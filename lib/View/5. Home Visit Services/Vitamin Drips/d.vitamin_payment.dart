@@ -5,30 +5,43 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+import 'package:harees_new_project/Resources/Button/myroundbutton.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/b.%20E-Clinics/e_clinic.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:intl/intl.dart';
 
-class LabPaymentPage extends StatelessWidget {
+class VitaminPaymentPage extends StatelessWidget {
   final UserModel userModel;
   final User firebaseUser;
   final Map<String, dynamic> providerData;
   final String selectedTime;
   final Map<String, dynamic> selectedProviderData;
+  final String packageName;
+  final String packagePrice;
 
-  const LabPaymentPage({
+  const VitaminPaymentPage({
     super.key,
     required this.providerData,
     required this.userModel,
     required this.firebaseUser,
     required this.selectedTime,
     required this.selectedProviderData,
+    required this.packageName,
+    required this.packagePrice,
   });
 
   @override
   Widget build(BuildContext context) {
     final String currentDate = DateFormat.yMMMd().format(DateTime.now());
+
+    // Calculate the VAT and total amount
+    final double vat = 20.0;
+    // Extract numeric value from packagePrice by removing non-numeric characters
+    final double parsedPackagePrice =
+        double.parse(packagePrice.replaceAll(RegExp(r'[^\d.]'), ''));
+
+    final double totalAmount = parsedPackagePrice + vat;
 
     return Scaffold(
       appBar: MyAppBar(
@@ -89,7 +102,7 @@ class LabPaymentPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Laboratory',
+                        'Vitamin IV Drips',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -121,32 +134,40 @@ class LabPaymentPage extends StatelessWidget {
                       color: Colors.blue[100],
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: ListTile(
-                      title: Text(
-                        '${providerData['packageName']}',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListTile(
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Email: ${selectedProviderData['email']}',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              'Address: ${selectedProviderData['address']}',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      subtitle: Text(
-                        'Price: ${providerData['packagePrice']}',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
+                        leading: Image.asset(
+                          "assets/images/vitamin.png",
+                          height: 60,
                         ),
-                      ),
-                      leading: Icon(
-                        Icons.science_outlined,
-                        color: Colors.black,
-                        size: 40,
                       ),
                     ),
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Zyad Faisal',
+                    'Ziyad Faisal',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -313,7 +334,7 @@ class LabPaymentPage extends StatelessWidget {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            'Selected test',
+                            'Selected Service',
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.black,
@@ -322,11 +343,12 @@ class LabPaymentPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 10),
+                        SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Labpratory Package',
+                              packageName,
                               style: TextStyle(
                                 fontSize: 17,
                                 color: Colors.black,
@@ -334,7 +356,7 @@ class LabPaymentPage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'SAR 60',
+                              'SAR $packagePrice',
                               style: TextStyle(
                                 fontSize: 17,
                                 color: Colors.black,
@@ -356,7 +378,7 @@ class LabPaymentPage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'SAR 20',
+                              'SAR $vat',
                               style: TextStyle(
                                 fontSize: 17,
                                 color: Colors.black,
@@ -382,7 +404,7 @@ class LabPaymentPage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'SAR 80',
+                        'SAR $totalAmount',
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.black,

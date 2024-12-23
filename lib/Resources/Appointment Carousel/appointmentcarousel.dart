@@ -13,17 +13,26 @@ class AppointmentCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Gradient> gradients = [
       LinearGradient(
-        colors: [Color.fromARGB(255, 82, 177, 255), Color.fromARGB(255, 149, 207, 255)],
+        colors: [
+          Color.fromARGB(255, 82, 177, 255),
+          Color.fromARGB(255, 149, 207, 255)
+        ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
       LinearGradient(
-        colors: [Color.fromARGB(255, 255, 255, 172), Color.fromARGB(255, 252, 252, 220)],
+        colors: [
+          Color.fromARGB(255, 124, 228, 247),
+          Color.fromARGB(255, 110, 161, 196)
+        ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
       LinearGradient(
-        colors: [Colors.purple, Colors.deepPurpleAccent],
+        colors: [
+          const Color.fromARGB(255, 31, 204, 247),
+          const Color.fromARGB(255, 117, 95, 177)
+        ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       ),
@@ -44,7 +53,7 @@ class AppointmentCarousel extends StatelessWidget {
 
         return CarouselSlider.builder(
           options: CarouselOptions(
-            height: 200.0,
+            height: 240.0,
             aspectRatio: 16 / 9,
             viewportFraction: 0.8,
             autoPlay: true,
@@ -106,10 +115,9 @@ class AppointmentCarousel extends StatelessWidget {
                               child: Text(
                                 appointment['address'].toString(),
                                 style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500
-                                ),
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
                               ),
                             ),
                           ],
@@ -126,10 +134,27 @@ class AppointmentCarousel extends StatelessWidget {
                             Text(
                               appointment['type'].toString(),
                               style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500
-                              ),
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.access_time,
+                              color: Colors.black,
+                              size: 30,
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              appointment['selected_time'].toString(),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500),
                             ),
                           ],
                         ),

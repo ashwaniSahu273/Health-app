@@ -11,7 +11,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:harees_new_project/Resources/Button/myroundbutton.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/Vitamin_services.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/b.Vitamin_services.dart';
 
 class Vitamin extends StatefulWidget {
   final UserModel userModel;
@@ -64,9 +64,10 @@ class _VitaminState extends State<Vitamin> {
     print("${position.latitude} ${position.longitude}");
 
     // Get address
-    List<Placemark> placemarks = await placemarkFromCoordinates(
-        position.latitude, position.longitude);
-    stAddress = "${placemarks.reversed.last.country} ${placemarks.reversed.last.locality} ${placemarks.reversed.last.street}";
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+    stAddress =
+        "${placemarks.reversed.last.country} ${placemarks.reversed.last.locality} ${placemarks.reversed.last.street}";
 
     setState(() {
       _marker.add(Marker(
@@ -110,7 +111,8 @@ class _VitaminState extends State<Vitamin> {
                       fireStore.doc(widget.firebaseUser.email).set({
                         "email": widget.firebaseUser.email,
                         "address": stAddress,
-                        "type": "Vitamin"
+                        "type": "Vitamin Drips",
+                        "selected_time": ""
                       });
                       Navigator.pop(context); // Close the dialog
                       Navigator.pop(context); // Close the bottom sheet
@@ -118,7 +120,6 @@ class _VitaminState extends State<Vitamin> {
                           address: stAddress,
                           userModel: widget.userModel,
                           firebaseUser: widget.firebaseUser));
-                      
                     });
                   },
                   textCancel: "Cancel".tr,
@@ -160,7 +161,6 @@ class _VitaminState extends State<Vitamin> {
           onTap: _showAddressBottomSheet,
         ),
       ),
-     
     );
   }
 }

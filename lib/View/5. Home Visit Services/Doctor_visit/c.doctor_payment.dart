@@ -5,19 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+import 'package:harees_new_project/Resources/Button/myroundbutton.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/b.%20E-Clinics/e_clinic.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:intl/intl.dart';
 
-class LabPaymentPage extends StatelessWidget {
+class DoctorVisitPaymentPage extends StatelessWidget {
   final UserModel userModel;
   final User firebaseUser;
   final Map<String, dynamic> providerData;
   final String selectedTime;
   final Map<String, dynamic> selectedProviderData;
 
-  const LabPaymentPage({
+  const DoctorVisitPaymentPage({
     super.key,
     required this.providerData,
     required this.userModel,
@@ -89,7 +90,7 @@ class LabPaymentPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Laboratory',
+                        'Doctor Visit',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -121,32 +122,40 @@ class LabPaymentPage extends StatelessWidget {
                       color: Colors.blue[100],
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: ListTile(
-                      title: Text(
-                        '${providerData['packageName']}',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListTile(
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Email: ${selectedProviderData['email']}',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              'Address: ${selectedProviderData['address']}',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      subtitle: Text(
-                        'Price: ${providerData['packagePrice']}',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
+                        leading: Image.asset(
+                          "assets/images/doctor.png",
+                          height: 60,
                         ),
-                      ),
-                      leading: Icon(
-                        Icons.science_outlined,
-                        color: Colors.black,
-                        size: 40,
                       ),
                     ),
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Zyad Faisal',
+                    'Ziyad Faisal',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -313,7 +322,7 @@ class LabPaymentPage extends StatelessWidget {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            'Selected test',
+                            'Selected Service',
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.black,
@@ -322,11 +331,12 @@ class LabPaymentPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 10),
+                        SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Labpratory Package',
+                              'Home Visit Fee',
                               style: TextStyle(
                                 fontSize: 17,
                                 color: Colors.black,
@@ -334,7 +344,7 @@ class LabPaymentPage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'SAR 60',
+                              'SAR 300',
                               style: TextStyle(
                                 fontSize: 17,
                                 color: Colors.black,
@@ -382,7 +392,7 @@ class LabPaymentPage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'SAR 80',
+                        'SAR 320',
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.black,

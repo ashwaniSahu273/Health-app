@@ -4,7 +4,9 @@ class UserModel {
   String? uid;
   String? profilePic;
   String? experience;
-  String? designation; // New variable added
+  String? designation;
+  String? mobileNumber;
+  String? gender;
 
   UserModel({
     this.fullname,
@@ -13,6 +15,8 @@ class UserModel {
     this.profilePic,
     this.experience,
     this.designation,
+    this.mobileNumber,
+    this.gender,
   });
 
   UserModel.frommap(Map<String, dynamic> map) {
@@ -21,7 +25,9 @@ class UserModel {
     fullname = map['fullname'];
     profilePic = map['profilePic'];
     experience = map['experience'];
-    designation = map['designation']; // New variable added
+    designation = map['designation'];
+    mobileNumber = map['mobileNumber'];
+    gender = map['gender'];
   }
 
   Map<String, dynamic> tomap() {
@@ -31,7 +37,9 @@ class UserModel {
       'fullname': fullname,
       'profilePic': profilePic,
       'experience': experience,
-      'designation': designation, // New variable added
+      'designation': designation,
+      'mobileNumber': mobileNumber,
+      'gender': gender,
     };
   }
 }

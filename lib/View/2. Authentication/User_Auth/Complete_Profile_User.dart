@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, avoid_print
+// ignore_for_file: file_names, avoid_print, prefer_const_constructors
 
 import 'dart:developer';
 import 'dart:io';
@@ -32,6 +32,8 @@ class CompleteProfile extends StatefulWidget {
 class _CompleteProfileState extends State<CompleteProfile> {
   File? imageFile;
   TextEditingController fullNameController = TextEditingController();
+  TextEditingController mobileNumberController = TextEditingController();
+  String? selectedGender;
 
   void selectImage(ImageSource source) async {
     XFile? pickedFile = await ImagePicker().pickImage(source: source);
@@ -57,43 +59,44 @@ class _CompleteProfileState extends State<CompleteProfile> {
 
   void showPhotoOptions() {
     showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text("Upload Profile Picture".tr),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                onTap: () {
-                  Navigator.pop(context);
-                  selectImage(ImageSource.gallery);
-                },
-                leading: const Icon(Icons.photo_album),
-                title: Text("Select from Gallery".tr),
-              ),
-              ListTile(
-                onTap: () {
-                  Navigator.pop(context);
-                  selectImage(ImageSource.camera);
-                },
-                leading: const Icon(Icons.camera_alt),
-                title: Text("Take a photo".tr),
-              ),
-            ],
-          ),
-        );
-      }
-    );
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Upload Profile Picture".tr),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  onTap: () {
+                    Navigator.pop(context);
+                    selectImage(ImageSource.gallery);
+                  },
+                  leading: const Icon(Icons.photo_album),
+                  title: Text("Select from Gallery".tr),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.pop(context);
+                    selectImage(ImageSource.camera);
+                  },
+                  leading: const Icon(Icons.camera_alt),
+                  title: Text("Take a photo".tr),
+                ),
+              ],
+            ),
+          );
+        });
   }
 
   void checkValues() {
     String fullname = fullNameController.text.trim();
+    String mobileNumber = mobileNumberController.text.trim();
+    String? gender = selectedGender;
 
-    if (fullname.isEmpty) {
+    if (fullname.isEmpty || mobileNumber.isEmpty || gender == null) {
       print("Please fill all the fields");
-      UIHelper.showAlertDialog(context, "Incomplete Data",
-          "Please fill all the fields");
+      UIHelper.showAlertDialog(
+          context, "Incomplete Data", "Please fill all the fields");
     } else {
       log("Uploading data..");
       uploadData();
@@ -115,10 +118,14 @@ class _CompleteProfileState extends State<CompleteProfile> {
       imageUrl = await snapshot.ref.getDownloadURL();
     }
 
-    String? fullname = fullNameController.text.trim();
+    String fullname = fullNameController.text.trim();
+    String mobileNumber = mobileNumberController.text.trim();
+    String? gender = selectedGender;
 
     widget.userModel.fullname = fullname;
     widget.userModel.profilePic = imageUrl;
+    widget.userModel.mobileNumber = mobileNumber;
+    widget.userModel.gender = gender;
 
     await FirebaseFirestore.instance
         .collection("Registered Users")
@@ -142,9 +149,12 @@ class _CompleteProfileState extends State<CompleteProfile> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: MyColors.purple,
+        backgroundColor: Colors.white,
         elevation: 0,
-        title: Text("Complete Your Profile".tr),
+        title: Text(
+          "Complete Your Profile".tr,
+          style: TextStyle(color: Colors.black),
+        ),
         centerTitle: true,
       ),
       body: Stack(
@@ -175,11 +185,12 @@ class _CompleteProfileState extends State<CompleteProfile> {
                       backgroundColor: Colors.grey[600],
                       radius: 50,
                       child: (imageFile == null)
-                          ? const Icon(Icons.person, size: 60, color: Colors.white)
+                          ? const Icon(Icons.person,
+                              size: 60, color: Colors.white)
                           : null,
                     ),
                   ),
-                  const SizedBox(
+                  SizedBox(
                     height: 20,
                   ),
                   TextField(
@@ -188,7 +199,37 @@ class _CompleteProfileState extends State<CompleteProfile> {
                       labelText: "Full Name".tr,
                     ),
                   ),
-                  const SizedBox(
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextField(
+                    controller: mobileNumberController,
+                    decoration: InputDecoration(
+                      labelText: "Mobile Number".tr,
+                    ),
+                    keyboardType: TextInputType.phone,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  DropdownButtonFormField<String>(
+                    value: selectedGender,
+                    decoration: InputDecoration(
+                      labelText: "Gender".tr,
+                    ),
+                    items: ['Male', 'Female', 'Other'].map((String gender) {
+                      return DropdownMenuItem<String>(
+                        value: gender,
+                        child: Text(gender.tr),
+                      );
+                    }).toList(),
+                    onChanged: (newValue) {
+                      setState(() {
+                        selectedGender = newValue;
+                      });
+                    },
+                  ),
+                  SizedBox(
                     height: 20,
                   ),
                   RoundButton(

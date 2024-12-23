@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/Button/mybutton.dart';
-import 'package:harees_new_project/View/2.%20Authentication/Provider_Auth/provider_register.dart';
-import 'package:harees_new_project/View/2.%20Authentication/User_Auth/user_register.dart';
+import 'package:harees_new_project/View/2.%20Authentication/Provider_Auth/provider_login.dart';
+import 'package:harees_new_project/View/2.%20Authentication/User_Auth/user_login.dart';
 
 class Splash_Screen extends StatefulWidget {
   const Splash_Screen({
@@ -123,7 +123,7 @@ class _Splash_ScreenState extends State<Splash_Screen> {
                   RoundButton(
                     text: "Join as a user".tr,
                     onTap: () {
-                      Get.to(() => const User_Register());
+                      Get.to(() => const LoginScreen());
                     },
                   ),
                   const SizedBox(
@@ -132,7 +132,7 @@ class _Splash_ScreenState extends State<Splash_Screen> {
                   RoundButton(
                     text: "Join as a provider".tr,
                     onTap: () {
-                      Get.to(() => const Provider_Register());
+                      Get.to(() => const Provider_login());
                     },
                   ),
                   const SizedBox(

@@ -9,7 +9,7 @@ class Language extends Translations {
         "en_US": {
           "Nurse visit": "Nurse visit",
           "Doctor visit": "Doctor visit",
-          "Virtual consultation": "Virtual consultation",
+          "Virtual Consultation": "Virtual Consultation",
           "Vitamin IV drips and fluids": "Vitamin IV drips and fluids",
           "Laboratory": "Laboratory",
           "Our Services ": "Our Services ",
@@ -19,7 +19,7 @@ class Language extends Translations {
           "Contacts": "Contacts",
           "Contact us": "Contact us",
           "Family": "Family",
-          "About us": "About us",
+          "About Us": "About Us",
           "Your requests": "Your requests",
           "logout": "Logout",
           "Login": "Login",
@@ -143,11 +143,17 @@ class Language extends Translations {
           "We accept Bupa, Tawuniya, MEDGULD, Malath and Alrajhi Takaful insurance for telemedicine":
               "We accept Bupa, Tawuniya, MEDGULD, Malath and Alrajhi Takaful insurance for telemedicine",
           "Select the consultant": "Select the consultant",
+          'Hello!': 'Hello!',
+          'More Services': 'More Services',
+          "Results": "Results",
+          "FAQ's": "FAQ's",
+          'Pending Appointments': 'Pending Appointments',
+          "FAQ": "FAQ",
         },
         "ar_AE": {
           "Nurse visit": "زيارة تمريض",
           "Doctor visit": "زيارة طبيب",
-          "Virtual consultation": "استشارة طبيب عن بعد",
+          "Virtual Consultation": "استشارة طبيب عن بعد",
           "Laboratory": " الفحوصات",
           "Vitamin IV drips and fluids": "المحاليل والسوائل",
           "Our Services ": " خدماتنا ",
@@ -155,7 +161,7 @@ class Language extends Translations {
           "Accepted appointments": "المواعيد المقبولة",
           "Contact": "اتصل بنا",
           "Family": "عائلة",
-          "About us": "من نحن",
+          "About Us": "من نحن",
           "Your requests": "طلباتك",
           "logout": "تسجيل خروج",
           "Login": "تسجيل الدخول",
@@ -275,9 +281,15 @@ class Language extends Translations {
           "Nurse Visit": "زيارة الناشئ",
           "Doctor Visit": "زيارة الطبيب",
           "Vitamin Drips": "نقط وسوائل فيتامين",
-          "We accept Bupa, Tawuniya, MEDGULD, Malath and Alrajhi Takaful insurance for telemedicine":
-              "نقبل تأمين بوبا والتعاونية وميدغلف وملاذ وتكافل الراجحي للأدوية.",
+          "We accept Bupa, Tawuniya, MEDGULF, Malath and AlRajhi Takaful insurance for telemedicine.":
+              "نحن نقبل التأمين التكافلي من بوبا والتعاونية وميدغلف وملاذ والراجحي للتطبيب عن بعد.",
           "Select the consultant": "اختر المرسل",
+          'Hello!': "!مرحبا",
+          'More Services': 'خدمات اخرى',
+          "Results": "النتائج",
+          "FAQ's": "التعليمات",
+          'Pending Appointments': 'المواعيد المعلقة',
+          "FAQ": "التعليمات",
         }
       };
 }

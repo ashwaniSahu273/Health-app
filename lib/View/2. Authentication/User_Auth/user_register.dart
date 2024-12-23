@@ -173,40 +173,46 @@ class _User_RegisterState extends State<User_Register> {
                             child: CircleAvatar(
                                 radius: 20,
                                 backgroundImage:
-                                    Image.asset("assets/images/google.png").image),
+                                    Image.asset("assets/images/google.png")
+                                        .image),
                           ),
-                        
-                          GestureDetector(
-                            onTap: () {},
-                            child: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                radius: 20,
-                                backgroundImage:
-                                    Image.asset("assets/images/fb.png").image),
-                          )
+
+                          // GestureDetector(
+                          //   onTap: () {},
+                          //   child: CircleAvatar(
+                          //       backgroundColor: Colors.white,
+                          //       radius: 20,
+                          //       backgroundImage:
+                          //           Image.asset("assets/images/fb.png").image),
+                          // )
                         ],
                       ),
                       Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Already a User?".tr,
-              style: const TextStyle(fontSize: 19,color: Colors.black),
-            ),
-            CupertinoButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const LoginScreen()));
-              },
-              child: Text(
-                "Let's Login".tr,
-                style: const TextStyle(fontSize: 19,color: Colors.white),
-              ),
-            ),
-          ],
-        ),
-      ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Already a User?".tr,
+                              style: const TextStyle(
+                                  fontSize: 19, color: Colors.black),
+                            ),
+                            CupertinoButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LoginScreen()));
+                              },
+                              child: Text(
+                                "Let's Login".tr,
+                                style: const TextStyle(
+                                    fontSize: 19, color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -215,7 +221,6 @@ class _User_RegisterState extends State<User_Register> {
           ],
         ),
       ),
-     
     );
   }
 }

@@ -1,6 +1,7 @@
-// ignore_for_file: unused_import, unused_local_variable, prefer_const_constructors, avoid_print, non_constant_identifier_names
+// ignore_for_file: no_leading_underscores_for_local_identifiers, prefer_final_fields, prefer_const_constructors, non_constant_identifier_names, avoid_print, prefer_interpolation_to_compose_strings, prefer_const_literals_to_create_immutables, unused_import, unused_local_variable
 
 import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,28 +9,33 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:harees_new_project/Resources/Button/mybutton.dart';
+import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/Button/myroundbutton.dart';
-import '../../../Resources/AppColors/app_colors.dart';
+import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/b.nurse_time.dart';
+import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
-class DoctorVisit extends StatefulWidget {
-  const DoctorVisit({super.key});
+class NurseVisit extends StatefulWidget {
+  final UserModel userModel;
+  final User firebaseUser;
+  const NurseVisit(
+      {super.key, required this.userModel, required this.firebaseUser});
 
   @override
-  State<DoctorVisit> createState() => _DoctorVisitState();
+  State<NurseVisit> createState() => _NurseVisitState();
 }
 
-class _DoctorVisitState extends State<DoctorVisit> {
-  final Completer<GoogleMapController> _controller = Completer();
-  static const CameraPosition kGooglePlex = CameraPosition(
+class _NurseVisitState extends State<NurseVisit> {
+  Completer<GoogleMapController> _controller = Completer();
+  static final CameraPosition kGooglePlex = CameraPosition(
     target: LatLng(24.8846, 67.1754),
     zoom: 14.4746,
   );
-  final List<Marker> _marker = [];
-  final List<Marker> _list = [
+  List<Marker> _marker = [];
+  List<Marker> _list = [
     Marker(
-        markerId: const MarkerId("1"),
-        position: const LatLng(24.8846, 70.1754),
+        markerId: MarkerId("1"),
+        position: LatLng(24.8846, 70.1754),
         infoWindow: InfoWindow(title: "Current Location".tr))
   ];
   String stAddress = '';
@@ -57,13 +63,14 @@ class _DoctorVisitState extends State<DoctorVisit> {
     print("${position.latitude} ${position.longitude}");
 
     // Get address
-    List<Placemark> placemarks = await placemarkFromCoordinates(
-        position.latitude, position.longitude);
-    stAddress = "${placemarks.reversed.last.country} ${placemarks.reversed.last.locality} ${placemarks.reversed.last.street}";
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+    stAddress =
+        "${placemarks.reversed.last.country} ${placemarks.reversed.last.locality} ${placemarks.reversed.last.street}";
 
     setState(() {
       _marker.add(Marker(
-          markerId: const MarkerId("2"),
+          markerId: MarkerId("2"),
           position: LatLng(position.latitude, position.longitude),
           infoWindow: InfoWindow(title: "My Location".tr)));
       Latitude = position.latitude.toString();
@@ -100,15 +107,27 @@ class _DoctorVisitState extends State<DoctorVisit> {
                   },
                   onConfirm: () {
                     setState(() {
-                      fireStore.doc(FirebaseAuth.instance.currentUser!.email).set({
+                      // Save data to Firestore
+                      fireStore
+                          .doc(FirebaseAuth.instance.currentUser!.email)
+                          .set({
                         "email": FirebaseAuth.instance.currentUser!.email,
                         "address": stAddress,
-                        "type": "Doctor Visit"
+                        "type": "Nurse Visit",
+                        "selected_time": ""
                       });
-                      Navigator.pop(context); // Close bottom sheet
+
                       Navigator.pop(context);
                       Get.back();
-
+                      Get.to(() => Nurse_Time(
+                            userModel: widget.userModel,
+                            firebaseUser: widget.firebaseUser,
+                            providerData: {
+                              "email": FirebaseAuth.instance.currentUser!.email,
+                              "address": stAddress,
+                              "type": "Nurse Visit",
+                            },
+                          ));
                     });
                   },
                   textCancel: "Cancel".tr,
@@ -127,8 +146,8 @@ class _DoctorVisitState extends State<DoctorVisit> {
 
   @override
   Widget build(BuildContext context) {
-    final auth = FirebaseAuth.instance;
-    final user = auth.currentUser;
+    final _auth = FirebaseAuth.instance;
+    final user = _auth.currentUser;
 
     return Scaffold(
       body: SafeArea(
@@ -150,7 +169,6 @@ class _DoctorVisitState extends State<DoctorVisit> {
           onTap: _showAddressBottomSheet,
         ),
       ),
-      
     );
   }
 }

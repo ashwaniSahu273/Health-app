@@ -12,8 +12,12 @@ class BackgroundSection extends StatelessWidget {
   final User firebaseUser;
   const BackgroundSection({super.key, required this.userModel, required this.firebaseUser});
 
+
   @override
   Widget build(BuildContext context) {
+    String backgroundImage = Get.locale?.languageCode == 'ar'
+        ? 'assets/images/bgarabic.png'
+        : 'assets/images/bgenglish.png';
     return GestureDetector(
       onTap: () {
         Get.to(() => E_Clinics(
@@ -30,7 +34,7 @@ class BackgroundSection extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(
-                image: AssetImage('assets/images/gradbg2.png'),
+                image: AssetImage(backgroundImage),
                 fit: BoxFit.cover,
               ),
             ),
@@ -52,7 +56,7 @@ class BackgroundSection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Virtual Consultation',
+                          'Virtual Consultation'.tr,
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -61,9 +65,9 @@ class BackgroundSection extends StatelessWidget {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          'We accept Bupa, Tawuniya, MEDGULF, Malath and AlRajhi Takaful insurance for telemedicine.',
+                          'We accept Bupa, Tawuniya, MEDGULF, Malath and AlRajhi Takaful insurance for telemedicine.'.tr,
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
                           ),

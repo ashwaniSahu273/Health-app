@@ -1,9 +1,11 @@
-// ignore_for_file: library_prefixes, avoid_print
+
+// ignore_for_file: library_prefixes, avoid_print, prefer_const_constructors, unused_import
 
 import 'package:file_picker/file_picker.dart' as FilePicker;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/b.Vitamin_services.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/firebase_helper.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/1.%20Splash%20Screen/splash_screen.dart';
@@ -44,7 +46,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: const Splash_Screen(),
+      home: Splash_Screen(),
+      // home: VitaminServices(
+      //   address: "",
+      //   firebaseUser: firebaseUser!,
+      //   userModel: userModel!,
+      // ),
       debugShowCheckedModeBanner: false,
       locale: const Locale("en", "US"),
       fallbackLocale: const Locale("en", "US"),

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Doctor_visit/doctor_visit.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Doctor_visit/a.doctor_visit.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/b.laboratory.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_visit.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/Vitamin_IV_drips_and_fluids.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/a.nurse_visit.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/a.vitamin_drips.dart';
 
 class HomeServices extends StatelessWidget {
   final IconData serviceIcon;
@@ -69,9 +69,9 @@ class Home_Services extends StatelessWidget {
         InkWell(
           onTap: () {
             Get.to(() => Laboratory(
-              userModel: userModel,
-              firebaseUser: firebaseUser,
-            ));
+                  userModel: userModel,
+                  firebaseUser: firebaseUser,
+                ));
           },
           child: Center(
             child: Container(
@@ -108,7 +108,10 @@ class Home_Services extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            Get.to(() => const DoctorVisit());
+            Get.to(() => DoctorVisit(
+                  userModel: userModel,
+                  firebaseUser: firebaseUser,
+                ));
           },
           child: Center(
             child: Container(
@@ -147,8 +150,8 @@ class Home_Services extends StatelessWidget {
           onTap: () {
             Get.to(() => NurseVisit(
                   userModel: userModel,
-                  firebaseUser: firebaseUser, 
-            ));
+                  firebaseUser: firebaseUser,
+                ));
           },
           child: Center(
             child: Container(

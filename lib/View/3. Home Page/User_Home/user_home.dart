@@ -21,11 +21,11 @@ import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/Bottom_Navigation_Bar/bottom_nav.dart';
 import 'package:harees_new_project/Resources/Services_grid/user_grid.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Doctor_visit/doctor_visit.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Doctor_visit/a.doctor_visit.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/b.%20E-Clinics/e_clinic.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/a.Lab_imp.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_visit.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/Vitamin_IV_drips_and_fluids.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/a.nurse_visit.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/a.vitamin_drips.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/a.%20Virtual%20Consultation/virtual_consultation.dart';
 
 class HomePage extends StatefulWidget {
@@ -60,13 +60,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: MyAppBar(
-        firebaseUser: widget.firebaseUser, 
+        firebaseUser: widget.firebaseUser,
         userModel: widget.userModel,
         targetUser: widget.userModel,
       ),
       drawer: MyDrawer(
-        userModel: widget.userModel, 
-        firebaseUser: widget.firebaseUser, 
+        userModel: widget.userModel,
+        firebaseUser: widget.firebaseUser,
         targetUser: widget.userModel,
       ),
       body: Stack(
@@ -124,13 +124,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   SizedBox(height: 20),
-
                   ServicesCarousel(
                     userModel: widget.userModel,
                     firebaseUser: widget.firebaseUser,
                   ),
-
-                  
                   SizedBox(height: 30),
                   BackgroundSection(
                     userModel: widget.userModel,
@@ -155,10 +152,10 @@ class _HomePageState extends State<HomePage> {
                             GestureDetector(
                               onTap: () {
                                 Get.to(() => MyAppointments(
-                                  userModel: widget.userModel,
-                                  firebaseUser: widget.firebaseUser, 
-                                  targetUser: UserModel(),
-                                ));
+                                      userModel: widget.userModel,
+                                      firebaseUser: widget.firebaseUser,
+                                      targetUser: UserModel(),
+                                    ));
                               },
                               child: Container(
                                 height: 120.0,
@@ -193,9 +190,9 @@ class _HomePageState extends State<HomePage> {
                             GestureDetector(
                               onTap: () {
                                 Get.to(() => UserResult(
-                                  userModel: widget.userModel,
-                                  firebaseUser: widget.firebaseUser,
-                                ));
+                                      userModel: widget.userModel,
+                                      firebaseUser: widget.firebaseUser,
+                                    ));
                               },
                               child: Container(
                                 height: 120.0,
@@ -235,9 +232,9 @@ class _HomePageState extends State<HomePage> {
                             GestureDetector(
                               onTap: () {
                                 Get.to(() => UserContact(
-                                  userModel: widget.userModel,
-                                  firebaseUser: widget.firebaseUser,
-                                ));
+                                      userModel: widget.userModel,
+                                      firebaseUser: widget.firebaseUser,
+                                    ));
                               },
                               child: Container(
                                 height: 120.0,
@@ -272,9 +269,9 @@ class _HomePageState extends State<HomePage> {
                             GestureDetector(
                               onTap: () {
                                 Get.to(() => Family(
-                                  userModel: widget.userModel,
-                                  firebaseUser: widget.firebaseUser,
-                                ));
+                                      userModel: widget.userModel,
+                                      firebaseUser: widget.firebaseUser,
+                                    ));
                               },
                               child: Container(
                                 height: 120.0,
@@ -314,9 +311,9 @@ class _HomePageState extends State<HomePage> {
                             GestureDetector(
                               onTap: () {
                                 Get.to(() => FAQ(
-                                  userModel: widget.userModel,
-                                  firebaseUser: widget.firebaseUser,
-                                ));
+                                      userModel: widget.userModel,
+                                      firebaseUser: widget.firebaseUser,
+                                    ));
                               },
                               child: Container(
                                 height: 120.0,
@@ -351,9 +348,9 @@ class _HomePageState extends State<HomePage> {
                             GestureDetector(
                               onTap: () {
                                 Get.to(() => AboutUsPage(
-                                  userModel: widget.userModel,
-                                  firebaseUser: widget.firebaseUser,
-                                ));
+                                      userModel: widget.userModel,
+                                      firebaseUser: widget.firebaseUser,
+                                    ));
                               },
                               child: Container(
                                 height: 120.0,
@@ -400,7 +397,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                   SizedBox(height: 20),
                   AppointmentCarousel(
-                    userAppointments: FirebaseFirestore.instance.collection("User_appointments").snapshots(),
+                    userAppointments: FirebaseFirestore.instance
+                        .collection("User_appointments")
+                        .snapshots(),
                   ),
                   SizedBox(height: 20),
                 ],

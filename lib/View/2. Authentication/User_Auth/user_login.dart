@@ -123,11 +123,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       const CircleAvatar(
                         radius: 100,
-                        backgroundImage: AssetImage("assets/logo/harees_logo.png"),
+                        backgroundImage:
+                            AssetImage("assets/logo/harees_logo.png"),
                       ),
                       Text(
                         "Harees".tr,
-                        style: const TextStyle(fontSize: 45, fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                            fontSize: 45, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 10,
@@ -171,45 +173,46 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: CircleAvatar(
                                 radius: 20,
                                 backgroundImage:
-                                    Image.asset("assets/images/google.png").image),
+                                    Image.asset("assets/images/google.png")
+                                        .image),
                           ),
-                        
-                          GestureDetector(
-                            onTap: () {},
-                            child: CircleAvatar(
-                                radius: 20,
-                                backgroundImage:
-                                    Image.asset("assets/images/fb.png").image),
-                          ),
-                          
+
+                          // GestureDetector(
+                          //   onTap: () {},
+                          //   child: CircleAvatar(
+                          //       radius: 20,
+                          //       backgroundImage:
+                          //           Image.asset("assets/images/fb.png").image),
+                          // ),
                         ],
-                        
                       ),
                       Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Don't have an account?".tr,
-              style: const TextStyle(fontSize: 19,color: Colors.black),
-            ),
-            CupertinoButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return const User_Register();
-                  }),
-                );
-              },
-              child: Text(
-                "Sign up".tr,
-                style:  const TextStyle(fontSize: 19,color: Colors.white),
-              ),
-            ),
-          ],
-        ),
-      ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Don't have an account?".tr,
+                              style: const TextStyle(
+                                  fontSize: 19, color: Colors.black),
+                            ),
+                            CupertinoButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return const User_Register();
+                                  }),
+                                );
+                              },
+                              child: Text(
+                                "Sign Up".tr,
+                                style: const TextStyle(
+                                    fontSize: 19, color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),

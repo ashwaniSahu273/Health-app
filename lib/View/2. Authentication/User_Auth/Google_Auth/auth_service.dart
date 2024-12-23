@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
-import 'package:harees_new_project/View/2.%20Authentication/User_Auth/user_login.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 
 class AuthServiceUserLogin {
@@ -186,7 +185,10 @@ class AuthServiceUserRegister {
         //   firebaseUser: userCredential.user!,
         // ));
 
-        Get.to(() => const LoginScreen());
+        Get.to(() =>  HomePage(
+              userModel: userModel,
+              firebaseUser: userCredential.user!,
+            ));
       }
     } catch (error) {
       print("Error signing in with Google: $error");

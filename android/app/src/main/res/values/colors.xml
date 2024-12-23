@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Define your colorAccent here -->
+    <color name="colorAccent">#FF4081</color> <!-- Replace with your desired color value -->
+</resources>

@@ -3,16 +3,18 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Doctor_visit/doctor_visit.dart';
+import 'package:get/get.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Doctor_visit/a.doctor_visit.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/b.laboratory.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_visit.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/Vitamin_IV_drips_and_fluids.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/a.nurse_visit.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/a.vitamin_drips.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class ServicesCarousel extends StatelessWidget {
-    final UserModel userModel;
+  final UserModel userModel;
   final User firebaseUser;
-  const ServicesCarousel({super.key, required this.userModel, required this.firebaseUser});
+  const ServicesCarousel(
+      {super.key, required this.userModel, required this.firebaseUser});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class ServicesCarousel extends StatelessWidget {
       {
         'color': Colors.blue[100],
         'icon': 'assets/images/lab.png',
-        'text': 'Laboratory',
+        'text': 'Laboratory'.tr,
         'route': Laboratory(
           userModel: userModel,
           firebaseUser: firebaseUser,
@@ -29,13 +31,16 @@ class ServicesCarousel extends StatelessWidget {
       {
         'color': Colors.blue[200],
         'icon': 'assets/images/doctor.png',
-        'text': 'Doctor Visit',
-        'route': DoctorVisit(),
+        'text': 'Doctor Visit'.tr,
+        'route': DoctorVisit(
+          userModel: userModel,
+          firebaseUser: firebaseUser,
+        ),
       },
       {
         'color': Colors.blue[100],
         'icon': 'assets/images/nurse.png',
-        'text': 'Nurse Visit',
+        'text': 'Nurse Visit'.tr,
         'route': NurseVisit(
           userModel: userModel,
           firebaseUser: firebaseUser,
@@ -44,7 +49,7 @@ class ServicesCarousel extends StatelessWidget {
       {
         'color': Colors.blue[200],
         'icon': 'assets/images/vitamin.png',
-        'text': 'Vitamin Drips',
+        'text': 'Vitamin Drips'.tr,
         'route': Vitamin(
           userModel: userModel,
           firebaseUser: firebaseUser,
