@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "343705544018",
+    "project_id": "health-85d49",
+    "storage_bucket": "health-85d49.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343705544018:android:e5115a3b4158e04344868b",
+        "android_client_info": {
+          "package_name": "com.example.harees_new_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343705544018-jq6h3crmis4cccasoett9ivbe43r8i6n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLVR3V0ruGzLcvonn79-jgcVVWgrIItL0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343705544018-jq6h3crmis4cccasoett9ivbe43r8i6n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "343705544018-92k24n23bj1asg63tm3mhnmceoadoauj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.hareesNewProject"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
