@@ -31,13 +31,26 @@ class LabPaymentPage extends StatelessWidget {
     final String currentDate = DateFormat.yMMMd().format(DateTime.now());
 
     return Scaffold(
-      appBar: MyAppBar(
-        userModel: userModel,
-        firebaseUser: firebaseUser,
-        targetUser: userModel,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Row(
+          children: [
+            GestureDetector(
+              onTap: () => Get.back(),
+              child: Icon(
+                Icons.keyboard_double_arrow_left,
+                size: 35,
+                weight: 200,
+              ),
+            ), // Double-arrow icon
+            const Text(
+              'Payment Details',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
       ),
       body: Container(
-        color: Colors.blue[50],
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
@@ -46,27 +59,28 @@ class LabPaymentPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Payment Details",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Divider(
-                    color: MyColors.logocolor,
-                    thickness: 2.0,
-                    height: 10.0,
-                  ),
+                  // Text(
+                  //   "Payment Details",
+                  //   style: TextStyle(
+                  //     fontSize: 20,
+                  //     fontWeight: FontWeight.bold,
+                  //     color: Colors.black,
+                  //   ),
+                  // ),
+                  // SizedBox(height: 10),
+                  // Divider(
+                  //   color: MyColors.logocolor,
+                  //   thickness: 2.0,
+                  //   height: 10.0,
+                  // ),
                   ListTile(
+                    contentPadding: EdgeInsets.zero,
                     title: Text(
                       'Harees Health:',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: Colors.blue,
                       ),
                     ),
                     subtitle: Text(
@@ -78,12 +92,12 @@ class LabPaymentPage extends StatelessWidget {
                     ),
                     leading: Image.asset("assets/logo/harees_logo.png"),
                   ),
-                  SizedBox(height: 10),
-                  Divider(
-                    color: MyColors.logocolor,
-                    thickness: 2.0,
-                    height: 10.0,
-                  ),
+                  // SizedBox(height: 10),
+                  // Divider(
+                  //   color: MyColors.logocolor,
+                  //   thickness: 2.0,
+                  //   height: 10.0,
+                  // ),
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,14 +107,14 @@ class LabPaymentPage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: Colors.blue,
                         ),
                       ),
                       Row(
                         children: [
                           Icon(
                             Icons.calendar_month_outlined,
-                            color: Colors.grey.shade800,
+                            color: Colors.blue,
                             size: 20,
                           ),
                           SizedBox(width: 5),
@@ -115,35 +129,35 @@ class LabPaymentPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.blue[100],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: ListTile(
-                      title: Text(
-                        '${providerData['packageName']}',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      subtitle: Text(
-                        'Price: ${providerData['packagePrice']}',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                      ),
-                      leading: Icon(
-                        Icons.science_outlined,
-                        color: Colors.black,
-                        size: 40,
-                      ),
-                    ),
-                  ),
+                  // SizedBox(height: 20),
+                  // Container(
+                  //   decoration: BoxDecoration(
+                  //     color: Colors.blue[100],
+                  //     borderRadius: BorderRadius.circular(10),
+                  //   ),
+                  //   child: ListTile(
+                  //     title: Text(
+                  //       '${providerData['packageName']}',
+                  //       style: TextStyle(
+                  //         fontSize: 18,
+                  //         fontWeight: FontWeight.bold,
+                  //         color: Colors.black,
+                  //       ),
+                  //     ),
+                  //     subtitle: Text(
+                  //       'Price: ${providerData['packagePrice']}',
+                  //       style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //       ),
+                  //     ),
+                  //     leading: Icon(
+                  //       Icons.science_outlined,
+                  //       color: Colors.black,
+                  //       size: 40,
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(height: 10),
                   Text(
                     'Zyad Faisal',
@@ -174,7 +188,104 @@ class LabPaymentPage extends StatelessWidget {
                   SizedBox(height: 15),
                   Container(
                     width: double.infinity,
-                    color: Colors.blue[100],
+                    color: Color(0xFFCAE8E5),
+                    height: 25,
+                  ),
+                  Container( // Background color
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Promo Code Section
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.percent,
+                                    color: Colors.teal, size: 20),
+                                SizedBox(width: 8),
+                                Text(
+                                  "Add promo code here",
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.black),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              "Apply",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                       
+                        // Wallet Balance Section
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  "SAR 0",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.teal,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  "Use wallet balance",
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.black),
+                                ),
+                              ],
+                            ),
+                            Switch(
+                              value: false,
+                              onChanged: (value) {
+                                // Handle switch state
+                              },
+                            ),
+                          ],
+                        ),
+                 
+                        // Pay with Bank Points Sections
+                        ListTile(
+                          contentPadding:EdgeInsets.zero ,
+                          title: Text(
+                            "Pay with bank points",
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                          trailing: Icon(Icons.arrow_forward_ios,
+                              size: 16, color: Colors.grey),
+                          onTap: () {
+                            // Handle navigation
+                          },
+                        ),
+                     
+                        ListTile(
+                          contentPadding:EdgeInsets.zero ,
+                          title: Text(
+                            "Pay with bank points",
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                          trailing: Icon(Icons.arrow_forward_ios,
+                              size: 16, color: Colors.grey),
+                          onTap: () {
+                            // Handle navigation
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    color: Color(0xFFCAE8E5),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -183,7 +294,7 @@ class LabPaymentPage extends StatelessWidget {
                           Text(
                             'Select payment method',
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 13,
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
                             ),
@@ -198,7 +309,7 @@ class LabPaymentPage extends StatelessWidget {
                               Text(
                                 'Cancellation policy',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 13,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -285,88 +396,86 @@ class LabPaymentPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Container(
-                    width: double.infinity,
-                    color: Colors.blue[100],
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Price Breakup',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
+                  // SizedBox(height: 10),
+                  Text(
+                    'Price Breakup',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  // SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            topRight: Radius.circular(15)),
+                        color: Color(0xFFCAE8E5)),
                     width: double.infinity,
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'Selected test',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 10),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              'Selected test',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Labpratory Package',
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Labpratory Package',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                            Text(
-                              'SAR 60',
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
+                              Text(
+                                'SAR 60',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'VAT (+)',
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'VAT (+)',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                            Text(
-                              'SAR 20',
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
+                              Text(
+                                'SAR 20',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                      ],
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 10),
@@ -385,13 +494,13 @@ class LabPaymentPage extends StatelessWidget {
                         'SAR 80',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.black,
+                          color: Colors.blue,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 10),
                   GestureDetector(
                     onTap: () {
                       Get.to(() => HomePage(
@@ -400,7 +509,7 @@ class LabPaymentPage extends StatelessWidget {
                           ));
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      padding: const EdgeInsets.only(left: 2, right: 2),
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),

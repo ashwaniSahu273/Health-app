@@ -111,110 +111,150 @@ class _User_RegisterState extends State<User_Register> {
         child: Stack(
           children: [
             // Background image
-            Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/back_image.png"),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+            // Container(
+            //   decoration: const BoxDecoration(
+            //     image: DecorationImage(
+            //       image: AssetImage("assets/images/back_image.png"),
+            //       fit: BoxFit.cover,
+            //     ),
+            //   ),
+            // ),
             // Foreground content
             Container(
               padding: const EdgeInsets.symmetric(
-                horizontal: 40,
+                horizontal: 20,
               ),
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const CircleAvatar(
-                          radius: 100,
-                          backgroundImage: AssetImage(
-                            "assets/logo/harees_logo.png",
-                          )),
-                      const SizedBox(
-                        height: 10,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 50.0),
+                      child:  CircleAvatar(
+                        radius: 100,
+                        backgroundImage:
+                            AssetImage("assets/logo/harees_logo.png"),
                       ),
-                      MyTextField(
-                          controller: emailController,
-                          obscureText: false,
-                          labelText: "Email Address".tr,
-                          conditionText: "Email Address cannot be empty"),
-                      MyTextField(
-                          controller: passwordController,
-                          obscureText: true,
-                          labelText: "Password".tr,
-                          conditionText: "Password cannot be empty"),
-                      MyTextField(
-                          controller: cPasswordController,
-                          obscureText: true,
-                          labelText: "Confirm Password".tr,
-                          conditionText: "Password cannot be empty"),
-                      const SizedBox(height: 20),
-                      RoundButton(
-                          text: "Sign Up".tr,
-                          onTap: () {
-                            checkValues();
-                          }),
-                      const SizedBox(height: 25),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              AuthServiceUserRegister(
-                                      userModel: UserModel(),
-                                      firebaseUser:
-                                          FirebaseAuth.instance.currentUser)
-                                  .signInWithGoogle();
-                            },
-                            child: CircleAvatar(
-                                radius: 20,
-                                backgroundImage:
-                                    Image.asset("assets/images/google.png")
-                                        .image),
-                          ),
+                    ),
+                     const SizedBox(
+                      height: 25,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Create Your Account".tr,
+                          style: const TextStyle(
+                              fontSize: 20,color: Color(0xFF79AEC3),fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    MyTextField(
+                        controller: emailController,
+                        obscureText: false,
+                        labelText: "Email".tr,
+                        conditionText: "Email Address cannot be empty"),
 
-                          // GestureDetector(
-                          //   onTap: () {},
-                          //   child: CircleAvatar(
-                          //       backgroundColor: Colors.white,
-                          //       radius: 20,
-                          //       backgroundImage:
-                          //           Image.asset("assets/images/fb.png").image),
-                          // )
-                        ],
-                      ),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Already a User?".tr,
+                         const SizedBox(
+                      height: 20,
+                    ),
+                    
+                    MyTextField(
+                        controller: passwordController,
+                        obscureText: true,
+                        labelText: "Password".tr,
+                        conditionText: "Password cannot be empty"),
+                           const SizedBox(
+                      height: 20,
+                    ),
+                    MyTextField(
+                        controller: cPasswordController,
+                        obscureText: true,
+                        labelText: "Confirm Password".tr,
+                        conditionText: "Password cannot be empty"),
+                    const SizedBox(height: 40),
+                    RoundButton(
+                       borderColor: Colors.white,
+                        color:Color(0xFFB2E1DA),
+                        text: "Sign Up".tr,
+                        onTap: () {
+                          checkValues();
+                        }),
+                    const SizedBox(height: 25),
+                     RichText(
+                      text: TextSpan(
+                      text: "Or Sign In With? ".tr,
+                      style: const TextStyle(color: Colors.black,fontSize: 15,fontWeight: FontWeight.w500),
+                      children: [
+                        TextSpan(
+                          text: "Mobile".tr,
+                          style: const TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.w500)
+                        )
+                      ]
+                    ),
+                    
+                    
+                    ),
+                    const SizedBox(height: 25),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            AuthServiceUserRegister(
+                                    userModel: UserModel(),
+                                    firebaseUser:
+                                        FirebaseAuth.instance.currentUser)
+                                .signInWithGoogle();
+                          },
+                          child: CircleAvatar(
+                              radius: 20,
+                              backgroundImage:
+                                  Image.asset("assets/images/google.png")
+                                      .image),
+                        ),
+              
+                        // GestureDetector(
+                        //   onTap: () {},
+                        //   child: CircleAvatar(
+                        //       backgroundColor: Colors.white,
+                        //       radius: 20,
+                        //       backgroundImage:
+                        //           Image.asset("assets/images/fb.png").image),
+                        // )
+                      ],
+                    ),
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Already a User?".tr,
+                            style: const TextStyle(
+                                fontSize: 19, color: Colors.black),
+                          ),
+                          CupertinoButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LoginScreen()));
+                            },
+                            child: Text(
+                              "Let's Login".tr,
                               style: const TextStyle(
                                   fontSize: 19, color: Colors.black),
                             ),
-                            CupertinoButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const LoginScreen()));
-                              },
-                              child: Text(
-                                "Let's Login".tr,
-                                style: const TextStyle(
-                                    fontSize: 19, color: Colors.white),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

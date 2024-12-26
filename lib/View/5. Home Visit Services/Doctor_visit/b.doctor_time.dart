@@ -31,24 +31,117 @@ class _Doctor_TimeState extends State<Doctor_Time> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
-        userModel: widget.userModel,
-        firebaseUser: widget.firebaseUser,
-        targetUser: widget.userModel,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Row(
+          children: [
+            IconButton(
+                onPressed: () => Get.back(),
+                icon: Icon(
+                  Icons.keyboard_double_arrow_left,
+                  size: 35,
+                  weight: 200,
+                )), // Double-arrow icon
+            const Text(
+              'Select Date',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        backgroundColor: MyColors.PageBg,
+        elevation: 1,
+        actions: [
+          Row(
+            children: [
+              Text(
+                "Search",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.search),
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ],
       ),
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Image.asset(
-              'assets/images/back_image.png',
-              fit: BoxFit.cover,
-            ),
-          ),
+          // Positioned.fill(
+          //   child: Image.asset(
+          //     'assets/images/back_image.png',
+          //     fit: BoxFit.cover,
+          //   ),
+          // ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(
+                  children: [
+                    Text(
+                      "December, 2024",
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                    const Icon(
+                      Icons.keyboard_arrow_down,
+                      size: 28,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
+                 const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    5,
+                    (index) => Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color:
+                                index == 0 ? Colors.green : Colors.transparent,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                'Today',
+                                style: TextStyle(
+                                  color:
+                                      index == 0 ? Colors.white : Colors.black,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                '31',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: index == 0
+                                        ? Colors.white
+                                        : Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    FilterOption(icon: Icons.person, label: 'Any'),
+                    FilterOption(icon: Icons.male, label: 'Male'),
+                    FilterOption(icon: Icons.female, label: 'Female'),
+                  ],
+                ),
+                const SizedBox(height: 16),
                 Padding(
                   padding: const EdgeInsets.only(left: 10, right: 10),
                   child: Text(
@@ -260,6 +353,27 @@ class _Doctor_TimeState extends State<Doctor_Time> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class FilterOption extends StatelessWidget {
+  final IconData icon;
+  final String label;
+
+  const FilterOption({required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CircleAvatar(
+          radius: 20,
+          child: Icon(icon, size: 20),
+        ),
+        const SizedBox(height: 4),
+        Text(label),
+      ],
     );
   }
 }

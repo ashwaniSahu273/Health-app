@@ -104,117 +104,151 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Stack(
           children: [
             // Background image
-            Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/back_image.png"),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+            // Container(
+            //   decoration: const BoxDecoration(
+            //     image: DecorationImage(
+            //       image: AssetImage("assets/images/back_image.png"),
+            //       fit: BoxFit.cover,
+            //     ),
+            //   ),
+            // ),
             // Foreground content
             Container(
               padding: const EdgeInsets.symmetric(
-                horizontal: 40,
+                horizontal: 20,
               ),
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const CircleAvatar(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 50.0),
+                      child:  CircleAvatar(
                         radius: 100,
                         backgroundImage:
                             AssetImage("assets/logo/harees_logo.png"),
                       ),
-                      Text(
-                        "Harees".tr,
-                        style: const TextStyle(
-                            fontSize: 45, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      MyTextField(
-                          controller: emailController,
-                          obscureText: false,
-                          labelText: "Email Address".tr,
-                          conditionText: "Email Address cannot be empty".tr),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      MyTextField(
-                          controller: passwordController,
-                          obscureText: true,
-                          labelText: "Password".tr,
-                          conditionText: "Password cannot be empty".tr),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      RoundButton(
-                          text: "Login".tr,
-                          onTap: () {
-                            checkValues();
-                          }),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              AuthServiceUserLogin(
-                                      userModel: UserModel(),
-                                      firebaseUser:
-                                          FirebaseAuth.instance.currentUser)
-                                  .signInWithGoogle();
-                            },
-                            child: CircleAvatar(
-                                radius: 20,
-                                backgroundImage:
-                                    Image.asset("assets/images/google.png")
-                                        .image),
-                          ),
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Login To Your Account".tr,
+                          style: const TextStyle(
+                              fontSize: 20,color: Color(0xFF79AEC3),fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    MyTextField(
+                        controller: emailController,
+                        obscureText: false,
+                        labelText: "Email".tr,
+                        conditionText: "Email Address cannot be empty".tr),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    MyTextField(
+                        controller: passwordController,
+                        obscureText: true,
+                        labelText: "Password".tr,
+                        conditionText: "Password cannot be empty".tr),
+                    const SizedBox(
+                      height: 35,
+                    ),
 
-                          // GestureDetector(
-                          //   onTap: () {},
-                          //   child: CircleAvatar(
-                          //       radius: 20,
-                          //       backgroundImage:
-                          //           Image.asset("assets/images/fb.png").image),
-                          // ),
+                    
+                    RoundButton(
+                        borderColor: Colors.white,
+                        color:Color(0xFFB2E1DA),
+                        text: "Sign In".tr,
+                        onTap: () {
+                          checkValues();
+                        }),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                      text: "Or Sign In With? ".tr,
+                      style: const TextStyle(color: Colors.black,fontSize: 15,fontWeight: FontWeight.w500),
+                      children: [
+                        TextSpan(
+                          text: "Mobile".tr,
+                          style: const TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.w500)
+                        )
+                      ]
+                    ),
+                    
+                    
+                    ),
+                     const SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            AuthServiceUserLogin(
+                                    userModel: UserModel(),
+                                    firebaseUser:
+                                        FirebaseAuth.instance.currentUser)
+                                .signInWithGoogle();
+                          },
+                          child: CircleAvatar(
+                              radius: 20,
+                              backgroundImage:
+                                  Image.asset("assets/images/google.png")
+                                      .image),
+                        ),
+              
+                        // GestureDetector(
+                        //   onTap: () {},
+                        //   child: CircleAvatar(
+                        //       radius: 20,
+                        //       backgroundImage:
+                        //           Image.asset("assets/images/fb.png").image),
+                        // ),
+                      ],
+                    ),
+                     const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Create a new account?".tr,
+                            style: const TextStyle(
+                                fontSize: 16, color: Colors.black),
+                          ),
+                          CupertinoButton(
+                          
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) {
+                                  return const User_Register();
+                                }),
+                              );
+                            },
+                            child: Text(
+                              "Sign Up".tr,
+                              style: const TextStyle(
+                                  fontSize: 16, color: Colors.blue,fontWeight: FontWeight.w500),
+                            ),
+                          ),
                         ],
                       ),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Don't have an account?".tr,
-                              style: const TextStyle(
-                                  fontSize: 19, color: Colors.black),
-                            ),
-                            CupertinoButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) {
-                                    return const User_Register();
-                                  }),
-                                );
-                              },
-                              child: Text(
-                                "Sign Up".tr,
-                                style: const TextStyle(
-                                    fontSize: 19, color: Colors.white),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

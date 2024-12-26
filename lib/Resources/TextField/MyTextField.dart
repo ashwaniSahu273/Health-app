@@ -17,27 +17,39 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(0.0),
       child: TextFormField(
-        style: const TextStyle(color: Colors.black,fontSize: 18, fontWeight: FontWeight.bold),
+        style: const TextStyle(
+          color: Colors.black,
+          fontSize: 16,
+        ),
         keyboardType: TextInputType.text,
         obscureText: obscureText,
         controller: controller,
         decoration: InputDecoration(
+          filled: true,
+          fillColor: Color(0xFFD4D2D0), // Background color
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(50),
-            borderSide: const BorderSide(color: Colors.white, width: 2),
+            borderRadius: BorderRadius.circular(14), // Slightly rounded corners
+            borderSide: BorderSide.none, // No border
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(50),
-            borderSide: const BorderSide(color: Colors.black, width: 2),
+            borderRadius: BorderRadius.circular(14),
+            borderSide: BorderSide.none, // No border
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(50),
-            borderSide: const BorderSide(color: Colors.white, width: 2),
+            borderRadius: BorderRadius.circular(14),
+            borderSide: BorderSide.none, // No border
           ),
-          labelText: labelText,
-          labelStyle: const TextStyle(fontSize: 18, color: Colors.white),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16, // Padding inside the field
+            vertical: 14,
+          ),
+          hintText: labelText, // Hint as label text
+          hintStyle:const TextStyle(
+            fontSize: 16,
+            color: Colors.black, // Subtle hint color
+          ),
         ),
         validator: (value) {
           if (value!.isEmpty) {
