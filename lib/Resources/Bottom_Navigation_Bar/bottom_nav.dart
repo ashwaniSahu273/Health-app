@@ -35,12 +35,16 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
       items: [
         BottomNavigationBarItem(
           icon: const Icon(Icons.home, size: 40),
-          label: "Home".tr,
+          label: "Services".tr,
         ),
         BottomNavigationBarItem(
           icon: const Icon(Icons.calendar_month, size: 40),
           label: "Appointments".tr,
         ),
+        // BottomNavigationBarItem(
+        //   icon: const Icon(Icons.receipt_outlined, size: 40),
+        //   label: "Patient record".tr,
+        // ),
         BottomNavigationBarItem(
           icon: const Icon(Icons.chat, size: 40),
           label: "Chats".tr,

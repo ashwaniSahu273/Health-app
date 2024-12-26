@@ -23,7 +23,7 @@ class Laboratory extends StatelessWidget {
           children: [
             IconButton(
                 onPressed: () => Get.back(),
-                icon: Icon(
+                icon: const Icon(
                   Icons.keyboard_double_arrow_left,
                   size: 35,
                   weight: 200,
