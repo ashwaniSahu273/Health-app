@@ -235,7 +235,7 @@ class _User_RegisterState extends State<User_Register> {
                           Text(
                             "Already a User?".tr,
                             style: const TextStyle(
-                                fontSize: 19, color: Colors.black),
+                                fontSize: 16, color: Colors.black),
                           ),
                           CupertinoButton(
                             onPressed: () {
@@ -248,7 +248,7 @@ class _User_RegisterState extends State<User_Register> {
                             child: Text(
                               "Let's Login".tr,
                               style: const TextStyle(
-                                  fontSize: 19, color: Colors.black),
+                                  fontSize: 16, color: Colors.blue),
                             ),
                           ),
                         ],

@@ -232,12 +232,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           CupertinoButton(
                           
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) {
-                                  return const User_Register();
-                                }),
-                              );
+                              Get.to(User_Register());
+
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(builder: (context) {
+                              //     return const User_Register();
+                              //   }),
+                              // );
                             },
                             child: Text(
                               "Sign Up".tr,

@@ -33,23 +33,59 @@ class _VitaminState extends State<Vitamin> {
     zoom: 14.4746,
   );
   final List<Marker> _marker = [];
-  final List<Marker> _list = [
-    Marker(
-        markerId: const MarkerId("1"),
-        position: const LatLng(24.8846, 70.1754),
-        infoWindow: InfoWindow(title: "Current Location".tr))
-  ];
+  // final List<Marker> _list = [
+  //   Marker(
+  //       markerId: const MarkerId("1"),
+  //       position: const LatLng(24.8846, 70.1754),
+  //       infoWindow: InfoWindow(title: "Current Location".tr))
+  // ];
   String stAddress = '';
   String Latitude = " ";
   String Longitude = " ";
   bool address = false;
   final fireStore = FirebaseFirestore.instance.collection("User_appointments");
 
-  @override
-  void initState() {
+ void initState() {
     super.initState();
-    _marker.addAll(_list);
+    // Initial marker (optional)
+    _marker.add(Marker(
+      markerId: const MarkerId("1"),
+      position: const LatLng(24.8846, 67.1754),
+      infoWindow: InfoWindow(title: "Initial Location"),
+    ));
   }
+  
+  Future<void> _handleTap(LatLng tappedPoint) async {
+    final GoogleMapController mapController = await _controller.future;
+
+    // Animate to tapped location
+    mapController.animateCamera(CameraUpdate.newLatLng(tappedPoint));
+
+    // Address fetching and marker updates
+    setState(() {
+      stAddress = "Fetching address...";
+      Latitude = tappedPoint.latitude.toString();
+      Longitude = tappedPoint.longitude.toString();
+
+      _marker.clear();
+      _marker.add(Marker(
+        markerId: const MarkerId("selectedLocation"),
+        position: tappedPoint,
+        infoWindow: InfoWindow(title: "Selected Location"),
+      ));
+    });
+
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+        tappedPoint.latitude, tappedPoint.longitude);
+
+    setState(() {
+      stAddress =
+          "${placemarks.reversed.last.country}, ${placemarks.reversed.last.locality}, ${placemarks.reversed.last.street}";
+    });
+
+    // _showAddressBottomSheet();
+  }
+
 
   Future<Position> getUserCurrentLocation() async {
     await Geolocator.requestPermission()

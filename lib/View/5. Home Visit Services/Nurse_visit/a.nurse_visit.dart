@@ -32,12 +32,12 @@ class _NurseVisitState extends State<NurseVisit> {
     zoom: 14.4746,
   );
   List<Marker> _marker = [];
-  List<Marker> _list = [
-    Marker(
-        markerId: MarkerId("1"),
-        position: LatLng(24.8846, 70.1754),
-        infoWindow: InfoWindow(title: "Current Location".tr))
-  ];
+  // List<Marker> _list = [
+  //   Marker(
+  //       markerId: MarkerId("1"),
+  //       position: LatLng(24.8846, 70.1754),
+  //       infoWindow: InfoWindow(title: "Current Location".tr))
+  // ];
   String stAddress = '';
   String Latitude = " ";
   String Longitude = " ";
@@ -47,7 +47,43 @@ class _NurseVisitState extends State<NurseVisit> {
   @override
   void initState() {
     super.initState();
-    _marker.addAll(_list);
+    // Initial marker (optional)
+    _marker.add(Marker(
+      markerId: const MarkerId("1"),
+      position: const LatLng(24.8846, 67.1754),
+      infoWindow: InfoWindow(title: "Initial Location"),
+    ));
+  }
+
+  Future<void> _handleTap(LatLng tappedPoint) async {
+    final GoogleMapController mapController = await _controller.future;
+
+    // Animate to tapped location
+    mapController.animateCamera(CameraUpdate.newLatLng(tappedPoint));
+
+    // Address fetching and marker updates
+    setState(() {
+      stAddress = "Fetching address...";
+      Latitude = tappedPoint.latitude.toString();
+      Longitude = tappedPoint.longitude.toString();
+
+      _marker.clear();
+      _marker.add(Marker(
+        markerId: const MarkerId("selectedLocation"),
+        position: tappedPoint,
+        infoWindow: InfoWindow(title: "Selected Location"),
+      ));
+    });
+
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+        tappedPoint.latitude, tappedPoint.longitude);
+
+    setState(() {
+      stAddress =
+          "${placemarks.reversed.last.country}, ${placemarks.reversed.last.locality}, ${placemarks.reversed.last.street}";
+    });
+
+    // _showAddressBottomSheet();
   }
 
   Future<Position> getUserCurrentLocation() async {
@@ -58,24 +94,24 @@ class _NurseVisitState extends State<NurseVisit> {
   }
 
   void _showAddressBottomSheet() async {
-    final position = await getUserCurrentLocation();
-    print("My Location".tr);
-    print("${position.latitude} ${position.longitude}");
+    // final position = await getUserCurrentLocation();
+    // print("My Location".tr);
+    // print("${position.latitude} ${position.longitude}");
 
-    // Get address
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
-    stAddress =
-        "${placemarks.reversed.last.country} ${placemarks.reversed.last.locality} ${placemarks.reversed.last.street}";
+    // // Get address
+    // List<Placemark> placemarks =
+    //     await placemarkFromCoordinates(position.latitude, position.longitude);
+    // stAddress =
+    //     "${placemarks.reversed.last.country} ${placemarks.reversed.last.locality} ${placemarks.reversed.last.street}";
 
-    setState(() {
-      _marker.add(Marker(
-          markerId: MarkerId("2"),
-          position: LatLng(position.latitude, position.longitude),
-          infoWindow: InfoWindow(title: "My Location".tr)));
-      Latitude = position.latitude.toString();
-      Longitude = position.longitude.toString();
-    });
+    // setState(() {
+    //   _marker.add(Marker(
+    //       markerId: MarkerId("2"),
+    //       position: LatLng(position.latitude, position.longitude),
+    //       infoWindow: InfoWindow(title: "My Location".tr)));
+    //   Latitude = position.latitude.toString();
+    //   Longitude = position.longitude.toString();
+    // });
 
     // Show bottom sheet
     Get.bottomSheet(
@@ -160,6 +196,7 @@ class _NurseVisitState extends State<NurseVisit> {
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
           },
+          onTap: _handleTap
         ),
       ),
       floatingActionButton: Align(
