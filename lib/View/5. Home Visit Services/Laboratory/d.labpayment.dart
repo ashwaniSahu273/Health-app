@@ -80,7 +80,7 @@ class LabPaymentPage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blue,
+                        color: Color(0xFF7EAFC9),
                       ),
                     ),
                     subtitle: Text(
@@ -107,14 +107,14 @@ class LabPaymentPage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue,
+                          color: Color(0xFF7EAFC9),
                         ),
                       ),
                       Row(
                         children: [
                           Icon(
                             Icons.calendar_month_outlined,
-                            color: Colors.blue,
+                            color: Color(0xFF7EAFC9),
                             size: 20,
                           ),
                           SizedBox(width: 5),
@@ -172,7 +172,7 @@ class LabPaymentPage extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.location_on_rounded,
-                        color: Colors.black,
+                        color: Color(0xFF7EAFC9),
                         size: 28,
                       ),
                       SizedBox(width: 5),
@@ -192,7 +192,7 @@ class LabPaymentPage extends StatelessWidget {
                     height: 25,
                   ),
                   Container( // Background color
-                    padding: EdgeInsets.all(16),
+                    padding: EdgeInsets.all(8),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -203,7 +203,7 @@ class LabPaymentPage extends StatelessWidget {
                             Row(
                               children: [
                                 Icon(Icons.percent,
-                                    color: Colors.teal, size: 20),
+                                    color: Color(0xFF7EAFC9), size: 20),
                                 SizedBox(width: 8),
                                 Text(
                                   "Add promo code here",
@@ -216,7 +216,7 @@ class LabPaymentPage extends StatelessWidget {
                               "Apply",
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.blue,
+                                color: Color(0xFF7EAFC9),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -233,7 +233,7 @@ class LabPaymentPage extends StatelessWidget {
                                   "SAR 0",
                                   style: TextStyle(
                                     fontSize: 16,
-                                    color: Colors.teal,
+                                    color: Color(0xFF7EAFC9),
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -397,12 +397,19 @@ class LabPaymentPage extends StatelessWidget {
                     ),
                   ),
                   // SizedBox(height: 10),
-                  Text(
-                    'Price Breakup',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
+                  Container(
+                    width: double.infinity,
+                    // color: Colors.blue[100],
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Price Breakup',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
+                      ),
                     ),
                   ),
                   // SizedBox(height: 10),
@@ -500,7 +507,7 @@ class LabPaymentPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 20),
                   GestureDetector(
                     onTap: () {
                       Get.to(() => HomePage(

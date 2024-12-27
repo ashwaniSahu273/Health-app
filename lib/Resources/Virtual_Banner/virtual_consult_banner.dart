@@ -45,7 +45,7 @@ class BackgroundSection extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 20.0),
                 child: Icon(
-                  Icons.video_camera_front,
+                  Icons.videocam,
                   size: 40.0,
                   color: Color(0xFF7DD1E0),
                 ),

@@ -24,14 +24,22 @@ class Selected_Package extends StatefulWidget {
     required this.providerData,
   });
 
+
+  
+  
+
   @override
   _Selected_PackageState createState() => _Selected_PackageState();
 }
+
 
 class _Selected_PackageState extends State<Selected_Package> {
   String? selectedTime;
   int selectedIndex = 0;
   int genderIndex = 0;
+   String selectedDate = "December, 2024"; // Default date
+
+
 
   final List<String> timeSlots = [
     "09:00 am",
@@ -45,21 +53,182 @@ class _Selected_PackageState extends State<Selected_Package> {
     "06:00 pm",
   ];
 
-  @override
-  void initState() {
-    super.initState();
+ void _showDatePicker(BuildContext context) {
+  final List<String> months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+  final List<int> dates = List.generate(31, (index) => index + 1);
+  final List<int> years = List.generate(10, (index) => 2024 + index);
 
-    // Create a new modifiable map from providerData
-    Map<String, dynamic> modifiableProviderData =
-        Map<String, dynamic>.from(widget.providerData);
+  int selectedMonthIndex = 11; // Default: December
+  int selectedDateIndex = 26; // Default: 27th (index = 26)
+  int selectedYearIndex = 0; // Default: 2024 (index = 0)
 
-    // Store package details in modifiableProviderData
-    modifiableProviderData['packageName'] = widget.packageName;
-    modifiableProviderData['packagePrice'] = widget.packagePrice;
-    modifiableProviderData['icon'] = Icons.science_outlined;
-
-    // You will pass modifiableProviderData when navigating to the next screen
-  }
+  showModalBottomSheet(
+    context: context,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (context) {
+      return StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return Container(
+            height: 400,
+            padding: EdgeInsets.all(16),
+            child: Column(
+              children: [
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[400],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Text(
+                  "Select a Date",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 16),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Months
+                      Expanded(
+                        child: ListWheelScrollView.useDelegate(
+                          itemExtent: 50,
+                          perspective: 0.005,
+                          diameterRatio: 1.2,
+                          onSelectedItemChanged: (index) {
+                            setState(() {
+                              selectedMonthIndex = index;
+                            });
+                          },
+                          childDelegate: ListWheelChildBuilderDelegate(
+                            childCount: months.length,
+                            builder: (context, index) {
+                              return Center(
+                                child: Text(
+                                  months[index],
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: index == selectedMonthIndex
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                    color: index == selectedMonthIndex
+                                        ? Colors.blue
+                                        : Colors.black,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      // Dates
+                      Expanded(
+                        child: ListWheelScrollView.useDelegate(
+                          itemExtent: 50,
+                          perspective: 0.005,
+                          diameterRatio: 1.2,
+                          onSelectedItemChanged: (index) {
+                            setState(() {
+                              selectedDateIndex = index;
+                            });
+                          },
+                          childDelegate: ListWheelChildBuilderDelegate(
+                            childCount: dates.length,
+                            builder: (context, index) {
+                              return Center(
+                                child: Text(
+                                  dates[index].toString(),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: index == selectedDateIndex
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                    color: index == selectedDateIndex
+                                        ? Colors.blue
+                                        : Colors.black,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      // Years
+                      Expanded(
+                        child: ListWheelScrollView.useDelegate(
+                          itemExtent: 50,
+                          perspective: 0.005,
+                          diameterRatio: 1.2,
+                          onSelectedItemChanged: (index) {
+                            setState(() {
+                              selectedYearIndex = index;
+                            });
+                          },
+                          childDelegate: ListWheelChildBuilderDelegate(
+                            childCount: years.length,
+                            builder: (context, index) {
+                              return Center(
+                                child: Text(
+                                  years[index].toString(),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: index == selectedYearIndex
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                    color: index == selectedYearIndex
+                                        ? Colors.blue
+                                        : Colors.black,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    final selectedDate =
+                        "${months[selectedMonthIndex]} ${dates[selectedDateIndex]}, ${years[selectedYearIndex]}";
+                    Navigator.pop(context, selectedDate);
+                  },
+                  child: Center(child: Text("Confirm")),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    },
+  ).then((selectedDate) {
+    if (selectedDate != null) {
+      setState(() {
+        this.selectedDate = selectedDate;
+      });
+    }
+  });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -117,19 +286,22 @@ class _Selected_PackageState extends State<Selected_Package> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        "December, 2024",
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const Icon(
-                        Icons.keyboard_arrow_down,
-                        size: 28,
-                        color: Colors.black,
-                      ),
-                    ],
+                   GestureDetector(
+                    onTap: ()=> _showDatePicker(context),
+                    child: Row(
+                      children: [
+                        Text(
+                          selectedDate,
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        const Icon(
+                          Icons.keyboard_arrow_down,
+                          size: 28,
+                          color: Colors.black,
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Row(

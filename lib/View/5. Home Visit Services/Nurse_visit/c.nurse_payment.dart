@@ -32,13 +32,27 @@ class NurseVisitPaymentPage extends StatelessWidget {
     final String currentDate = DateFormat.yMMMd().format(DateTime.now());
 
     return Scaffold(
-      appBar: MyAppBar(
-        userModel: userModel,
-        firebaseUser: firebaseUser,
-        targetUser: userModel,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Row(
+          children: [
+            GestureDetector(
+              onTap: () => Get.back(),
+              child: Icon(
+                Icons.keyboard_double_arrow_left,
+                size: 35,
+                weight: 200,
+              ),
+            ), // Double-arrow icon
+            const Text(
+              'Payment Details',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
       ),
       body: Container(
-        color: Colors.blue[50],
+        // color: Colors.blue[50],
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
@@ -47,27 +61,29 @@ class NurseVisitPaymentPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Payment Details",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Divider(
-                    color: MyColors.logocolor,
-                    thickness: 2.0,
-                    height: 10.0,
-                  ),
+                  // Text(
+                  //   "Payment Details",
+                  //   style: TextStyle(
+                  //     fontSize: 20,
+                  //     fontWeight: FontWeight.bold,
+                  //     color: Colors.black,
+                  //   ),
+                  // ),
+                  // SizedBox(height: 10),
+                  // Divider(
+                  //   color: MyColors.logocolor,
+                  //   thickness: 2.0,
+                  //   height: 10.0,
+                  // ),
                   ListTile(
+                    contentPadding: EdgeInsets.zero,
+
                     title: Text(
                       'Harees Health:',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: Color(0xFF7EAFC9),
                       ),
                     ),
                     subtitle: Text(
@@ -79,12 +95,12 @@ class NurseVisitPaymentPage extends StatelessWidget {
                     ),
                     leading: Image.asset("assets/logo/harees_logo.png"),
                   ),
-                  SizedBox(height: 10),
-                  Divider(
-                    color: MyColors.logocolor,
-                    thickness: 2.0,
-                    height: 10.0,
-                  ),
+                  // SizedBox(height: 10),
+                  // Divider(
+                  //   color: MyColors.logocolor,
+                  //   thickness: 2.0,
+                  //   height: 10.0,
+                  // ),
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,14 +110,14 @@ class NurseVisitPaymentPage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: Color(0xFF7EAFC9),
                         ),
                       ),
                       Row(
                         children: [
                           Icon(
                             Icons.calendar_month_outlined,
-                            color: Colors.grey.shade800,
+                            color: Color(0xFF7EAFC9),
                             size: 20,
                           ),
                           SizedBox(width: 5),
@@ -116,43 +132,43 @@ class NurseVisitPaymentPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.blue[100],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListTile(
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Email: ${selectedProviderData['email']}',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              'Address: ${selectedProviderData['address']}',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
-                        leading: Image.asset(
-                          "assets/images/nurse.png",
-                          height: 60,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // SizedBox(height: 20),
+                  // Container(
+                  //   decoration: BoxDecoration(
+                  //     color: Colors.blue[100],
+                  //     borderRadius: BorderRadius.circular(10),
+                  //   ),
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(8.0),
+                  //     child: ListTile(
+                  //       subtitle: Column(
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           Text(
+                  //             'Email: ${selectedProviderData['email']}',
+                  //             style: TextStyle(
+                  //               color: Colors.black,
+                  //               fontSize: 16,
+                  //               fontWeight: FontWeight.bold,
+                  //             ),
+                  //           ),
+                  //           SizedBox(height: 5),
+                  //           Text(
+                  //             'Address: ${selectedProviderData['address']}',
+                  //             style: TextStyle(
+                  //               color: Colors.black,
+                  //               fontSize: 16,
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //       leading: Image.asset(
+                  //         "assets/images/nurse.png",
+                  //         height: 60,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(height: 10),
                   Text(
                     'Ziyad Faisal',
@@ -167,7 +183,7 @@ class NurseVisitPaymentPage extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.location_on_rounded,
-                        color: Colors.black,
+                        color: Color(0xFF7EAFC9),
                         size: 28,
                       ),
                       SizedBox(width: 5),
@@ -181,9 +197,107 @@ class NurseVisitPaymentPage extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 15),
+                 Container(
+                    width: double.infinity,
+                    color: Color(0xFFCAE8E5),
+                    height: 25,
+                  ),
+                  Container( // Background color
+                    padding: EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Promo Code Section
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.percent,
+                                    color: Color(0xFF7EAFC9), size: 20),
+                                SizedBox(width: 8),
+                                Text(
+                                  "Add promo code here",
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.black),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              "Apply",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Color(0xFF7EAFC9),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                       
+                        // Wallet Balance Section
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  "SAR 0",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color(0xFF7EAFC9),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  "Use wallet balance",
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.black),
+                                ),
+                              ],
+                            ),
+                            Switch(
+                              value: false,
+                              onChanged: (value) {
+                                // Handle switch state
+                              },
+                            ),
+                          ],
+                        ),
+                 
+                        // Pay with Bank Points Sections
+                        ListTile(
+                          contentPadding:EdgeInsets.zero ,
+                          title: Text(
+                            "Pay with bank points",
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                          trailing: Icon(Icons.arrow_forward_ios,
+                              size: 16, color: Colors.grey),
+                          onTap: () {
+                            // Handle navigation
+                          },
+                        ),
+                     
+                        ListTile(
+                          contentPadding:EdgeInsets.zero ,
+                          title: Text(
+                            "Pay with bank points",
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                          trailing: Icon(Icons.arrow_forward_ios,
+                              size: 16, color: Colors.grey),
+                          onTap: () {
+                            // Handle navigation
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  // SizedBox(height: 15),
                   Container(
                     width: double.infinity,
-                    color: Colors.blue[100],
+                    color: Color(0xFFCAE8E5),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -192,7 +306,7 @@ class NurseVisitPaymentPage extends StatelessWidget {
                           Text(
                             'Select payment method',
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 13,
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
                             ),
@@ -207,7 +321,7 @@ class NurseVisitPaymentPage extends StatelessWidget {
                               Text(
                                 'Cancellation policy',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 13,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -297,7 +411,7 @@ class NurseVisitPaymentPage extends StatelessWidget {
                   SizedBox(height: 10),
                   Container(
                     width: double.infinity,
-                    color: Colors.blue[100],
+                    // color: Colors.blue[100],
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
@@ -305,78 +419,83 @@ class NurseVisitPaymentPage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: Colors.blue,
                         ),
                       ),
                     ),
                   ),
                   SizedBox(height: 10),
                   Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                   decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            topRight: Radius.circular(15)),
+                        color: Color(0xFFCAE8E5)),
                     width: double.infinity,
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'Selected Service',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 10),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              'Selected Service',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 10),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Home Visit Fee',
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
+                          SizedBox(height: 10),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Home Visit Fee',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                            Text(
-                              'SAR 300',
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
+                              Text(
+                                'SAR 300',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'VAT (+)',
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'VAT (+)',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                            Text(
-                              'SAR 20',
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
+                              Text(
+                                'SAR 20',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                      ],
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 10),
@@ -395,7 +514,7 @@ class NurseVisitPaymentPage extends StatelessWidget {
                         'SAR 320',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.black,
+                          color:Colors.blue,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -410,7 +529,7 @@ class NurseVisitPaymentPage extends StatelessWidget {
                           ));
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      padding: const EdgeInsets.only(left: 2, right: 2),
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
