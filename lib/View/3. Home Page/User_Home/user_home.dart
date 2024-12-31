@@ -139,16 +139,15 @@ class _HomePageState extends State<HomePage> {
                               RichText(
                                 text: TextSpan(
                                     text:
-                                        'We accept Bupa, Tawuniya, MEDGULF, Malath and AlRajhi Takaful insurance for telemedicine. '
-                                            .tr,
+                                        'We accept Bupa, Tawuniya, MEDGULF, Malath and AlRajhi Takaful insurance for telemedicine.'.tr,
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
                                       color: Colors.black,
                                     ),
-                                    children:const [
+                                    children: [
                                       TextSpan(
-                                        text: 'Link',
+                                        text: ' Link'.tr,
                                         style: TextStyle(
                                           color: Colors
                                               .green, // Text color for link
@@ -223,7 +222,7 @@ class _HomePageState extends State<HomePage> {
                           padding: const EdgeInsets.only(left:16.0,top: 16,right:6,bottom: 5),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
-                            children: const [
+                            children: [
                               Icon(
                                 Icons.location_on,
                                 color: Color(0xFF7DD1E0), // Use the desired color
@@ -232,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                               SizedBox(
                                   width: 4), // Spacing between the icon and text
                               Text(
-                                'Select location',
+                                'Select Location'.tr,
                                 style: TextStyle(
                                   color: Colors.grey, // Adjust text color
                                   fontSize: 16,

@@ -80,34 +80,53 @@ class _Provider_loginState extends State<Provider_login> {
       body: Stack(
         children: [
           // Background image
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/back_image.png"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          // Container(
+          //   decoration: const BoxDecoration(
+          //     image: DecorationImage(
+          //       image: AssetImage("assets/images/back_image.png"),
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
           // Content of the page
           SafeArea(
             child: Container(
               padding: const EdgeInsets.symmetric(
-                horizontal: 40,
+                horizontal: 20,
               ),
               child: Center(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      const CircleAvatar(
-                        radius: 100,
-                        backgroundImage: AssetImage("assets/logo/harees_logo.png"),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 50.0),
+                        child: CircleAvatar(
+                          radius: 100,
+                          backgroundImage:
+                              AssetImage("assets/logo/harees_logo.png"),
+                        ),
                       ),
-                      Text(
-                        "Harees".tr,
-                        style: const TextStyle(fontSize: 45, fontWeight: FontWeight.bold),
+                      // Text(
+                      //   "Harees".tr,
+                      //   style: const TextStyle(fontSize: 45, fontWeight: FontWeight.bold),
+                      // ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Login To Your Account".tr,
+                            style: const TextStyle(
+                                fontSize: 20,
+                                color: Color(0xFF79AEC3),
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 20,
                       ),
                       MyTextField(
                           controller: emailController,
@@ -115,7 +134,7 @@ class _Provider_loginState extends State<Provider_login> {
                           labelText: "Email Address".tr,
                           conditionText: "Email Address cannot be empty"),
                       const SizedBox(
-                        height: 10,
+                        height: 20,
                       ),
                       MyTextField(
                           controller: passwordController,
@@ -126,13 +145,65 @@ class _Provider_loginState extends State<Provider_login> {
                         height: 20,
                       ),
                       RoundButton(
-                          text: "Log in".tr,
+                          borderColor: Colors.white,
+                          color: Color(0xFFB2E1DA),
+                          text: "Sign in".tr,
                           onTap: () {
                             checkValues();
                           }),
                       const SizedBox(
-                        height: 25,
+                        height: 15,
                       ),
+                      RichText(
+                        text: TextSpan(
+                            text: "Or Sign In With? ".tr,
+                            style: const TextStyle(
+                                color: Color.fromRGBO(0, 0, 0, 1),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500),
+                            children: [
+                              TextSpan(
+                                  text: "Mobile".tr,
+                                  style: const TextStyle(
+                                      color: Colors.blue,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500))
+                            ]),
+                      ),
+
+                        const SizedBox(
+                      height: 20,
+                    ),
+                       Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Create a new account?".tr,
+                            style: const TextStyle(
+                                fontSize: 16, color: Colors.black),
+                          ),
+                          CupertinoButton(
+                          
+                            onPressed: () {
+                              Get.to(Provider_Register());
+
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(builder: (context) {
+                              //     return const User_Register();
+                              //   }),
+                              // );
+                            },
+                            child: Text(
+                              "Sign Up".tr,
+                              style: const TextStyle(
+                                  fontSize: 16, color: Colors.blue,fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     ],
                   ),
                 ),
@@ -141,31 +212,31 @@ class _Provider_loginState extends State<Provider_login> {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Don't have an account?".tr,
-              style: const TextStyle(fontSize: 16),
-            ),
-            CupertinoButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return const Provider_Register();
-                  }),
-                );
-              },
-              child: Text(
-                "Sign Up".tr,
-                style: const TextStyle(fontSize: 16),
-              ),
-            ),
-          ],
-        ),
-      ),
+      // bottomNavigationBar: Container(
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: [
+      //       Text(
+      //         "Don't have an account?".tr,
+      //         style: const TextStyle(fontSize: 16),
+      //       ),
+      //       CupertinoButton(
+      //         onPressed: () {
+      //           Navigator.push(
+      //             context,
+      //             MaterialPageRoute(builder: (context) {
+      //               return const Provider_Register();
+      //             }),
+      //           );
+      //         },
+      //         child: Text(
+      //           "Sign Up".tr,
+      //           style: const TextStyle(fontSize: 16),
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }

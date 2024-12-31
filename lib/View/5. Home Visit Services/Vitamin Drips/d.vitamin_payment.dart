@@ -56,8 +56,8 @@ class VitaminPaymentPage extends StatelessWidget {
                 weight: 200,
               ),
             ), // Double-arrow icon
-            const Text(
-              'Payment Details',
+           Text(
+              'Payment Details'.tr,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ],
@@ -89,7 +89,7 @@ class VitaminPaymentPage extends StatelessWidget {
                   // ),
                   ListTile(
                     title: Text(
-                      'Harees Health:',
+                      'Harees Health:'.tr,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -97,7 +97,7 @@ class VitaminPaymentPage extends StatelessWidget {
                       ),
                     ),
                     subtitle: Text(
-                      'Laboratory Riyadh, Saudi Arabia',
+                      'Laboratory Riyadh, Saudi Arabia'.tr,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -116,9 +116,9 @@ class VitaminPaymentPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Vitamin IV Drips',
+                        'Vitamin IV Drips'.tr,
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF7EAFC9),
                         ),
@@ -128,13 +128,13 @@ class VitaminPaymentPage extends StatelessWidget {
                           Icon(
                             Icons.calendar_month_outlined,
                             color: Color(0xFF7EAFC9),
-                            size: 20,
+                            size: 16,
                           ),
                           SizedBox(width: 5),
                           Text(
                             '$currentDate - $selectedTime',
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 14,
                               color: Colors.black,
                             ),
                           ),
@@ -181,7 +181,7 @@ class VitaminPaymentPage extends StatelessWidget {
                   // ),
                   // SizedBox(height: 10),
                   Text(
-                    'Ziyad Faisal',
+                    'Zyad Faisal'.tr,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -198,7 +198,7 @@ class VitaminPaymentPage extends StatelessWidget {
                       ),
                       SizedBox(width: 5),
                       Text(
-                        'Riyadh, Saudi Arabia',
+                        'Riyadh, Saudi Arabia'.tr,
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.black,
@@ -228,14 +228,14 @@ class VitaminPaymentPage extends StatelessWidget {
                                     color: Color(0xFF7EAFC9), size: 20),
                                 SizedBox(width: 8),
                                 Text(
-                                  "Add promo code here",
+                                  "Add promo code here".tr,
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.black),
                                 ),
                               ],
                             ),
                             Text(
-                              "Apply",
+                              "Apply".tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Color(0xFF7EAFC9),
@@ -261,7 +261,7 @@ class VitaminPaymentPage extends StatelessWidget {
                                 ),
                                 SizedBox(width: 8),
                                 Text(
-                                  "Use wallet balance",
+                                  "Use wallet balance".tr,
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.black),
                                 ),
@@ -280,7 +280,7 @@ class VitaminPaymentPage extends StatelessWidget {
                         ListTile(
                           contentPadding: EdgeInsets.zero,
                           title: Text(
-                            "Pay with bank points",
+                            "Pay with bank points".tr,
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                           trailing: Icon(Icons.arrow_forward_ios,
@@ -293,7 +293,7 @@ class VitaminPaymentPage extends StatelessWidget {
                         ListTile(
                           contentPadding: EdgeInsets.zero,
                           title: Text(
-                            "Pay with bank points",
+                            "Pay with bank points".tr,
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                           trailing: Icon(Icons.arrow_forward_ios,
@@ -315,7 +315,7 @@ class VitaminPaymentPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Select payment method',
+                            'Select payment method'.tr,
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
@@ -330,7 +330,7 @@ class VitaminPaymentPage extends StatelessWidget {
                                 size: 28,
                               ),
                               Text(
-                                'Cancellation policy',
+                                'Cancellation policy'.tr,
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.black,
@@ -352,7 +352,7 @@ class VitaminPaymentPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Apple Pay',
+                              'Apple Pay'.tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
@@ -369,7 +369,7 @@ class VitaminPaymentPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Split into 3 payments',
+                              'Split into 3 payments'.tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
@@ -386,7 +386,7 @@ class VitaminPaymentPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '4 interest-free payments',
+                              '4 interest-free payments'.tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
@@ -403,7 +403,7 @@ class VitaminPaymentPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Card payments',
+                              'Card payments'.tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
@@ -426,7 +426,7 @@ class VitaminPaymentPage extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        'Price Breakup',
+                        'Price Breakup'.tr,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -451,7 +451,7 @@ class VitaminPaymentPage extends StatelessWidget {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Selected Service',
+                              'Selected Service'.tr,
                               style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.black,
@@ -528,7 +528,7 @@ class VitaminPaymentPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Amount Payable',
+                        'Amount Payable'.tr,
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.black,
@@ -567,7 +567,7 @@ class VitaminPaymentPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Checkout",
+                                  "Checkout".tr,
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w500,

@@ -53,20 +53,21 @@ class _VitaminServicesState extends State<VitaminServices> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 204, 230, 251),
       appBar: AppBar(
-        backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
-        leading: IconButton(
-          onPressed: () {
-            Get.to(() => HomePage(
-                  userModel: widget.userModel,
-                  firebaseUser: widget.firebaseUser,
-                ));
-          },
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-        ),
-        title: const Text(
-          "Packages",
-          style: TextStyle(color: Colors.black),
+        title: Row(
+          children: [
+            IconButton(
+                onPressed: () => Get.back(),
+                icon: const Icon(
+                  Icons.keyboard_double_arrow_left,
+                  size: 35,
+                  weight: 200,
+                )), // Double-arrow icon
+            Text(
+              'Select Packages'.tr,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
       ),
       body: SafeArea(
@@ -104,154 +105,155 @@ class _VitaminServicesState extends State<VitaminServices> {
               ),
               const SizedBox(height: 10),
               _buildServiceCard(
-                serviceName: "Memory Enhancement IV Therapy",
+                serviceName: "memory_enhancement.name".tr,
                 description:
-                    "It calms the stimulated mind and plays an important role in forming brain cells and enhances memory.",
+                   "memory_enhancement.description".tr,
                 components:
-                    "Vitamin B12, Zinc, Selenium, Calcium Gluconate, Magnesium Sulphate, Vitamin C, Amino Acids, Potassium Chloride, Normal Saline, Water-Soluble Vitamins, Thiamine (Vitamin B1)",
-                price: "990 SAR",
+                   "memory_enhancement.ingredients".tr,
+                price: "memory_enhancement.price".tr,
                 imagePath: "assets/images/vitamin.png",
               ),
               const SizedBox(height: 10),
               _buildServiceCard(
-                serviceName: "Hydration IV Therapy",
+                serviceName: "hydration.name".tr,
                 description:
-                    "Ideal for recovery from an action-packed weekend or busy lifestyle, boost energy levels while replenishing the electrolytes in your body.",
+                    "hydration.description".tr,
                 components:
-                    "Vitamin C, Potassium Chloride, Magnesium Sulphate, Zinc, Normal Saline, Thiamine (Vitamin B1), Amino Acids, Water-Soluble Vitamins.",
-                price: "990 SAR",
+                    "hydration.ingredients".tr,
+                price: "hydration.price".tr,
                 imagePath: "assets/images/vitamin.png",
               ),
               const SizedBox(height: 10),
               _buildServiceCard(
-                serviceName: "Antiaging IV Therapy",
+                serviceName: "antiaging.name".tr,
                 description:
-                    "The ladies favourite a powerful hit of antioxidants with antiaging properties supporting detox, hydration, optimal hair, nail and skin health.",
+                    "antiaging.description".tr,
                 components:
-                    "MultiVitamins Mixture, Vitamin C, Zinc, Selenium, Magnesium Sulphate, Potassium Chloride, Amino Acids, Vitamin B12, Normal Saline.",
-                price: "990 SAR",
+                   "antiaging.ingredients".tr,
+                price: "antiaging.price".tr,
                 imagePath: "assets/images/vitamin.png",
               ),
               const SizedBox(height: 10),
               _buildServiceCard(
-                serviceName: "Stress Relief IV Therapy",
+                serviceName: "stress_relief.name".tr,
                 description:
-                    "It calms the body, improves mood, reduces anxiety and other signs of stress.",
+                    "stress_relief.description".tr,
                 components:
-                    "Magnesium Sulphate, Zinc, Selenium, Amino Acids, Vitamin C, Vitamin B12, Normal Saline, Thiamine (Vitamin B1), Water-Soluble Vitamins.",
-                price: "900 SAR",
+                    "stress_relief.ingredients".tr,
+                price: "stress_relief.price".tr,
                 imagePath: "assets/images/vitamin.png",
               ),
               const SizedBox(height: 10),
               _buildServiceCard(
-                serviceName: "Fitness Boost IV Therapy",
+                serviceName: "fitness_boost.name".tr,
                 description:
-                    "Recommended for fitness enthusiasts or those who maintain an active lifestyle.",
+                    "fitness_boost.description".tr,
                 components:
-                    "Vitamin C, Magnesium Sulphate, Calcium Gluconate, Potassium Chloride, Zinc, Vitamin B12, Glutamine, Normal Saline, Water-Soluble Vitamins, L-Carnitine, Thiamine (Vitamin B1).",
-                price: "1080 SAR",
-                imagePath: "assets/images/vitamin.png",
-              ),
-              SizedBox(height: 10),
-              _buildServiceCard(
-                serviceName: "Energy Boost IV Therapy",
-                description:
-                    "To restore energy, build proteins, support antioxidants, and increase productivity.",
-                components:
-                    "Vitamin B12, Vitamin C, Magnesium Sulphate, Potassium Chloride, Zinc, Selenium, L-Carnitine, Glutamine, Normal Saline, Multivitamins Mixture.",
-                price: "1170 SAR",
+                    "fitness_boost.ingredients".tr,
+                price: "fitness_boost.price".tr,
                 imagePath: "assets/images/vitamin.png",
               ),
               const SizedBox(height: 10),
               _buildServiceCard(
-                serviceName: "Post Sleeve Gastrectomy IV Therapy",
+                serviceName: "energy_boost.name".tr,
                 description:
-                    "To hydrate the body after gastric sleeve and provide better absorption for the nutrients and supplements.",
+                    "energy_boost.description".tr,
                 components:
-                    "Calcium Gluconate, Magnesium Sulphate, Vitamin B12, Potassium Chloride, Multivitamins Mixture, Vitamin C, Vitamin B1, Vitamin D3, Selenium, Amino Acids, Normal Saline, Trace Elements Mixture, Zinc.",
-                price: "1035 SAR",
+                    "energy_boost.ingredients".tr,
+                price: "energy_boost.price".tr,
                 imagePath: "assets/images/vitamin.png",
               ),
               const SizedBox(height: 10),
               _buildServiceCard(
-                serviceName: "Hair Health IV Therapy",
+                serviceName: "post_sleeve.name".tr,
                 description:
-                    "For healthy, strong, balanced hair, reduces hair loss and supports nails and skin.",
+                    "post_sleeve.description".tr,
                 components:
-                    "Vitamin C, Zinc, Selenium, Water-Soluble Vitamins, Vitamin D3, Vitamin B12, Magnesium Sulphate, Folic Acid, Amino Acids, Normal Saline.",
-                price: "1035 SAR",
+                    "post_sleeve.ingredients".tr,
+                price: "post_sleeve.price".tr,
                 imagePath: "assets/images/vitamin.png",
               ),
               const SizedBox(height: 10),
               _buildServiceCard(
-                serviceName: "Jet Lag IV Therapy",
+                serviceName: "hair_health.name".tr,
                 description:
-                    "Hydration after a flight is essential for the body, this is recommended for frequent travelers to support with energy production and the immune system.",
+                    "hair_health.description".tr,
                 components:
-                    "Vitamin B12, Zinc, Magnesium Sulphate, Vitamin C, Calcium Gluconate, Amino Acids, Normal Saline, Thiamine (Vitamin B1), Water-Soluble Vitamins.",
-                price: "990 SAR",
+                    "hair_health.ingredients".tr,
+                price: "hair_health.price".tr,
                 imagePath: "assets/images/vitamin.png",
               ),
               const SizedBox(height: 10),
               _buildServiceCard(
-                serviceName: "Migraine Relief IV Therapy",
+                serviceName: "jet_lag.name".tr,
                 description:
-                    "This multivitamin relieves migraine headaches and their related symptoms.",
+                    "jet_lag.description".tr,
                 components:
-                    "Vitamin C, Vitamin D3, Folic Acid, Thiamine (Vitamin B1), Magnesium Sulphate, Vitamin B12, Normal Saline, Water-Soluble Vitamins.",
-                price: "945 SAR",
+                    "jet_lag.ingredients".tr,
+                price: "jet_lag.price".tr,
                 imagePath: "assets/images/vitamin.png",
               ),
               const SizedBox(height: 10),
               _buildServiceCard(
-                serviceName: "Depression Relief IV Therapy",
+                serviceName: "migraine_relief.name".tr,
                 description:
-                    "This multivitamin relieves Depression, Anxiety, and their related symptoms.",
+                    "migraine_relief.description".tr,
                 components:
-                    "Selenium, Zinc, Calcium Gluconate, Amino Acids, Vitamin C, Vitamin B12, Vitamin D3, Folic Acid, Thiamine (Vitamin B1), Magnesium Sulphate, Normal Saline, Trace Elements Mixture, Water-Soluble Vitamins.",
-                price: "990 SAR",
+                    "migraine_relief.ingredients".tr,
+                price: "migraine_relief.price".tr,
                 imagePath: "assets/images/vitamin.png",
               ),
               const SizedBox(height: 10),
               _buildServiceCard(
-                serviceName: "Weight Loss IV Therapy",
+                serviceName: "depression_relief.name".tr,
                 description:
-                    "This multivitamin aids in improving body metabolism and the rate of fat burning within the body.",
+                    "depression_relief.description".tr,
                 components:
-                    "L-Carnitine, Glutamine, Zinc, Calcium Gluconate, Vitamin C, Vitamin B12, Vitamin D3, Thiamine (Vitamin B1), Magnesium Sulphate, Normal Saline, Trace Elements Mixture, Water-Soluble Vitamins.",
-                price: "1170 SAR",
+                    "depression_relief.ingredients".tr,
+                price: "depression_relief.price".tr,
                 imagePath: "assets/images/vitamin.png",
               ),
               const SizedBox(height: 10),
               _buildServiceCard(
-                serviceName: "Diet & Detox IV Therapy",
+                serviceName: "weight_loss.name".tr,
                 description:
-                    "Incorporate antioxidants into your regular wellness routine and remove any lingering free radicals in your body.",
+                    "weight_loss.description".tr,
                 components:
-                    "Vitamin C, Water-Soluble Vitamins, Potassium Chloride, Calcium Gluconate, Vitamin D3, Selenium, Trace Elements Mixture, Zinc, Thiamine, Amino Acids 10%, Magnesium Sulphate, Normal Saline 0.9%, D5W.",
-                price: "990 SAR",
+                    "weight_loss.ingredients".tr,
+                price: "weight_loss.price".tr,
                 imagePath: "assets/images/vitamin.png",
               ),
               const SizedBox(height: 10),
               _buildServiceCard(
-                serviceName: "Mayers Cocktail IV Therapy",
+                serviceName: "diet_detox.name".tr,
                 description:
-                    "Restore balance, reduce the symptoms of chronic illnesses, and promote general wellness.",
+                    "diet_detox.description".tr,
                 components:
-                    "Calcium Gluconate, Magnesium Sulphate, Ascorbic Acid, Water-Soluble Vitamins, Thiamine, Vitamin B12, Normal Saline 0.9%, D5W.",
-                price: "990 SAR",
+                    "diet_detox.ingredients".tr,
+                price: "diet_detox.price".tr,
                 imagePath: "assets/images/vitamin.png",
               ),
               const SizedBox(height: 10),
               _buildServiceCard(
-                serviceName: "Immunity Boost IV Therapy",
+                serviceName: "mayers_cocktail.name".tr,
                 description:
-                    "Strengthen your immunity and support whole-body wellness. Maintain a robust immune system despite fluctuations. This is the best method, whether it's for preventing wellness or treating a cold.",
+                    "mayers_cocktail.description".tr,
                 components:
-                    "Vitamin C, Water-Soluble Vitamins, Magnesium Sulphate, Zinc, Potassium Chloride, Vitamin B12, Thiamine, Normal Saline 0.9%, D5W, Glutamine.",
-                price: "990 SAR",
+                    "mayers_cocktail.ingredients".tr,
+                price: "mayers_cocktail.price".tr,
                 imagePath: "assets/images/vitamin.png",
               ),
+              const SizedBox(height: 10),
+              _buildServiceCard(
+                serviceName: "immunity_boost.name".tr,
+                description:
+                    "immunity_boost.description".tr,
+                components:
+                    "immunity_boost.ingredients".tr,
+                price: "immunity_boost.price".tr,
+                imagePath: "assets/images/vitamin.png",
+              ),
+
             ],
           ),
         ),
@@ -271,7 +273,7 @@ class _VitaminServicesState extends State<VitaminServices> {
 
     return Container(
       width: 370,
-      height: 300,
+      height: 320,
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: isSelected ? Colors.blue : Colors.black),
@@ -311,7 +313,7 @@ class _VitaminServicesState extends State<VitaminServices> {
                   Text(description),
                   const SizedBox(height: 10),
                   Text(
-                    "Price: $price",
+                    "$price",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   ),
                 ],
@@ -320,7 +322,7 @@ class _VitaminServicesState extends State<VitaminServices> {
             const SizedBox(height: 10),
             Container(
               width: 340,
-              height: 130,
+              height: 140,
               decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 169, 214, 246),
                 borderRadius: BorderRadius.circular(12),
@@ -331,7 +333,7 @@ class _VitaminServicesState extends State<VitaminServices> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Components Included:",
+                      "Components Included:".tr,
                       style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.bold),
                     ),

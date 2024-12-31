@@ -33,7 +33,7 @@ class LabPaymentPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Row(
+        leading: Row(
           children: [
             GestureDetector(
               onTap: () => Get.back(),
@@ -43,8 +43,8 @@ class LabPaymentPage extends StatelessWidget {
                 weight: 200,
               ),
             ), // Double-arrow icon
-            const Text(
-              'Payment Details',
+            Text(
+              'Payment Details'.tr,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ],
@@ -76,7 +76,7 @@ class LabPaymentPage extends StatelessWidget {
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     title: Text(
-                      'Harees Health:',
+                      'Harees Health:'.tr,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -84,7 +84,7 @@ class LabPaymentPage extends StatelessWidget {
                       ),
                     ),
                     subtitle: Text(
-                      'Laboratory Riyadh, Saudi Arabia',
+                      'Laboratory Riyadh, Saudi Arabia'.tr,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -103,7 +103,7 @@ class LabPaymentPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Laboratory',
+                        'Laboratory'.tr,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -160,7 +160,7 @@ class LabPaymentPage extends StatelessWidget {
                   // ),
                   SizedBox(height: 10),
                   Text(
-                    'Zyad Faisal',
+                    'Zyad Faisal'.tr,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -177,7 +177,7 @@ class LabPaymentPage extends StatelessWidget {
                       ),
                       SizedBox(width: 5),
                       Text(
-                        'Riyadh, Saudi Arabia',
+                        'Riyadh, Saudi Arabia'.tr,
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.black,
@@ -206,14 +206,14 @@ class LabPaymentPage extends StatelessWidget {
                                     color: Color(0xFF7EAFC9), size: 20),
                                 SizedBox(width: 8),
                                 Text(
-                                  "Add promo code here",
+                                  "Add promo code here".tr,
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.black),
                                 ),
                               ],
                             ),
                             Text(
-                              "Apply",
+                              "Apply".tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Color(0xFF7EAFC9),
@@ -239,7 +239,7 @@ class LabPaymentPage extends StatelessWidget {
                                 ),
                                 SizedBox(width: 8),
                                 Text(
-                                  "Use wallet balance",
+                                  "Use wallet balance".tr,
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.black),
                                 ),
@@ -258,7 +258,7 @@ class LabPaymentPage extends StatelessWidget {
                         ListTile(
                           contentPadding:EdgeInsets.zero ,
                           title: Text(
-                            "Pay with bank points",
+                            "Pay with bank points".tr,
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                           trailing: Icon(Icons.arrow_forward_ios,
@@ -271,7 +271,7 @@ class LabPaymentPage extends StatelessWidget {
                         ListTile(
                           contentPadding:EdgeInsets.zero ,
                           title: Text(
-                            "Pay with bank points",
+                            "Pay with bank points".tr,
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                           trailing: Icon(Icons.arrow_forward_ios,
@@ -292,7 +292,7 @@ class LabPaymentPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Select payment method',
+                            'Select payment method'.tr,
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
@@ -307,7 +307,7 @@ class LabPaymentPage extends StatelessWidget {
                                 size: 28,
                               ),
                               Text(
-                                'Cancellation policy',
+                                'Cancellation policy'.tr,
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.black,
@@ -329,7 +329,7 @@ class LabPaymentPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Apple Pay',
+                              'Apple Pay'.tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
@@ -346,7 +346,7 @@ class LabPaymentPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Split into 3 payments',
+                              'Split into 3 payments'.tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
@@ -363,7 +363,7 @@ class LabPaymentPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '4 interest-free payments',
+                              '4 interest-free payments'.tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
@@ -380,7 +380,7 @@ class LabPaymentPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Card payments',
+                              'Card payments'.tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
@@ -403,7 +403,7 @@ class LabPaymentPage extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        'Price Breakup',
+                        'Price Breakup'.tr,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -428,7 +428,7 @@ class LabPaymentPage extends StatelessWidget {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Selected test',
+                              'Selected test'.tr,
                               style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.black,
@@ -441,7 +441,7 @@ class LabPaymentPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Labpratory Package',
+                                'Labpratory Package'.tr,
                                 style: TextStyle(
                                   fontSize: 17,
                                   color: Colors.grey,
@@ -490,7 +490,7 @@ class LabPaymentPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Amount Payable',
+                        'Amount Payable'.tr,
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.black,
@@ -498,7 +498,7 @@ class LabPaymentPage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'SAR 80',
+                        "SAR 80",
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.blue,
@@ -529,7 +529,7 @@ class LabPaymentPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Checkout",
+                                  "Checkout".tr,
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w500,

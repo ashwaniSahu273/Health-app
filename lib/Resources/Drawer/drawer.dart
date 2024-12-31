@@ -11,6 +11,7 @@ import 'package:harees_new_project/View/6.%20More%20Services/User_services/Conta
 import 'package:harees_new_project/View/6.%20More%20Services/User_services/FAQ/faq_page.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+import 'package:harees_new_project/ViewModel/Localization/localization.dart';
 
 class MyDrawer extends StatefulWidget {
   final UserModel userModel;
@@ -33,6 +34,7 @@ class MyDrawer extends StatefulWidget {
 class _MyDrawerState extends State<MyDrawer> {
   int _selectedIndex = -1;
   final _auth = FirebaseAuth.instance;
+  String selectedLanguage = 'English';
 
   @override
   Widget build(BuildContext context) {
@@ -101,9 +103,9 @@ class _MyDrawerState extends State<MyDrawer> {
             "Family".tr,
             () {
               Get.to(() => Family(
-                userModel: widget.userModel, 
-                firebaseUser: widget.firebaseUser,
-              ));
+                    userModel: widget.userModel,
+                    firebaseUser: widget.firebaseUser,
+                  ));
             },
           ),
           Divider(thickness: 2, color: Colors.grey[300]),
@@ -111,12 +113,12 @@ class _MyDrawerState extends State<MyDrawer> {
             context,
             2,
             Icons.policy_outlined,
-            "FAQ",
+            "FAQ".tr,
             () {
               Get.to(() => FAQ(
-                userModel: widget.userModel, 
-                firebaseUser: widget.firebaseUser,
-              ));
+                    userModel: widget.userModel,
+                    firebaseUser: widget.firebaseUser,
+                  ));
             },
           ),
           Divider(thickness: 2, color: Colors.grey[300]),
@@ -127,9 +129,9 @@ class _MyDrawerState extends State<MyDrawer> {
             "Contact us".tr,
             () {
               Get.to(() => UserContact(
-                userModel: widget.userModel, 
-                firebaseUser: widget.firebaseUser,
-              ));
+                    userModel: widget.userModel,
+                    firebaseUser: widget.firebaseUser,
+                  ));
             },
           ),
           Divider(thickness: 2, color: Colors.grey[300]),
@@ -145,12 +147,93 @@ class _MyDrawerState extends State<MyDrawer> {
               Get.to(() => Splash_Screen());
             },
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              // _buildListTile(
+              //   context,
+              //   4,
+              //   Icons.language,
+              //   "Language".tr,
+              //   () async {
+              //     await GoogleSignIn().signOut();
+              //     await FirebaseAuth.instance.signOut();
+              //     _auth.signOut();
+              //     Get.to(() => Splash_Screen());
+              //   },
+              // ),
+              Row(
+                children: [
+                  Icon(Icons.language, size: 40, color: Colors.grey[850]),
+                  Text(
+                    "Language",
+                    style: TextStyle(
+                      color: Colors.grey[850],
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(right: 10, top: 4),
+                child: Container(
+                  width: 130,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      DropdownButton<String>(
+                        value: selectedLanguage,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedLanguage = newValue!;
+                            // Perform language change logic here
+                            if (selectedLanguage == 'Arabic') {
+                              Get.updateLocale(const Locale('ar', 'AE'));
+                              Get.back();
+                            } else if (selectedLanguage == 'English') {
+                              Get.updateLocale(const Locale('en', 'US'));
+                              Get.back();
+                            }
+                            print('Selected Language: $selectedLanguage');
+                          });
+                        },
+                        dropdownColor: Colors.black,
+                        items: <String>[
+                          'English',
+                          'Arabic',
+                        ]
+                            .map<DropdownMenuItem<String>>(
+                              (String value) => DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value.tr,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildListTile(BuildContext context, int index, IconData icon, String title, VoidCallback onTap) {
+  Widget _buildListTile(BuildContext context, int index, IconData icon,
+      String title, VoidCallback onTap) {
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -159,11 +242,9 @@ class _MyDrawerState extends State<MyDrawer> {
         onTap();
       },
       child: ListTile(
-        leading: Icon(
-          icon, 
-          size: 40, 
-          color: _selectedIndex == index ? MyColors.blue : Colors.grey[850]
-        ),
+        leading: Icon(icon,
+            size: 40,
+            color: _selectedIndex == index ? MyColors.blue : Colors.grey[850]),
         title: Text(
           title,
           style: TextStyle(

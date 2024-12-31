@@ -37,36 +37,36 @@ class _Selected_PackageState extends State<Selected_Package> {
   String? selectedTime;
   int selectedIndex = 0;
   int genderIndex = 0;
-   String selectedDate = "December, 2024"; // Default date
+   String selectedDate = "December, 2024".tr; // Default date
 
 
 
   final List<String> timeSlots = [
-    "09:00 am",
-    "10:00 am",
-    "11:00 am",
-    "12:00 pm",
-    "1:00 pm",
-    "02:00 pm",
-    "04:00 pm",
-    "05:00 pm",
-    "06:00 pm",
+    "09:00 am".tr,
+    "10:00 am".tr,
+    "11:00 am".tr,
+    "12:00 pm".tr,
+    "1:00 pm".tr,
+    "02:00 pm".tr,
+    "04:00 pm".tr,
+    "05:00 pm".tr,
+    "06:00 pm".tr,
   ];
 
  void _showDatePicker(BuildContext context) {
   final List<String> months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
+    "January".tr,
+    "February".tr,
+    "March".tr,
+    "April".tr,
+    "May".tr,
+    "June".tr,
+    "July".tr,
+    "August".tr,
+    "September".tr,
+    "October".tr,
+    "November".tr,
+    "December".tr
   ];
   final List<int> dates = List.generate(31, (index) => index + 1);
   final List<int> years = List.generate(10, (index) => 2024 + index);
@@ -100,7 +100,7 @@ class _Selected_PackageState extends State<Selected_Package> {
                 ),
                 SizedBox(height: 16),
                 Text(
-                  "Select a Date",
+                  "Select a Date".tr,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 16),
@@ -213,7 +213,7 @@ class _Selected_PackageState extends State<Selected_Package> {
                         "${months[selectedMonthIndex]} ${dates[selectedDateIndex]}, ${years[selectedYearIndex]}";
                     Navigator.pop(context, selectedDate);
                   },
-                  child: Center(child: Text("Confirm")),
+                  child: Center(child: Text("Confirm".tr)),
                 ),
               ],
             ),
@@ -235,7 +235,7 @@ class _Selected_PackageState extends State<Selected_Package> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Row(
+        leading: Row(
           children: [
             GestureDetector(
               onTap: () => Get.back(),
@@ -245,8 +245,8 @@ class _Selected_PackageState extends State<Selected_Package> {
                 weight: 200,
               ),
             ), // Double-arrow icon
-            const Text(
-              'Select Date',
+             Text(
+              'Select Date'.tr,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ],
@@ -257,7 +257,7 @@ class _Selected_PackageState extends State<Selected_Package> {
           Row(
             children: [
               Text(
-                "Search",
+                "Search".tr,
                 style: TextStyle(
                   fontSize: 16,
                 ),
@@ -327,7 +327,7 @@ class _Selected_PackageState extends State<Selected_Package> {
                               child: Column(
                                 children: [
                                   Text(
-                                    'Today',
+                                    'Today'.tr,
                                     style: TextStyle(
                                         color: selectedIndex == index
                                             ? Colors.white
@@ -390,7 +390,7 @@ class _Selected_PackageState extends State<Selected_Package> {
                                     const Icon(Icons.person),
                                     const SizedBox(width: 5),
                                     Text(
-                                      "Any",
+                                      "Any".tr,
                                       style: TextStyle(
                                         color: genderIndex == 0
                                             ? Colors.white
@@ -426,7 +426,7 @@ class _Selected_PackageState extends State<Selected_Package> {
                                     const Icon(Icons.male),
                                     const SizedBox(width: 5),
                                     Text(
-                                      "Male",
+                                      "Male".tr,
                                       style: TextStyle(
                                         color: genderIndex == 1
                                             ? Colors.white
@@ -462,7 +462,7 @@ class _Selected_PackageState extends State<Selected_Package> {
                                     const Icon(Icons.female),
                                     const SizedBox(width: 5),
                                     Text(
-                                      "Female",
+                                      "Female".tr,
                                       style: TextStyle(
                                         color: genderIndex == 2
                                             ? Colors.white
@@ -481,7 +481,7 @@ class _Selected_PackageState extends State<Selected_Package> {
                   const SizedBox(height: 16),
                   ListTile(
                     title: Text(
-                      'Harees Health:',
+                      'Harees Health:'.tr,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -489,7 +489,7 @@ class _Selected_PackageState extends State<Selected_Package> {
                       ),
                     ),
                     subtitle: Text(
-                      'Laboratory Riyadh, Saudi Arabia',
+                      'Laboratory Riyadh, Saudi Arabia'.tr,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -510,11 +510,11 @@ class _Selected_PackageState extends State<Selected_Package> {
                       // Handle the tap action (e.g., navigate to another screen)
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                            content: Text('Navigating to Selected Details...')),
+                            content: Text('Navigating to Selected Details...'.tr)),
                       );
                     },
                     child: Text(
-                      'View Selected Details',
+                      'View Selected Details'.tr,
                       style: TextStyle(
                         color: Colors.blue, // Text color for link
                         decoration:
@@ -525,7 +525,7 @@ class _Selected_PackageState extends State<Selected_Package> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Excluding visit fee',
+                    'Excluding visit fee'.tr,
                     style: TextStyle(color: Colors.grey),
                   ),
                   Padding(
@@ -685,7 +685,7 @@ class _Selected_PackageState extends State<Selected_Package> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Proceed to Payment Details",
+                                  "Proceed to Payment Details".tr,
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w500,

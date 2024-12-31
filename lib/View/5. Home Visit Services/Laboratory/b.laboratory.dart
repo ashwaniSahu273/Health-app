@@ -19,7 +19,7 @@ class Laboratory extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Row(
+        leading: Row(
           children: [
             IconButton(
                 onPressed: () => Get.back(),
@@ -28,8 +28,8 @@ class Laboratory extends StatelessWidget {
                   size: 35,
                   weight: 200,
                 )), // Double-arrow icon
-            const Text(
-              'Select Lab',
+            Text(
+              'Select Lab'.tr,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ],
@@ -57,49 +57,49 @@ class Laboratory extends StatelessWidget {
                       children: [
                         buildClickableListTile(
                           context,
-                          "فحص البروتين الكلي في البول",
+                          "protein_test_urine".tr,
                           "60 SAR",
                           Icons.science_outlined,
                         ),
                         buildClickableListTile(
                           context,
-                          "فحص البروتين الكلي في الدم ",
+                          "protein_test_blood".tr,
                           "60 SAR",
                           Icons.science_outlined,
                         ),
                         buildClickableListTile(
                           context,
-                          "فحص الكوليسترول الضار (LDL)",
+                          "ldl_cholesterol_test".tr,
                           "60 SAR",
                           Icons.science_outlined,
                         ),
                         buildClickableListTile(
                           context,
-                          "فحص فيتامين B6",
+                          "vitamin_b6_test".tr,
                           "60 SAR",
                           Icons.science_outlined,
                         ),
                         buildClickableListTile(
                           context,
-                          "فحص حمى التيفوئيد",
+                          "typhoid_fever_test".tr,
                           "60 SAR",
                           Icons.science_outlined,
                         ),
                         buildClickableListTile(
                           context,
-                          "فحص معدل الترشيح الكلوي النسبي",
+                          "renal_filtration_rate_test".tr,
                           "60 SAR",
                           Icons.science_outlined,
                         ),
                         buildClickableListTile(
                           context,
-                          "اختبار الدم المختفي في البراز",
+                          "occult_blood_test".tr,
                           "60 SAR",
                           Icons.science_outlined,
                         ),
                         buildClickableListTile(
                           context,
-                          "تحليل مستضد البروستاتا النوعي الحر",
+                          "prostate_antigen_test".tr,
                           "60 SAR",
                           Icons.science_outlined,
                         ),
@@ -1498,21 +1498,21 @@ class Laboratory extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text("Confirmation"),
-              content: const Text("Are you sure you want to continue?"),
+              title: Text("Confirmation".tr),
+              content: Text("Are you sure you want to continue?".tr),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text('No'),
+                  child: Text('No'.tr),
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                     navigateToSelectedPackage(title, subtitle);
                   },
-                  child: const Text('Yes'),
+                  child: Text('Yes'.tr),
                 ),
               ],
             );
