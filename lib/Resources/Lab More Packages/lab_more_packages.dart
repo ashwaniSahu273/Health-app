@@ -53,11 +53,12 @@ class LabMorePackages extends StatelessWidget {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisSpacing: 16,
                           mainAxisSpacing: 16,
-                          crossAxisCount: 2),
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.92),
                       itemCount: 12,
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Container(
                             height: 50,
                             width: 70,
@@ -99,16 +100,16 @@ class LabMorePackages extends StatelessWidget {
                                           horizontal: 5, vertical: 12),
                                       child: Container(
                                         height: 22,
-                                        width: 135,
+                                        width: 120,
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(12),
                                             color: Colors.white),
                                         child: Center(
                                           child: Text(
-                                            "Starting at 200 SAR",
+                                            "Starting 200 SAR",
                                             style: TextStyle(
-                                                fontWeight: FontWeight.bold),
+                                                fontWeight: FontWeight.bold, fontSize: 12,),
                                           ),
                                         ),
                                       ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/d.labpayment.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -235,6 +236,7 @@ class _Selected_PackageState extends State<Selected_Package> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        leadingWidth: 200,
         leading: Row(
           children: [
             GestureDetector(
@@ -244,14 +246,14 @@ class _Selected_PackageState extends State<Selected_Package> {
                 size: 35,
                 weight: 200,
               ),
-            ), // Double-arrow icon
+            ), 
              Text(
               'Select Date'.tr,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ],
         ),
-        backgroundColor: MyColors.PageBg,
+        backgroundColor: Colors.white,
         elevation: 1,
         actions: [
           Row(
@@ -282,199 +284,217 @@ class _Selected_PackageState extends State<Selected_Package> {
           // Main content
           SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(0.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                   GestureDetector(
-                    onTap: ()=> _showDatePicker(context),
-                    child: Row(
-                      children: [
-                        Text(
-                          selectedDate,
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        const Icon(
-                          Icons.keyboard_arrow_down,
-                          size: 28,
-                          color: Colors.black,
-                        ),
-                      ],
+
+                  Container(
+                    // decoration: BoxDecoration(
+                    //   color: Colors.white,
+                    // ),
+                    child: StepProgressBar(currentStep: 3, totalSteps: 4)
                     ),
-                  ),
                   const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: List.generate(
-                      5,
-                      (index) => GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedIndex = index; // Update selected index
-                          });
-                        },
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: selectedIndex == index
-                                    ? Colors.green
-                                    : Colors.transparent,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    'Today'.tr,
-                                    style: TextStyle(
+
+                   Padding(
+                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                     child: GestureDetector(
+                      onTap: ()=> _showDatePicker(context),
+                      child: Row(
+                        children: [
+                          Text(
+                            selectedDate,
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          const Icon(
+                            Icons.keyboard_arrow_down,
+                            size: 28,
+                            color: Colors.black,
+                          ),
+                        ],
+                      ),
+                                       ),
+                   ),
+                  const SizedBox(height: 16),
+                  Padding(
+                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: List.generate(
+                        5,
+                        (index) => GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedIndex = index; // Update selected index
+                            });
+                          },
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: selectedIndex == index
+                                      ? Colors.green
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      'Today'.tr,
+                                      style: TextStyle(
+                                          color: selectedIndex == index
+                                              ? Colors.white
+                                              : Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      '31',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
                                         color: selectedIndex == index
                                             ? Colors.white
                                             : Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    '31',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: selectedIndex == index
-                                          ? Colors.white
-                                          : Colors.black,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                   const SizedBox(height: 40),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xFFCAE8E5),
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20)),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 50, bottom: 40),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                genderIndex = 0;
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: genderIndex == 0
-                                    ? Colors.green
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16.0,
-                                    right: 16,
-                                    top: 8.0,
-                                    bottom: 8.0),
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.person),
-                                    const SizedBox(width: 5),
-                                    Text(
-                                      "Any".tr,
-                                      style: TextStyle(
-                                        color: genderIndex == 0
-                                            ? Colors.white
-                                            : Colors.black,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFFCAE8E5),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 50, bottom: 40),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  genderIndex = 0;
+                                });
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: genderIndex == 0
+                                      ? Colors.green
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 16.0,
+                                      right: 16,
+                                      top: 8.0,
+                                      bottom: 8.0),
+                                  child: Row(
+                                    children: [
+                                      const Icon(Icons.person),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Any".tr,
+                                        style: TextStyle(
+                                          color: genderIndex == 0
+                                              ? Colors.white
+                                              : Colors.black,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                genderIndex = 1;
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: genderIndex == 1
-                                    ? Colors.green
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16.0,
-                                    right: 16,
-                                    top: 8.0,
-                                    bottom: 8.0),
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.male),
-                                    const SizedBox(width: 5),
-                                    Text(
-                                      "Male".tr,
-                                      style: TextStyle(
-                                        color: genderIndex == 1
-                                            ? Colors.white
-                                            : Colors.black,
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  genderIndex = 1;
+                                });
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: genderIndex == 1
+                                      ? Colors.green
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 16.0,
+                                      right: 16,
+                                      top: 8.0,
+                                      bottom: 8.0),
+                                  child: Row(
+                                    children: [
+                                      const Icon(Icons.male),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Male".tr,
+                                        style: TextStyle(
+                                          color: genderIndex == 1
+                                              ? Colors.white
+                                              : Colors.black,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                genderIndex = 2;
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: genderIndex == 2
-                                    ? Colors.green
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16.0,
-                                    right: 16,
-                                    top: 8.0,
-                                    bottom: 8.0),
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.female),
-                                    const SizedBox(width: 5),
-                                    Text(
-                                      "Female".tr,
-                                      style: TextStyle(
-                                        color: genderIndex == 2
-                                            ? Colors.white
-                                            : Colors.black,
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  genderIndex = 2;
+                                });
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: genderIndex == 2
+                                      ? Colors.green
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 16.0,
+                                      right: 16,
+                                      top: 8.0,
+                                      bottom: 8.0),
+                                  child: Row(
+                                    children: [
+                                      const Icon(Icons.female),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Female".tr,
+                                        style: TextStyle(
+                                          color: genderIndex == 2
+                                              ? Colors.white
+                                              : Colors.black,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -505,28 +525,34 @@ class _Selected_PackageState extends State<Selected_Package> {
                   ),
                   SizedBox(height: 10),
 
-                  GestureDetector(
-                    onTap: () {
-                      // Handle the tap action (e.g., navigate to another screen)
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content: Text('Navigating to Selected Details...'.tr)),
-                      );
-                    },
-                    child: Text(
-                      'View Selected Details'.tr,
-                      style: TextStyle(
-                        color: Colors.blue, // Text color for link
-                        decoration:
-                            TextDecoration.underline, // Underline the text
-                        fontSize: 16,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        // Handle the tap action (e.g., navigate to another screen)
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text('Navigating to Selected Details...'.tr)),
+                        );
+                      },
+                      child: Text(
+                        'View Selected Details'.tr,
+                        style: TextStyle(
+                          color: Colors.blue, // Text color for link
+                          decoration:
+                              TextDecoration.underline, // Underline the text
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    'Excluding visit fee'.tr,
-                    style: TextStyle(color: Colors.grey),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      'Excluding visit fee'.tr,
+                      style: TextStyle(color: Colors.grey),
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
@@ -609,19 +635,22 @@ class _Selected_PackageState extends State<Selected_Package> {
                   // ),
                   SizedBox(height: 10),
 
-                  SingleChildScrollView(
-                    scrollDirection:
-                        Axis.horizontal, // Enable horizontal scrolling
-                    child: Wrap(
-                      spacing: 10,
-                      children: [
-                        ...timeSlots.map((item) => buildTimeContainer(item)),
-                        //       buildTimeSelectionRow(
-                        //           "09:00 am", "10:00 am", "11:00 am"),
-                        //       buildTimeSelectionRow(
-                        //           "12:00 pm", "1:00 pm", "02:00 pm"),
-                        // buildTimeSelectionRow("04:00 pm", "05:00 pm", "06:00 pm"),
-                      ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: SingleChildScrollView(
+                      scrollDirection:
+                          Axis.horizontal, // Enable horizontal scrolling
+                      child: Wrap(
+                        spacing: 10,
+                        children: [
+                          ...timeSlots.map((item) => buildTimeContainer(item)),
+                          //       buildTimeSelectionRow(
+                          //           "09:00 am", "10:00 am", "11:00 am"),
+                          //       buildTimeSelectionRow(
+                          //           "12:00 pm", "1:00 pm", "02:00 pm"),
+                          // buildTimeSelectionRow("04:00 pm", "05:00 pm", "06:00 pm"),
+                        ],
+                      ),
                     ),
                   ),
                   // SizedBox(height: 15),
@@ -651,54 +680,57 @@ class _Selected_PackageState extends State<Selected_Package> {
                   // ),
 
                   SizedBox(height: 40),
-                  GestureDetector(
-                    onTap: () {
-                      if (selectedTime != null) {
-                        Get.to(() => LabPaymentPage(
-                              providerData: {
-                                'packageName': widget.packageName,
-                                'packagePrice': widget.packagePrice,
-                                'icon': Icons.science_outlined,
-                                ...widget
-                                    .providerData, // Add any additional data from providerData
-                              },
-                              userModel: widget.userModel,
-                              firebaseUser: widget.firebaseUser,
-                              selectedTime: selectedTime!,
-                              selectedProviderData: {},
-                            ));
-                      } else {
-                        Get.snackbar("Error", "Please select a time slot");
-                      }
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 2),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Color(0xFFc1e9e4),
-                        ),
-                        child: Column(
-                          children: [
-                            SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Proceed to Payment Details".tr,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        if (selectedTime != null) {
+                          Get.to(() => LabPaymentPage(
+                                providerData: {
+                                  'packageName': widget.packageName,
+                                  'packagePrice': widget.packagePrice,
+                                  'icon': Icons.science_outlined,
+                                  ...widget
+                                      .providerData, // Add any additional data from providerData
+                                },
+                                userModel: widget.userModel,
+                                firebaseUser: widget.firebaseUser,
+                                selectedTime: selectedTime!,
+                                selectedProviderData: {},
+                              ));
+                        } else {
+                          Get.snackbar("Error", "Please select a time slot");
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 2),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Color(0xFFc1e9e4),
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Proceed to Payment Details".tr,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: 10),
-                                Icon(Icons.keyboard_double_arrow_right,
-                                    color: Colors.black, size: 30),
-                              ],
-                            ),
-                            SizedBox(height: 10),
-                          ],
+                                  SizedBox(width: 10),
+                                  Icon(Icons.keyboard_double_arrow_right,
+                                      color: Colors.black, size: 30),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                            ],
+                          ),
                         ),
                       ),
                     ),

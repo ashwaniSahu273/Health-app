@@ -13,7 +13,7 @@ class LabFunctions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 85.0,
+        height: 90.0,
         width: 85.0,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),

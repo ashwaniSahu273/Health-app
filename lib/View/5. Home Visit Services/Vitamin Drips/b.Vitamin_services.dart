@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/c.vitamin_time.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
@@ -54,7 +55,9 @@ class _VitaminServicesState extends State<VitaminServices> {
       backgroundColor: const Color.fromARGB(255, 204, 230, 251),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Row(
+        backgroundColor: Colors.white,
+        leadingWidth: 200,
+        leading: Row(
           children: [
             IconButton(
                 onPressed: () => Get.back(),
@@ -74,6 +77,12 @@ class _VitaminServicesState extends State<VitaminServices> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    child: StepProgressBar(currentStep: 2, totalSteps: 4)
+                    ),
               const SizedBox(height: 25),
               Center(
                 child: Container(

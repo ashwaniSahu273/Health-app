@@ -149,13 +149,13 @@ class AppointmentCarousel extends StatelessWidget {
                               size: 30,
                             ),
                             SizedBox(width: 10),
-                            Text(
-                              appointment['selected_time'].toString(),
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500),
-                            ),
+                            // Text(
+                            //   appointment['selected_time'].toString(),
+                            //   style: TextStyle(
+                            //       color: Colors.black,
+                            //       fontSize: 14,
+                            //       fontWeight: FontWeight.w500),
+                            // ),
                           ],
                         ),
                       ],

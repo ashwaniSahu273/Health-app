@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/Button/myroundbutton.dart';
+import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/b.%20E-Clinics/e_clinic.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -46,7 +47,8 @@ class VitaminPaymentPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Row(
+        leadingWidth: 200,
+        leading: Row(
           children: [
             GestureDetector(
               onTap: () => Get.back(),
@@ -68,11 +70,17 @@ class VitaminPaymentPage extends StatelessWidget {
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(0.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Container(
+                    // decoration: BoxDecoration(
+                    //   color: Colors.white,
+                    // ),
+                    child: StepProgressBar(currentStep: 4, totalSteps: 4)
+                    ),
                   // Text(
                   //   "Payment Details",
                   //   style: TextStyle(
@@ -112,35 +120,38 @@ class VitaminPaymentPage extends StatelessWidget {
                   //   height: 10.0,
                   // ),
                   SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Vitamin IV Drips'.tr,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF7EAFC9),
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.calendar_month_outlined,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Vitamin IV Drips'.tr,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
                             color: Color(0xFF7EAFC9),
-                            size: 16,
                           ),
-                          SizedBox(width: 5),
-                          Text(
-                            '$currentDate - $selectedTime',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.black,
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.calendar_month_outlined,
+                              color: Color(0xFF7EAFC9),
+                              size: 16,
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                            SizedBox(width: 5),
+                            Text(
+                              '$currentDate - $selectedTime',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(height: 10),
                   // Container(
@@ -180,12 +191,15 @@ class VitaminPaymentPage extends StatelessWidget {
                   //   ),
                   // ),
                   // SizedBox(height: 10),
-                  Text(
-                    'Zyad Faisal'.tr,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Text(
+                      'Zyad Faisal'.tr,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                   SizedBox(height: 5),
@@ -214,7 +228,7 @@ class VitaminPaymentPage extends StatelessWidget {
                   ),
                   Container(
                     // Background color
-                    padding: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -436,151 +450,161 @@ class VitaminPaymentPage extends StatelessWidget {
                     ),
                   ),
             
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(15)),
-                        color: Color(0xFFCAE8E5)),
-                    width: double.infinity,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          SizedBox(height: 10),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              'Selected Service'.tr,
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Container(
+                      
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(15),
+                              topRight: Radius.circular(15)),
+                          color: Color(0xFFCAE8E5)),
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            SizedBox(height: 10),
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                'Selected Service'.tr,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(height: 10),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                flex: 3, // Takes 3 parts of the row
-                                child: Text(
-                                  packageName,
-                                  maxLines:
-                                      2,
-                                  overflow: TextOverflow
-                                      .ellipsis, 
+                            SizedBox(height: 10),
+                            SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  flex: 3, // Takes 3 parts of the row
+                                  child: Text(
+                                    packageName,
+                                    maxLines:
+                                        2,
+                                    overflow: TextOverflow
+                                        .ellipsis, 
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                    width: 8),
+                                Flexible(
+                                  flex: 1, // Takes 1 part of the row
+                                  child: Text(
+                                    '$packagePrice',
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    textAlign:
+                                        TextAlign.end, // Aligns text to the end
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'VAT (+)',
                                   style: TextStyle(
                                     fontSize: 17,
                                     color: Colors.grey,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                  width: 8),
-                              Flexible(
-                                flex: 1, // Takes 1 part of the row
-                                child: Text(
-                                  '$packagePrice',
+                                Text(
+                                  'SAR $vat',
                                   style: TextStyle(
                                     fontSize: 17,
                                     color: Colors.black,
                                     fontWeight: FontWeight.w500,
                                   ),
-                                  textAlign:
-                                      TextAlign.end, // Aligns text to the end
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'VAT (+)',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Text(
-                                'SAR $vat',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Amount Payable'.tr,
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        'SAR $totalAmount',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 30),
-                  GestureDetector(
-                    onTap: () {
-                      Get.to(() => HomePage(
-                            userModel: userModel,
-                            firebaseUser: firebaseUser,
-                          ));
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 2, right: 2),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Color(0xFFc1e9e4),
-                        ),
-                        child: Column(
-                          children: [
-                            SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Checkout".tr,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.green,
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                Icon(Icons.keyboard_double_arrow_right,
-                                    color: Colors.black, size: 30),
                               ],
                             ),
                             SizedBox(height: 10),
                           ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Amount Payable'.tr,
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'SAR $totalAmount',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 30),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(() => HomePage(
+                              userModel: userModel,
+                              firebaseUser: firebaseUser,
+                            ));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 2, right: 2),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Color(0xFFc1e9e4),
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Checkout".tr,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Icon(Icons.keyboard_double_arrow_right,
+                                      color: Colors.black, size: 30),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                            ],
+                          ),
                         ),
                       ),
                     ),

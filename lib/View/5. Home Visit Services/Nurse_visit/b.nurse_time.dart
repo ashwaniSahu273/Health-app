@@ -224,7 +224,8 @@ class _Nurse_TimeState extends State<Nurse_Time> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Row(
+        leadingWidth: 200,
+        leading: Row(
           children: [
             IconButton(
                 onPressed: () => Get.back(),

@@ -267,7 +267,7 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    Get.to(() => Laboratory(
+                                    Get.to(() => LabImp(
                                           userModel: widget.userModel,
                                           firebaseUser: widget.firebaseUser,
                                         ));
