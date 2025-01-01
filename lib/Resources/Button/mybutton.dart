@@ -9,12 +9,18 @@ class RoundButton extends StatelessWidget {
   final bool loading;
   final Color? color;
   final Color? borderColor;
+  final double? height;
+  final double? width;
+  final double? fontSize;
 
   const RoundButton(
       {super.key,
       required this.text,
       required this.onTap,
       this.color,
+      this.height,
+      this.width,
+      this.fontSize,
       this.borderColor,
       this.loading = false});
 
@@ -23,8 +29,8 @@ class RoundButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-          height: 55,
-          width: 250,
+          height: height ?? 55,
+          width: width?? 250,
           decoration: BoxDecoration(
             color: color ?? Colors.white,
             border: Border.all(color:borderColor?? Colors.black),
@@ -39,8 +45,8 @@ class RoundButton extends StatelessWidget {
                   )
                 : Text(
                     text,
-                    style: const TextStyle(
-                        fontSize: 24,
+                    style: TextStyle(
+                        fontSize:fontSize ?? 24,
                         color: Colors.black,
                         fontWeight: FontWeight.w500),
                   ),

@@ -23,25 +23,36 @@ class ServiceIconButton extends StatelessWidget {
     Key? key,
     required this.serviceIcon,
     required this.serviceName,
-    required this.onPressed, required this.userModel, required this.firebaseUser,
+    required this.onPressed,
+    required this.userModel,
+    required this.firebaseUser,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        IconButton(
-          icon: Icon(serviceIcon, size: 40),
-          onPressed: onPressed,
-          color: Colors.black,
-        ),
-        const SizedBox(height: 5),
-        Text(
-          serviceName,
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-        ),
-      ],
+    return Container(
+      height: 10.0,
+      width: 10.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Color.fromARGB(255, 170, 226, 244),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            icon: Icon(serviceIcon, size: 40),
+            onPressed: onPressed,
+            color: Colors.black,
+          ),
+          const SizedBox(height: 5),
+          Text(
+            serviceName,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -54,108 +65,111 @@ class MoreServicesGrid extends StatelessWidget {
       {super.key, required this.userModel, required this.firebaseUser});
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 3,
-      crossAxisSpacing: 10.0,
-      mainAxisSpacing: 10.0,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      children: [
-        ServiceIconButton(
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: GridView.count(
+        crossAxisCount: 2,
+        crossAxisSpacing: 25.0,
+        mainAxisSpacing: 25.0,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        children: [
+          ServiceIconButton(
             serviceIcon: Icons.calendar_month_outlined,
             serviceName: "Appointments".tr,
             onPressed: () {
               Get.to(() => UserRequests(
-                userModel: userModel, 
-                firebaseUser: firebaseUser,
-              ));
-            }, 
-            userModel: userModel, 
+                    userModel: userModel,
+                    firebaseUser: firebaseUser,
+                  ));
+            },
+            userModel: userModel,
             firebaseUser: firebaseUser,
           ),
-        ServiceIconButton(
-          serviceIcon: Icons.add_box_outlined,
-          serviceName: "Accepted appointments".tr,
-          onPressed: () {
-            Get.to(() =>  AcceptedRequests(
-                  userModel: userModel, 
-                  firebaseUser: firebaseUser,
-            ));
-          },
-          userModel: userModel, 
-                  firebaseUser: firebaseUser,
-        ),
-        ServiceIconButton(
-          serviceIcon: Icons.list_alt,
-          serviceName: "Upload Results".tr,
-          onPressed: () {
-            Get.to(() => const ResultUpload());
-          },
-          userModel: userModel, 
-                  firebaseUser: firebaseUser,
-        ),
-        ServiceIconButton(
-          serviceIcon: Icons.message_outlined,
-          serviceName: "Contact Us".tr,
-          onPressed: () {
-            Get.to(() => ProviderContact(
-                  userModel: userModel, 
-                  firebaseUser: firebaseUser,
-            ));
-          },
-          userModel: userModel, 
-                  firebaseUser: firebaseUser,
-        ),
-        ServiceIconButton(
-          serviceIcon: Icons.family_restroom,
-          serviceName: "Family".tr,
-          onPressed: () {
-            Get.to(() => Family(
-                  userModel: userModel, 
-                  firebaseUser: firebaseUser,
-            ));
-          },
-          userModel: userModel, 
-                  firebaseUser: firebaseUser,
-        ),
-        ServiceIconButton(
-          serviceIcon: Icons.chat_bubble_outline,
-          serviceName: "Chats".tr,
-          onPressed: () {
-            Get.to(() => Home(
-                  userModel: userModel,
-                  firebaseUser: firebaseUser, 
-                  targetUser: userModel,
-                ));
-          },
-          userModel: userModel, 
-                  firebaseUser: firebaseUser,
-        ),
-        ServiceIconButton(
-          serviceIcon: Icons.info,
-          serviceName: "About us".tr,
-          onPressed: () {
-            Get.to(() => AboutUsPage(
-                  userModel: userModel,
-                  firebaseUser: firebaseUser,
-                ));
-          },
-          userModel: userModel, 
-                  firebaseUser: firebaseUser,
-        ),
-        ServiceIconButton(
-          serviceIcon: Icons.question_answer,
-          serviceName: "FAQ".tr,
-          onPressed: () {
-            Get.to(() => FAQ(
-                  userModel: userModel, 
-                  firebaseUser: firebaseUser,
-            ));
-          },
-          userModel: userModel, 
-                  firebaseUser: firebaseUser,
-        ),
-      ],
+          ServiceIconButton(
+            serviceIcon: Icons.add_box_outlined,
+            serviceName: "Accepted appointments".tr,
+            onPressed: () {
+              Get.to(() => AcceptedRequests(
+                    userModel: userModel,
+                    firebaseUser: firebaseUser,
+                  ));
+            },
+            userModel: userModel,
+            firebaseUser: firebaseUser,
+          ),
+          ServiceIconButton(
+            serviceIcon: Icons.list_alt,
+            serviceName: "Upload Results".tr,
+            onPressed: () {
+              Get.to(() => const ResultUpload());
+            },
+            userModel: userModel,
+            firebaseUser: firebaseUser,
+          ),
+          ServiceIconButton(
+            serviceIcon: Icons.message_outlined,
+            serviceName: "Contact Us".tr,
+            onPressed: () {
+              Get.to(() => ProviderContact(
+                    userModel: userModel,
+                    firebaseUser: firebaseUser,
+                  ));
+            },
+            userModel: userModel,
+            firebaseUser: firebaseUser,
+          ),
+          ServiceIconButton(
+            serviceIcon: Icons.family_restroom,
+            serviceName: "Family".tr,
+            onPressed: () {
+              Get.to(() => Family(
+                    userModel: userModel,
+                    firebaseUser: firebaseUser,
+                  ));
+            },
+            userModel: userModel,
+            firebaseUser: firebaseUser,
+          ),
+          ServiceIconButton(
+            serviceIcon: Icons.chat_bubble_outline,
+            serviceName: "Chats".tr,
+            onPressed: () {
+              Get.to(() => Home(
+                    userModel: userModel,
+                    firebaseUser: firebaseUser,
+                    targetUser: userModel,
+                  ));
+            },
+            userModel: userModel,
+            firebaseUser: firebaseUser,
+          ),
+          ServiceIconButton(
+            serviceIcon: Icons.info,
+            serviceName: "About us".tr,
+            onPressed: () {
+              Get.to(() => AboutUsPage(
+                    userModel: userModel,
+                    firebaseUser: firebaseUser,
+                  ));
+            },
+            userModel: userModel,
+            firebaseUser: firebaseUser,
+          ),
+          ServiceIconButton(
+            serviceIcon: Icons.question_answer,
+            serviceName: "FAQ".tr,
+            onPressed: () {
+              Get.to(() => FAQ(
+                    userModel: userModel,
+                    firebaseUser: firebaseUser,
+                  ));
+            },
+            userModel: userModel,
+            firebaseUser: firebaseUser,
+          ),
+        ],
+      ),
     );
   }
 }

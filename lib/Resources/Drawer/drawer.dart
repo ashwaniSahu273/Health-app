@@ -147,85 +147,82 @@ class _MyDrawerState extends State<MyDrawer> {
               Get.to(() => Splash_Screen());
             },
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              // _buildListTile(
-              //   context,
-              //   4,
-              //   Icons.language,
-              //   "Language".tr,
-              //   () async {
-              //     await GoogleSignIn().signOut();
-              //     await FirebaseAuth.instance.signOut();
-              //     _auth.signOut();
-              //     Get.to(() => Splash_Screen());
-              //   },
-              // ),
-              Row(
-                children: [
-                  Icon(Icons.language, size: 40, color: Colors.grey[850]),
-                  Text(
-                    "Language",
-                    style: TextStyle(
-                      color: Colors.grey[850],
-                      fontWeight: FontWeight.w500,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // _buildListTile(
+                //   context,
+                //   4,
+                //   Icons.language,
+                //   "Language".tr,
+                //   () async {
+                //     await GoogleSignIn().signOut();
+                //     await FirebaseAuth.instance.signOut();
+                //     _auth.signOut();
+                //     Get.to(() => Splash_Screen());
+                //   },
+                // ),
+                Row(
+                  children: [
+                    Icon(Icons.language, size: 40, color: Colors.grey[850]),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                      child: Text(
+                        "Language",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[850],
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
+                  ],
+                ),
+            
+                Padding(
+              padding: const EdgeInsets.only(right: 0, top: 2),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  DropdownButton<String>(
+                    value: selectedLanguage,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedLanguage = newValue!;
+                        // Perform language change logic here
+                        if (selectedLanguage == 'Arabic') {
+                          Get.updateLocale(const Locale('ar', 'AE'));
+                        } else if (selectedLanguage == 'English') {
+                          Get.updateLocale(const Locale('en', 'US'));
+                        }
+                        print('Selected Language: $selectedLanguage');
+                      });
+                    },
+                    dropdownColor: Colors.black,
+                    items: <String>[
+                      'English',
+                      'Arabic',
+                    ]
+                        .map<DropdownMenuItem<String>>(
+                          (String value) => DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value.tr,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.green),
+                            ),
+                          ),
+                        )
+                        .toList(),
                   ),
                 ],
               ),
-
-              Padding(
-                padding: const EdgeInsets.only(right: 10, top: 4),
-                child: Container(
-                  width: 130,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      DropdownButton<String>(
-                        value: selectedLanguage,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedLanguage = newValue!;
-                            // Perform language change logic here
-                            if (selectedLanguage == 'Arabic') {
-                              Get.updateLocale(const Locale('ar', 'AE'));
-                              Get.back();
-                            } else if (selectedLanguage == 'English') {
-                              Get.updateLocale(const Locale('en', 'US'));
-                              Get.back();
-                            }
-                            print('Selected Language: $selectedLanguage');
-                          });
-                        },
-                        dropdownColor: Colors.black,
-                        items: <String>[
-                          'English',
-                          'Arabic',
-                        ]
-                            .map<DropdownMenuItem<String>>(
-                              (String value) => DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value.tr,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                              ),
-                            )
-                            .toList(),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+            ),
+              ],
+            ),
           ),
         ],
       ),

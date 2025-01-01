@@ -685,7 +685,7 @@ class Language extends Translations {
           "Service Type: Laboratory": "نوع الخدمة: مختبر",
           "Service Type: Doctor Visit": "نوع الخدمة: زيارة طبيب",
           "Service Type: Nurse Visit": "نوع الخدمة: زيارة ممرض",
-          "Join as a provider": "انضم كمزود",
+          "Join as a provider": "انضم كمقدم للخدمة",
           "Join as a user": "انضم كمستخدم",
           "Contact Us": "اتصل بنا",
           "Enter your message": "ادخل رسالتك",
