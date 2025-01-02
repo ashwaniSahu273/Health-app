@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+// import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/Button/mybutton.dart';
 import 'package:harees_new_project/View/2.%20Authentication/Provider_Auth/provider_login.dart';
 import 'package:harees_new_project/View/2.%20Authentication/User_Auth/user_login.dart';

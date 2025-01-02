@@ -8,6 +8,7 @@ import 'package:harees_new_project/Resources/Lab%20Functions/lab_functions.dart'
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/b.laboratory.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/cart_page.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class LabTest extends StatefulWidget {
@@ -394,7 +395,7 @@ class _LabTestState extends State<LabTest> {
                                 horizontal: 12, vertical: 8), // Padding
                           ),
                           onPressed: () {
-                            // Handle button action
+                            Get.to(CartPage());
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.min,

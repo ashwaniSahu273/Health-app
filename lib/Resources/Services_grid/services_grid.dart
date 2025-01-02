@@ -30,28 +30,31 @@ class ServiceIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 10.0,
-      width: 10.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: Color.fromARGB(255, 170, 226, 244),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          IconButton(
-            icon: Icon(serviceIcon, size: 40),
-            onPressed: onPressed,
-            color: Colors.black,
-          ),
-          const SizedBox(height: 5),
-          Text(
-            serviceName,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-          ),
-        ],
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        height: 10.0,
+        width: 10.0,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Color.fromARGB(255, 170, 226, 244),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              icon: Icon(serviceIcon, size: 40),
+              onPressed: onPressed,
+              color: Colors.black,
+            ),
+            const SizedBox(height: 5),
+            Text(
+              serviceName,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
       ),
     );
   }
