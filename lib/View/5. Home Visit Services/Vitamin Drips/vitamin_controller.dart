@@ -11,6 +11,10 @@ class VitaminCartController extends GetxController {
     _loadCartFromStorage();
   }
 
+  bool isCartEmpty() {
+    return cartItems.isEmpty;
+  }
+  
   List<Map<String, dynamic>> getCartItems() {
     return cartItems.toList();
   }

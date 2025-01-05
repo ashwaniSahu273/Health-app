@@ -352,25 +352,26 @@ class _VitaminServicesState extends State<VitaminServices> {
                           ],
                         ),
                       ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              MyColors.greenColorauth, // Background color
-                          minimumSize: const Size(160, 55), // Width and height
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(12), // Border radius
+                      Obx(
+                        ()=> ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: cartController.isCartEmpty()? MyColors.greenColorauth: MyColors.liteGreen, // Background color
+                            minimumSize: const Size(160, 55), // Width and height
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(12), // Border radius
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          // Get.to(() => Laboratory(
-                          //             userModel: widget.userModel,
-                          //             firebaseUser: widget.firebaseUser,
-                          //           ));
-                        },
-                        child: Text(
-                          'Continue',
-                          style: TextStyle(color: Colors.black, fontSize: 15),
+                          onPressed: () {
+                            // Get.to(() => Laboratory(
+                            //             userModel: widget.userModel,
+                            //             firebaseUser: widget.firebaseUser,
+                            //           ));
+                          },
+                          child: Text(
+                            'Continue',
+                            style: TextStyle(color: Colors.black, fontSize: 15),
+                          ),
                         ),
                       ),
                     ],

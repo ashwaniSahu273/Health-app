@@ -5,10 +5,12 @@ import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/Lab%20More%20Packages/lab_more_packages.dart';
 import 'package:harees_new_project/Resources/Lab%20Functions/lab_functions.dart';
+import 'package:harees_new_project/Resources/LabDynamicUi/lab_dynamic_ui.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/b.laboratory.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/cart_page.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class LabTest extends StatefulWidget {
@@ -27,6 +29,8 @@ class LabTest extends StatefulWidget {
 }
 
 class _LabTestState extends State<LabTest> {
+   LabController controller = Get.put(LabController());
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -230,10 +234,10 @@ class _LabTestState extends State<LabTest> {
                       Text(
                         "Most helpful packages",
                         style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
-                        width: 50,
+                        width: 20,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -248,7 +252,7 @@ class _LabTestState extends State<LabTest> {
                           "View all Packages",
                           style: TextStyle(
                             color: Colors.blue,
-                            fontSize: 14,
+                            fontSize: 16,
                           ),
                         ),
                       ),
@@ -279,17 +283,21 @@ class _LabTestState extends State<LabTest> {
                             childAspectRatio: 1.3),
                         itemCount: 4,
                         itemBuilder: (context, index) {
+
+                           var item = controller.testItems[index];
                           return GestureDetector(
                             onTap: () {
-                              Get.to(() => PaymentDetailsPage(
-                                    selectedProviderData: {},
-                                    selectedTime: "",
-                                    providerData: {},
-                                    packageName: "Health check package",
-                                    packagePrice: "200",
-                                    userModel: widget.userModel,
-                                    firebaseUser: widget.firebaseUser,
-                                  ));
+                              // Get.to(() => PaymentDetailsPage(
+                              //       selectedProviderData: {},
+                              //       selectedTime: "",
+                              //       providerData: {},
+                              //       packageName: "Health check package",
+                              //       packagePrice: "200",
+                              //       userModel: widget.userModel,
+                              //       firebaseUser: widget.firebaseUser,
+                              //     ));
+
+                                Get.to(()=> LabDynamicUIPage(title: item["name"],id: item["id"], description: "", price: item["price"], components: ""));
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -304,29 +312,29 @@ class _LabTestState extends State<LabTest> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 5),
+                                          horizontal: 10, vertical: 10),
                                       child: Align(
                                           alignment: Alignment.topLeft,
                                           child: Text(
-                                            "Health Check",
+                                            "${item["name"]}",
                                             style: TextStyle(
-                                                fontWeight: FontWeight.bold),
+                                                fontWeight: FontWeight.bold,fontSize: 16),
                                           )),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 2),
-                                      child: Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text(
-                                            "Packages",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
+                                    // Padding(
+                                    //   padding: const EdgeInsets.symmetric(
+                                    //       horizontal: 10, vertical: 2),
+                                    //   child: Align(
+                                    //       alignment: Alignment.topLeft,
+                                    //       child: Text(
+                                    //         "Packages",
+                                    //         style: TextStyle(
+                                    //             fontWeight: FontWeight.bold),
+                                    //       )),
+                                    // ),
+                                    // SizedBox(
+                                    //   height: 10,
+                                    // ),
                                     // Image.asset("assets/images/1.png"),
                                     Row(
                                       children: [
@@ -342,7 +350,7 @@ class _LabTestState extends State<LabTest> {
                                                 color: Colors.white),
                                             child: Center(
                                               child: Text(
-                                                "Starting 200 SAR",
+                                                "Starting ${item["price"]}",
                                                 style: TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -395,7 +403,7 @@ class _LabTestState extends State<LabTest> {
                                 horizontal: 12, vertical: 8), // Padding
                           ),
                           onPressed: () {
-                            Get.to(CartPage());
+                            Get.to(LabCartPage());
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -409,13 +417,15 @@ class _LabTestState extends State<LabTest> {
                                   borderRadius: BorderRadius.circular(
                                       8), // Make it circular
                                 ),
-                                child: const Center(
-                                  child: Text(
-                                    '0',
-                                    style: TextStyle(
-                                      color: Colors.white, // Text color
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
+                                child: Obx(
+                                  ()=> Center(
+                                    child: Text(
+                                      '${controller.cartItems.length}',
+                                      style: TextStyle(
+                                        color: Colors.white, // Text color
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ),

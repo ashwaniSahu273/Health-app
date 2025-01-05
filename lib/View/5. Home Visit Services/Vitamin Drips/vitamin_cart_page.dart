@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/get_patient_info.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
 
 class VitaminCartPage extends StatelessWidget {
-  VitaminCartController cartController = Get.put(VitaminCartController());
+  final VitaminCartController cartController = Get.put(VitaminCartController());
+
+  VitaminCartPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +138,9 @@ class VitaminCartPage extends StatelessWidget {
                                               icon: const Icon(
                                                   Icons.remove_circle_outline),
                                               onPressed: () {
-                                                cartController.decreaseQuantityByCart(index);
+                                                cartController
+                                                    .decreaseQuantityByCart(
+                                                        index);
                                               },
                                             ),
                                             Text(
@@ -147,7 +152,9 @@ class VitaminCartPage extends StatelessWidget {
                                               icon: const Icon(
                                                   Icons.add_circle_outline),
                                               onPressed: () {
-                                                cartController.increaseQuantityByCart(index);
+                                                cartController
+                                                    .increaseQuantityByCart(
+                                                        index);
                                               },
                                             ),
                                           ],
@@ -320,7 +327,7 @@ class VitaminCartPage extends StatelessWidget {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
-                            MyColors.greenColorauth, // Background color
+                           cartController.isCartEmpty()?  MyColors.greenColorauth : MyColors.liteGreen, // Background color
                         minimumSize: const Size(160, 55), // Width and height
                         shape: RoundedRectangleBorder(
                           borderRadius:
@@ -332,6 +339,8 @@ class VitaminCartPage extends StatelessWidget {
                         //             userModel: widget.userModel,
                         //             firebaseUser: widget.firebaseUser,
                         //           ));
+
+                        Get.to(GetPatientInfoPage());
                       },
                       child: Text(
                         'Continue',

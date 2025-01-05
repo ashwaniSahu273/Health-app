@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 // import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/cart_page.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_cart_page.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
+// import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
 
-class DynamicUIPage extends StatelessWidget {
+class LabDynamicUIPage extends StatelessWidget {
   final int? id;
   final String title;
   final String description;
@@ -14,7 +16,7 @@ class DynamicUIPage extends StatelessWidget {
   final String price;
   final String? image;
 
-  const DynamicUIPage(
+  const LabDynamicUIPage(
       {super.key,
        this.id,
       required this.title,
@@ -25,7 +27,7 @@ class DynamicUIPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   VitaminCartController vitaminCartController = Get.find<VitaminCartController>();
+   LabController controller = Get.find<LabController>();
     
     return Scaffold(
       appBar: AppBar(
@@ -82,7 +84,7 @@ class DynamicUIPage extends StatelessWidget {
                       Row(
                         children: [
                           Image.asset(
-                            'assets/images/vitamin.png',
+                            'assets/images/1.png',
                             height: 60,
                             width: 60,
                           ),
@@ -104,20 +106,20 @@ class DynamicUIPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      // SizedBox(height: 16),
 
                       // About section
-                      const Text(
-                        'About This Package',
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
-                     const SizedBox(height: 8),
+                      // const Text(
+                      //   'About This Package',
+                      //   style: TextStyle(
+                      //       fontSize: 14, fontWeight: FontWeight.bold),
+                      // ),
+                    //  const SizedBox(height: 8),
                       Text(
                         description,
                         style:const TextStyle(fontSize: 13),
                       ),
-                      const SizedBox(height: 16),
+                      // const SizedBox(height: 16),
 
                       // Instructions
                       // Text(
@@ -135,15 +137,15 @@ class DynamicUIPage extends StatelessWidget {
                       //   '• The procedure takes about 40 to 60 minutes and the injection is done at home or workplace.',
                       //   style: TextStyle(fontSize: 13),
                       // ),
-                      const SizedBox(height: 16),
+                      // const SizedBox(height: 16),
 
                       // Components
-                      const Text(
-                        'Components Included',
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
-                     const SizedBox(height: 8),
+                      // const Text(
+                      //   'Components Included',
+                      //   style: TextStyle(
+                      //       fontSize: 14, fontWeight: FontWeight.bold),
+                      // ),
+                    //  const SizedBox(height: 8),
                       Text(
                         '$components',
                         style: TextStyle(fontSize: 13),
@@ -153,7 +155,7 @@ class DynamicUIPage extends StatelessWidget {
                       // Select button
 
                      Obx(
-                       ()=> vitaminCartController.isItemInCart(id) ? Row(
+                       ()=> controller.isItemInCart(id) ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                            const Text(
@@ -172,14 +174,14 @@ class DynamicUIPage extends StatelessWidget {
                               child: IconButton(
                                 icon: Icon(Icons.remove),
                                 onPressed: () {
-                                  vitaminCartController.decreaseQuantity(id);
+                                  controller.decreaseQuantity(id);
                                 },
                               ),
                             ),
                             SizedBox(width: 10),
                            Obx(
                              ()=> Text(
-                                '${vitaminCartController.getQuantityById(id)}',
+                                '${controller.getQuantityById(id)}',
                                 style: TextStyle(fontSize: 18),
                               ),
                            ),
@@ -194,7 +196,7 @@ class DynamicUIPage extends StatelessWidget {
                               child: IconButton(
                                 icon: Icon(Icons.add),
                                 onPressed: () {
-                                   vitaminCartController.increaseQuantity(id);
+                                   controller.increaseQuantity(id);
                                 },
                               ),
                             ),
@@ -202,7 +204,7 @@ class DynamicUIPage extends StatelessWidget {
                         ): Center(
                           child: ElevatedButton(
                             onPressed: () {
-                              vitaminCartController.addToCart(id);
+                              controller.addToCart(id);
                             },
                             child: Text('Select'),
                             style: ElevatedButton.styleFrom(
@@ -263,8 +265,8 @@ class DynamicUIPage extends StatelessWidget {
                             horizontal: 12, vertical: 8), // Padding
                       ),
                       onPressed: () {
-                        if (vitaminCartController.cartItems.length > 0) {
-                        Get.to(VitaminCartPage());
+                        if (controller.cartItems.length > 0) {
+                        Get.to(LabCartPage());
                         }
                       },
                       child: Row(
@@ -282,7 +284,7 @@ class DynamicUIPage extends StatelessWidget {
                             child:  Obx(
                               ()=> Center(
                                 child: Text(
-                                  '${vitaminCartController.cartItems.length}', // Cart item count
+                                  '${controller.cartItems.length}', // Cart item count
                                   style: TextStyle(
                                     color: Colors.white, // Text color
                                     fontSize: 14,
@@ -305,27 +307,25 @@ class DynamicUIPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Obx(
-                     ()=> ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              vitaminCartController.isCartEmpty()? MyColors.greenColorauth: MyColors.liteGreen, // Background color
-                          minimumSize: const Size(160, 55), // Width and height
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(12), // Border radius
-                          ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            MyColors.greenColorauth, // Background color
+                        minimumSize: const Size(160, 55), // Width and height
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(12), // Border radius
                         ),
-                        onPressed: () {
-                          // Get.to(() => Laboratory(
-                          //             userModel: widget.userModel,
-                          //             firebaseUser: widget.firebaseUser,
-                          //           ));
-                        },
-                        child:const Text(
-                          'Continue',
-                          style: TextStyle(color: Colors.black, fontSize: 15),
-                        ),
+                      ),
+                      onPressed: () {
+                        // Get.to(() => Laboratory(
+                        //             userModel: widget.userModel,
+                        //             firebaseUser: widget.firebaseUser,
+                        //           ));
+                      },
+                      child: Text(
+                        'Continue',
+                        style: TextStyle(color: Colors.black, fontSize: 15),
                       ),
                     ),
                   ],
