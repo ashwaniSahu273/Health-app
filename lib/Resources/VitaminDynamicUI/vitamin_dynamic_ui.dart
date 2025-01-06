@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/get_patient_info.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_cart_page.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
+import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class DynamicUIPage extends StatelessWidget {
   final int? id;
@@ -13,6 +16,9 @@ class DynamicUIPage extends StatelessWidget {
   final String? components;
   final String price;
   final String? image;
+   final String address;
+  final UserModel userModel;
+  final User firebaseUser;
 
   const DynamicUIPage(
       {super.key,
@@ -21,7 +27,7 @@ class DynamicUIPage extends StatelessWidget {
       required this.description,
       required this.price,
       this.image,
-      required this.components});
+      required this.components, required this.address, required this.userModel, required this.firebaseUser});
 
   @override
   Widget build(BuildContext context) {
@@ -263,8 +269,12 @@ class DynamicUIPage extends StatelessWidget {
                             horizontal: 12, vertical: 8), // Padding
                       ),
                       onPressed: () {
-                        if (vitaminCartController.cartItems.length > 0) {
-                        Get.to(VitaminCartPage());
+                        if (vitaminCartController.cartItems.isNotEmpty) {
+                        Get.to(VitaminCartPage(
+                          address: address,
+                          userModel: userModel,
+                          firebaseUser: firebaseUser,
+                        ));
                         }
                       },
                       child: Row(
@@ -283,7 +293,7 @@ class DynamicUIPage extends StatelessWidget {
                               ()=> Center(
                                 child: Text(
                                   '${vitaminCartController.cartItems.length}', // Cart item count
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white, // Text color
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
@@ -317,10 +327,14 @@ class DynamicUIPage extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          // Get.to(() => Laboratory(
-                          //             userModel: widget.userModel,
-                          //             firebaseUser: widget.firebaseUser,
-                          //           ));
+                          if (!vitaminCartController.isCartEmpty()) {
+
+                          Get.to(() => GetPatientInfoPage(
+                                     address: address,
+                                      userModel: userModel,
+                                      firebaseUser: firebaseUser,
+                                    ));
+                          }
                         },
                         child:const Text(
                           'Continue',

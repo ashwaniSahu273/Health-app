@@ -1,12 +1,28 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class GetPatientInfoPage extends StatelessWidget {
+   
+   final String address;
+  final UserModel userModel;
+  final User firebaseUser;
+
+   GetPatientInfoPage({
+    Key? key,
+    required this.address,
+    required this.userModel,
+    required this.firebaseUser,
+  }) : super(key: key);
+
   final TextEditingController nameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -143,8 +159,3 @@ class GetPatientInfoPage extends StatelessWidget {
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: GetPatientInfoPage(),
-  ));
-}

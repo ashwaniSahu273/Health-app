@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/Resources/VitaminDynamicUI/vitamin_dynamic_ui.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/get_patient_info.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_cart_page.dart';
 // import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/cart_page.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
@@ -46,6 +47,9 @@ class _VitaminServicesState extends State<VitaminServices> {
       description: description,
       price: price,
       components: components,
+      address: widget.address,
+      userModel: widget.userModel,
+      firebaseUser: widget.firebaseUser,
     ));
     // Get.to(() => Vitamin_Time(
     //       userModel: widget.userModel,
@@ -284,13 +288,13 @@ class _VitaminServicesState extends State<VitaminServices> {
                   topRight: Radius.circular(30),
                 ),
                 boxShadow: [
-                BoxShadow(
-                  color: Colors.grey, // Shadow color
-                  blurRadius: 10, // Blur radius
-                  spreadRadius: 2, // Spread radius
-                  offset: Offset(0, 5), // Offset in x and y direction
-                ),
-              ],
+                  BoxShadow(
+                    color: Colors.grey, // Shadow color
+                    blurRadius: 10, // Blur radius
+                    spreadRadius: 2, // Spread radius
+                    offset: Offset(0, 5), // Offset in x and y direction
+                  ),
+                ],
               ),
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -312,7 +316,13 @@ class _VitaminServicesState extends State<VitaminServices> {
                               horizontal: 12, vertical: 8), // Padding
                         ),
                         onPressed: () {
-                          Get.to(VitaminCartPage());
+                          if (cartController.cartItems.isNotEmpty) {
+                            Get.to(VitaminCartPage(
+                              address: widget.address,
+                              userModel: widget.userModel,
+                              firebaseUser: widget.firebaseUser,
+                            ));
+                          }
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -353,20 +363,26 @@ class _VitaminServicesState extends State<VitaminServices> {
                         ),
                       ),
                       Obx(
-                        ()=> ElevatedButton(
+                        () => ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: cartController.isCartEmpty()? MyColors.greenColorauth: MyColors.liteGreen, // Background color
-                            minimumSize: const Size(160, 55), // Width and height
+                            backgroundColor: cartController.isCartEmpty()
+                                ? MyColors.greenColorauth
+                                : MyColors.liteGreen, // Background color
+                            minimumSize:
+                                const Size(160, 55), // Width and height
                             shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.circular(12), // Border radius
                             ),
                           ),
                           onPressed: () {
-                            // Get.to(() => Laboratory(
-                            //             userModel: widget.userModel,
-                            //             firebaseUser: widget.firebaseUser,
-                            //           ));
+                            if (!cartController.isCartEmpty()) {
+                              Get.to(() => GetPatientInfoPage(
+                                    address: widget.address,
+                                    userModel: widget.userModel,
+                                    firebaseUser: widget.firebaseUser,
+                                  ));
+                            }
                           },
                           child: Text(
                             'Continue',
