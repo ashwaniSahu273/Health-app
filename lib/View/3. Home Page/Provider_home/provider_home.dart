@@ -76,10 +76,13 @@ class _Service_Provider_HomeState extends State<Service_Provider_Home> {
           // Background image
           Container(
             decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/back_image.png"),
-                fit: BoxFit.cover,
-              ),
+              // image: DecorationImage(
+              //   image: AssetImage("assets/images/back_image.png"),
+              //   fit: BoxFit.cover,
+              // ),
+
+              color: Color(0xFFE7F4F2),
+
             ),
           ),
           // Content of the page
@@ -90,7 +93,7 @@ class _Service_Provider_HomeState extends State<Service_Provider_Home> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [],
               ),
-              const SizedBox(height: 20),
+              // const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
@@ -101,14 +104,11 @@ class _Service_Provider_HomeState extends State<Service_Provider_Home> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: MoreServicesGrid(
-                    userModel: widget.userModel, firebaseUser: widget.firebaseUser),
-              ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
+              MoreServicesGrid(
+                  userModel: widget.userModel, firebaseUser: widget.firebaseUser),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(

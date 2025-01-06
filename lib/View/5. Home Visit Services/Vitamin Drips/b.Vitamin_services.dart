@@ -3,9 +3,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/c.vitamin_time.dart';
+import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
+import 'package:harees_new_project/Resources/VitaminDynamicUI/vitamin_dynamic_ui.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_cart_page.dart';
+// import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/cart_page.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
+// import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/c.vitamin_time.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
-import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
+// import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 
 class VitaminServices extends StatefulWidget {
   final String address;
@@ -28,233 +34,353 @@ class _VitaminServicesState extends State<VitaminServices> {
   String? selectedService;
 
   // Method to handle the service selection
-  void _onServiceSelected(
-      String serviceName, String description, String components, String price) {
+  void _onServiceSelected(String serviceName, id, String description,
+      String components, String price) {
     setState(() {
       selectedService = serviceName;
     });
 
-    Get.to(() => Vitamin_Time(
-          userModel: widget.userModel,
-          firebaseUser: widget.firebaseUser,
-          providerData: {
-            "email": FirebaseAuth.instance.currentUser!.email,
-            "address": widget.address,
-            "type": serviceName,
-            "benefits": description,
-            "components": components,
-            "price": price, // Pass the price
-          },
-        ));
+    Get.to(DynamicUIPage(
+      id: id,
+      title: serviceName,
+      description: description,
+      price: price,
+      components: components,
+    ));
+    // Get.to(() => Vitamin_Time(
+    //       userModel: widget.userModel,
+    //       firebaseUser: widget.firebaseUser,
+    //       providerData: {
+    //         "email": FirebaseAuth.instance.currentUser!.email,
+    //         "address": widget.address,
+    //         "type": serviceName,
+    //         "benefits": description,
+    //         "components": components,
+    //         "price": price, // Pass the price
+    //       },
+    //     ));
   }
 
   @override
   Widget build(BuildContext context) {
+    VitaminCartController cartController = Get.put(VitaminCartController());
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 204, 230, 251),
       appBar: AppBar(
-        backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
-        leading: IconButton(
-          onPressed: () {
-            Get.to(() => HomePage(
-                  userModel: widget.userModel,
-                  firebaseUser: widget.firebaseUser,
-                ));
-          },
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-        ),
-        title: const Text(
-          "Packages",
-          style: TextStyle(color: Colors.black),
+        backgroundColor: Colors.white,
+        leadingWidth: 200,
+        leading: Row(
+          children: [
+            IconButton(
+                onPressed: () => Get.back(),
+                icon: const Icon(
+                  Icons.keyboard_double_arrow_left,
+                  size: 35,
+                  weight: 200,
+                )), // Double-arrow icon
+            Text(
+              'Select Packages'.tr,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 25),
-              Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  width: 370,
-                  height: 50,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Text("Your location".tr),
-                        const SizedBox(width: 10),
-                        const VerticalDivider(color: Colors.black),
-                        const Icon(Icons.location_on, color: Colors.green),
-                        Expanded(
-                          child: Text(
-                            widget.address,
-                            overflow: TextOverflow.ellipsis,
+        child: Stack(fit: StackFit.expand, children: [
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    child: StepProgressBar(currentStep: 2, totalSteps: 4)),
+                const SizedBox(height: 25),
+                Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    width: 370,
+                    height: 50,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text("Your location".tr),
+                          const SizedBox(width: 10),
+                          const VerticalDivider(color: Colors.black),
+                          const Icon(Icons.location_on, color: Colors.green),
+                          Expanded(
+                            child: Text(
+                              widget.address,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              _buildServiceCard(
-                serviceName: "Memory Enhancement IV Therapy",
-                description:
-                    "It calms the stimulated mind and plays an important role in forming brain cells and enhances memory.",
-                components:
-                    "Vitamin B12, Zinc, Selenium, Calcium Gluconate, Magnesium Sulphate, Vitamin C, Amino Acids, Potassium Chloride, Normal Saline, Water-Soluble Vitamins, Thiamine (Vitamin B1)",
-                price: "990 SAR",
-                imagePath: "assets/images/vitamin.png",
-              ),
-              const SizedBox(height: 10),
-              _buildServiceCard(
-                serviceName: "Hydration IV Therapy",
-                description:
-                    "Ideal for recovery from an action-packed weekend or busy lifestyle, boost energy levels while replenishing the electrolytes in your body.",
-                components:
-                    "Vitamin C, Potassium Chloride, Magnesium Sulphate, Zinc, Normal Saline, Thiamine (Vitamin B1), Amino Acids, Water-Soluble Vitamins.",
-                price: "990 SAR",
-                imagePath: "assets/images/vitamin.png",
-              ),
-              const SizedBox(height: 10),
-              _buildServiceCard(
-                serviceName: "Antiaging IV Therapy",
-                description:
-                    "The ladies favourite a powerful hit of antioxidants with antiaging properties supporting detox, hydration, optimal hair, nail and skin health.",
-                components:
-                    "MultiVitamins Mixture, Vitamin C, Zinc, Selenium, Magnesium Sulphate, Potassium Chloride, Amino Acids, Vitamin B12, Normal Saline.",
-                price: "990 SAR",
-                imagePath: "assets/images/vitamin.png",
-              ),
-              const SizedBox(height: 10),
-              _buildServiceCard(
-                serviceName: "Stress Relief IV Therapy",
-                description:
-                    "It calms the body, improves mood, reduces anxiety and other signs of stress.",
-                components:
-                    "Magnesium Sulphate, Zinc, Selenium, Amino Acids, Vitamin C, Vitamin B12, Normal Saline, Thiamine (Vitamin B1), Water-Soluble Vitamins.",
-                price: "900 SAR",
-                imagePath: "assets/images/vitamin.png",
-              ),
-              const SizedBox(height: 10),
-              _buildServiceCard(
-                serviceName: "Fitness Boost IV Therapy",
-                description:
-                    "Recommended for fitness enthusiasts or those who maintain an active lifestyle.",
-                components:
-                    "Vitamin C, Magnesium Sulphate, Calcium Gluconate, Potassium Chloride, Zinc, Vitamin B12, Glutamine, Normal Saline, Water-Soluble Vitamins, L-Carnitine, Thiamine (Vitamin B1).",
-                price: "1080 SAR",
-                imagePath: "assets/images/vitamin.png",
-              ),
-              SizedBox(height: 10),
-              _buildServiceCard(
-                serviceName: "Energy Boost IV Therapy",
-                description:
-                    "To restore energy, build proteins, support antioxidants, and increase productivity.",
-                components:
-                    "Vitamin B12, Vitamin C, Magnesium Sulphate, Potassium Chloride, Zinc, Selenium, L-Carnitine, Glutamine, Normal Saline, Multivitamins Mixture.",
-                price: "1170 SAR",
-                imagePath: "assets/images/vitamin.png",
-              ),
-              const SizedBox(height: 10),
-              _buildServiceCard(
-                serviceName: "Post Sleeve Gastrectomy IV Therapy",
-                description:
-                    "To hydrate the body after gastric sleeve and provide better absorption for the nutrients and supplements.",
-                components:
-                    "Calcium Gluconate, Magnesium Sulphate, Vitamin B12, Potassium Chloride, Multivitamins Mixture, Vitamin C, Vitamin B1, Vitamin D3, Selenium, Amino Acids, Normal Saline, Trace Elements Mixture, Zinc.",
-                price: "1035 SAR",
-                imagePath: "assets/images/vitamin.png",
-              ),
-              const SizedBox(height: 10),
-              _buildServiceCard(
-                serviceName: "Hair Health IV Therapy",
-                description:
-                    "For healthy, strong, balanced hair, reduces hair loss and supports nails and skin.",
-                components:
-                    "Vitamin C, Zinc, Selenium, Water-Soluble Vitamins, Vitamin D3, Vitamin B12, Magnesium Sulphate, Folic Acid, Amino Acids, Normal Saline.",
-                price: "1035 SAR",
-                imagePath: "assets/images/vitamin.png",
-              ),
-              const SizedBox(height: 10),
-              _buildServiceCard(
-                serviceName: "Jet Lag IV Therapy",
-                description:
-                    "Hydration after a flight is essential for the body, this is recommended for frequent travelers to support with energy production and the immune system.",
-                components:
-                    "Vitamin B12, Zinc, Magnesium Sulphate, Vitamin C, Calcium Gluconate, Amino Acids, Normal Saline, Thiamine (Vitamin B1), Water-Soluble Vitamins.",
-                price: "990 SAR",
-                imagePath: "assets/images/vitamin.png",
-              ),
-              const SizedBox(height: 10),
-              _buildServiceCard(
-                serviceName: "Migraine Relief IV Therapy",
-                description:
-                    "This multivitamin relieves migraine headaches and their related symptoms.",
-                components:
-                    "Vitamin C, Vitamin D3, Folic Acid, Thiamine (Vitamin B1), Magnesium Sulphate, Vitamin B12, Normal Saline, Water-Soluble Vitamins.",
-                price: "945 SAR",
-                imagePath: "assets/images/vitamin.png",
-              ),
-              const SizedBox(height: 10),
-              _buildServiceCard(
-                serviceName: "Depression Relief IV Therapy",
-                description:
-                    "This multivitamin relieves Depression, Anxiety, and their related symptoms.",
-                components:
-                    "Selenium, Zinc, Calcium Gluconate, Amino Acids, Vitamin C, Vitamin B12, Vitamin D3, Folic Acid, Thiamine (Vitamin B1), Magnesium Sulphate, Normal Saline, Trace Elements Mixture, Water-Soluble Vitamins.",
-                price: "990 SAR",
-                imagePath: "assets/images/vitamin.png",
-              ),
-              const SizedBox(height: 10),
-              _buildServiceCard(
-                serviceName: "Weight Loss IV Therapy",
-                description:
-                    "This multivitamin aids in improving body metabolism and the rate of fat burning within the body.",
-                components:
-                    "L-Carnitine, Glutamine, Zinc, Calcium Gluconate, Vitamin C, Vitamin B12, Vitamin D3, Thiamine (Vitamin B1), Magnesium Sulphate, Normal Saline, Trace Elements Mixture, Water-Soluble Vitamins.",
-                price: "1170 SAR",
-                imagePath: "assets/images/vitamin.png",
-              ),
-              const SizedBox(height: 10),
-              _buildServiceCard(
-                serviceName: "Diet & Detox IV Therapy",
-                description:
-                    "Incorporate antioxidants into your regular wellness routine and remove any lingering free radicals in your body.",
-                components:
-                    "Vitamin C, Water-Soluble Vitamins, Potassium Chloride, Calcium Gluconate, Vitamin D3, Selenium, Trace Elements Mixture, Zinc, Thiamine, Amino Acids 10%, Magnesium Sulphate, Normal Saline 0.9%, D5W.",
-                price: "990 SAR",
-                imagePath: "assets/images/vitamin.png",
-              ),
-              const SizedBox(height: 10),
-              _buildServiceCard(
-                serviceName: "Mayers Cocktail IV Therapy",
-                description:
-                    "Restore balance, reduce the symptoms of chronic illnesses, and promote general wellness.",
-                components:
-                    "Calcium Gluconate, Magnesium Sulphate, Ascorbic Acid, Water-Soluble Vitamins, Thiamine, Vitamin B12, Normal Saline 0.9%, D5W.",
-                price: "990 SAR",
-                imagePath: "assets/images/vitamin.png",
-              ),
-              const SizedBox(height: 10),
-              _buildServiceCard(
-                serviceName: "Immunity Boost IV Therapy",
-                description:
-                    "Strengthen your immunity and support whole-body wellness. Maintain a robust immune system despite fluctuations. This is the best method, whether it's for preventing wellness or treating a cold.",
-                components:
-                    "Vitamin C, Water-Soluble Vitamins, Magnesium Sulphate, Zinc, Potassium Chloride, Vitamin B12, Thiamine, Normal Saline 0.9%, D5W, Glutamine.",
-                price: "990 SAR",
-                imagePath: "assets/images/vitamin.png",
-              ),
-            ],
+                const SizedBox(height: 10),
+
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  child: ListView.builder(
+                    itemCount: cartController.services.length,
+                    itemBuilder: (context, index) {
+                      final service = cartController.services[index];
+                      return Column(
+                        children: [
+                          _buildServiceCard(
+                            id: service['id'],
+                            serviceName: service['serviceName'],
+                            description: service['description'],
+                            components: service['components'],
+                            price: service['price'],
+                            imagePath: service['imagePath'],
+                          ),
+                          const SizedBox(height: 10),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+                // _buildServiceCard(
+                //   serviceName: "memory_enhancement.name".tr,
+                //   description: "memory_enhancement.description".tr,
+                //   components: "memory_enhancement.ingredients".tr,
+                //   price: "memory_enhancement.price".tr,
+                //   imagePath: "assets/images/vitamin.png",
+                // ),
+                // const SizedBox(height: 10),
+                // _buildServiceCard(
+                //   serviceName: "hydration.name".tr,
+                //   description: "hydration.description".tr,
+                //   components: "hydration.ingredients".tr,
+                //   price: "hydration.price".tr,
+                //   imagePath: "assets/images/vitamin.png",
+                // ),
+                // const SizedBox(height: 10),
+                // _buildServiceCard(
+                //   serviceName: "antiaging.name".tr,
+                //   description: "antiaging.description".tr,
+                //   components: "antiaging.ingredients".tr,
+                //   price: "antiaging.price".tr,
+                //   imagePath: "assets/images/vitamin.png",
+                // ),
+                // const SizedBox(height: 10),
+                // _buildServiceCard(
+                //   serviceName: "stress_relief.name".tr,
+                //   description: "stress_relief.description".tr,
+                //   components: "stress_relief.ingredients".tr,
+                //   price: "stress_relief.price".tr,
+                //   imagePath: "assets/images/vitamin.png",
+                // ),
+                // const SizedBox(height: 10),
+                // _buildServiceCard(
+                //   serviceName: "fitness_boost.name".tr,
+                //   description: "fitness_boost.description".tr,
+                //   components: "fitness_boost.ingredients".tr,
+                //   price: "fitness_boost.price".tr,
+                //   imagePath: "assets/images/vitamin.png",
+                // ),
+                // const SizedBox(height: 10),
+                // _buildServiceCard(
+                //   serviceName: "energy_boost.name".tr,
+                //   description: "energy_boost.description".tr,
+                //   components: "energy_boost.ingredients".tr,
+                //   price: "energy_boost.price".tr,
+                //   imagePath: "assets/images/vitamin.png",
+                // ),
+                // const SizedBox(height: 10),
+                // _buildServiceCard(
+                //   serviceName: "post_sleeve.name".tr,
+                //   description: "post_sleeve.description".tr,
+                //   components: "post_sleeve.ingredients".tr,
+                //   price: "post_sleeve.price".tr,
+                //   imagePath: "assets/images/vitamin.png",
+                // ),
+                // const SizedBox(height: 10),
+                // _buildServiceCard(
+                //   serviceName: "hair_health.name".tr,
+                //   description: "hair_health.description".tr,
+                //   components: "hair_health.ingredients".tr,
+                //   price: "hair_health.price".tr,
+                //   imagePath: "assets/images/vitamin.png",
+                // ),
+                // const SizedBox(height: 10),
+                // _buildServiceCard(
+                //   serviceName: "jet_lag.name".tr,
+                //   description: "jet_lag.description".tr,
+                //   components: "jet_lag.ingredients".tr,
+                //   price: "jet_lag.price".tr,
+                //   imagePath: "assets/images/vitamin.png",
+                // ),
+                // const SizedBox(height: 10),
+                // _buildServiceCard(
+                //   serviceName: "migraine_relief.name".tr,
+                //   description: "migraine_relief.description".tr,
+                //   components: "migraine_relief.ingredients".tr,
+                //   price: "migraine_relief.price".tr,
+                //   imagePath: "assets/images/vitamin.png",
+                // ),
+                // const SizedBox(height: 10),
+                // _buildServiceCard(
+                //   serviceName: "depression_relief.name".tr,
+                //   description: "depression_relief.description".tr,
+                //   components: "depression_relief.ingredients".tr,
+                //   price: "depression_relief.price".tr,
+                //   imagePath: "assets/images/vitamin.png",
+                // ),
+                // const SizedBox(height: 10),
+                // _buildServiceCard(
+                //   serviceName: "weight_loss.name".tr,
+                //   description: "weight_loss.description".tr,
+                //   components: "weight_loss.ingredients".tr,
+                //   price: "weight_loss.price".tr,
+                //   imagePath: "assets/images/vitamin.png",
+                // ),
+                // const SizedBox(height: 10),
+                // _buildServiceCard(
+                //   serviceName: "diet_detox.name".tr,
+                //   description: "diet_detox.description".tr,
+                //   components: "diet_detox.ingredients".tr,
+                //   price: "diet_detox.price".tr,
+                //   imagePath: "assets/images/vitamin.png",
+                // ),
+                // const SizedBox(height: 10),
+                // _buildServiceCard(
+                //   serviceName: "mayers_cocktail.name".tr,
+                //   description: "mayers_cocktail.description".tr,
+                //   components: "mayers_cocktail.ingredients".tr,
+                //   price: "mayers_cocktail.price".tr,
+                //   imagePath: "assets/images/vitamin.png",
+                // ),
+                // const SizedBox(height: 10),
+                // _buildServiceCard(
+                //   serviceName: "immunity_boost.name".tr,
+                //   description: "immunity_boost.description".tr,
+                //   components: "immunity_boost.ingredients".tr,
+                //   price: "immunity_boost.price".tr,
+                //   imagePath: "assets/images/vitamin.png",
+                // ),
+              ],
+            ),
           ),
-        ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                ),
+                boxShadow: [
+                BoxShadow(
+                  color: Colors.grey, // Shadow color
+                  blurRadius: 10, // Blur radius
+                  spreadRadius: 2, // Spread radius
+                  offset: Offset(0, 5), // Offset in x and y direction
+                ),
+              ],
+              ),
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          side: const BorderSide(
+                              color: Colors.grey), // Border color
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(8), // Rounded corners
+                          ),
+                          minimumSize: Size(160, 55),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 8), // Padding
+                        ),
+                        onPressed: () {
+                          Get.to(VitaminCartPage());
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            // Circular container
+                            Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: Colors.teal, // Background color
+                                borderRadius: BorderRadius.circular(
+                                    8), // Make it circular
+                              ),
+                              child: Obx(
+                                () => Center(
+                                  child: Text(
+                                    '${cartController.cartItems.length}',
+                                    style: TextStyle(
+                                      color: Colors.white, // Text color
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                                width: 8), // Space between the icon and text
+                            const Text(
+                              'Selected item',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Obx(
+                        ()=> ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: cartController.isCartEmpty()? MyColors.greenColorauth: MyColors.liteGreen, // Background color
+                            minimumSize: const Size(160, 55), // Width and height
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(12), // Border radius
+                            ),
+                          ),
+                          onPressed: () {
+                            // Get.to(() => Laboratory(
+                            //             userModel: widget.userModel,
+                            //             firebaseUser: widget.firebaseUser,
+                            //           ));
+                          },
+                          child: Text(
+                            'Continue',
+                            style: TextStyle(color: Colors.black, fontSize: 15),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ]),
       ),
     );
   }
@@ -266,82 +392,93 @@ class _VitaminServicesState extends State<VitaminServices> {
     required String components,
     required String price,
     required String imagePath,
+    int? id,
   }) {
     final isSelected = selectedService == serviceName;
 
-    return Container(
-      width: 370,
-      height: 300,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: isSelected ? Colors.blue : Colors.black),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            ListTile(
-              onTap: () => _onServiceSelected(
-                  serviceName, description, components, price),
-              leading: Container(
-                width: 50,
-                height: 50,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: 370,
+        height: 320,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: isSelected ? Colors.blue : Colors.black),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Column(
+            children: [
+              ListTile(
+                onTap: () => _onServiceSelected(
+                    serviceName, id, description, components, price),
+                leading: Container(
+                  width: 60,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 169, 214, 246),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Image(image: AssetImage(imagePath)),
+                ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                        child: Text(serviceName,
+                            style: const TextStyle(color: Colors.blue))),
+                    // Icon(
+                    //   Icons.circle_outlined,
+                    //   color: Colors.blue,
+                    // ),
+                  ],
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Text(description),
+                    Text(
+                      description,
+                      maxLines: 3, // Limit to 3 lines
+                      overflow: TextOverflow
+                          .ellipsis, // Show dots if text exceeds 3 lines
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      "$price",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                width: 340,
+                height: 140,
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 169, 214, 246),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Image(image: AssetImage(imagePath)),
-              ),
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                      child: Text(serviceName,
-                          style: const TextStyle(color: Colors.blue))),
-                  Icon(
-                    Icons.circle_outlined,
-                    color: Colors.blue,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Components Included:".tr,
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(components),
+                    ],
                   ),
-                ],
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(description),
-                  const SizedBox(height: 10),
-                  Text(
-                    "Price: $price",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              width: 340,
-              height: 130,
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 169, 214, 246),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Components Included:",
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(components),
-                  ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

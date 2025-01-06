@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.9.20'
+    ext.kotlin_version = '1.9.0'
     repositories {
         google()
         mavenCentral()
@@ -20,6 +20,14 @@ allprojects {
 }
 
 rootProject.buildDir = '../build'
+
+subprojects {
+        afterEvaluate { project ->
+            if (project.hasProperty('android')) {
+                project.android { compileSdkVersion 34 }
+            }
+        }
+}
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
@@ -30,3 +38,5 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+
+

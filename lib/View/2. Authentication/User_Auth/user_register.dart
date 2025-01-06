@@ -11,7 +11,7 @@ import 'package:harees_new_project/View/2.%20Authentication/User_Auth/Google_Aut
 import 'package:harees_new_project/Resources/Button/mybutton.dart';
 import 'package:harees_new_project/Resources/TextField/MyTextField.dart';
 import 'package:harees_new_project/View/2.%20Authentication/User_Auth/Complete_Profile_User.dart';
-import 'package:harees_new_project/View/2.%20Authentication/User_Auth/user_login.dart';
+// import 'package:harees_new_project/View/2.%20Authentication/User_Auth/user_login.dart';
 
 class User_Register extends StatefulWidget {
   const User_Register({Key? key}) : super(key: key);
@@ -107,6 +107,16 @@ class _User_RegisterState extends State<User_Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+         automaticallyImplyLeading: false,
+        leading:IconButton(
+                onPressed: () => Get.back(),
+                icon: const Icon(
+                  Icons.keyboard_double_arrow_left,
+                  size: 35,
+                  weight: 200,
+                ))
+      ),
       body: SafeArea(
         child: Stack(
           children: [
@@ -127,14 +137,13 @@ class _User_RegisterState extends State<User_Register> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(top: 50.0),
-                      child:  CircleAvatar(
+                    const 
+                      CircleAvatar(
                         radius: 100,
                         backgroundImage:
                             AssetImage("assets/logo/harees_logo.png"),
                       ),
-                    ),
+                    
                      const SizedBox(
                       height: 25,
                     ),
@@ -228,32 +237,32 @@ class _User_RegisterState extends State<User_Register> {
                         // )
                       ],
                     ),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Already a User?".tr,
-                            style: const TextStyle(
-                                fontSize: 16, color: Colors.black),
-                          ),
-                          CupertinoButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LoginScreen()));
-                            },
-                            child: Text(
-                              "Let's Login".tr,
-                              style: const TextStyle(
-                                  fontSize: 16, color: Colors.blue),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Container(
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       Text(
+                    //         "Already a User?".tr,
+                    //         style: const TextStyle(
+                    //             fontSize: 16, color: Colors.black),
+                    //       ),
+                    //       CupertinoButton(
+                    //         onPressed: () {
+                    //           Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                   builder: (context) =>
+                    //                       const LoginScreen()));
+                    //         },
+                    //         child: Text(
+                    //           "Let's Login".tr,
+                    //           style: const TextStyle(
+                    //               fontSize: 16, color: Colors.blue),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

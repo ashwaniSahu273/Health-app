@@ -227,7 +227,8 @@ class _Doctor_TimeState extends State<Doctor_Time> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Row(
+        leadingWidth: 200,
+        leading: Row(
           children: [
             IconButton(
                 onPressed: () => Get.back(),

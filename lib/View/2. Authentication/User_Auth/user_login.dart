@@ -165,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     RoundButton(
                         borderColor: Colors.white,
                         color:Color(0xFFB2E1DA),
-                        text: "Sign In".tr,
+                        text: "Sign in".tr,
                         onTap: () {
                           checkValues();
                         }),
@@ -175,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     RichText(
                       text: TextSpan(
                       text: "Or Sign In With? ".tr,
-                      style: const TextStyle(color: Colors.black,fontSize: 15,fontWeight: FontWeight.w500),
+                      style: const TextStyle(color: Color.fromRGBO(0, 0, 0, 1),fontSize: 15,fontWeight: FontWeight.w500),
                       children: [
                         TextSpan(
                           text: "Mobile".tr,

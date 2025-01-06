@@ -34,7 +34,8 @@ class NurseVisitPaymentPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Row(
+        leadingWidth: 200,
+        leading: Row(
           children: [
             GestureDetector(
               onTap: () => Get.back(),
