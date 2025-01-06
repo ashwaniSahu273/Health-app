@@ -44,7 +44,7 @@ android {
     defaultConfig {
         applicationId "com.example.harees_new_project"
         minSdkVersion 23
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
