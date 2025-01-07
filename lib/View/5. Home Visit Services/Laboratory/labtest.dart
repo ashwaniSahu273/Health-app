@@ -7,7 +7,7 @@ import 'package:harees_new_project/Resources/Lab%20More%20Packages/lab_more_pack
 import 'package:harees_new_project/Resources/Lab%20Functions/lab_functions.dart';
 import 'package:harees_new_project/Resources/LabDynamicUi/lab_dynamic_ui.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
-import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
+// import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/b.laboratory.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/cart_page.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';

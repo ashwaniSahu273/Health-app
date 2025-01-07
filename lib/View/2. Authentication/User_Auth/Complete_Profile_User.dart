@@ -28,11 +28,11 @@ class CompleteProfile extends StatefulWidget {
   @override
   State<CompleteProfile> createState() => _CompleteProfileState();
 }
-
 class _CompleteProfileState extends State<CompleteProfile> {
   File? imageFile;
   TextEditingController fullNameController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
+  TextEditingController dobController = TextEditingController();
   String? selectedGender;
 
   void selectImage(ImageSource source) async {
@@ -88,12 +88,28 @@ class _CompleteProfileState extends State<CompleteProfile> {
         });
   }
 
+  void showDatePickerDialog() async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime(2000),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+
+    if (pickedDate != null) {
+      setState(() {
+        dobController.text = "${pickedDate.toLocal()}".split(' ')[0];
+      });
+    }
+  }
+
   void checkValues() {
     String fullname = fullNameController.text.trim();
     String mobileNumber = mobileNumberController.text.trim();
+    String dob = dobController.text.trim();
     String? gender = selectedGender;
 
-    if (fullname.isEmpty || mobileNumber.isEmpty || gender == null) {
+    if (fullname.isEmpty || mobileNumber.isEmpty || gender == null || dob.isEmpty) {
       print("Please fill all the fields");
       UIHelper.showAlertDialog(
           context, "Incomplete Data", "Please fill all the fields");
@@ -120,12 +136,14 @@ class _CompleteProfileState extends State<CompleteProfile> {
 
     String fullname = fullNameController.text.trim();
     String mobileNumber = mobileNumberController.text.trim();
+    String dob = dobController.text.trim();
     String? gender = selectedGender;
 
     widget.userModel.fullname = fullname;
     widget.userModel.profilePic = imageUrl;
     widget.userModel.mobileNumber = mobileNumber;
     widget.userModel.gender = gender;
+    widget.userModel.dob = dob;
 
     await FirebaseFirestore.instance
         .collection("Registered Users")
@@ -208,6 +226,17 @@ class _CompleteProfileState extends State<CompleteProfile> {
                       labelText: "Mobile Number".tr,
                     ),
                     keyboardType: TextInputType.phone,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextField(
+                    controller: dobController,
+                    readOnly: true,
+                    decoration: InputDecoration(
+                      labelText: "Date of Birth".tr,
+                    ),
+                    onTap: showDatePickerDialog,
                   ),
                   SizedBox(
                     height: 20,

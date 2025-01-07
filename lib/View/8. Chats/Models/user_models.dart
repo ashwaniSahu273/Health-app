@@ -7,6 +7,7 @@ class UserModel {
   String? designation;
   String? mobileNumber;
   String? gender;
+  String? dob;
 
   UserModel({
     this.fullname,
@@ -17,6 +18,7 @@ class UserModel {
     this.designation,
     this.mobileNumber,
     this.gender,
+    this.dob,
   });
 
   UserModel.frommap(Map<String, dynamic> map) {
@@ -28,6 +30,7 @@ class UserModel {
     designation = map['designation'];
     mobileNumber = map['mobileNumber'];
     gender = map['gender'];
+    dob = map['dob'];
   }
 
   Map<String, dynamic> tomap() {
@@ -40,6 +43,7 @@ class UserModel {
       'designation': designation,
       'mobileNumber': mobileNumber,
       'gender': gender,
+      'dob': dob,
     };
   }
 }

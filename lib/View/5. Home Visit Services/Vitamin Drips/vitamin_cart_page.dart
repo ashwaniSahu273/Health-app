@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/c.vitamin_time.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/get_patient_info.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -11,6 +12,8 @@ class VitaminCartPage extends StatelessWidget {
   final String address;
   final UserModel userModel;
   final User firebaseUser;
+
+
   final VitaminCartController cartController = Get.put(VitaminCartController());
 
   VitaminCartPage({
@@ -297,11 +300,11 @@ class VitaminCartPage extends StatelessWidget {
                             horizontal: 12, vertical: 8), // Padding
                       ),
                       onPressed: () {
-                        Get.to(VitaminCartPage(
-                          address: address,
-                           userModel: userModel,
-                           firebaseUser: firebaseUser,
-                        ));
+                        // Get.to(VitaminCartPage(
+                        //   address: address,
+                        //    userModel: userModel,
+                        //    firebaseUser: firebaseUser,
+                        // ));
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -358,10 +361,11 @@ class VitaminCartPage extends StatelessWidget {
                         //           ));
                         if(!cartController.isCartEmpty()){
 
-                        Get.to(GetPatientInfoPage(
+                        Get.to(Vitamin_Time(
                           userModel: userModel,
                           firebaseUser:firebaseUser,
-                          address: address,
+                        
+                          
                         ));
                         }
                       },

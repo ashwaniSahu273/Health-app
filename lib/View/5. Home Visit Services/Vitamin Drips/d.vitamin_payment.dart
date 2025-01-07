@@ -9,40 +9,37 @@ import 'package:harees_new_project/Resources/Button/myroundbutton.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/b.%20E-Clinics/e_clinic.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:intl/intl.dart';
 
 class VitaminPaymentPage extends StatelessWidget {
   final UserModel userModel;
   final User firebaseUser;
-  final Map<String, dynamic> providerData;
   final String selectedTime;
-  final Map<String, dynamic> selectedProviderData;
-  final String packageName;
-  final String packagePrice;
+
 
   const VitaminPaymentPage({
     super.key,
-    required this.providerData,
     required this.userModel,
     required this.firebaseUser,
     required this.selectedTime,
-    required this.selectedProviderData,
-    required this.packageName,
-    required this.packagePrice,
   });
 
   @override
   Widget build(BuildContext context) {
     final String currentDate = DateFormat.yMMMd().format(DateTime.now());
+    VitaminCartController vitaminCartController =
+        Get.put(VitaminCartController());
 
     // Calculate the VAT and total amount
-    final double vat = 20.0;
-    // Extract numeric value from packagePrice by removing non-numeric characters
-    final double parsedPackagePrice =
-        double.parse(packagePrice.replaceAll(RegExp(r'[^\d.]'), ''));
+    const double vat = 20.0;
 
-    final double totalAmount = parsedPackagePrice + vat;
+    // // Extract numeric value from packagePrice by removing non-numeric characters
+    // final double parsedPackagePrice =
+    //     double.parse(packagePrice.replaceAll(RegExp(r'[^\d.]'), ''));
+
+    final double totalAmount = vitaminCartController.getTotalAmount() + vat;
 
     return Scaffold(
       appBar: AppBar(
@@ -58,7 +55,7 @@ class VitaminPaymentPage extends StatelessWidget {
                 weight: 200,
               ),
             ), // Double-arrow icon
-           Text(
+            Text(
               'Payment Details'.tr,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
@@ -76,11 +73,10 @@ class VitaminPaymentPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    // decoration: BoxDecoration(
-                    //   color: Colors.white,
-                    // ),
-                    child: StepProgressBar(currentStep: 4, totalSteps: 4)
-                    ),
+                      // decoration: BoxDecoration(
+                      //   color: Colors.white,
+                      // ),
+                      child: StepProgressBar(currentStep: 4, totalSteps: 4)),
                   // Text(
                   //   "Payment Details",
                   //   style: TextStyle(
@@ -449,11 +445,10 @@ class VitaminPaymentPage extends StatelessWidget {
                       ),
                     ),
                   ),
-            
+
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Container(
-                      
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(15),
@@ -478,41 +473,48 @@ class VitaminPaymentPage extends StatelessWidget {
                             ),
                             SizedBox(height: 10),
                             SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  flex: 3, // Takes 3 parts of the row
-                                  child: Text(
-                                    packageName,
-                                    maxLines:
-                                        2,
-                                    overflow: TextOverflow
-                                        .ellipsis, 
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                    width: 8),
-                                Flexible(
-                                  flex: 1, // Takes 1 part of the row
-                                  child: Text(
-                                    '$packagePrice',
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    textAlign:
-                                        TextAlign.end, // Aligns text to the end
-                                  ),
-                                ),
-                              ],
-                            ),
+                            ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount:
+                                    vitaminCartController.cartItems.length,
+                                itemBuilder: (context, index) {
+                                  final item =
+                                      vitaminCartController.cartItems[index];
+                                  return Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Flexible(
+                                        flex: 3, // Takes 3 parts of the row
+                                        child: Text(
+                                          item['serviceName'],
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: 17,
+                                            color: Colors.grey,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8),
+                                      Flexible(
+                                        flex: 1, // Takes 1 part of the row
+                                        child: Text(
+                                          item['price'],
+                                          style: TextStyle(
+                                            fontSize: 17,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          textAlign: TextAlign
+                                              .end, // Aligns text to the end
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }),
                             SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -526,7 +528,7 @@ class VitaminPaymentPage extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  'SAR $vat',
+                                  '$vat SAR',
                                   style: TextStyle(
                                     fontSize: 17,
                                     color: Colors.black,
@@ -556,7 +558,7 @@ class VitaminPaymentPage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'SAR $totalAmount',
+                          '$totalAmount SAR',
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.blue,
@@ -571,12 +573,16 @@ class VitaminPaymentPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: GestureDetector(
                       onTap: () {
+
+                        vitaminCartController.setUserOrderInfo(userModel, firebaseUser);
                         Get.to(() => HomePage(
                               userModel: userModel,
                               firebaseUser: firebaseUser,
                             ));
                       },
-                      child: Padding(
+                      child: vitaminCartController.isLoading.value?
+                      CircularProgressIndicator()
+                       :Padding(
                         padding: const EdgeInsets.only(left: 2, right: 2),
                         child: Container(
                           decoration: BoxDecoration(

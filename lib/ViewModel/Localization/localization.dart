@@ -207,96 +207,121 @@ class Language extends Translations {
           "Amount Payable": "Amount Payable",
           "Checkout": "Checkout",
           "Selected Service": "Selected Service",
+
+
+
           "memory_enhancement.name": "Memory Enhancement IV Therapy",
           "memory_enhancement.description":
               "It calms the stimulated mind and plays an important role in forming brain cells and enhances memory.",
           "memory_enhancement.ingredients":
               "Vitamin B12, Zinc, Selenium, Calcium Gluconate, Magnesium Sulphate, Vitamin C, Amino Acids, Potassium Chloride, Normal Saline, Water-Soluble Vitamins, Thiamine (Vitamin B1)",
           "memory_enhancement.price": "990 SAR",
+
+
           "hydration.name": "Hydration IV Therapy",
           "hydration.description":
               "Ideal for recovery from an action-packed weekend or busy lifestyle, boost energy levels while replenishing the electrolytes in your body.",
           "hydration.ingredients":
               "Vitamin C, Potassium Chloride, Magnesium Sulphate, Zinc, Normal Saline, Thiamine (Vitamin B1), Amino Acids, Water-Soluble Vitamins.",
           "hydration.price": "990 SAR",
+
           "antiaging.name": "Antiaging IV Therapy",
           "antiaging.description":
               "The ladies favourite a powerful hit of antioxidants with antiaging properties supporting detox, hydration, optimal hair, nail and skin health.",
           "antiaging.ingredients":
               "MultiVitamins Mixture, Vitamin C, Zinc, Selenium, Magnesium Sulphate, Potassium Chloride, Amino Acids, Vitamin B12, Normal Saline.",
           "antiaging.price": "900 SAR",
+
+
           "stress_relief.name": "Stress Relief IV Therapy",
           "stress_relief.description":
               "It calms the body, improves mood, reduces anxiety and other signs of stress.",
           "stress_relief.ingredients":
               "Vitamin C, Magnesium Sulphate, Zinc, Potassium Chloride, Amino Acids, Vitamin B12, Normal Saline, Water-Soluble Vitamins.",
           "stress_relief.price": "900 SAR",
+
+
           "fitness_boost.name": "Fitness Boost IV Therapy",
           "fitness_boost.description":
               "Recommended for fitness enthusiasts or those who maintain an active lifestyle.",
           "fitness_boost.ingredients":
               "Vitamin C, Magnesium Sulphate, Calcium Gluconate, Potassium Chloride, Zinc, Vitamin B12, Glutamine, Normal Saline, Water-Soluble Vitamins, L-Carnitine, Thiamine (Vitamin B1).",
           "fitness_boost.price": "1080 SAR",
+
+
           "energy_boost.name": "Energy Boost IV Therapy",
           "energy_boost.description":
               "To restore energy, build proteins, support antioxidants, and increase productivity.",
           "energy_boost.ingredients":
               "Vitamin B12, Vitamin C, Magnesium Sulphate, Potassium Chloride, Zinc, Selenium, L-Carnitine, Glutamine, Normal Saline, Multivitamins Mixture.",
           "energy_boost.price": "1170 SAR",
+
+
           "post_sleeve.name": "Post Sleeve Gastrectomy IV Therapy",
           "post_sleeve.description":
               "To hydrate the body after gastric sleeve and provide better absorption for the nutrients and supplements.",
           "post_sleeve.ingredients":
               "Calcium Gluconate, Magnesium Sulphate, Vitamin B12, Potassium Chloride, Multivitamins Mixture, Vitamin C, Vitamin B1, Vitamin D3, Selenium, Amino Acids, Normal Saline, Trace Elements Mixture, Zinc.",
           "post_sleeve.price": "1035 SAR",
+
+
           "hair_health.name": "Hair Health IV Therapy",
           "hair_health.description":
               "For healthy, strong, balanced hair, reduces hair loss and supports nails and skin.",
           "hair_health.ingredients":
               "Vitamin C, Zinc, Selenium, Water-Soluble Vitamins, Vitamin D3, Vitamin B12, Magnesium Sulphate, Folic Acid, Amino Acids, Normal Saline.",
           "hair_health.price": "1035 SAR",
+
           "jet_lag.name": "Jet Lag IV Therapy",
           "jet_lag.description":
               "Hydration after a flight is essential for the body, this is recommended for frequent travelers to support with energy production and the immune system.",
           "jet_lag.ingredients":
               "Vitamin B12, Zinc, Magnesium Sulphate, Vitamin C, Calcium Gluconate, Amino Acids, Normal Saline, Thiamine (Vitamin B1), Water-Soluble Vitamins.",
           "jet_lag.price": "990 SAR",
+
+
           "migraine_relief.name": "Migraine Relief IV Therapy",
           "migraine_relief.description":
               "This multivitamin relieves migraine headaches and their related symptoms.",
           "migraine_relief.ingredients":
               "Vitamin C, Vitamin D3, Folic Acid, Thiamine (Vitamin B1), Magnesium Sulphate, Vitamin B12, Normal Saline, Water-Soluble Vitamins.",
           "migraine_relief.price": "945 SAR",
+
           "depression_relief.name": "Depression Relief IV Therapy",
           "depression_relief.description":
               "This multivitamin relieves Depression, Anxiety, and their related symptoms.",
           "depression_relief.ingredients":
               "Selenium, Zinc, Calcium Gluconate, Amino Acids, Vitamin C, Vitamin B12, Vitamin D3, Folic Acid, Thiamine (Vitamin B1), Magnesium Sulphate, Normal Saline, Trace Elements Mixture, Water-Soluble Vitamins.",
           "depression_relief.price": "990 SAR",
+
           "weight_loss.name": "Weight Loss IV Therapy",
           "weight_loss.description":
               "This multivitamin aids in improving body metabolism and the rate of fat burning within the body.",
           "weight_loss.ingredients":
               "L-Carnitine, Glutamine, Zinc, Calcium Gluconate, Vitamin C, Vitamin B12, Vitamin D3, Thiamine (Vitamin B1), Magnesium Sulphate, Normal Saline, Trace Elements Mixture, Water-Soluble Vitamins.",
           "weight_loss.price": "1170 SAR",
+
           "diet_detox.name": "Diet & Detox IV Therapy",
           "diet_detox.description":
               "Incorporate antioxidants into your regular wellness routine and remove any lingering free radicals in your body.",
           "diet_detox.ingredients":
               "Vitamin C, Water-Soluble Vitamins, Potassium Chloride, Calcium Gluconate, Vitamin D3, Selenium, Trace Elements Mixture, Zinc, Thiamine, Amino Acids 10%, Magnesium Sulphate, Normal Saline 0.9%, D5W.",
           "diet_detox.price": "990 SAR",
+          
           "mayers_cocktail.name": "Mayers Cocktail IV Therapy",
           "mayers_cocktail.description":
               "Restore balance, reduce the symptoms of chronic illnesses, and promote general wellness.",
           "mayers_cocktail.ingredients":
               "Calcium Gluconate, Magnesium Sulphate, Ascorbic Acid, Water-Soluble Vitamins, Thiamine, Vitamin B12, Normal Saline 0.9%, D5W.",
           "mayers_cocktail.price": "990 SAR",
+
           "immunity_boost.name": "Immunity Boost IV Therapy",
           "immunity_boost.description":
               "Strengthen your immunity and support whole-body wellness. Maintain a robust immune system despite fluctuations. This is the best method, whether it's for preventing wellness or treating a cold.",
           "immunity_boost.ingredients":
               "Vitamin C, Water-Soluble Vitamins, Magnesium Sulphate, Zinc, Potassium Chloride, Vitamin B12, Thiamine, Normal Saline 0.9%, D5W, Glutamine.",
           "immunity_boost.price": "990 SAR",
+
           "Components Included:": "Components Included:",
           "December, 2024": "December, 2024",
           "protein_test_urine": "Urine Total Protein Test",

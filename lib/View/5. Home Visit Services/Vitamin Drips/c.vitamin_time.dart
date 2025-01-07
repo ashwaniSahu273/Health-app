@@ -9,15 +9,15 @@ import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/d.vitamin_payment.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_cart_page.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class Vitamin_Time extends StatefulWidget {
   final UserModel userModel;
   final User firebaseUser;
-  final Map<String, dynamic> providerData;
 
   Vitamin_Time({
-    required this.providerData,
     required this.userModel,
     required this.firebaseUser,
   });
@@ -30,7 +30,10 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
   String? selectedTime;
   int selectedIndex = 0;
   int genderIndex = 0;
-  String selectedDate = "December, 2024".tr; // Default date
+  String selectedDate = "December 1, 2024".tr; // Default date
+
+  VitaminCartController vitaminCartController =
+      Get.put(VitaminCartController());
 
   final List<String> timeSlots = [
     "09:00 am".tr,
@@ -235,7 +238,7 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
                   size: 35,
                   weight: 200,
                 )), // Double-arrow icon
-          Text(
+            Text(
               'Select Date'.tr,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
@@ -274,13 +277,7 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
-                  Container(
-                    // decoration: BoxDecoration(
-                    //   color: Colors.white,
-                    // ),
-                    child: StepProgressBar(currentStep: 3, totalSteps: 4)
-                    ),
+                  StepProgressBar(currentStep: 3, totalSteps: 4),
                   //   padding: const EdgeInsets.only(left: 10, right: 10),
                   //   child: Text(
                   //     "Vitamin Drips Details",
@@ -410,8 +407,7 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
                   ),
                   const SizedBox(height: 16),
                   Padding(
-                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: List.generate(
@@ -465,7 +461,6 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
                   const SizedBox(height: 40),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-
                     child: Container(
                       decoration: BoxDecoration(
                         color: Color(0xFFCAE8E5),
@@ -482,6 +477,16 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
                               onTap: () {
                                 setState(() {
                                   genderIndex = 0;
+
+                                  if (genderIndex == 0) {
+                                    widget.userModel.gender = "Any";
+                                  }
+                                  if (genderIndex == 1) {
+                                    widget.userModel.gender = "Male";
+                                  }
+                                  if (genderIndex == 0) {
+                                    widget.userModel.gender = "Female";
+                                  }
                                 });
                               },
                               child: Container(
@@ -673,15 +678,20 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
                   ),
 
                   Padding(
-                                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: GestureDetector(
                       onTap: () {
                         // Handle the tap action (e.g., navigate to another screen)
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                              content: Text('Navigating to Selected Details...'.tr)),
-                        );
+                        Get.to(VitaminCartPage(
+                            address: vitaminCartController.stAddress.value,
+                            userModel: widget.userModel,
+                            firebaseUser: widget.firebaseUser));
+
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   SnackBar(
+                        //       content:
+                        //           Text('Navigating to Selected Details...'.tr)),
+                        // );
                       },
                       child: Text(
                         'View Selected Details'.tr,
@@ -696,8 +706,7 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
                   ),
                   const SizedBox(height: 8),
                   Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
                       'Excluding visit fee'.tr,
                       style: TextStyle(color: Colors.grey),
@@ -709,7 +718,7 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          'SAR 300',
+                          'SAR ${vitaminCartController.getTotalAmount()}',
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -731,8 +740,7 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
                   // ),
                   SizedBox(height: 10),
                   Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: SingleChildScrollView(
                       scrollDirection:
                           Axis.horizontal, // Enable horizontal scrolling
@@ -740,11 +748,6 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
                         spacing: 10,
                         children: [
                           ...timeSlots.map((item) => buildTimeContainer(item)),
-                          //       buildTimeSelectionRow(
-                          //           "09:00 am", "10:00 am", "11:00 am"),
-                          //       buildTimeSelectionRow(
-                          //           "12:00 pm", "1:00 pm", "02:00 pm"),
-                          // buildTimeSelectionRow("04:00 pm", "05:00 pm", "06:00 pm"),
                         ],
                       ),
                     ),
@@ -796,35 +799,32 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
                   SizedBox(height: 40),
 
                   Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: GestureDetector(
                       // Inside the GestureDetector's onTap method
-                      onTap: () async {
+                      onTap: () {
                         if (selectedTime != null) {
                           // Update the Firestore document with the selected time
-                          await FirebaseFirestore.instance
-                              .collection("User_appointments")
-                              .doc(FirebaseAuth.instance.currentUser!.email)
-                              .update({
-                            "selected_time": selectedTime,
-                          });
-                    
+                          // await FirebaseFirestore.instance
+                          //     .collection("User_appointments")
+                          //     .doc(FirebaseAuth.instance.currentUser!.email)
+                          //     .update({
+                          //   "selected_time": selectedTime,
+                          // });
+
+                           vitaminCartController.convertToFirebaseTimestamp(selectedDate,selectedTime!);
+
                           // Navigate to Payment Details with the package name and price
                           Get.to(() => VitaminPaymentPage(
                                 userModel: widget.userModel,
                                 firebaseUser: widget.firebaseUser,
-                                providerData: widget.providerData,
                                 selectedTime: selectedTime!,
-                                selectedProviderData: widget.providerData,
-                                packageName: widget.providerData['type'],
-                                packagePrice: widget.providerData['price'],
                               ));
                         } else {
                           Get.snackbar("Error", "Please select a time slot");
                         }
                       },
-                    
+
                       child: Padding(
                         padding: const EdgeInsets.only(left: 2, right: 2),
                         child: Container(
@@ -887,6 +887,7 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
         setState(() {
           selectedTime = time;
         });
+        vitaminCartController.convertToFirebaseTimestamp(selectedDate, time);
       },
       child: Container(
         decoration: BoxDecoration(

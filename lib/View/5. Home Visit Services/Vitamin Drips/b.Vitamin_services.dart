@@ -6,13 +6,10 @@ import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/Resources/VitaminDynamicUI/vitamin_dynamic_ui.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/get_patient_info.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/c.vitamin_time.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_cart_page.dart';
-// import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/cart_page.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
-// import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/c.vitamin_time.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
-// import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 
 class VitaminServices extends StatefulWidget {
   final String address;
@@ -51,18 +48,6 @@ class _VitaminServicesState extends State<VitaminServices> {
       userModel: widget.userModel,
       firebaseUser: widget.firebaseUser,
     ));
-    // Get.to(() => Vitamin_Time(
-    //       userModel: widget.userModel,
-    //       firebaseUser: widget.firebaseUser,
-    //       providerData: {
-    //         "email": FirebaseAuth.instance.currentUser!.email,
-    //         "address": widget.address,
-    //         "type": serviceName,
-    //         "benefits": description,
-    //         "components": components,
-    //         "price": price, // Pass the price
-    //       },
-    //     ));
   }
 
   @override
@@ -135,18 +120,18 @@ class _VitaminServicesState extends State<VitaminServices> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.7,
                   child: ListView.builder(
-                    itemCount: cartController.services.length,
+                    itemCount: cartController.servicesList.length,
                     itemBuilder: (context, index) {
-                      final service = cartController.services[index];
+                      final service = cartController.servicesList[index];
                       return Column(
                         children: [
                           _buildServiceCard(
-                            id: service['id'],
-                            serviceName: service['serviceName'],
-                            description: service['description'],
-                            components: service['components'],
-                            price: service['price'],
-                            imagePath: service['imagePath'],
+                            id: service.id,
+                            serviceName: service.localizedData.serviceName,
+                            description: service.localizedData.description,
+                            components: service.localizedData.components,
+                            price: service.localizedData.price,
+                           
                           ),
                           const SizedBox(height: 10),
                         ],
@@ -321,6 +306,7 @@ class _VitaminServicesState extends State<VitaminServices> {
                               address: widget.address,
                               userModel: widget.userModel,
                               firebaseUser: widget.firebaseUser,
+                              //
                             ));
                           }
                         },
@@ -367,18 +353,15 @@ class _VitaminServicesState extends State<VitaminServices> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: cartController.isCartEmpty()
                                 ? MyColors.greenColorauth
-                                : MyColors.liteGreen, // Background color
-                            minimumSize:
-                                const Size(160, 55), // Width and height
+                                : MyColors.liteGreen,
+                            minimumSize: const Size(160, 55),
                             shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(12), // Border radius
+                              borderRadius: BorderRadius.circular(12),
                             ),
                           ),
                           onPressed: () {
                             if (!cartController.isCartEmpty()) {
-                              Get.to(() => GetPatientInfoPage(
-                                    address: widget.address,
+                              Get.to(() => Vitamin_Time(
                                     userModel: widget.userModel,
                                     firebaseUser: widget.firebaseUser,
                                   ));
@@ -407,7 +390,7 @@ class _VitaminServicesState extends State<VitaminServices> {
     required String description,
     required String components,
     required String price,
-    required String imagePath,
+   String? imagePath,
     int? id,
   }) {
     final isSelected = selectedService == serviceName;
@@ -436,7 +419,7 @@ class _VitaminServicesState extends State<VitaminServices> {
                     color: const Color.fromARGB(255, 169, 214, 246),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Image(image: AssetImage(imagePath)),
+                  child: Image(image: AssetImage("assets/images/vitamin.png")),
                 ),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

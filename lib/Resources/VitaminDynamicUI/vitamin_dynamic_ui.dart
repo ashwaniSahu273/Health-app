@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 // import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/get_patient_info.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/c.vitamin_time.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_cart_page.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -16,27 +16,31 @@ class DynamicUIPage extends StatelessWidget {
   final String? components;
   final String price;
   final String? image;
-   final String address;
+  final String address;
   final UserModel userModel;
   final User firebaseUser;
 
   const DynamicUIPage(
       {super.key,
-       this.id,
+      this.id,
       required this.title,
       required this.description,
       required this.price,
       this.image,
-      required this.components, required this.address, required this.userModel, required this.firebaseUser});
+      required this.components,
+      required this.address,
+      required this.userModel,
+      required this.firebaseUser});
 
   @override
   Widget build(BuildContext context) {
-   VitaminCartController vitaminCartController = Get.find<VitaminCartController>();
-    
+    VitaminCartController vitaminCartController =
+        Get.find<VitaminCartController>();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        automaticallyImplyLeading:true,
+        automaticallyImplyLeading: true,
         leadingWidth: 200,
         leading: Row(
           children: [
@@ -49,7 +53,7 @@ class DynamicUIPage extends StatelessWidget {
                 )), // Double-arrow icon
             Text(
               'Select Package'.tr,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -61,26 +65,21 @@ class DynamicUIPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Step indicator
-            Container(
-                // decoration: BoxDecoration(
-                //   color: Colors.white,
-                // ),
-                child: StepProgressBar(currentStep: 2, totalSteps: 4)),
+            const StepProgressBar(currentStep: 2, totalSteps: 4),
             const SizedBox(height: 16),
 
             // Content box
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Card(
-                color:  Color.fromARGB(255, 218, 232, 243),
+                color: const Color.fromARGB(255, 218, 232, 243),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
                   side: BorderSide(color: Colors.grey.shade300, width: 1),
-                  
                 ),
                 elevation: 2,
                 child: Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -110,7 +109,7 @@ class DynamicUIPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
 
                       // About section
                       const Text(
@@ -118,14 +117,13 @@ class DynamicUIPage extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold),
                       ),
-                     const SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Text(
                         description,
-                        style:const TextStyle(fontSize: 13),
+                        style: const TextStyle(fontSize: 13),
                       ),
                       const SizedBox(height: 16),
 
-                      // Instructions
                       // Text(
                       //   'Instructions',
                       //   style: TextStyle(
@@ -143,85 +141,87 @@ class DynamicUIPage extends StatelessWidget {
                       // ),
                       const SizedBox(height: 16),
 
-                      // Components
                       const Text(
                         'Components Included',
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold),
                       ),
-                     const SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Text(
                         '$components',
-                        style: TextStyle(fontSize: 13),
+                        style: const TextStyle(fontSize: 13),
                       ),
-                     const  SizedBox(height: 16),
+                      const SizedBox(height: 16),
 
-                      // Select button
-
-                     Obx(
-                       ()=> vitaminCartController.isItemInCart(id) ? Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                           const Text(
-                              'Qty:',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w500),
-                            ),
-                            SizedBox(width: 10),
-                            Container(
-                                height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.grey[200],
+                      Obx(
+                        () => vitaminCartController.isItemInCart(id)
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    'Qty:',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.grey[200],
+                                    ),
+                                    child: IconButton(
+                                      icon: const Icon(Icons.remove),
+                                      onPressed: () {
+                                        vitaminCartController
+                                            .decreaseQuantity(id);
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Obx(
+                                    () => Text(
+                                      '${vitaminCartController.getQuantityById(id)}',
+                                      style: const TextStyle(fontSize: 18),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.grey[200],
+                                    ),
+                                    child: IconButton(
+                                      icon: const Icon(Icons.add),
+                                      onPressed: () {
+                                        vitaminCartController
+                                            .increaseQuantity(id);
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Center(
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    vitaminCartController.addToCart(id);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.blue,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 32, vertical: 12),
+                                  ),
+                                  child: const Text('Select'),
+                                ),
                               ),
-                              child: IconButton(
-                                icon: Icon(Icons.remove),
-                                onPressed: () {
-                                  vitaminCartController.decreaseQuantity(id);
-                                },
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                           Obx(
-                             ()=> Text(
-                                '${vitaminCartController.getQuantityById(id)}',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                           ),
-                            const SizedBox(width: 10),
-                            Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.grey[200],
-                              ),
-                              child: IconButton(
-                                icon: Icon(Icons.add),
-                                onPressed: () {
-                                   vitaminCartController.increaseQuantity(id);
-                                },
-                              ),
-                            ),
-                          ],
-                        ): Center(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              vitaminCartController.addToCart(id);
-                            },
-                            child: Text('Select'),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              padding:const EdgeInsets.symmetric(
-                                  horizontal: 32, vertical: 12),
-                            ),
-                          ),
-                        ),
-                     ),
+                      ),
                     ],
                   ),
                 ),
@@ -264,17 +264,17 @@ class DynamicUIPage extends StatelessWidget {
                           borderRadius:
                               BorderRadius.circular(8), // Rounded corners
                         ),
-                        minimumSize: Size(160, 55),
+                        minimumSize: const Size(160, 55),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 8), // Padding
                       ),
                       onPressed: () {
                         if (vitaminCartController.cartItems.isNotEmpty) {
-                        Get.to(VitaminCartPage(
-                          address: address,
-                          userModel: userModel,
-                          firebaseUser: firebaseUser,
-                        ));
+                          Get.to(VitaminCartPage(
+                            address: address,
+                            userModel: userModel,
+                            firebaseUser: firebaseUser,
+                          ));
                         }
                       },
                       child: Row(
@@ -289,8 +289,8 @@ class DynamicUIPage extends StatelessWidget {
                               borderRadius:
                                   BorderRadius.circular(8), // Make it circular
                             ),
-                            child:  Obx(
-                              ()=> Center(
+                            child: Obx(
+                              () => Center(
                                 child: Text(
                                   '${vitaminCartController.cartItems.length}', // Cart item count
                                   style: const TextStyle(
@@ -316,10 +316,11 @@ class DynamicUIPage extends StatelessWidget {
                       ),
                     ),
                     Obx(
-                     ()=> ElevatedButton(
+                      () => ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              vitaminCartController.isCartEmpty()? MyColors.greenColorauth: MyColors.liteGreen, // Background color
+                          backgroundColor: vitaminCartController.isCartEmpty()
+                              ? MyColors.greenColorauth
+                              : MyColors.liteGreen, // Background color
                           minimumSize: const Size(160, 55), // Width and height
                           shape: RoundedRectangleBorder(
                             borderRadius:
@@ -328,15 +329,13 @@ class DynamicUIPage extends StatelessWidget {
                         ),
                         onPressed: () {
                           if (!vitaminCartController.isCartEmpty()) {
-
-                          Get.to(() => GetPatientInfoPage(
-                                     address: address,
-                                      userModel: userModel,
-                                      firebaseUser: firebaseUser,
-                                    ));
+                            Get.to(() => Vitamin_Time(
+                                  userModel: userModel,
+                                  firebaseUser: firebaseUser,
+                                ));
                           }
                         },
-                        child:const Text(
+                        child: const Text(
                           'Continue',
                           style: TextStyle(color: Colors.black, fontSize: 15),
                         ),
