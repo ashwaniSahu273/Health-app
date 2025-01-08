@@ -284,7 +284,7 @@ class _LabTestState extends State<LabTest> {
                         itemCount: 4,
                         itemBuilder: (context, index) {
 
-                           var item = controller.testItems[index];
+                           var item = controller.servicesList[index];
                           return GestureDetector(
                             onTap: () {
                               // Get.to(() => PaymentDetailsPage(
@@ -297,7 +297,7 @@ class _LabTestState extends State<LabTest> {
                               //       firebaseUser: widget.firebaseUser,
                               //     ));
 
-                                Get.to(()=> LabDynamicUIPage(title: item["name"],id: item["id"], description: "", price: item["price"], components: ""));
+                                Get.to(()=> LabDynamicUIPage(title: item.localizedData.serviceName,id: item.id, description: item.localizedData.description, price: item.localizedData.price, components: item.localizedData.components));
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -316,7 +316,7 @@ class _LabTestState extends State<LabTest> {
                                       child: Align(
                                           alignment: Alignment.topLeft,
                                           child: Text(
-                                            "${item["name"]}",
+                                            "${item.localizedData.serviceName}",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,fontSize: 16),
                                           )),
@@ -350,7 +350,7 @@ class _LabTestState extends State<LabTest> {
                                                 color: Colors.white),
                                             child: Center(
                                               child: Text(
-                                                "Starting ${item["price"]}",
+                                                "Starting ${item.localizedData.price}",
                                                 style: TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:

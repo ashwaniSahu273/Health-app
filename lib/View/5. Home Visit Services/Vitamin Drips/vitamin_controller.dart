@@ -23,6 +23,44 @@ class VitaminCartController extends GetxController {
     fetchServices();
   }
 
+  Future<void> signInWithPhoneNumber(
+      String verificationId, String smsCode) async {
+    FirebaseAuth _auth = FirebaseAuth.instance;
+
+    // Create a PhoneAuthCredential with the code
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+      verificationId: verificationId,
+      smsCode: smsCode,
+    );
+
+    // Sign in the user with the credential
+    await _auth.signInWithCredential(credential);
+  }
+
+  Future<void> verifyPhoneNumber(String phoneNumber) async {
+    FirebaseAuth _auth = FirebaseAuth.instance;
+
+    await _auth.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        // Automatically sign in the user when verification is completed
+        await _auth.signInWithCredential(credential);
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        if (e.code == 'invalid-phone-number') {
+          print('The provided phone number is not valid.');
+        }
+        // Handle other errors
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        // Store the verificationId and resendToken for later use
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        // Handle timeout
+      },
+    );
+  }
+
   void fetchServices() async {
     try {
       QuerySnapshot querySnapshot =

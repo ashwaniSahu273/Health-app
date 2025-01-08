@@ -9,13 +9,15 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/labtest.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class LabImp extends StatefulWidget {
   final UserModel userModel;
   final User firebaseUser;
-  const LabImp({super.key, required this.userModel, required this.firebaseUser});
+  const LabImp(
+      {super.key, required this.userModel, required this.firebaseUser});
 
   @override
   State<LabImp> createState() => _LabImpState();
@@ -23,6 +25,8 @@ class LabImp extends StatefulWidget {
 
 class _LabImpState extends State<LabImp> {
   Completer<GoogleMapController> _controller = Completer();
+  LabController labController = Get.put(LabController());
+
   static final CameraPosition kGooglePlex = CameraPosition(
     target: LatLng(24.8846, 67.1754),
     zoom: 14.4746,
@@ -42,7 +46,7 @@ class _LabImpState extends State<LabImp> {
 
   @override
   void initState() {
-
+    labController.storeServices();
     super.initState();
     _marker.addAll(_list);
   }
@@ -127,18 +131,24 @@ class _LabImpState extends State<LabImp> {
                     Navigator.pop(context);
                   },
                   onConfirm: () {
-                    setState(() {
-                      fireStore.doc(user!.email).set({
-                        "email": user.email,
-                        "address": stAddress,
-                        "type": "Doctor Visit"
-                      });
-                      Get.to(() => LabTest(
-                            userModel: widget.userModel,
-                            firebaseUser: widget.firebaseUser,
-                            address: stAddress,
-                          ));
-                    });
+                    // setState(() {
+                    //   fireStore.doc(user!.email).set({
+                    //     "email": user.email,
+                    //     "address": stAddress,
+                    //     "type": "Doctor Visit"
+                    //   });
+
+                    // });
+
+                    labController.stAddress.value = stAddress;
+                    labController.latitude.value = Latitude;
+                    labController.longitude.value = Longitude;
+
+                    Get.to(() => LabTest(
+                          userModel: widget.userModel,
+                          firebaseUser: widget.firebaseUser,
+                          address: stAddress,
+                        ));
                   },
                   textCancel: "Cancel".tr,
                   textConfirm: "Confirm".tr,

@@ -5,8 +5,6 @@ import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/cart_page.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_cart_page.dart';
-// import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
 
 class LabDynamicUIPage extends StatelessWidget {
   final int? id;
@@ -106,15 +104,15 @@ class LabDynamicUIPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      // SizedBox(height: 16),
+                      SizedBox(height: 16),
 
                       // About section
-                      // const Text(
-                      //   'About This Package',
-                      //   style: TextStyle(
-                      //       fontSize: 14, fontWeight: FontWeight.bold),
-                      // ),
-                    //  const SizedBox(height: 8),
+                      const Text(
+                        'About This Package',
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                     const SizedBox(height: 8),
                       Text(
                         description,
                         style:const TextStyle(fontSize: 13),
