@@ -123,15 +123,22 @@ class _VitaminServicesState extends State<VitaminServices> {
                     itemCount: cartController.servicesList.length,
                     itemBuilder: (context, index) {
                       final service = cartController.servicesList[index];
+
+                      String languageCode = Get.locale?.languageCode ?? 'en';
+
+                      // Access localized data
+                      final localizedData = languageCode == 'ar'
+                          ? service.localized.ar
+                          : service.localized.en;
+
                       return Column(
                         children: [
                           _buildServiceCard(
                             id: service.id,
-                            serviceName: service.localizedData.serviceName,
-                            description: service.localizedData.description,
-                            components: service.localizedData.components,
-                            price: service.localizedData.price,
-                           
+                            serviceName: localizedData.serviceName,
+                            description: localizedData.description,
+                            components: localizedData.components,
+                            price: localizedData.price,
                           ),
                           const SizedBox(height: 10),
                         ],
@@ -390,7 +397,7 @@ class _VitaminServicesState extends State<VitaminServices> {
     required String description,
     required String components,
     required String price,
-   String? imagePath,
+    String? imagePath,
     int? id,
   }) {
     final isSelected = selectedService == serviceName;

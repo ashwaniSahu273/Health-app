@@ -481,6 +481,15 @@ class VitaminPaymentPage extends StatelessWidget {
                                 itemBuilder: (context, index) {
                                   final item =
                                       vitaminCartController.cartItems[index];
+
+                                      
+                            String languageCode =
+                                Get.locale?.languageCode ?? 'en';
+
+                            final localizedData = languageCode == 'ar'
+                                ? item["localized"]["ar"]
+                                : item["localized"]["en"];
+
                                   return Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -488,7 +497,7 @@ class VitaminPaymentPage extends StatelessWidget {
                                       Flexible(
                                         flex: 3, // Takes 3 parts of the row
                                         child: Text(
-                                          item['serviceName'],
+                                          localizedData['serviceName'],
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
@@ -502,7 +511,7 @@ class VitaminPaymentPage extends StatelessWidget {
                                       Flexible(
                                         flex: 1, // Takes 1 part of the row
                                         child: Text(
-                                          item['price'],
+                                          localizedData['price'],
                                           style: TextStyle(
                                             fontSize: 17,
                                             color: Colors.black,

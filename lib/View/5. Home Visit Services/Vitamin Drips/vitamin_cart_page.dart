@@ -7,11 +7,9 @@ import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20D
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class VitaminCartPage extends StatelessWidget {
-
   final String address;
   final UserModel userModel;
   final User firebaseUser;
-
 
   final VitaminCartController cartController = Get.put(VitaminCartController());
 
@@ -67,6 +65,15 @@ class VitaminCartPage extends StatelessWidget {
                           itemCount: cartController.cartItems.length,
                           itemBuilder: (context, index) {
                             final item = cartController.cartItems[index];
+
+                            String languageCode =
+                                Get.locale?.languageCode ?? 'en';
+
+                            // Access localized data
+                            final localizedData = languageCode == 'ar'
+                                ? item["localized"]["ar"]
+                                : item["localized"]["en"];
+
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
@@ -97,7 +104,7 @@ class VitaminCartPage extends StatelessWidget {
                                           width:
                                               200, // Set your desired width here
                                           child: Text(
-                                            '${item["serviceName"]}',
+                                            '${localizedData["serviceName"]}',
                                             style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w500,
@@ -136,7 +143,7 @@ class VitaminCartPage extends StatelessWidget {
                                           padding:
                                               const EdgeInsets.only(left: 55.0),
                                           child: Text(
-                                            '${item["price"]}',
+                                            '${localizedData["price"]}',
                                             style: const TextStyle(
                                               fontSize: 16,
                                               color: Colors.blue,
@@ -345,8 +352,9 @@ class VitaminCartPage extends StatelessWidget {
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                           cartController.isCartEmpty()?  MyColors.greenColorauth : MyColors.liteGreen, // Background color
+                        backgroundColor: cartController.isCartEmpty()
+                            ? MyColors.greenColorauth
+                            : MyColors.liteGreen, // Background color
                         minimumSize: const Size(160, 55), // Width and height
                         shape: RoundedRectangleBorder(
                           borderRadius:
@@ -358,14 +366,11 @@ class VitaminCartPage extends StatelessWidget {
                         //             userModel: widget.userModel,
                         //             firebaseUser: widget.firebaseUser,
                         //           ));
-                        if(!cartController.isCartEmpty()){
-
-                        Get.to(Vitamin_Time(
-                          userModel: userModel,
-                          firebaseUser:firebaseUser,
-                        
-                          
-                        ));
+                        if (!cartController.isCartEmpty()) {
+                          Get.to(Vitamin_Time(
+                            userModel: userModel,
+                            firebaseUser: firebaseUser,
+                          ));
                         }
                       },
                       child: Text(
