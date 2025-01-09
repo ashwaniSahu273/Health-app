@@ -537,7 +537,7 @@ class VitaminPaymentPage extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '$vat SAR',
+                                  '$vat ${'SAR'.tr}',
                                   style: TextStyle(
                                     fontSize: 17,
                                     color: Colors.black,
@@ -567,7 +567,7 @@ class VitaminPaymentPage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '$totalAmount SAR',
+                          '$totalAmount ${'SAR'.tr}',
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.blue,

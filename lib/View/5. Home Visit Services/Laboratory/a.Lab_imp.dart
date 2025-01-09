@@ -60,8 +60,8 @@ class _LabImpState extends State<LabImp> {
 
   @override
   Widget build(BuildContext context) {
-    final _auth = FirebaseAuth.instance;
-    final user = _auth.currentUser;
+    // final _auth = FirebaseAuth.instance;
+    // final user = _auth.currentUser;
 
     return Scaffold(
       body: SafeArea(

@@ -29,8 +29,8 @@ class VitaminCartPage extends StatelessWidget {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
-        title: const Text(
-          'Cart Items',
+        title: Text(
+          'Cart Items'.tr,
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
         ),
         leading: IconButton(
@@ -52,7 +52,7 @@ class VitaminCartPage extends StatelessWidget {
                 children: [
                   Obx(
                     () => Text(
-                      'Your Package tests (${cartController.cartItems.length})',
+                      '${'Your Package tests'.tr} (${cartController.cartItems.length})',
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
@@ -154,7 +154,7 @@ class VitaminCartPage extends StatelessWidget {
                                         Row(
                                           children: [
                                             Text(
-                                              "Qty :",
+                                              "Qty :".tr,
                                             ),
                                             IconButton(
                                               icon: const Icon(
@@ -275,13 +275,13 @@ class VitaminCartPage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Amount payable',
+                       Text(
+                        'Amount payable'.tr,
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                       Text(
-                        '${cartController.getTotalAmount()} SAR',
+                        '${cartController.getTotalAmount()} ${'SAR'.tr}',
                         style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -339,8 +339,8 @@ class VitaminCartPage extends StatelessWidget {
                           ),
                           const SizedBox(
                               width: 8), // Space between the icon and text
-                          const Text(
-                            'Selected item',
+                          Text(
+                            'Selected item'.tr,
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
@@ -374,7 +374,7 @@ class VitaminCartPage extends StatelessWidget {
                         }
                       },
                       child: Text(
-                        'Continue',
+                        'Continue'.tr,
                         style: TextStyle(color: Colors.black, fontSize: 15),
                       ),
                     ),

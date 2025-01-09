@@ -133,7 +133,7 @@ class _VitaminState extends State<Vitamin> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Address:",
+              "Address:".tr,
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),

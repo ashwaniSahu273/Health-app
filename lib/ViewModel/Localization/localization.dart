@@ -208,120 +208,6 @@ class Language extends Translations {
           "Checkout": "Checkout",
           "Selected Service": "Selected Service",
 
-
-
-          "memory_enhancement.name": "Memory Enhancement IV Therapy",
-          "memory_enhancement.description":
-              "It calms the stimulated mind and plays an important role in forming brain cells and enhances memory.",
-          "memory_enhancement.ingredients":
-              "Vitamin B12, Zinc, Selenium, Calcium Gluconate, Magnesium Sulphate, Vitamin C, Amino Acids, Potassium Chloride, Normal Saline, Water-Soluble Vitamins, Thiamine (Vitamin B1)",
-          "memory_enhancement.price": "990 SAR",
-
-
-          "hydration.name": "Hydration IV Therapy",
-          "hydration.description":
-              "Ideal for recovery from an action-packed weekend or busy lifestyle, boost energy levels while replenishing the electrolytes in your body.",
-          "hydration.ingredients":
-              "Vitamin C, Potassium Chloride, Magnesium Sulphate, Zinc, Normal Saline, Thiamine (Vitamin B1), Amino Acids, Water-Soluble Vitamins.",
-          "hydration.price": "990 SAR",
-
-          "antiaging.name": "Antiaging IV Therapy",
-          "antiaging.description":
-              "The ladies favourite a powerful hit of antioxidants with antiaging properties supporting detox, hydration, optimal hair, nail and skin health.",
-          "antiaging.ingredients":
-              "MultiVitamins Mixture, Vitamin C, Zinc, Selenium, Magnesium Sulphate, Potassium Chloride, Amino Acids, Vitamin B12, Normal Saline.",
-          "antiaging.price": "900 SAR",
-
-
-          "stress_relief.name": "Stress Relief IV Therapy",
-          "stress_relief.description":
-              "It calms the body, improves mood, reduces anxiety and other signs of stress.",
-          "stress_relief.ingredients":
-              "Vitamin C, Magnesium Sulphate, Zinc, Potassium Chloride, Amino Acids, Vitamin B12, Normal Saline, Water-Soluble Vitamins.",
-          "stress_relief.price": "900 SAR",
-
-
-          "fitness_boost.name": "Fitness Boost IV Therapy",
-          "fitness_boost.description":
-              "Recommended for fitness enthusiasts or those who maintain an active lifestyle.",
-          "fitness_boost.ingredients":
-              "Vitamin C, Magnesium Sulphate, Calcium Gluconate, Potassium Chloride, Zinc, Vitamin B12, Glutamine, Normal Saline, Water-Soluble Vitamins, L-Carnitine, Thiamine (Vitamin B1).",
-          "fitness_boost.price": "1080 SAR",
-
-
-          "energy_boost.name": "Energy Boost IV Therapy",
-          "energy_boost.description":
-              "To restore energy, build proteins, support antioxidants, and increase productivity.",
-          "energy_boost.ingredients":
-              "Vitamin B12, Vitamin C, Magnesium Sulphate, Potassium Chloride, Zinc, Selenium, L-Carnitine, Glutamine, Normal Saline, Multivitamins Mixture.",
-          "energy_boost.price": "1170 SAR",
-
-
-          "post_sleeve.name": "Post Sleeve Gastrectomy IV Therapy",
-          "post_sleeve.description":
-              "To hydrate the body after gastric sleeve and provide better absorption for the nutrients and supplements.",
-          "post_sleeve.ingredients":
-              "Calcium Gluconate, Magnesium Sulphate, Vitamin B12, Potassium Chloride, Multivitamins Mixture, Vitamin C, Vitamin B1, Vitamin D3, Selenium, Amino Acids, Normal Saline, Trace Elements Mixture, Zinc.",
-          "post_sleeve.price": "1035 SAR",
-
-
-          "hair_health.name": "Hair Health IV Therapy",
-          "hair_health.description":
-              "For healthy, strong, balanced hair, reduces hair loss and supports nails and skin.",
-          "hair_health.ingredients":
-              "Vitamin C, Zinc, Selenium, Water-Soluble Vitamins, Vitamin D3, Vitamin B12, Magnesium Sulphate, Folic Acid, Amino Acids, Normal Saline.",
-          "hair_health.price": "1035 SAR",
-
-          "jet_lag.name": "Jet Lag IV Therapy",
-          "jet_lag.description":
-              "Hydration after a flight is essential for the body, this is recommended for frequent travelers to support with energy production and the immune system.",
-          "jet_lag.ingredients":
-              "Vitamin B12, Zinc, Magnesium Sulphate, Vitamin C, Calcium Gluconate, Amino Acids, Normal Saline, Thiamine (Vitamin B1), Water-Soluble Vitamins.",
-          "jet_lag.price": "990 SAR",
-
-
-          "migraine_relief.name": "Migraine Relief IV Therapy",
-          "migraine_relief.description":
-              "This multivitamin relieves migraine headaches and their related symptoms.",
-          "migraine_relief.ingredients":
-              "Vitamin C, Vitamin D3, Folic Acid, Thiamine (Vitamin B1), Magnesium Sulphate, Vitamin B12, Normal Saline, Water-Soluble Vitamins.",
-          "migraine_relief.price": "945 SAR",
-
-          "depression_relief.name": "Depression Relief IV Therapy",
-          "depression_relief.description":
-              "This multivitamin relieves Depression, Anxiety, and their related symptoms.",
-          "depression_relief.ingredients":
-              "Selenium, Zinc, Calcium Gluconate, Amino Acids, Vitamin C, Vitamin B12, Vitamin D3, Folic Acid, Thiamine (Vitamin B1), Magnesium Sulphate, Normal Saline, Trace Elements Mixture, Water-Soluble Vitamins.",
-          "depression_relief.price": "990 SAR",
-
-          "weight_loss.name": "Weight Loss IV Therapy",
-          "weight_loss.description":
-              "This multivitamin aids in improving body metabolism and the rate of fat burning within the body.",
-          "weight_loss.ingredients":
-              "L-Carnitine, Glutamine, Zinc, Calcium Gluconate, Vitamin C, Vitamin B12, Vitamin D3, Thiamine (Vitamin B1), Magnesium Sulphate, Normal Saline, Trace Elements Mixture, Water-Soluble Vitamins.",
-          "weight_loss.price": "1170 SAR",
-
-          "diet_detox.name": "Diet & Detox IV Therapy",
-          "diet_detox.description":
-              "Incorporate antioxidants into your regular wellness routine and remove any lingering free radicals in your body.",
-          "diet_detox.ingredients":
-              "Vitamin C, Water-Soluble Vitamins, Potassium Chloride, Calcium Gluconate, Vitamin D3, Selenium, Trace Elements Mixture, Zinc, Thiamine, Amino Acids 10%, Magnesium Sulphate, Normal Saline 0.9%, D5W.",
-          "diet_detox.price": "990 SAR",
-          
-          "mayers_cocktail.name": "Mayers Cocktail IV Therapy",
-          "mayers_cocktail.description":
-              "Restore balance, reduce the symptoms of chronic illnesses, and promote general wellness.",
-          "mayers_cocktail.ingredients":
-              "Calcium Gluconate, Magnesium Sulphate, Ascorbic Acid, Water-Soluble Vitamins, Thiamine, Vitamin B12, Normal Saline 0.9%, D5W.",
-          "mayers_cocktail.price": "990 SAR",
-
-          "immunity_boost.name": "Immunity Boost IV Therapy",
-          "immunity_boost.description":
-              "Strengthen your immunity and support whole-body wellness. Maintain a robust immune system despite fluctuations. This is the best method, whether it's for preventing wellness or treating a cold.",
-          "immunity_boost.ingredients":
-              "Vitamin C, Water-Soluble Vitamins, Magnesium Sulphate, Zinc, Potassium Chloride, Vitamin B12, Thiamine, Normal Saline 0.9%, D5W, Glutamine.",
-          "immunity_boost.price": "990 SAR",
-
           "Components Included:": "Components Included:",
           "December, 2024": "December, 2024",
           "protein_test_urine": "Urine Total Protein Test",
@@ -409,9 +295,37 @@ class Language extends Translations {
           "04:00 pm": "04:00 pm",
           "05:00 pm": "05:00 pm",
           "06:00 pm": "06:00 pm",
-          "Select Packages":"Select Packages"
+          "Select Packages":"Select Packages",
+          "Selected item":"Selected item",
+          "Continue":"Continue",
+          "Your location":"Your location",
+          "About This Package":"About This Package",
+          "Care about you and your family":"Care about you and your family",
+          "Components Included":"Components Included",
+          "Select":"Select",
+          "Step ":"Step ",
+          "of": "of",
+          "Cart Items":"Cart Items",
+          "Amount payable":"Amount payable",
+          "Qty :":"Qty :",
+          "Your Package tests": "Your Package tests",
+          "SAR":"SAR",
         },
         "ar_AE": {
+          "SAR":"ريال",
+          "Your Package tests": "لعناصر المختارة",
+          "Qty :":"العدد:" ,
+          "Amount payable":"المبلغ المستحق",
+          "Cart Items":"عناصر السلة",
+          "of": "ar_AE",
+          "Step ":" خطوة",
+          "Select":"اختر",
+          "Components Included":"المكونات",
+          "Care about you and your family":"حريص عليك وعلى عائلتك",
+          "About This Package":"عن الباقة",
+          "Your location":"موقعك",
+          "Continue":"متابعة",
+          "Selected item":"عرض السلة",
          "Select Packages":"اختر الباقات",
           "09:00 am": "9:00 صباحا",
           "10:00 am": "10:00 صباحا",
@@ -506,96 +420,6 @@ class Language extends Translations {
           "tb_test_tr": "فحص الكونتيفيرون (السل)",
           "alk_phosphatase_enzyme_test": "تحليل انزيم الفوسفاتيز القلوي",
           "Components Included:": "المكونات المتضمنة:",
-          "fitness_boost.name": "علاج تعزيز اللياقة البدنية عبر الوريد",
-          "fitness_boost.description":
-              "موصى به لعشاق اللياقة البدنية أو الذين يحافظون على أسلوب حياة نشط.",
-          "fitness_boost.ingredients":
-              "فيتامين سي، كبريتات المغنيسيوم، جلوكونات الكالسيوم، كلوريد البوتاسيوم، الزنك، فيتامين ب12، الجلوتامين، محلول ملحي عادي، فيتامينات قابلة للذوبان في الماء، إل-كارنيتين، الثيامين (فيتامين ب1).",
-          "fitness_boost.price": "1080 SAR",
-          "energy_boost.name": "علاج تعزيز الطاقة عبر الوريد",
-          "energy_boost.description":
-              "لاستعادة الطاقة، وبناء البروتينات، ودعم مضادات الأكسدة، وزيادة الإنتاجية.",
-          "energy_boost.ingredients":
-              "فيتامين ب12، فيتامين سي، كبريتات المغنيسيوم، كلوريد البوتاسيوم، الزنك، السيلينيوم، إل-كارنيتين، الجلوتامين، محلول ملحي عادي، خليط الفيتامينات المتعددة.",
-          "energy_boost.price": "1170 SAR",
-          "post_sleeve.name": "علاج ما بعد تكميم المعدة عبر الوريد",
-          "post_sleeve.description":
-              "لترطيب الجسم بعد تكميم المعدة وتوفير امتصاص أفضل للعناصر الغذائية والمكملات الغذائية.",
-          "post_sleeve.ingredients":
-              "جلوكونات الكالسيوم، كبريتات المغنيسيوم، فيتامين ب12، كلوريد البوتاسيوم، خليط الفيتامينات المتعددة، فيتامين سي، فيتامين ب1، فيتامين د3، السيلينيوم، الأحماض الأمينية، محلول ملحي عادي، خليط العناصر النزرة، الزنك.",
-          "post_sleeve.price": "1035 SAR",
-          "hair_health.name": "علاج صحة الشعر عبر الوريد",
-          "hair_health.description":
-              "للحصول على شعر صحي وقوي ومتوازن، يقلل من تساقط الشعر ويدعم الأظافر والبشرة.",
-          "hair_health.ingredients":
-              "فيتامين سي، الزنك، السيلينيوم، الفيتامينات القابلة للذوبان في الماء، فيتامين د3، فيتامين ب12، كبريتات المغنيسيوم، حمض الفوليك، الأحماض الأمينية، محلول ملحي.",
-          "hair_health.price": "1035 SAR",
-          "jet_lag.name": "علاج اضطراب السفر عبر الوريد",
-          "jet_lag.description":
-              "الترطيب بعد الرحلة أمر ضروري للجسم، يُوصى به للمسافرين الدائمين لدعم إنتاج الطاقة وتعزيز الجهاز المناعي.",
-          "jet_lag.ingredients":
-              "فيتامين ب12، الزنك، كبريتات المغنيسيوم، فيتامين سي، جلوكونات الكالسيوم، الأحماض الأمينية، محلول ملحي عادي، الثيامين (فيتامين ب1)، فيتامينات قابلة للذوبان في الماء.",
-          "jet_lag.price": "990 SAR",
-          "migraine_relief.name": "علاج تخفيف الصداع النصفي عبر الوريد",
-          "migraine_relief.description":
-              "هذا الفيتامين المتعدد يخفف من الصداع النصفي وأعراضه المرتبطة.",
-          "migraine_relief.ingredients":
-              "فيتامين سي، فيتامين د3، حمض الفوليك، الثيامين (فيتامين ب1)، كبريتات المغنيسيوم، فيتامين ب12، محلول ملحي عادي، فيتامينات قابلة للذوبان في الماء.",
-          "migraine_relief.price": "945 SAR",
-          "depression_relief.name": "علاج تخفيف الاكتئاب عبر الوريد",
-          "depression_relief.description":
-              "هذا الفيتامين المتعدد يخفف من الاكتئاب، القلق، وأعراضهما المرتبطة.",
-          "depression_relief.ingredients":
-              "السيلينيوم، الزنك، جلوكونات الكالسيوم، الأحماض الأمينية، فيتامين سي، فيتامين ب12، فيتامين د3، حمض الفوليك، الثيامين (فيتامين ب1), كبريتات المغنيسيوم، محلول ملحي عادي، خليط العناصر النزرة، فيتامينات قابلة للذوبان في الماء.",
-          "depression_relief.price": "990 SAR",
-          "weight_loss.name": "علاج فقدان الوزن عبر الوريد",
-          "weight_loss.description":
-              "يساعد هذا الفيتامين المتعدد في تحسين عملية الأيض وسرعة حرق الدهون داخل الجسم.",
-          "weight_loss.ingredients":
-              "إل-كارنيتين، الجلوتامين، الزنك، جلوكونات الكالسيوم، فيتامين سي، فيتامين ب12، فيتامين د3، الثيامين (فيتامين ب1)، كبريتات المغنيسيوم، محلول ملحي عادي، خليط العناصر النزرة، فيتامينات قابلة للذوبان في الماء.",
-          "weight_loss.price": "1170 SAR",
-          "diet_detox.name": "علاج الحمية وإزالة السموم عبر الوريد",
-          "diet_detox.description":
-              "أدخل مضادات الأكسدة في روتين العناية بصحتك لإزالة أي جذور حرة متبقية داخل جسمك.",
-          "diet_detox.ingredients":
-              "فيتامين سي، فيتامينات قابلة للذوبان في الماء، كلوريد البوتاسيوم، جلوكونات الكالسيوم، فيتامين د3، السيلينيوم، خليط العناصر النزرة، الزنك، الثيامين، الأحماض الأمينية ١٠٪، كبريتات المغنيسيوم، محلول ملحي عادي ٠.٩٪، دي٥دبليو.",
-          "diet_detox.price": "990 SAR",
-          "mayers_cocktail.name": "علاج ماييرز كوكتيل عبر الوريد",
-          "mayers_cocktail.description":
-              "استعادة التوازن، تقليل أعراض الأمراض المزمنة، وتعزيز الصحة العامة.",
-          "mayers_cocktail.ingredients":
-              "جلوكونات الكالسيوم، كبريتات المغنيسيوم، حمض الأسكوربيك، فيتامينات قابلة للذوبان في الماء، الثيامين، فيتامين ب12، محلول ملحي عادي ٠.٩٪، دي٥دبليو.",
-          "mayers_cocktail.price": "990 SAR",
-          "immunity_boost.name": "علاج تعزيز المناعة عبر الوريد",
-          "immunity_boost.description":
-              "تقوية مناعتك ودعم الصحة العامة للجسم. حافظ على جهاز مناعي قوي على الرغم من التقلبات. هذه هي الطريقة المثلى سواء للوقاية أو لعلاج نزلات البرد.",
-          "immunity_boost.ingredients":
-              "فيتامين سي، فيتامينات قابلة للذوبان في الماء، كبريتات المغنيسيوم، الزنك، كلوريد البوتاسيوم، فيتامين ب12، الثيامين، محلول ملحي عادي ٠.٩٪، دي٥دبليو، الجلوتامين.",
-          "immunity_boost.price": "990 SAR",
-          "memory_enhancement.name": "علاج تعزيز الذاكرة عن طريق الوريد",
-          "memory_enhancement.description":
-              "يهدئ العقل المحفز ويلعب دورًا مهمًا في تكوين خلايا الدماغ وتحسين الذاكرة.",
-          "memory_enhancement.ingredients":
-              "فيتامين ب12، الزنك، السيلينيوم، جلوكونات الكالسيوم، كبريتات المغنيسيوم، فيتامين سي، الأحماض الأمينية، كلوريد البوتاسيوم، المحلول الملحي العادي، الفيتامينات القابلة للذوبان في الماء، الثيامين (فيتامين ب1)",
-          "memory_enhancement.price": "990 SAR",
-          "hydration.name": "علاج الترطيب عن طريق الوريد",
-          "hydration.description":
-              "مثالي للتعافي من عطلة نهاية أسبوع مليئة بالأنشطة أو أسلوب حياة مشغول، يعزز مستويات الطاقة مع تعويض الإلكتروليتات في الجسم.",
-          "hydration.ingredients":
-              "فيتامين سي، كلوريد البوتاسيوم، كبريتات المغنيسيوم، الزنك، المحلول الملحي الطبيعي، الثيامين (فيتامين ب1)، الأحماض الأمينية، الفيتامينات القابلة للذوبان في الماء.",
-          "hydration.price": "990 SAR",
-          "antiaging.name": "علاج مكافحة الشيخوخة عن طريق الوريد",
-          "antiaging.description":
-              "المفضل لدى السيدات، جرعة قوية من مضادات الأكسدة بخصائص مكافحة الشيخوخة تدعم إزالة السموم والترطيب وصحة الشعر والأظافر والبشرة المثالية.",
-          "antiaging.ingredients":
-              "خليط من الفيتامينات المتعددة، فيتامين سي، الزنك، السيلينيوم، كبريتات المغنيسيوم، كلوريد البوتاسيوم، الأحماض الأمينية، فيتامين ب12، المحلول الملحي.",
-          "antiaging.price": "900 SAR",
-          "stress_relief.name": "علاج تخفيف الإجهاد عن طريق الوريد",
-          "stress_relief.description":
-              "يهدئ الجسم، ويحسن المزاج، ويقلل من القلق وعلامات الإجهاد الأخرى.",
-          "stress_relief.ingredients":
-              "فيتامين سي، كبريتات المغنيسيوم، الزنك، كلوريد البوتاسيوم، الأحماض الأمينية، فيتامين ب12، المحلول الملحي، الفيتامينات القابلة للذوبان في الماء.",
-          "stress_relief.price": "900 SAR",
           "Selected Service": "الخدمة المختارة",
           "Checkout": "الدفع",
           "Amount Payable": "المبلغ المستحق الدفع",
@@ -748,7 +572,7 @@ class Language extends Translations {
           "Your result": "نتيجتك",
           "Upload Results": "تحميل نتيجتك",
           "Arabic": "العربية",
-          "English": "إنجليزي",
+          "English": "English",
           "We accept Bupa, Tawuniya, MEDGULF, Malath and AlRajhi Takaful insurance for medicine.":
               "نقبل تأمين بوبا والتعاونية وميدغلف وملاذ وتكافل الراجحي للأدوية.",
           "We accept Bupa, Tawuniya, MEDGULF, Malath and AlRajhi Takaful insurance for telemedicine.":

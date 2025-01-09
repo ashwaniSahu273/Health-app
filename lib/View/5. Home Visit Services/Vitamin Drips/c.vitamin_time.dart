@@ -31,7 +31,7 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
   String? selectedTime;
   int selectedIndex = 0;
   int genderIndex = 0;
-  String selectedDate = "December 1, 2024".tr; // Default date
+  String selectedDate = "${'December'.tr} 1, 2024".tr; // Default date
 
   VitaminCartController vitaminCartController =
       Get.put(VitaminCartController());
@@ -719,7 +719,7 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          'SAR ${vitaminCartController.getTotalAmount()}',
+                          '${vitaminCartController.getTotalAmount()} ${'SAR'.tr}',
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,

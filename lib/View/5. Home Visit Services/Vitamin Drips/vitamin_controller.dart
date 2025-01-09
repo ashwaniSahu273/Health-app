@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/vitamin_service_model.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 
 class VitaminCartController extends GetxController {
   var cartItems = <Map<String, dynamic>>[].obs;
@@ -19,7 +17,6 @@ class VitaminCartController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // _loadCartFromStorage();
     fetchServices();
   }
 
@@ -50,7 +47,6 @@ class VitaminCartController extends GetxController {
         if (e.code == 'invalid-phone-number') {
           print('The provided phone number is not valid.');
         }
-        // Handle other errors
       },
       codeSent: (String verificationId, int? resendToken) {
         // Store the verificationId and resendToken for later use
@@ -66,11 +62,7 @@ class VitaminCartController extends GetxController {
       QuerySnapshot querySnapshot =
           await FirebaseFirestore.instance.collection('VitaminServices').get();
 
-      print("Documents fetched: ${querySnapshot.docs.length}");
-
       var services = querySnapshot.docs.map((doc) {
-        // String languageCode = Get.locale?.languageCode ?? 'en';
-
         return Service.fromJson(
           doc.data() as Map<String, dynamic>,
         );
@@ -148,10 +140,16 @@ class VitaminCartController extends GetxController {
 
   double getTotalAmount() {
     double totalAmount = 0.0;
+    String languageCode = Get.locale?.languageCode ?? 'en';
 
     for (var item in cartItems) {
-      double price = double.tryParse(
-              item['price'].toString().replaceAll(RegExp(r'[^\d.]'), '')) ??
+      final localizedData = languageCode == 'ar'
+          ? item["localized"]["ar"]
+          : item["localized"]["en"];
+
+      double price = double.tryParse(localizedData['price']
+              .toString()
+              .replaceAll(RegExp(r'[^\d.]'), '')) ??
           0.0;
 
       totalAmount += price * item['quantity'];
@@ -168,15 +166,7 @@ class VitaminCartController extends GetxController {
   void addToCart(id) {
     final service = servicesList.firstWhere((service) => service.id == id);
 
-    print(
-        "==========================>Added to cart ================= $service");
     int index = cartItems.indexWhere((item) => item['id'] == service.id);
-    // String languageCode = Get.locale?.languageCode ?? 'en';
-
-    // // Access localized data
-    // final localizedData = languageCode == 'ar'
-    //     ? service.localized.ar
-    //     : service.localized.en;
 
     if (index == -1) {
       cartItems.add(service.toJson());
@@ -707,4 +697,6 @@ class VitaminCartController extends GetxController {
 //       "imagePath": "assets/images/vitamin.png",
 //     },
 //   ];
+
+
 }

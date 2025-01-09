@@ -344,8 +344,8 @@ class _VitaminServicesState extends State<VitaminServices> {
                             ),
                             const SizedBox(
                                 width: 8), // Space between the icon and text
-                            const Text(
-                              'Selected item',
+                           Text(
+                              'Selected item'.tr,
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -375,7 +375,7 @@ class _VitaminServicesState extends State<VitaminServices> {
                             }
                           },
                           child: Text(
-                            'Continue',
+                            'Continue'.tr,
                             style: TextStyle(color: Colors.black, fontSize: 15),
                           ),
                         ),

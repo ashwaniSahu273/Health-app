@@ -134,7 +134,14 @@ class _Splash_ScreenState extends State<Splash_Screen> {
                           ),
                         ),
                         const SizedBox(
-                          height: 30,
+                          height: 20,
+                        ),
+                        Text("Care about you and your family".tr,style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: "Schyler"
+                        ),),
+                        const SizedBox(
+                          height: 20,
                         ),
                         RoundButton(
                           text: "Join as a user".tr,

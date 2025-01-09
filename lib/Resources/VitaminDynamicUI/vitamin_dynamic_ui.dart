@@ -52,7 +52,7 @@ class DynamicUIPage extends StatelessWidget {
                   weight: 200,
                 )), // Double-arrow icon
             Text(
-              'Select Package'.tr,
+              'Select Packages'.tr,
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ],
@@ -112,8 +112,8 @@ class DynamicUIPage extends StatelessWidget {
                       const SizedBox(height: 16),
 
                       // About section
-                      const Text(
-                        'About This Package',
+                       Text(
+                        'About This Package'.tr,
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold),
                       ),
@@ -141,8 +141,8 @@ class DynamicUIPage extends StatelessWidget {
                       // ),
                       const SizedBox(height: 16),
 
-                      const Text(
-                        'Components Included',
+                       Text(
+                        'Components Included'.tr,
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold),
                       ),
@@ -158,8 +158,8 @@ class DynamicUIPage extends StatelessWidget {
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text(
-                                    'Qty:',
+                                   Text(
+                                    'Qty: '.tr,
                                     style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500),
@@ -218,7 +218,7 @@ class DynamicUIPage extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 32, vertical: 12),
                                   ),
-                                  child: const Text('Select'),
+                                  child: Text('Select'.tr),
                                 ),
                               ),
                       ),
@@ -304,8 +304,8 @@ class DynamicUIPage extends StatelessWidget {
                           ),
                           const SizedBox(
                               width: 8), // Space between the icon and text
-                          const Text(
-                            'Selected item',
+                         Text(
+                            'Selected item'.tr,
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
@@ -335,8 +335,8 @@ class DynamicUIPage extends StatelessWidget {
                                 ));
                           }
                         },
-                        child: const Text(
-                          'Continue',
+                        child: Text(
+                          'Continue'.tr,
                           style: TextStyle(color: Colors.black, fontSize: 15),
                         ),
                       ),
