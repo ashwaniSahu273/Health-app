@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 class LabController extends GetxController {
-   var cartItems = <Map<String, dynamic>>[].obs;
+  var cartItems = <Map<String, dynamic>>[].obs;
   var stAddress = "".obs;
   var latitude = "".obs;
   var longitude = "".obs;
@@ -24,18 +24,16 @@ class LabController extends GetxController {
     _loadCartFromStorage();
     fetchServices();
   }
+
   void fetchServices() async {
     try {
       QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection('Laboratory').get();
+          await FirebaseFirestore.instance.collection('LaboratoryServices').get();
 
       print("Documents fetched: ${querySnapshot.docs.length}");
 
       var services = querySnapshot.docs.map((doc) {
-        String languageCode = Get.locale?.languageCode ?? 'en';
-
-        return LabService.fromFirestore(
-            doc.data() as Map<String, dynamic>, languageCode);
+        return LabService.fromJson(doc.data() as Map<String, dynamic>);
       }).toList();
 
       servicesList.assignAll(services);
@@ -66,6 +64,12 @@ class LabController extends GetxController {
         "type": "Vitamin Drips",
         "selected_time": selectedTime.value
       });
+      Get.snackbar(
+            "Sucess",
+            "Sucessfully completed",
+            backgroundColor: Colors.lightGreen,
+            colorText: Colors.white,
+          );
     } catch (e) {
       Get.snackbar('Error', 'Failed to confirm. Please try again.');
     } finally {
@@ -103,10 +107,16 @@ class LabController extends GetxController {
 
   double getTotalAmount() {
     double totalAmount = 0.0;
+    String languageCode = Get.locale?.languageCode ?? 'en';
 
     for (var item in cartItems) {
-      double price = double.tryParse(
-              item['price'].toString().replaceAll(RegExp(r'[^\d.]'), '')) ??
+      final localizedData = languageCode == 'ar'
+          ? item["localized"]["ar"]
+          : item["localized"]["en"];
+
+      double price = double.tryParse(localizedData['price']
+              .toString()
+              .replaceAll(RegExp(r'[^\d.]'), '')) ??
           0.0;
 
       totalAmount += price * item['quantity'];
@@ -117,6 +127,10 @@ class LabController extends GetxController {
   bool isItemInCart(itemId) {
     return cartItems.any((item) => item['id'] == itemId);
   }
+  
+  bool isCartEmpty() {
+    return cartItems.isEmpty;
+  }
 
   int getQuantityById(itemId) {
     return cartItems
@@ -125,12 +139,11 @@ class LabController extends GetxController {
   }
 
   void addToCart(id) {
-    final item = testItems.firstWhere((cartItem) => cartItem['id'] == id);
+    final item = servicesList.firstWhere((cartItem) => cartItem.id == id);
     int index =
-        cartItems.indexWhere((cartItem) => cartItem['id'] == item['id']);
+        cartItems.indexWhere((cartItem) => cartItem['id'] == item.id);
     if (index == -1) {
-      item['quantity'] = 1;
-      cartItems.add(item);
+      cartItems.add(item.toJson());
     } else {
       cartItems[index]['quantity'] += 1;
     }

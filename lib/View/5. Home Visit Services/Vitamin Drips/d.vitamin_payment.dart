@@ -45,19 +45,19 @@ class VitaminPaymentPage extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leadingWidth: 200,
-        leading: Row(
+        title: Row(
           children: [
             GestureDetector(
               onTap: () => Get.back(),
               child: Icon(
                 Icons.keyboard_double_arrow_left,
-                size: 35,
+                size: 25,
                 weight: 200,
               ),
             ), // Double-arrow icon
             Text(
               'Payment Details'.tr,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16,fontFamily: "Roboto", fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -91,23 +91,26 @@ class VitaminPaymentPage extends StatelessWidget {
                   //   thickness: 2.0,
                   //   height: 10.0,
                   // ),
-                  ListTile(
-                    title: Text(
-                      'Harees Health:'.tr,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF7EAFC9),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4.0),
+                    child: ListTile(
+                      title: Text(
+                        'Harees Health:'.tr,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF7EAFC9),
+                        ),
                       ),
-                    ),
-                    subtitle: Text(
-                      'Laboratory Riyadh, Saudi Arabia'.tr,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
+                      subtitle: Text(
+                        'Laboratory Riyadh, Saudi Arabia'.tr,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
                       ),
+                      leading: Image.asset("assets/logo/harees_logo.png"),
                     ),
-                    leading: Image.asset("assets/logo/harees_logo.png"),
                   ),
                   // SizedBox(height: 10),
                   // Divider(
@@ -117,7 +120,7 @@ class VitaminPaymentPage extends StatelessWidget {
                   // ),
                   SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -188,33 +191,38 @@ class VitaminPaymentPage extends StatelessWidget {
                   // ),
                   // SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
                     child: Text(
                       'Zyad Faisal'.tr,
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
+                        fontFamily: "Roboto",
                         color: Colors.black,
                       ),
                     ),
                   ),
                   SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.location_on_rounded,
-                        color: Color(0xFF7EAFC9),
-                        size: 28,
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        'Riyadh, Saudi Arabia'.tr,
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.black,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.location_on_rounded,
+                          color: Color(0xFF7EAFC9),
+                          size: 28,
                         ),
-                      ),
-                    ],
+                        SizedBox(width: 5),
+                        Text(
+                          'Riyadh, Saudi Arabia'.tr,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "Roboto",
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(height: 15),
                   Container(
@@ -224,7 +232,7 @@ class VitaminPaymentPage extends StatelessWidget {
                   ),
                   Container(
                     // Background color
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.symmetric(horizontal: 16,vertical: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -291,7 +299,7 @@ class VitaminPaymentPage extends StatelessWidget {
                           contentPadding: EdgeInsets.zero,
                           title: Text(
                             "Pay with bank points".tr,
-                            style: TextStyle(fontSize: 16, color: Colors.black),
+                            style: TextStyle(fontSize: 16,fontFamily: "Roboto", color: Colors.black),
                           ),
                           trailing: Icon(Icons.arrow_forward_ios,
                               size: 16, color: Colors.grey),
@@ -304,7 +312,7 @@ class VitaminPaymentPage extends StatelessWidget {
                           contentPadding: EdgeInsets.zero,
                           title: Text(
                             "Pay with bank points".tr,
-                            style: TextStyle(fontSize: 16, color: Colors.black),
+                            style: TextStyle(fontSize: 16,fontFamily: "Roboto", color: Colors.black),
                           ),
                           trailing: Icon(Icons.arrow_forward_ios,
                               size: 16, color: Colors.grey),
@@ -320,16 +328,17 @@ class VitaminPaymentPage extends StatelessWidget {
                     width: double.infinity,
                     color: Color(0xFFCAE8E5),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 8),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             'Select payment method'.tr,
                             style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 16,
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
+                              fontFamily: "Roboto"
                             ),
                           ),
                           Row(
@@ -342,7 +351,7 @@ class VitaminPaymentPage extends StatelessWidget {
                               Text(
                                 'Cancellation policy'.tr,
                                 style: TextStyle(
-                                  fontSize: 13,
+                                  fontSize: 12,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -355,7 +364,7 @@ class VitaminPaymentPage extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.only(left: 30, right: 30),
+                    padding: const EdgeInsets.only(left: 16, right: 16),
                     child: Column(
                       children: [
                         Row(
@@ -429,16 +438,16 @@ class VitaminPaymentPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
+                  // SizedBox(height: 10),
                   Container(
                     width: double.infinity,
                     // color: Colors.blue[100],
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 4),
                       child: Text(
                         'Price Breakup'.tr,
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 17,
                           fontWeight: FontWeight.bold,
                           color: Colors.blue,
                         ),
@@ -465,7 +474,7 @@ class VitaminPaymentPage extends StatelessWidget {
                               child: Text(
                                 'Selected Service'.tr,
                                 style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   color: Colors.black,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -501,7 +510,7 @@ class VitaminPaymentPage extends StatelessWidget {
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
-                                            fontSize: 17,
+                                            fontSize: 16,
                                             color: Colors.grey,
                                             fontWeight: FontWeight.w500,
                                           ),
@@ -513,7 +522,7 @@ class VitaminPaymentPage extends StatelessWidget {
                                         child: Text(
                                           localizedData['price'],
                                           style: TextStyle(
-                                            fontSize: 17,
+                                            fontSize: 16,
                                             color: Colors.black,
                                             fontWeight: FontWeight.w500,
                                           ),
@@ -531,7 +540,7 @@ class VitaminPaymentPage extends StatelessWidget {
                                 Text(
                                   'VAT (+)',
                                   style: TextStyle(
-                                    fontSize: 17,
+                                    fontSize: 16,
                                     color: Colors.grey,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -539,7 +548,7 @@ class VitaminPaymentPage extends StatelessWidget {
                                 Text(
                                   '$vat ${'SAR'.tr}',
                                   style: TextStyle(
-                                    fontSize: 17,
+                                    fontSize: 16,
                                     color: Colors.black,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -554,7 +563,7 @@ class VitaminPaymentPage extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

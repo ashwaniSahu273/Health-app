@@ -7,22 +7,19 @@ import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/cart_page.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/d.labpayment.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class Selected_Package extends StatefulWidget {
   final UserModel userModel;
   final User firebaseUser;
-  final String packageName;
-  final String packagePrice;
-  final Map<String, dynamic> providerData;
 
   Selected_Package({
-    required this.packageName,
-    required this.packagePrice,
+
     required this.userModel,
     required this.firebaseUser,
-    required this.providerData,
   });
 
 
@@ -40,7 +37,8 @@ class _Selected_PackageState extends State<Selected_Package> {
   int genderIndex = 0;
    String selectedDate = "December, 2024".tr; // Default date
 
-
+  LabController cartController =
+      Get.put(LabController());
 
   final List<String> timeSlots = [
     "09:00 am".tr,
@@ -237,19 +235,19 @@ class _Selected_PackageState extends State<Selected_Package> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leadingWidth: 200,
-        leading: Row(
+        title: Row(
           children: [
             GestureDetector(
               onTap: () => Get.back(),
               child: Icon(
                 Icons.keyboard_double_arrow_left,
-                size: 35,
+                size: 25,
                 weight: 200,
               ),
             ), 
              Text(
               'Select Date'.tr,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16,fontFamily: 'Roboto', fontWeight: FontWeight.w700),
             ),
           ],
         ),
@@ -306,7 +304,7 @@ class _Selected_PackageState extends State<Selected_Package> {
                           Text(
                             selectedDate,
                             style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                                fontSize: 16, fontWeight: FontWeight.w700),
                           ),
                           const Icon(
                             Icons.keyboard_arrow_down,
@@ -348,7 +346,7 @@ class _Selected_PackageState extends State<Selected_Package> {
                                           color: selectedIndex == index
                                               ? Colors.white
                                               : Colors.black,
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.w700, fontFamily: "Roboto"),
                                     ),
                                     const SizedBox(height: 8),
                                     Text(
@@ -529,11 +527,12 @@ class _Selected_PackageState extends State<Selected_Package> {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: GestureDetector(
                       onTap: () {
-                        // Handle the tap action (e.g., navigate to another screen)
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                              content: Text('Navigating to Selected Details...'.tr)),
-                        );
+                        Get.to(LabCartPage(
+                                address: cartController.stAddress.value,
+                                userModel: widget.userModel,
+                                firebaseUser: widget.firebaseUser,
+                                //
+                              ));
                       },
                       child: Text(
                         'View Selected Details'.tr,
@@ -560,7 +559,7 @@ class _Selected_PackageState extends State<Selected_Package> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          '${widget.packagePrice}',
+                          '${cartController.getTotalAmount()} ${'SAR'.tr}',
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -686,17 +685,17 @@ class _Selected_PackageState extends State<Selected_Package> {
                       onTap: () {
                         if (selectedTime != null) {
                           Get.to(() => LabPaymentPage(
-                                providerData: {
-                                  'packageName': widget.packageName,
-                                  'packagePrice': widget.packagePrice,
-                                  'icon': Icons.science_outlined,
-                                  ...widget
-                                      .providerData, // Add any additional data from providerData
-                                },
+                                // providerData: {
+                                //   'packageName': widget.packageName,
+                                //   'packagePrice': widget.packagePrice,
+                                //   'icon': Icons.science_outlined,
+                                //   ...widget
+                                //       .providerData, // Add any additional data from providerData
+                                // },
                                 userModel: widget.userModel,
                                 firebaseUser: widget.firebaseUser,
                                 selectedTime: selectedTime!,
-                                selectedProviderData: {},
+           
                               ));
                         } else {
                           Get.snackbar("Error", "Please select a time slot");
@@ -718,7 +717,8 @@ class _Selected_PackageState extends State<Selected_Package> {
                                   Text(
                                     "Proceed to Payment Details".tr,
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 18,
+                                      fontFamily: "Roboto",
                                       fontWeight: FontWeight.w500,
                                       color: Colors.black,
                                     ),

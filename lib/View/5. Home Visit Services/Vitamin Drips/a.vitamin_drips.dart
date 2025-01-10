@@ -9,6 +9,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:harees_new_project/Resources/Button/myroundbutton.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/select_package.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
@@ -179,10 +180,15 @@ class _VitaminState extends State<Vitamin> {
 
                     Navigator.pop(context); // Close the dialog
                     Navigator.pop(context); // Close the bottom sheet
-                    Get.to(() => VitaminServices(
-                        address: stAddress,
-                        userModel: widget.userModel,
-                        firebaseUser: widget.firebaseUser));
+                    // Get.to(() => VitaminServices(
+                    //     address: stAddress,
+                    //     userModel: widget.userModel,
+                    //     firebaseUser: widget.firebaseUser));
+                     Get.to(SelectPackagesPage(
+                      userModel: widget.userModel,
+                      firebaseUser: widget.firebaseUser,
+                      address: stAddress,
+                     ));
                   },
                   textCancel: "Cancel".tr,
                   textConfirm: "Confirm".tr,

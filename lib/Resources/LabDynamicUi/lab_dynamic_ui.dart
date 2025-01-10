@@ -264,7 +264,7 @@ class LabDynamicUIPage extends StatelessWidget {
                       ),
                       onPressed: () {
                         if (controller.cartItems.length > 0) {
-                        Get.to(LabCartPage());
+                        // Get.to(LabCartPage());
                         }
                       },
                       child: Row(

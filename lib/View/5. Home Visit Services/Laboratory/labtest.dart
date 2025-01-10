@@ -9,8 +9,11 @@ import 'package:harees_new_project/Resources/LabDynamicUi/lab_dynamic_ui.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 // import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/b.laboratory.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/c.selected_package.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/cart_page.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/dynamic.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/dynamin_page.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class LabTest extends StatefulWidget {
@@ -29,7 +32,20 @@ class LabTest extends StatefulWidget {
 }
 
 class _LabTestState extends State<LabTest> {
-   LabController controller = Get.put(LabController());
+  LabController controller = Get.put(LabController());
+  void _onServiceSelected(String serviceName, id, String description,
+      String components, String price) {
+    Get.to(LabSelectPackage(
+      id: id,
+      title: serviceName,
+      description: description,
+      price: price,
+      components: components,
+      address: widget.address,
+      userModel: widget.userModel,
+      firebaseUser: widget.firebaseUser,
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +60,7 @@ class _LabTestState extends State<LabTest> {
             },
             child: Icon(
               Icons.keyboard_double_arrow_left,
-              size: 35,
+              size: 25,
               weight: 200,
             ),
           ),
@@ -105,12 +121,13 @@ class _LabTestState extends State<LabTest> {
                       child: Row(
                         children: [
                           Text(
-                            "Your location",
-                            style: TextStyle(color: Colors.black),
+                            "Your location".tr,
+
+                            style: TextStyle(fontSize: 16,color: Colors.black),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 15.0, horizontal: 5),
+                                vertical: 15.0, horizontal: 0),
                             child: VerticalDivider(
                               color: Colors.black,
                             ),
@@ -120,7 +137,7 @@ class _LabTestState extends State<LabTest> {
                             color: Colors.green,
                           ),
                           Expanded(
-                            child: Text(widget.address),
+                            child: Text(widget.address,style: TextStyle(fontSize: 14,color: Colors.black)),
                           ),
                         ],
                       ),
@@ -135,7 +152,7 @@ class _LabTestState extends State<LabTest> {
                   child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Lab Tests",
+                        "Lab Tests".tr,
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -146,7 +163,7 @@ class _LabTestState extends State<LabTest> {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text("and Packages",
+                      child: Text("and Packages".tr,
                           style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
@@ -174,7 +191,9 @@ class _LabTestState extends State<LabTest> {
                             child: Text(
                               "Body function or health concern",
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
+                                  fontSize: 16,
+                                  fontFamily: "Roboto",
+                                  fontWeight: FontWeight.w700),
                             )),
                       ),
                       Padding(
@@ -191,12 +210,12 @@ class _LabTestState extends State<LabTest> {
                               SizedBox(width: 8), // Add spacing between items
                               LabFunctions(
                                 imagePath: "assets/images/1.png",
-                                text: "Full body",
+                                text: "Diabetes",
                               ),
                               SizedBox(width: 8),
                               LabFunctions(
                                 imagePath: "assets/images/1.png",
-                                text: "Full body",
+                                text: "Cholesterol",
                               ),
                               SizedBox(width: 8),
                               LabFunctions(
@@ -234,7 +253,9 @@ class _LabTestState extends State<LabTest> {
                       Text(
                         "Most helpful packages",
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "Roboto"),
                       ),
                       SizedBox(
                         width: 20,
@@ -251,9 +272,9 @@ class _LabTestState extends State<LabTest> {
                         child: Text(
                           "View all Packages",
                           style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: 16,
-                          ),
+                              color: Colors.blue,
+                              fontSize: 16,
+                              fontFamily: "Roboto"),
                         ),
                       ),
                       GestureDetector(
@@ -283,21 +304,22 @@ class _LabTestState extends State<LabTest> {
                             childAspectRatio: 1.3),
                         itemCount: 4,
                         itemBuilder: (context, index) {
+                          var item = controller.servicesList[index];
+                          String languageCode =
+                              Get.locale?.languageCode ?? 'en';
 
-                           var item = controller.servicesList[index];
+                          final localizedData = languageCode == 'ar'
+                              ? item.localized.ar
+                              : item.localized.en;
+
                           return GestureDetector(
                             onTap: () {
-                              // Get.to(() => PaymentDetailsPage(
-                              //       selectedProviderData: {},
-                              //       selectedTime: "",
-                              //       providerData: {},
-                              //       packageName: "Health check package",
-                              //       packagePrice: "200",
-                              //       userModel: widget.userModel,
-                              //       firebaseUser: widget.firebaseUser,
-                              //     ));
-
-                                Get.to(()=> LabDynamicUIPage(title: item.localizedData.serviceName,id: item.id, description: item.localizedData.description, price: item.localizedData.price, components: item.localizedData.components));
+                              _onServiceSelected(
+                                  localizedData.serviceName,
+                                  item.id,
+                                  localizedData.description,
+                                  localizedData.instructions,
+                                  localizedData.price);
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -309,6 +331,8 @@ class _LabTestState extends State<LabTest> {
                                     color: MyColors.greenColorauth,
                                     borderRadius: BorderRadius.circular(15)),
                                 child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -316,9 +340,11 @@ class _LabTestState extends State<LabTest> {
                                       child: Align(
                                           alignment: Alignment.topLeft,
                                           child: Text(
-                                            "${item.localizedData.serviceName}",
+                                            localizedData.serviceName,
                                             style: TextStyle(
-                                                fontWeight: FontWeight.bold,fontSize: 16),
+                                                fontWeight: FontWeight.w500,
+                                                fontFamily: "Roboto",
+                                                fontSize: 16),
                                           )),
                                     ),
                                     // Padding(
@@ -350,7 +376,7 @@ class _LabTestState extends State<LabTest> {
                                                 color: Colors.white),
                                             child: Center(
                                               child: Text(
-                                                "Starting ${item.localizedData.price}",
+                                                "Starting ${localizedData.price}",
                                                 style: TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:
@@ -393,7 +419,7 @@ class _LabTestState extends State<LabTest> {
                         OutlinedButton(
                           style: OutlinedButton.styleFrom(
                             side: const BorderSide(
-                                color: Colors.grey), // Border color
+                                color: Color(0xFF009788)), // Border color
                             shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.circular(8), // Rounded corners
@@ -403,7 +429,14 @@ class _LabTestState extends State<LabTest> {
                                 horizontal: 12, vertical: 8), // Padding
                           ),
                           onPressed: () {
-                            Get.to(LabCartPage());
+                            if (controller.cartItems.isNotEmpty) {
+                              Get.to(LabCartPage(
+                                address: widget.address,
+                                userModel: widget.userModel,
+                                firebaseUser: widget.firebaseUser,
+                                //
+                              ));
+                            }
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -413,12 +446,12 @@ class _LabTestState extends State<LabTest> {
                                 width: 30,
                                 height: 30,
                                 decoration: BoxDecoration(
-                                  color: Colors.teal, // Background color
+                                  color: Color(0xFF009788), // Background color
                                   borderRadius: BorderRadius.circular(
                                       8), // Make it circular
                                 ),
                                 child: Obx(
-                                  ()=> Center(
+                                  () => Center(
                                     child: Text(
                                       '${controller.cartItems.length}',
                                       style: TextStyle(
@@ -432,37 +465,44 @@ class _LabTestState extends State<LabTest> {
                               ),
                               const SizedBox(
                                   width: 8), // Space between the icon and text
-                              const Text(
-                                'Selected item',
+                              Text(
+                                'Selected item'.tr,
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.black,
+                                  color: Color(0xFF009788),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                MyColors.greenColorauth, // Background color
-                            minimumSize:
-                                const Size(160, 55), // Width and height
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(12), // Border radius
+                        Obx(
+                          () => ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: controller.isCartEmpty()
+                                  ? Color(0xFFD9D9D9)
+                                  : Color(0xFF007ABB),
+                              minimumSize: const Size(160, 55),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
                             ),
-                          ),
-                          onPressed: () {
-                              Get.to(() => Laboratory(
-                                          userModel: widget.userModel,
-                                          firebaseUser: widget.firebaseUser,
-                                        ));
-                          },
-                          child: Text(
-                            'Continue',
-                            style: TextStyle(color: Colors.black, fontSize: 15),
+                            onPressed: () {
+                              if (!controller.isCartEmpty()) {
+                                Get.to(() => Selected_Package(
+                                      userModel: widget.userModel,
+                                      firebaseUser: widget.firebaseUser,
+                                    ));
+                              }
+                            },
+                            child: Text(
+                              'Continue'.tr,
+                              style: TextStyle(
+                                  color: controller.isCartEmpty()
+                                      ? Color(0xFF9C9C9C)
+                                      : Colors.white,
+                                  fontSize: 15),
+                            ),
                           ),
                         ),
                       ],

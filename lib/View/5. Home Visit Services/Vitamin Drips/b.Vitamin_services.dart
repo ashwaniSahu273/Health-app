@@ -126,7 +126,6 @@ class _VitaminServicesState extends State<VitaminServices> {
 
                       String languageCode = Get.locale?.languageCode ?? 'en';
 
-                      // Access localized data
                       final localizedData = languageCode == 'ar'
                           ? service.localized.ar
                           : service.localized.en;

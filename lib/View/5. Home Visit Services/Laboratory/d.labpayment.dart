@@ -8,47 +8,58 @@ import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/b.%20E-Clinics/e_clinic.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:intl/intl.dart';
 
 class LabPaymentPage extends StatelessWidget {
   final UserModel userModel;
   final User firebaseUser;
-  final Map<String, dynamic> providerData;
   final String selectedTime;
-  final Map<String, dynamic> selectedProviderData;
+
 
   const LabPaymentPage({
     super.key,
-    required this.providerData,
+
     required this.userModel,
     required this.firebaseUser,
     required this.selectedTime,
-    required this.selectedProviderData,
+
   });
 
   @override
   Widget build(BuildContext context) {
     final String currentDate = DateFormat.yMMMd().format(DateTime.now());
+LabController cartController =
+        Get.put(LabController());
+
+ const double vat = 20.0;
+
+    // // Extract numeric value from packagePrice by removing non-numeric characters
+    // final double parsedPackagePrice =
+    //     double.parse(packagePrice.replaceAll(RegExp(r'[^\d.]'), ''));
+
+    final double totalAmount = cartController.getTotalAmount() + vat;
+
 
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leadingWidth: 200,
-        leading: Row(
+        title: Row(
           children: [
            
             GestureDetector(
               onTap: () => Get.back(),
               child: Icon(
                 Icons.keyboard_double_arrow_left,
-                size: 35,
+                size: 25,
                 weight: 200,
               ),
             ), // Double-arrow icon
             Text(
               'Payment Details'.tr,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
             ),
           ],
         ),
@@ -84,7 +95,7 @@ class LabPaymentPage extends StatelessWidget {
                     child: StepProgressBar(currentStep: 4, totalSteps: 4)
                     ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
@@ -113,15 +124,16 @@ class LabPaymentPage extends StatelessWidget {
                   // ),
                   SizedBox(height: 20),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'Laboratory'.tr,
                           style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "Roboto",
                             color: Color(0xFF7EAFC9),
                           ),
                         ),
@@ -130,7 +142,7 @@ class LabPaymentPage extends StatelessWidget {
                             Icon(
                               Icons.calendar_month_outlined,
                               color: Color(0xFF7EAFC9),
-                              size: 20,
+                              size: 18,
                             ),
                             SizedBox(width: 5),
                             Text(
@@ -138,6 +150,7 @@ class LabPaymentPage extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
+                                fontFamily: "Roboto"
                               ),
                             ),
                           ],
@@ -176,19 +189,19 @@ class LabPaymentPage extends StatelessWidget {
                   // ),
                   SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Text(
                       'Zyad Faisal'.tr,
                       style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
                         color: Colors.black,
                       ),
                     ),
                   ),
                   SizedBox(height: 5),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Row(
                       children: [
                         Icon(
@@ -200,7 +213,8 @@ class LabPaymentPage extends StatelessWidget {
                         Text(
                           'Riyadh, Saudi Arabia'.tr,
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
+                            fontFamily: "Roboto",
                             color: Colors.black,
                           ),
                         ),
@@ -214,7 +228,7 @@ class LabPaymentPage extends StatelessWidget {
                     height: 25,
                   ),
                   Container( // Background color
-                    padding: EdgeInsets.all(8),
+                    padding: EdgeInsets.symmetric(horizontal: 20,vertical: 8),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -230,7 +244,7 @@ class LabPaymentPage extends StatelessWidget {
                                 Text(
                                   "Add promo code here".tr,
                                   style: TextStyle(
-                                      fontSize: 16, color: Colors.black),
+                                      fontSize: 16,fontFamily: "Roboto", color: Colors.black),
                                 ),
                               ],
                             ),
@@ -309,14 +323,14 @@ class LabPaymentPage extends StatelessWidget {
                     width: double.infinity,
                     color: Color(0xFFCAE8E5),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(left: 18.0,right: 8),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             'Select payment method'.tr,
                             style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 16,
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
                             ),
@@ -344,7 +358,7 @@ class LabPaymentPage extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.only(left: 30, right: 30),
+                    padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Column(
                       children: [
                         Row(
@@ -423,12 +437,13 @@ class LabPaymentPage extends StatelessWidget {
                     width: double.infinity,
                     // color: Colors.blue[100],
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 8),
                       child: Text(
                         'Price Breakup'.tr,
                         style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontFamily: "Roboto",
+                          fontWeight: FontWeight.w700,
                           color: Colors.blue,
                         ),
                       ),
@@ -454,56 +469,86 @@ class LabPaymentPage extends StatelessWidget {
                               child: Text(
                                 'Selected test'.tr,
                                 style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   color: Colors.black,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
                             SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Labpratory Package'.tr,
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Text(
-                                  'SAR 60',
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 10),
-                            Row(
+                            ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount:
+                                    cartController.cartItems.length,
+                                itemBuilder: (context, index) {
+                                  final item =
+                                      cartController.cartItems[index];
+
+                                      
+                            String languageCode =
+                                Get.locale?.languageCode ?? 'en';
+
+                            final localizedData = languageCode == 'ar'
+                                ? item["localized"]["ar"]
+                                : item["localized"]["en"];
+
+                                  return Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Flexible(
+                                        flex: 3, // Takes 3 parts of the row
+                                        child: Text(
+                                          localizedData['serviceName'],
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8),
+                                      Flexible(
+                                        flex: 1, // Takes 1 part of the row
+                                        child: Text(
+                                          localizedData['price'],
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          textAlign: TextAlign
+                                              .end, // Aligns text to the end
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }),
+                                Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   'VAT (+)',
                                   style: TextStyle(
-                                    fontSize: 17,
+                                    fontSize: 16,
                                     color: Colors.grey,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 Text(
-                                  'SAR 20',
+                                  '$vat ${'SAR'.tr}',
                                   style: TextStyle(
-                                    fontSize: 17,
+                                    fontSize: 16,
                                     color: Colors.black,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                               ],
                             ),
+                       
                             SizedBox(height: 10),
                           ],
                         ),
@@ -512,7 +557,7 @@ class LabPaymentPage extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -525,7 +570,7 @@ class LabPaymentPage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "SAR 80",
+                          '$totalAmount ${'SAR'.tr}',
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.blue,
@@ -540,6 +585,8 @@ class LabPaymentPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: GestureDetector(
                       onTap: () {
+                        cartController.setUserOrderInfo(userModel, firebaseUser);
+
                         Get.to(() => HomePage(
                               userModel: userModel,
                               firebaseUser: firebaseUser,

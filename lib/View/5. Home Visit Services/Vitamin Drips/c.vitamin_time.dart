@@ -236,12 +236,12 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
                 onPressed: () => Get.back(),
                 icon: Icon(
                   Icons.keyboard_double_arrow_left,
-                  size: 35,
+                  size: 25,
                   weight: 200,
                 )), // Double-arrow icon
             Text(
               'Select Date'.tr,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16,fontFamily: "Roboto", fontWeight: FontWeight.bold),
             ),
           ],
         ),

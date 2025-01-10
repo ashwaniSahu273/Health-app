@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/vitamin_service_model.dart';
@@ -96,6 +97,13 @@ class VitaminCartController extends GetxController {
         "type": "Vitamin Drips",
         "selected_time": selectedTime.value
       });
+
+       Get.snackbar(
+            "Sucess",
+            "Sucessfully completed",
+            backgroundColor: Colors.lightGreen,
+            colorText: Colors.white,
+          );
     } catch (e) {
       Get.snackbar('Error', 'Failed to confirm. Please try again.');
     } finally {

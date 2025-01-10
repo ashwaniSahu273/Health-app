@@ -1524,13 +1524,13 @@ class Laboratory extends StatelessWidget {
   }
 
   void navigateToSelectedPackage(String title, String subtitle) {
-    Get.to(() => Selected_Package(
-          userModel: userModel,
-          firebaseUser: firebaseUser,
-          packageName: title,
-          packagePrice: subtitle,
-          providerData: const {},
-        ));
+    // Get.to(() => Selected_Package(
+    //       userModel: userModel,
+    //       firebaseUser: firebaseUser,
+    //       packageName: title,
+    //       packagePrice: subtitle,
+    //       providerData: const {},
+    //     ));
   }
 
   Widget buildListTile(String title, String subtitle, IconData icon) {

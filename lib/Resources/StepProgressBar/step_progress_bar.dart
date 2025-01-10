@@ -37,7 +37,7 @@ class StepProgressBar extends StatelessWidget {
         // ),
         // Step and Progress Bar
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Row(
             children: [
               RichText(
@@ -46,7 +46,7 @@ class StepProgressBar extends StatelessWidget {
                     const TextSpan(
                       text: 'Step ', // First part
                       style:  TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Colors.blue,
                       ),
@@ -54,7 +54,7 @@ class StepProgressBar extends StatelessWidget {
                     TextSpan(
                       text: '$currentStep of $totalSteps', // Second part
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
@@ -71,7 +71,7 @@ class StepProgressBar extends StatelessWidget {
             children: [
               // Background bar
               Container(
-                height: 6,
+                height: 4,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.grey[300],
@@ -82,7 +82,7 @@ class StepProgressBar extends StatelessWidget {
               FractionallySizedBox(
                 widthFactor: currentStep / totalSteps,
                 child: Container(
-                  height: 6,
+                  height: 4,
                   decoration: BoxDecoration(
                     color: Colors.blue,
                     // borderRadius: BorderRadius.circular(4),

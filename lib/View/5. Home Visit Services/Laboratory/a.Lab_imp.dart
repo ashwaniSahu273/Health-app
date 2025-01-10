@@ -112,7 +112,7 @@ class _LabImpState extends State<LabImp> {
             });
             Get.snackbar("To proceed".tr,
                 "Kindly click on your address mentioned below".tr,
-                duration: Duration(seconds: 5),
+                duration: Duration(seconds: 3),
                 backgroundColor: MyColors.logocolor,
                 borderColor: Colors.black,
                 borderWidth: 1);

@@ -54,7 +54,7 @@ class VitaminCartPage extends StatelessWidget {
                     () => Text(
                       '${'Your Package tests'.tr} (${cartController.cartItems.length})',
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -95,8 +95,8 @@ class VitaminCartPage extends StatelessWidget {
                                     Row(
                                       children: [
                                         Image.asset(
-                                          'assets/images/vitamin.png',
-                                          height: 30,
+                                          'assets/images/vitamin1.png',
+                                          height: 50,
                                           width: 40,
                                         ),
                                         Container(
@@ -108,6 +108,8 @@ class VitaminCartPage extends StatelessWidget {
                                             style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w500,
+                                              fontFamily: "Roboto"
+                                            
                                             ),
                                             // overflow: TextOverflow
                                             //     .ellipsis, // Optional, if you want to truncate text that doesn't fit
@@ -294,90 +296,94 @@ class VitaminCartPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        side: const BorderSide(
-                            color: Colors.grey), // Border color
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(8), // Rounded corners
-                        ),
-                        minimumSize: Size(160, 55),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 8), // Padding
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(
+                          color: Color(0xFF009788)), // Border color
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(8), // Rounded corners
                       ),
-                      onPressed: () {
-                        // Get.to(VitaminCartPage(
-                        //   address: address,
-                        //    userModel: userModel,
-                        //    firebaseUser: firebaseUser,
-                        // ));
-                      },
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // Circular container
-                          Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              color: Colors.teal, // Background color
-                              borderRadius:
-                                  BorderRadius.circular(8), // Make it circular
-                            ),
-                            child: Obx(
-                              () => Center(
-                                child: Text(
-                                  '${cartController.cartItems.length}',
-                                  style: const TextStyle(
-                                    color: Colors.white, // Text color
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                      minimumSize: Size(160, 55),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8), // Padding
+                    ),
+                    onPressed: () {
+                      if (cartController.cartItems.isNotEmpty) {
+                        Get.to(VitaminCartPage(
+                          address: address,
+                          userModel: userModel,
+                          firebaseUser: firebaseUser,
+                          //
+                        ));
+                      }
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Circular container
+                        Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF009788), // Background color
+                            borderRadius:
+                                BorderRadius.circular(8), // Make it circular
+                          ),
+                          child: Obx(
+                            () => Center(
+                              child: Text(
+                                '${cartController.cartItems.length}',
+                                style: TextStyle(
+                                  color: Colors.white, // Text color
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
                           ),
-                          const SizedBox(
-                              width: 8), // Space between the icon and text
-                          Text(
-                            'Selected item'.tr,
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                            ),
+                        ),
+                        const SizedBox(
+                            width: 8), // Space between the icon and text
+                        Text(
+                          'Selected item'.tr,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF009788),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    ElevatedButton(
+                  ),
+                     Obx(
+                    () => ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: cartController.isCartEmpty()
-                            ? MyColors.greenColorauth
-                            : MyColors.liteGreen, // Background color
-                        minimumSize: const Size(160, 55), // Width and height
+                            ? Color(0xFFD9D9D9)
+                            : Color(0xFF007ABB),
+                        minimumSize: const Size(160, 55),
                         shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(12), // Border radius
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       onPressed: () {
-                        // Get.to(() => Laboratory(
-                        //             userModel: widget.userModel,
-                        //             firebaseUser: widget.firebaseUser,
-                        //           ));
                         if (!cartController.isCartEmpty()) {
-                          Get.to(Vitamin_Time(
-                            userModel: userModel,
-                            firebaseUser: firebaseUser,
-                          ));
+                          Get.to(() => Vitamin_Time(
+                                userModel: userModel,
+                                firebaseUser: firebaseUser,
+                              ));
                         }
                       },
                       child: Text(
                         'Continue'.tr,
-                        style: TextStyle(color: Colors.black, fontSize: 15),
+                        style: TextStyle(
+                            color: cartController.isCartEmpty()
+                                ? Color(0xFF9C9C9C)
+                                : Colors.white,
+                            fontSize: 15),
                       ),
                     ),
+                  ),
                   ],
                 ),
               ],

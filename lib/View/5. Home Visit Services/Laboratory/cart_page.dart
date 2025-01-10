@@ -1,13 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/c.selected_package.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
+import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 // import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
 
 class LabCartPage extends StatelessWidget {
+
+  final String address;
+  final UserModel userModel;
+  final User firebaseUser;
+
   final LabController controller = Get.put(LabController());
 
-  LabCartPage({super.key});
+  LabCartPage({super.key,required this.address,
+    required this.userModel,
+    required this.firebaseUser,});
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +57,19 @@ class LabCartPage extends StatelessWidget {
                   const SizedBox(height: 16),
                   Obx(
                     () => SizedBox(
-                      
                       height: MediaQuery.of(context).size.height * 0.7,
                       child: ListView.builder(
                           itemCount: controller.cartItems.length,
                           itemBuilder: (context, index) {
                             final item = controller.cartItems[index];
+
+                            String languageCode =
+                                Get.locale?.languageCode ?? 'en';
+
+                            final localizedData = languageCode == 'ar'
+                                ? item["localized"]["ar"]
+                                : item["localized"]["en"];
+
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
@@ -83,7 +100,7 @@ class LabCartPage extends StatelessWidget {
                                           width:
                                               200, // Set your desired width here
                                           child: Text(
-                                            '${item["name"]}',
+                                            '${localizedData["serviceName"]}',
                                             style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w500,
@@ -97,8 +114,7 @@ class LabCartPage extends StatelessWidget {
                                         IconButton(
                                           icon: const Icon(Icons.close),
                                           onPressed: () {
-                                            controller
-                                                .removeFromCart(index);
+                                            controller.removeFromCart(index);
                                           },
                                         ),
                                       ],
@@ -122,7 +138,7 @@ class LabCartPage extends StatelessWidget {
                                           padding:
                                               const EdgeInsets.only(left: 55.0),
                                           child: Text(
-                                            '${item["price"]}',
+                                            '${localizedData["price"]}',
                                             style: const TextStyle(
                                               fontSize: 16,
                                               color: Colors.blue,
@@ -273,79 +289,94 @@ class LabCartPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        side: const BorderSide(
-                            color: Colors.grey), // Border color
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(8), // Rounded corners
-                        ),
-                        minimumSize: Size(160, 55),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 8), // Padding
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(
+                          color: Color(0xFF009788)), // Border color
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(8), // Rounded corners
                       ),
-                      onPressed: () {
-                        Get.to(LabCartPage());
-                      },
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // Circular container
-                          Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              color: Colors.teal, // Background color
-                              borderRadius:
-                                  BorderRadius.circular(8), // Make it circular
-                            ),
-                            child: Obx(
-                              () => Center(
-                                child: Text(
-                                  '${controller.cartItems.length}',
-                                  style: const TextStyle(
-                                    color: Colors.white, // Text color
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                      minimumSize: Size(160, 55),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8), // Padding
+                    ),
+                    onPressed: () {
+                      if (controller.cartItems.isNotEmpty) {
+                        Get.to(LabCartPage(
+                                address: address,
+                                userModel: userModel,
+                                firebaseUser: firebaseUser,
+                                //
+                              ));
+                      }
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Circular container
+                        Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF009788), // Background color
+                            borderRadius:
+                                BorderRadius.circular(8), // Make it circular
+                          ),
+                          child: Obx(
+                            () => Center(
+                              child: Text(
+                                '${controller.cartItems.length}',
+                                style: TextStyle(
+                                  color: Colors.white, // Text color
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
                           ),
-                          const SizedBox(
-                              width: 8), // Space between the icon and text
-                          const Text(
-                            'Selected item',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                            ),
+                        ),
+                        const SizedBox(
+                            width: 8), // Space between the icon and text
+                        Text(
+                          'Selected item'.tr,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF009788),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    ElevatedButton(
+                  ),
+                  Obx(
+                    () => ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            MyColors.greenColorauth, // Background color
-                        minimumSize: const Size(160, 55), // Width and height
+                        backgroundColor: controller.isCartEmpty()
+                            ? Color(0xFFD9D9D9)
+                            : Color(0xFF007ABB),
+                        minimumSize: const Size(160, 55),
                         shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(12), // Border radius
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       onPressed: () {
-                        // Get.to(() => Laboratory(
-                        //             userModel: widget.userModel,
-                        //             firebaseUser: widget.firebaseUser,
-                        //           ));
+                        if (!controller.isCartEmpty()) {
+                          Get.to(() => Selected_Package(
+                                      userModel:userModel,
+                                      firebaseUser:firebaseUser,
+                                    ));
+                        }
                       },
                       child: Text(
-                        'Continue',
-                        style: TextStyle(color: Colors.black, fontSize: 15),
+                        'Continue'.tr,
+                        style: TextStyle(
+                            color: controller.isCartEmpty()
+                                ? Color(0xFF9C9C9C)
+                                : Colors.white,
+                            fontSize: 15),
                       ),
                     ),
+                  ),
                   ],
                 ),
               ],
