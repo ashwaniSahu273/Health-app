@@ -9,6 +9,7 @@ import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/d.vitamin_payment.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/get_patient_info.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/phone_input_screen.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_cart_page.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
@@ -817,17 +818,20 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
                               selectedDate, selectedTime!);
 
                           // Navigate to Payment Details with the package name and price
-                          // Get.to(() => VitaminPaymentPage(
-                          //       userModel: widget.userModel,
-                          //       firebaseUser: widget.firebaseUser,
-                          //       selectedTime: selectedTime!,
-                          //     ));
+                          Get.to(() => GetPatientInfo(
+                              address: vitaminCartController.stAddress.value,
+                                userModel: widget.userModel,
+                                firebaseUser: widget.firebaseUser,
+                                selectedTime: selectedTime!,
+                              ));
 
-                          Get.to(PhoneInputScreen(
-                            userModel: widget.userModel,
-                            firebaseUser: widget.firebaseUser,
-                            selectedTime: selectedTime!,
-                          ));
+                          // Get.to(GetPatientInfo(
+                          //   userModel: widget.userModel,
+                          //   firebaseUser: widget.firebaseUser,
+                          //   address:vitaminCartController.stAddress.value ,
+                          // ));
+
+
                         } else {
                           Get.snackbar("Error", "Please select a time slot");
                         }

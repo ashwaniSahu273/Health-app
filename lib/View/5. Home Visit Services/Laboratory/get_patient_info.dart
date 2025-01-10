@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/phone_input.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/c.vitamin_time.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/phone_input_screen.dart';
+// import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/phone_input_screen.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_cart_page.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/ui_helper.dart';
@@ -35,9 +37,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController mobileNumberController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
-
-
-  VitaminCartController cartController = Get.put(VitaminCartController());
+  LabController cartController = Get.put(LabController());
 
   String? selectedGender;
 
@@ -57,7 +57,6 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
   }
 
   void checkValues() {
-    
     String fullname = fullNameController.text.trim();
     // String mobileNumber = mobileNumberController.text.trim();
     String dob = dobController.text.trim();
@@ -98,33 +97,26 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
     widget.userModel.gender = gender;
     widget.userModel.dob = dob;
 
+     Get.to(PhoneInputScreen(
+            userModel: widget.userModel,
+            firebaseUser: widget.firebaseUser,
+            selectedTime: widget.selectedTime,
+          ));
+
     // await FirebaseFirestore.instance
     //     .collection("Registered Users")
     //     .doc(widget.userModel.uid)
     //     .set(widget.userModel.tomap())
     //     .then((value) {
     //   log("Data uploaded!");
-    // });
-
-     Get.to(
-      PhoneInputScreen(
-            userModel: widget.userModel,
-            firebaseUser: widget.firebaseUser,
-            selectedTime: widget.selectedTime,
-          )
-     );
-
-    //  Navigator.popUntil(context, (route) => route.isFirst);
+    //   Navigator.popUntil(context, (route) => route.isFirst);
     //   Navigator.pushReplacement(
     //     context,
     //     MaterialPageRoute(builder: (context) {
-    //       return PhoneInputScreen(
-    //         userModel: widget.userModel,
-    //         firebaseUser: widget.firebaseUser,
-    //         selectedTime: widget.selectedTime,
-    //       );
+    //       return 
     //     }),
     //   );
+    // });
   }
 
   @override

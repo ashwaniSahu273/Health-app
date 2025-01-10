@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/LabDynamicUi/lab_dynamic_ui.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/dynamic.dart';
 // import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -12,12 +13,12 @@ import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 class LabMorePackages extends StatelessWidget {
   final UserModel userModel;
   final User firebaseUser;
-  const LabMorePackages({super.key, required this.userModel, required this.firebaseUser});
+  const LabMorePackages(
+      {super.key, required this.userModel, required this.firebaseUser});
 
   @override
   Widget build(BuildContext context) {
-
-   LabController controller = Get.find<LabController>();
+    LabController controller = Get.find<LabController>();
 
     return SafeArea(
       child: Scaffold(
@@ -46,10 +47,9 @@ class LabMorePackages extends StatelessWidget {
                   //     firebaseUser: firebaseUser,
                   //     providerData: {},
                   //     packageName: "Health check package",
-                  //     packagePrice: "200", 
+                  //     packagePrice: "200",
                   //     selectedTime: '',
                   //   ));
-
                 },
                 child: Container(
                   width: double.infinity,
@@ -60,15 +60,28 @@ class LabMorePackages extends StatelessWidget {
                           crossAxisSpacing: 2,
                           mainAxisSpacing: 4,
                           crossAxisCount: 2,
-                          childAspectRatio: 1
-                          ),
+                          childAspectRatio: 1),
                       itemCount: controller.testItems.length,
                       itemBuilder: (context, index) {
-                        var item  = controller.testItems[index];
+                        var item = controller.servicesList[index];
+
+                        String languageCode = Get.locale?.languageCode ?? 'en';
+
+                        final localizedData = languageCode == 'ar'
+                            ? item.localized.ar
+                            : item.localized.en;
                         return GestureDetector(
                           onTap: () {
-                                Get.to(()=> LabDynamicUIPage(title: item["name"],id: item["id"], description: "", price: item["price"], components: ""));
-
+                            Get.to(LabSelectPackage(
+                              id: item.id,
+                              title: localizedData.serviceName,
+                              description: localizedData.description,
+                              price: localizedData.price,
+                              components: localizedData.instructions,
+                              address:controller.stAddress.value,
+                              userModel: userModel,
+                              firebaseUser: firebaseUser,
+                            ));
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
@@ -86,7 +99,7 @@ class LabMorePackages extends StatelessWidget {
                                     child: Align(
                                         alignment: Alignment.topLeft,
                                         child: Text(
-                                          "${item["name"]}",
+                                          "${localizedData.serviceName}",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         )),
@@ -120,9 +133,11 @@ class LabMorePackages extends StatelessWidget {
                                               color: Colors.white),
                                           child: Center(
                                             child: Text(
-                                              "Starting ${item["price"]}",
+                                              "Starting ${localizedData.price}",
                                               style: TextStyle(
-                                                  fontWeight: FontWeight.bold, fontSize: 12,),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 12,
+                                              ),
                                             ),
                                           ),
                                         ),

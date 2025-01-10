@@ -9,6 +9,7 @@ import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.d
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/cart_page.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/d.labpayment.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/get_patient_info.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
@@ -684,19 +685,27 @@ class _Selected_PackageState extends State<Selected_Package> {
                     child: GestureDetector(
                       onTap: () {
                         if (selectedTime != null) {
-                          Get.to(() => LabPaymentPage(
-                                // providerData: {
-                                //   'packageName': widget.packageName,
-                                //   'packagePrice': widget.packagePrice,
-                                //   'icon': Icons.science_outlined,
-                                //   ...widget
-                                //       .providerData, // Add any additional data from providerData
-                                // },
+
+                          Get.to(() => GetPatientInfo(
+                              address: cartController.stAddress.value,
                                 userModel: widget.userModel,
                                 firebaseUser: widget.firebaseUser,
                                 selectedTime: selectedTime!,
-           
                               ));
+
+                          // Get.to(() => LabPaymentPage(
+                          //       // providerData: {
+                          //       //   'packageName': widget.packageName,
+                          //       //   'packagePrice': widget.packagePrice,
+                          //       //   'icon': Icons.science_outlined,
+                          //       //   ...widget
+                          //       //       .providerData, // Add any additional data from providerData
+                          //       // },
+                          //       userModel: widget.userModel,
+                          //       firebaseUser: widget.firebaseUser,
+                          //       selectedTime: selectedTime!,
+           
+                          //     ));
                         } else {
                           Get.snackbar("Error", "Please select a time slot");
                         }
