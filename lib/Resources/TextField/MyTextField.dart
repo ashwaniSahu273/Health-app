@@ -17,47 +17,51 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(0.0),
-      child: TextFormField(
-        style: const TextStyle(
-          color: Colors.black,
-          fontSize: 16,
-        ),
-        keyboardType: TextInputType.text,
-        obscureText: obscureText,
-        controller: controller,
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: Color(0xFFD4D2D0), // Background color
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14), // Slightly rounded corners
-            borderSide: BorderSide.none, // No border
+        padding: const EdgeInsets.all(0.0),
+        child: SizedBox(
+          height: 50, // Set the height you want
+          child: TextFormField(
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+              fontFamily: "Schyler",
+            ),
+            keyboardType: TextInputType.text,
+            obscureText: obscureText,
+            controller: controller,
+            decoration: InputDecoration(
+              hintText: labelText, // Hint as label text
+              hintStyle: const TextStyle(
+                fontSize: 16,
+                color: Colors.grey, // Matches the placeholder text color
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16, // Horizontal padding
+              ),
+              filled: true,
+              fillColor: Colors.white, // Background color of the text field
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8), // Rounded corners
+                borderSide: BorderSide(
+                  color: Colors.grey, // Light blue border color
+                  width: 0,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(
+                  color: Colors.grey, // Highlighted border color
+                  width: 1,
+                ),
+              ),
+            ),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return conditionText;
+              }
+              return null;
+            },
           ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14),
-            borderSide: BorderSide.none, // No border
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14),
-            borderSide: BorderSide.none, // No border
-          ),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16, // Padding inside the field
-            vertical: 14,
-          ),
-          hintText: labelText, // Hint as label text
-          hintStyle:const TextStyle(
-            fontSize: 16,
-            color: Colors.black, // Subtle hint color
-          ),
-        ),
-        validator: (value) {
-          if (value!.isEmpty) {
-            return conditionText;
-          }
-          return null;
-        },
-      ),
-    );
+        ));
   }
 }

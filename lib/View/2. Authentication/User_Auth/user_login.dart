@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/View/2.%20Authentication/Provider_Auth/provider_login.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/ui_helper.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/2.%20Authentication/User_Auth/Google_Auth/auth_service.dart';
@@ -100,6 +101,10 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            
+
+      backgroundColor: Color(0xFFEEF8FF),
+
       body: SafeArea(
         child: Stack(
           children: [
@@ -121,15 +126,33 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   children: [
                     const Padding(
-                      padding: EdgeInsets.only(top: 50.0),
-                      child:  CircleAvatar(
-                        radius: 100,
+                      padding: EdgeInsets.only(top: 30.0),
+                      child: CircleAvatar(
+                        radius: 90,
                         backgroundImage:
                             AssetImage("assets/logo/harees_logo.png"),
                       ),
                     ),
                     const SizedBox(
-                      height: 25,
+                      height: 5,
+                    ),
+                    Text(
+                      "Harees",
+                      style: TextStyle(
+                          fontSize: 36,
+                          fontFamily: "Schyler",
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF007ABB)),
+                    ),
+                    Text(
+                      "Care about you and your family".tr,
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "Schyler"),
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -137,12 +160,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         Text(
                           "Login To Your Account".tr,
                           style: const TextStyle(
-                              fontSize: 20,color: Color(0xFF79AEC3),fontWeight: FontWeight.w500),
+                              fontFamily: "Schyler",
+                              fontSize: 16,
+                              color: Color(0xFF424242),
+                              fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     MyTextField(
                         controller: emailController,
@@ -150,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         labelText: "Email".tr,
                         conditionText: "Email Address cannot be empty".tr),
                     const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     MyTextField(
                         controller: passwordController,
@@ -160,34 +186,39 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 35,
                     ),
-
-                    
                     RoundButton(
+                        width: 175,
                         borderColor: Colors.white,
-                        color:Color(0xFFB2E1DA),
+                        textColor: Colors.white,
+                        fontSize: 16,
+                        color: Color(0xFF007ABB),
                         text: "Sign in".tr,
                         onTap: () {
                           checkValues();
                         }),
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     RichText(
                       text: TextSpan(
-                      text: "Or Sign In With? ".tr,
-                      style: const TextStyle(color: Color.fromRGBO(0, 0, 0, 1),fontSize: 15,fontWeight: FontWeight.w500),
-                      children: [
-                        TextSpan(
-                          text: "Mobile".tr,
-                          style: const TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.w500)
-                        )
-                      ]
+                          text: "Or Sign In With? ".tr,
+                          style: const TextStyle(
+                              fontFamily: "Schyler",
+                              color: Color.fromRGBO(0, 0, 0, 1),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500),
+                          children: [
+                            TextSpan(
+                                text: "Mobile".tr,
+                                style: const TextStyle(
+                                    fontFamily: "Schyler",
+                                    color: Colors.blue,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500))
+                          ]),
                     ),
-                    
-                    
-                    ),
-                     const SizedBox(
-                      height: 30,
+                    const SizedBox(
+                      height: 20,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -207,7 +238,35 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Image.asset("assets/images/google.png")
                                       .image),
                         ),
-              
+                        GestureDetector(
+                          onTap: () {
+                            AuthServiceUserLogin(
+                                    userModel: UserModel(),
+                                    firebaseUser:
+                                        FirebaseAuth.instance.currentUser)
+                                .signInWithGoogle();
+                          },
+                          child: CircleAvatar(
+                              radius: 20,
+                              backgroundImage:
+                                  Image.asset("assets/images/google.png")
+                                      .image),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            AuthServiceUserLogin(
+                                    userModel: UserModel(),
+                                    firebaseUser:
+                                        FirebaseAuth.instance.currentUser)
+                                .signInWithGoogle();
+                          },
+                          child: CircleAvatar(
+                              radius: 20,
+                              backgroundImage:
+                                  Image.asset("assets/images/google.png")
+                                      .image),
+                        ),
+
                         // GestureDetector(
                         //   onTap: () {},
                         //   child: CircleAvatar(
@@ -217,38 +276,59 @@ class _LoginScreenState extends State<LoginScreen> {
                         // ),
                       ],
                     ),
-                     const SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Create a new account?".tr,
-                            style: const TextStyle(
-                                fontSize: 16, color: Colors.black),
+                        child: Column(
+                      mainAxisSize:
+                          MainAxisSize.min, // Reduce extra vertical spacing
+                      crossAxisAlignment: CrossAxisAlignment
+                          .center, // Align children to the center
+                      children: [
+                        Text(
+                          "Create a new account?".tr,
+                          style: const TextStyle(
+                            fontFamily: "Schyler",
+                            fontSize: 14,
+                            color: Colors.black,
                           ),
-                          CupertinoButton(
-                          
-                            onPressed: () {
-                              Get.to(User_Register());
-
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(builder: (context) {
-                              //     return const User_Register();
-                              //   }),
-                              // );
-                            },
-                            child: Text(
-                              "Sign Up".tr,
-                              style: const TextStyle(
-                                  fontSize: 16, color: Colors.blue,fontWeight: FontWeight.w500),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(User_Register());
+                          },
+                          child: Text(
+                            "Sign Up".tr,
+                            style: const TextStyle(
+                              fontFamily: "Schyler",
+                              fontSize: 14,
+                              color: Colors.blue,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    )),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        RoundButton(
+                          textColor: Colors.white,
+                          color:  Color(0xFF009788),
+                          borderColor:Color(0xFF009788) ,
+                          height: 32,
+                          width: 123,
+                          fontSize: 12,
+                          text: "Join us provider".tr,
+                          onTap: () {
+                            Get.to(() => const Provider_login());
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),

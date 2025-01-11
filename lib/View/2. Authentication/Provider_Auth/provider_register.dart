@@ -95,6 +95,8 @@ class _Provider_RegisterState extends State<Provider_Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+      backgroundColor: Color(0xFFEEF8FF),
+
          automaticallyImplyLeading: false,
         leading:IconButton(
                 onPressed: () => Get.back(),
@@ -104,6 +106,8 @@ class _Provider_RegisterState extends State<Provider_Register> {
                   weight: 200,
                 ))
       ),
+      backgroundColor: Color(0xFFEEF8FF),
+
       body: Stack(
         children: [
           // Background image
@@ -125,34 +129,58 @@ class _Provider_RegisterState extends State<Provider_Register> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      const CircleAvatar(
-                          radius: 100,
-                          backgroundImage: AssetImage(
-                            "assets/logo/harees_logo.png",
-                          )),
- const SizedBox(
-                        height: 25,
+                                     const Padding(
+                      padding: EdgeInsets.only(top: 0.0),
+                      child: CircleAvatar(
+                        radius: 90,
+                        backgroundImage:
+                            AssetImage("assets/logo/harees_logo.png"),
                       ),
-                           Row(
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "Harees",
+                      style: TextStyle(
+                          fontSize: 36,
+                          fontFamily: "Schyler",
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF007ABB)),
+                    ),
+                    Text(
+                      "Care about you and your family".tr,
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "Schyler"),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           "Create Your Account".tr,
                           style: const TextStyle(
-                              fontSize: 20,color: Color(0xFF79AEC3),fontWeight: FontWeight.w500),
+                              fontFamily: "Schyler",
+                              fontSize: 16,
+                              color: Color(0xFF424242),
+                              fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                       MyTextField(
                           controller: emailController,
                           obscureText: false,
                           labelText: "Email Address".tr,
                           conditionText: "Email Address cannot be empty"),
                                const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     
                       MyTextField(
@@ -161,7 +189,7 @@ class _Provider_RegisterState extends State<Provider_Register> {
                           labelText: "Password".tr,
                           conditionText: "Password cannot be empty"),
                                const SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     
                       MyTextField(
@@ -169,27 +197,36 @@ class _Provider_RegisterState extends State<Provider_Register> {
                           obscureText: true,
                           labelText: "Confirm Password".tr,
                           conditionText: "Password cannot be empty"),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 25),
                       RoundButton(
-                         borderColor: Colors.white,
-                        color:Color(0xFFB2E1DA),
+                            width: 175,
+                        borderColor: Colors.white,
+                        textColor: Colors.white,
+                        fontSize: 16,
+                        color: Color(0xFF007ABB),
                           text: "Sign Up".tr,
                           onTap: () {
                             checkValues();
                           }),
-                     const SizedBox(height: 25),
-                     RichText(
+                     const SizedBox(height: 15),
+                    RichText(
                       text: TextSpan(
-                      text: "Or Sign In With? ".tr,
-                      style: const TextStyle(color: Colors.black,fontSize: 15,fontWeight: FontWeight.w500),
-                      children: [
-                        TextSpan(
-                          text: "Mobile".tr,
-                          style: const TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.w500)
-                        )
-                      ]
+                          text: "Or Sign In With? ".tr,
+                          style: const TextStyle(
+                              fontFamily: "Schyler",
+                              color: Color.fromRGBO(0, 0, 0, 1),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500),
+                          children: [
+                            TextSpan(
+                                text: "Mobile".tr,
+                                style: const TextStyle(
+                                    fontFamily: "Schyler",
+                                    color: Colors.blue,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500))
+                          ]),
                     ),
-                     ),
 
                     SizedBox(height: 25),
 

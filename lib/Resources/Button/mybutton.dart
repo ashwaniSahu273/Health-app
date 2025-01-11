@@ -8,6 +8,7 @@ class RoundButton extends StatelessWidget {
   final String text;
   final bool loading;
   final Color? color;
+  final Color? textColor;
   final Color? borderColor;
   final double? height;
   final double? width;
@@ -18,6 +19,7 @@ class RoundButton extends StatelessWidget {
       required this.text,
       required this.onTap,
       this.color,
+      this.textColor,
       this.height,
       this.width,
       this.fontSize,
@@ -47,7 +49,8 @@ class RoundButton extends StatelessWidget {
                     text,
                     style: TextStyle(
                         fontSize:fontSize ?? 24,
-                        color: Colors.black,
+                        color:textColor ?? Colors.black,
+                        fontFamily: "Schyler",
                         fontWeight: FontWeight.w500),
                   ),
           )),
