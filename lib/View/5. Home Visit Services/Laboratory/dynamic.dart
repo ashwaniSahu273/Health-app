@@ -227,7 +227,7 @@ class LabSelectPackage extends StatelessWidget {
                                                               5),
                                                     ),
                                                     child: Text(
-                                                      "Select",
+                                                      "Select".tr,
                                                       style: const TextStyle(
                                                         fontSize: 12,
                                                         fontWeight:
@@ -281,8 +281,8 @@ class LabSelectPackage extends StatelessWidget {
                                 top: 8.0,
                                 left: 8,
                               ),
-                              child: const Text(
-                                "About This Package",
+                              child: Text(
+                                "About This Package".tr,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
@@ -324,7 +324,7 @@ class LabSelectPackage extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  "Components Included",
+                                  "Components Included".tr,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,

@@ -189,7 +189,7 @@ class _LabTestState extends State<LabTest> {
                         child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "Body function or health concern",
+                              "Body function or health concern".tr,
                               style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: "Roboto",
@@ -205,27 +205,27 @@ class _LabTestState extends State<LabTest> {
                             children: [
                               LabFunctions(
                                 imagePath: "assets/images/1.png",
-                                text: "Full body",
+                                text: "Full body".tr,
                               ),
                               SizedBox(width: 8), // Add spacing between items
                               LabFunctions(
                                 imagePath: "assets/images/1.png",
-                                text: "Diabetes",
+                                text: "Diabetes".tr,
                               ),
                               SizedBox(width: 8),
                               LabFunctions(
                                 imagePath: "assets/images/1.png",
-                                text: "Cholesterol",
+                                text: "Cholesterol".tr,
                               ),
                               SizedBox(width: 8),
                               LabFunctions(
                                 imagePath: "assets/images/1.png",
-                                text: "Full body",
+                                text: "Full body".tr,
                               ),
                               SizedBox(width: 8),
                               LabFunctions(
                                 imagePath: "assets/images/1.png",
-                                text: "Full body",
+                                text: "Full body".tr,
                               ),
                             ],
                           ),
@@ -251,7 +251,7 @@ class _LabTestState extends State<LabTest> {
                         width: 10,
                       ),
                       Text(
-                        "Most helpful packages",
+                        "Most helpful packages".tr,
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
@@ -270,7 +270,7 @@ class _LabTestState extends State<LabTest> {
                           });
                         },
                         child: Text(
-                          "View all Packages",
+                          "View all Packages".tr,
                           style: TextStyle(
                               color: Colors.blue,
                               fontSize: 16,
@@ -376,7 +376,7 @@ class _LabTestState extends State<LabTest> {
                                                 color: Colors.white),
                                             child: Center(
                                               child: Text(
-                                                "Starting ${localizedData.price}",
+                                                "${'Starting'.tr} ${localizedData.price}",
                                                 style: TextStyle(
                                                     fontSize: 12,
                                                     fontWeight:

@@ -15,7 +15,7 @@ import '../../View/6. More Services/Provider_services/User_Requests/user_request
 class ServiceIconButton extends StatelessWidget {
   final UserModel userModel;
   final User firebaseUser;
-  final IconData serviceIcon;
+  final String serviceIcon;
   final String serviceName;
   final VoidCallback onPressed;
 
@@ -37,21 +37,21 @@ class ServiceIconButton extends StatelessWidget {
         width: 10.0,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: Color.fromARGB(255, 170, 226, 244),
+          color: Colors.white,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(
-              icon: Icon(serviceIcon, size: 40),
-              onPressed: onPressed,
-              color: Colors.black,
-            ),
+             Image.asset(
+            serviceIcon,
+            height: 50, // Adjust the size as needed
+            width: 50,
+          ),
             const SizedBox(height: 5),
             Text(
               serviceName,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 12,fontFamily: "Roboto", fontWeight: FontWeight.w700),
             ),
           ],
         ),
@@ -78,7 +78,7 @@ class MoreServicesGrid extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           ServiceIconButton(
-            serviceIcon: Icons.calendar_month_outlined,
+            serviceIcon: "assets/images/appoint.png",
             serviceName: "Appointments".tr,
             onPressed: () {
               Get.to(() => UserRequests(
@@ -90,7 +90,7 @@ class MoreServicesGrid extends StatelessWidget {
             firebaseUser: firebaseUser,
           ),
           ServiceIconButton(
-            serviceIcon: Icons.add_box_outlined,
+            serviceIcon: "assets/images/accept.png",
             serviceName: "Accepted appointments".tr,
             onPressed: () {
               Get.to(() => AcceptedRequests(
@@ -102,7 +102,7 @@ class MoreServicesGrid extends StatelessWidget {
             firebaseUser: firebaseUser,
           ),
           ServiceIconButton(
-            serviceIcon: Icons.list_alt,
+            serviceIcon: "assets/images/upload.png",
             serviceName: "Upload Results".tr,
             onPressed: () {
               Get.to(() => const ResultUpload());
@@ -111,7 +111,7 @@ class MoreServicesGrid extends StatelessWidget {
             firebaseUser: firebaseUser,
           ),
           ServiceIconButton(
-            serviceIcon: Icons.message_outlined,
+            serviceIcon: "assets/images/service_contact.png",
             serviceName: "Contact Us".tr,
             onPressed: () {
               Get.to(() => ProviderContact(
@@ -123,7 +123,7 @@ class MoreServicesGrid extends StatelessWidget {
             firebaseUser: firebaseUser,
           ),
           ServiceIconButton(
-            serviceIcon: Icons.family_restroom,
+            serviceIcon:"assets/images/family.png",
             serviceName: "Family".tr,
             onPressed: () {
               Get.to(() => Family(
@@ -135,7 +135,7 @@ class MoreServicesGrid extends StatelessWidget {
             firebaseUser: firebaseUser,
           ),
           ServiceIconButton(
-            serviceIcon: Icons.chat_bubble_outline,
+            serviceIcon: "assets/images/chat.png",
             serviceName: "Chats".tr,
             onPressed: () {
               Get.to(() => Home(
@@ -148,7 +148,7 @@ class MoreServicesGrid extends StatelessWidget {
             firebaseUser: firebaseUser,
           ),
           ServiceIconButton(
-            serviceIcon: Icons.info,
+            serviceIcon: "assets/images/about.png",
             serviceName: "About us".tr,
             onPressed: () {
               Get.to(() => AboutUsPage(
@@ -160,7 +160,7 @@ class MoreServicesGrid extends StatelessWidget {
             firebaseUser: firebaseUser,
           ),
           ServiceIconButton(
-            serviceIcon: Icons.question_answer,
+            serviceIcon: "assets/images/faq1.png",
             serviceName: "FAQ".tr,
             onPressed: () {
               Get.to(() => FAQ(

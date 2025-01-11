@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
 import 'package:harees_new_project/Resources/Search_bar/search_bar.dart';
+import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/details_page.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 // import 'package:harees_new_project/controllers/user_requests_controller.dart';
@@ -31,23 +32,33 @@ class UserRequests extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: MyAppBar(
-        userModel: userModel,
-        firebaseUser: firebaseUser,
-        targetUser: userModel,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        leadingWidth: 200,
+        leading: Row(
+          children: [
+            IconButton(
+                onPressed: () => Get.back(),
+                icon: const Icon(
+                  Icons.keyboard_double_arrow_left,
+                  size: 25,
+                  weight: 200,
+                )), // Double-arrow icon
+            Text(
+              'Appointments'.tr,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700,fontFamily: "Roboto"),
+            ),
+          ],
+        ),
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/back_image.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
+        color: Colors.blue[50],
         child: SafeArea(
           child: Column(
             children: [
               const SizedBox(height: 20),
-              const MySearchBar(),
+              // const MySearchBar(),
               const SizedBox(height: 15),
               StreamBuilder<QuerySnapshot>(
                 stream: controller.userAppointments,
@@ -69,190 +80,208 @@ class UserRequests extends StatelessWidget {
                           double.parse(doc["longitude"]),
                         );
 
-                        return Padding(
-                          padding: const EdgeInsets.all(14.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              // border: Border.all(color: Colors.black),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Card(
-                              color: Colors.white,
-                              elevation: 4,
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 0, vertical: 8),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+                        return GestureDetector(
+                          onTap: () {
+                            Get.to(AppointmentDetailsScreen(doc: doc));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(14.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                // border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(15),
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        // Leading icon
-                                        CircleAvatar(
-                                          backgroundColor: Colors.blue[100],
-                                          radius: 25,
-                                          child: Icon(
-                                            Icons.person,
-                                            color: Colors.blue[700],
-                                            size: 30,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 12),
-                                        // Name and type
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                doc['name'].toString(),
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.blue[700],
-                                                ),
-                                              ),
-                                              const SizedBox(height: 4),
-                                              Text(
-                                                doc['type'].toString(),
-                                                style: const TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.red,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        // Medical service icon
-                                        Icon(
-                                          Icons.medical_services,
-                                          color: Colors.blue[700],
-                                          size: 35,
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 16),
-
-                                    // Details Section
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        _buildInfoRow(Icons.phone, "Phone",
-                                            doc['phone'].toString()),
-                                        const SizedBox(height: 8),
-                                        _buildInfoRow(
-                                            Icons.cake_rounded,
-                                            "Date of Birth",
-                                            doc['dob'].toString()),
-                                        const SizedBox(height: 8),
-                                        GestureDetector(
-                                          onTap: () {
-                                            _openInGoogleMaps(
-                                              double.parse(doc["latitude"]),
-                                              double.parse(doc["longitude"]),
-                                            );
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Icon(
-                                                Icons.location_on,
-                                                color: Colors.green[700],
-                                                size: 20,
-                                              ),
-                                              const SizedBox(width: 8),
-                                              Expanded(
-                                                child: Text(
-                                                  doc['address'].toString(),
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.green[800],
-                                                    decoration: TextDecoration
-                                                        .underline,
-                                                  ),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 2,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 16),
-
-                                    // Google Map
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(2),
-                                      child: Container(
-                                        height: 150,
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: Colors.blue, // Border color
-                                            width: 2.0, // Border width
-                                          ),
-                                          borderRadius: BorderRadius.circular(0)
-                                        ),
-                                        child: GoogleMap(
-                                          initialCameraPosition: CameraPosition(
-                                            target: location,
-                                            zoom: 15,
-                                          ),
-                                          markers: {
-                                            Marker(
-                                              markerId:
-                                                  MarkerId("cartLocation"),
-                                              position: location,
+                              child: Card(
+                                color: Colors.white,
+                                elevation: 4,
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 0, vertical: 8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          // Leading icon
+                                          CircleAvatar(
+                                            backgroundColor: Colors.blue[100],
+                                            radius: 25,
+                                            child: Icon(
+                                              Icons.person,
+                                              color: Colors.blue[700],
+                                              size: 30,
                                             ),
-                                          },
-                                          zoomControlsEnabled: false,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 16),
-
-                                    // Accept Appointment Button
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: ElevatedButton.icon(
-                                        onPressed: () {
-                                          Get.defaultDialog(
-                                            title: 'Accept Appointment'.tr,
-                                            middleText: "Are you sure?".tr,
-                                            textConfirm: 'Yes'.tr,
-                                            textCancel: 'No'.tr,
-                                            onConfirm: () {
-                                              controller.acceptAppointment(doc);
-                                              Get.back();
-                                            },
-                                            onCancel: () => Get.back(),
-                                          );
-                                        },
-                                        icon: const Icon(Icons.check, size: 18,color: Colors.white,),
-                                        label: Text("Accept",style: TextStyle(color: Colors.white),),
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.blue[700],
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
                                           ),
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 20,
-                                            vertical: 12,
+                                          const SizedBox(width: 12),
+                                          // Name and type
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  doc['name'].toString(),
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.blue[700],
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 4),
+                                                Text(
+                                                    doc['address'].toString(),
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.green[800],
+                                               
+                                                    ),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 2,
+                                                  ),
+                                                const SizedBox(height: 4),
+                          
+                                                Text(
+                                                  doc['type'].toString(),
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.red,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
+                                          // Medical service icon
+                                          Icon(
+                                            Icons.medical_services,
+                                            color: Colors.blue[700],
+                                            size: 35,
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
+                                      // const SizedBox(height: 16),
+                          
+                                      // Details Section
+                                      // Column(
+                                      //   crossAxisAlignment:
+                                      //       CrossAxisAlignment.start,
+                                      //   children: [
+                                      //     _buildInfoRow(Icons.phone, "Phone",
+                                      //         doc['phone'].toString()),
+                                      //     const SizedBox(height: 8),
+                                      //     _buildInfoRow(
+                                      //         Icons.cake_rounded,
+                                      //         "Date of Birth",
+                                      //         doc['dob'].toString()),
+                                      //     const SizedBox(height: 8),
+                                      //     GestureDetector(
+                                      //       onTap: () {
+                                      //         _openInGoogleMaps(
+                                      //           double.parse(doc["latitude"]),
+                                      //           double.parse(doc["longitude"]),
+                                      //         );
+                                      //       },
+                                      //       child: Row(
+                                      //         children: [
+                                      //           Icon(
+                                      //             Icons.location_on,
+                                      //             color: Colors.green[700],
+                                      //             size: 20,
+                                      //           ),
+                                      //           const SizedBox(width: 8),
+                                      //           Expanded(
+                                      //             child: Text(
+                                      //               doc['address'].toString(),
+                                      //               style: TextStyle(
+                                      //                 fontSize: 14,
+                                      //                 color: Colors.green[800],
+                                      //                 decoration: TextDecoration
+                                      //                     .underline,
+                                      //               ),
+                                      //               overflow:
+                                      //                   TextOverflow.ellipsis,
+                                      //               maxLines: 2,
+                                      //             ),
+                                      //           ),
+                                      //         ],
+                                      //       ),
+                                      //     ),
+                                      //   ],
+                                      // ),
+                                      // const SizedBox(height: 16),
+                          
+                                      // Google Map
+                                      // ClipRRect(
+                                      //   borderRadius: BorderRadius.circular(2),
+                                      //   child: Container(
+                                      //     height: 150,
+                                      //     width: double.infinity,
+                                      //     decoration: BoxDecoration(
+                                      //       border: Border.all(
+                                      //         color: Colors.blue, // Border color
+                                      //         width: 2.0, // Border width
+                                      //       ),
+                                      //       borderRadius: BorderRadius.circular(0)
+                                      //     ),
+                                      //     child: GoogleMap(
+                                      //       initialCameraPosition: CameraPosition(
+                                      //         target: location,
+                                      //         zoom: 15,
+                                      //       ),
+                                      //       markers: {
+                                      //         Marker(
+                                      //           markerId:
+                                      //               MarkerId("cartLocation"),
+                                      //           position: location,
+                                      //         ),
+                                      //       },
+                                      //       zoomControlsEnabled: false,
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      // const SizedBox(height: 16),
+                          
+                                      // Accept Appointment Button
+                                      // Align(
+                                      //   alignment: Alignment.centerRight,
+                                      //   child: ElevatedButton.icon(
+                                      //     onPressed: () {
+                                      //       Get.defaultDialog(
+                                      //         title: 'Accept Appointment'.tr,
+                                      //         middleText: "Are you sure?".tr,
+                                      //         textConfirm: 'Yes'.tr,
+                                      //         textCancel: 'No'.tr,
+                                      //         onConfirm: () {
+                                      //           controller.acceptAppointment(doc);
+                                      //           Get.back();
+                                      //         },
+                                      //         onCancel: () => Get.back(),
+                                      //       );
+                                      //     },
+                                      //     icon: const Icon(Icons.check, size: 18,color: Colors.white,),
+                                      //     label: Text("Accept",style: TextStyle(color: Colors.white),),
+                                      //     style: ElevatedButton.styleFrom(
+                                      //       backgroundColor: Colors.blue[700],
+                                      //       shape: RoundedRectangleBorder(
+                                      //         borderRadius:
+                                      //             BorderRadius.circular(8),
+                                      //       ),
+                                      //       padding: const EdgeInsets.symmetric(
+                                      //         horizontal: 20,
+                                      //         vertical: 12,
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

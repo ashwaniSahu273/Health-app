@@ -174,7 +174,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                       TextField(
                         controller: fullNameController,
                         decoration: InputDecoration(
-                          hintText: "Full Name",
+                          hintText: "Full Name".tr,
                           hintStyle: TextStyle(
                               color: Colors
                                   .grey), // Matches the placeholder text color
@@ -242,7 +242,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                             Icons.calendar_month,
                             color: Colors.grey,
                           ),
-                          hintText: "Date of birth",
+                          hintText: "Date of birth".tr,
                           hintStyle: TextStyle(
                               color: Colors
                                   .grey), // Matches the placeholder text color
@@ -274,7 +274,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                       DropdownButtonFormField<String>(
                         value: selectedGender,
                         decoration: InputDecoration(
-                          labelText: "Gender",
+                          labelText: "Gender".tr,
                           labelStyle: TextStyle(color: Colors.grey),
                           hintStyle: TextStyle(
                               color: Colors
