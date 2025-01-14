@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart' as FilePicker;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/View/2.%20Authentication/User_Auth/user_login.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/b.Vitamin_services.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/firebase_helper.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       home: firebaseUser != null && userModel != null
           ? HomePage(userModel: userModel!, firebaseUser: firebaseUser!)
-          : Splash_Screen(),
+          : LoginScreen(),
       
       
       // home: VitaminServices(

@@ -27,7 +27,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      backgroundColor: MyColors.PageBg, // Update this color as needed
+      backgroundColor: Colors.white, // Update this color as needed
       currentIndex: _currentIndex,
       selectedItemColor: Colors.blue,
       unselectedItemColor: MyColors.blue, // Changed unselected color to grey for better contrast

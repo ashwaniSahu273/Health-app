@@ -36,7 +36,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlue[50],
-        elevation: 1,
+        elevation: 0,
         title: const Text("Messages"),
         centerTitle: true,
         actions: [

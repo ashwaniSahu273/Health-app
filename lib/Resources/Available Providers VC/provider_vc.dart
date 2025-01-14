@@ -6,11 +6,13 @@ import 'package:harees_new_project/View/4.%20Virtual%20Consultation/c.%20Provide
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class AvailableDoctors extends StatelessWidget {
-  final user_appointments = FirebaseFirestore.instance.collection("Registered Providers").snapshots();
+  final user_appointments =
+      FirebaseFirestore.instance.collection("Registered Providers").snapshots();
   final UserModel userModel;
   final User firebaseUser;
 
-  AvailableDoctors({super.key, 
+  AvailableDoctors({
+    super.key,
     required this.userModel,
     required this.firebaseUser,
   });
@@ -22,7 +24,8 @@ class AvailableDoctors extends StatelessWidget {
         stream: user_appointments,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Center(child: Text('Something went wrong: ${snapshot.error}'));
+            return Center(
+                child: Text('Something went wrong: ${snapshot.error}'));
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -40,7 +43,8 @@ class AvailableDoctors extends StatelessWidget {
             itemBuilder: (context, index) {
               final doc = doctorsData[index];
               final doctor = {
-                'image': doc['profilePic'] ?? 'https://via.placeholder.com/150', // Placeholder image if none provided
+                'image': doc['profilePic'] ??
+                    'https://via.placeholder.com/150', // Placeholder image if none provided
                 'name': doc['fullname'] ?? 'N/A',
                 'email': doc['email'] ?? 'N/A',
                 'experience': doc['experience'] ?? 'N/A',
@@ -48,12 +52,13 @@ class AvailableDoctors extends StatelessWidget {
 
               return Container(
                 padding: const EdgeInsets.all(10.0),
-                margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                margin:
+                    const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
                 decoration: BoxDecoration(
-                  color: Colors.lightBlue[50],
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                height: 120,
+                height: 100,
                 child: Row(
                   children: [
                     // Doctor's picture
@@ -77,9 +82,11 @@ class AvailableDoctors extends StatelessWidget {
                           Text(
                             doctor['name'],
                             style: const TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF426ACA)
                             ),
+                            overflow: TextOverflow.clip,
                           ),
                           const SizedBox(height: 5),
                           Text(
@@ -88,38 +95,53 @@ class AvailableDoctors extends StatelessWidget {
                               fontSize: 14.0,
                               color: Colors.grey[700],
                             ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(height: 5),
                           Text(
                             'Experience: ${doctor['experience']}',
                             style: TextStyle(
                               fontSize: 14.0,
-                              color: Colors.grey[700],
+                              color: Color(0xFF426ACA)
+                              
                             ),
                           ),
                         ],
                       ),
                     ),
                     // Select button
-                    ElevatedButton(
-                      onPressed: () {
+                    GestureDetector(
+                      onTap: () {
                         Get.to(() => Provider_Details(
-                          providerData: doctor,
-                          userModel: userModel,
-                          firebaseUser: firebaseUser,
-                        ));
-                        // Handle select button tap
+                              providerData: doctor,
+                              userModel: userModel,
+                              firebaseUser: firebaseUser,
+                            ));
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue[900],
-                      ),
-                      child: const Text(
-                        'Select',
-                        style: TextStyle(
-                          color: Colors.white,
+                      child: Container(
+                        height: 30, // Set height
+                        width: 80, // Set width
+                        // padding: const EdgeInsets.symmetric(
+                        //   horizontal: 20, // Horizontal padding
+                        //   vertical: 15, // Vertical padding
+                        // ),
+                        decoration: BoxDecoration(
+                          color: Colors.teal, // Background color
+                          borderRadius:
+                              BorderRadius.circular(15), // Rounded corners
+                        ),
+                        alignment: Alignment.center, // Center the text inside
+                        child: const Text(
+                          'Select',
+                          style: TextStyle(
+                            color: Colors.white, // Text color
+                            fontSize: 14, // Font size
+                            fontWeight:
+                                FontWeight.bold, // Optional: Font weight
+                          ),
                         ),
                       ),
-                    ),
+                    )
                   ],
                 ),
               );

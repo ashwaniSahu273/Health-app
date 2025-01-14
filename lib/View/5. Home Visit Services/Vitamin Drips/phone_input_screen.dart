@@ -21,61 +21,140 @@ class PhoneInputScreen extends StatefulWidget {
 class _PhoneInputScreenState extends State<PhoneInputScreen> {
   final TextEditingController phoneController = TextEditingController();
   String? verificationId;
-  String selectedCountryCode = '+1'; // Default country code
 
-  // List of country codes for the dropdown
+  // Default selected country code
+  String selectedCountryCode = '+966';
+
+  // List of country codes
   final List<Map<String, String>> countryCodes = [
+    {'code': '+966', 'name': 'Saudi Arabia'},
     {'code': '+1', 'name': 'USA'},
     {'code': '+91', 'name': 'India'},
     {'code': '+44', 'name': 'UK'},
     {'code': '+61', 'name': 'Australia'},
+    {'code': '+971', 'name': 'UAE'},
     // Add more country codes as needed
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Phone Verification')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Logo at the top
+              CircleAvatar(
+                radius: 50,
+                backgroundColor: Colors.blueAccent.shade100,
+                child:const Icon(
+                  Icons.medical_services_rounded,
+                  color: Colors.white,
+                  size: 50,
+                ),
+              ),
+              SizedBox(height: 40),
+              // Enter Phone Number text
+              Text(
+                'Enter Phone Number',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueAccent,
+                ),
+              ),
+              SizedBox(height: 10),
+              // Country code dropdown and phone number input
+             Container(
+        // decoration: BoxDecoration(
+        //   color: Colors.white,
+        //   borderRadius: BorderRadius.circular(12),
+        //   boxShadow: [
+        //     BoxShadow(
+        //       color: Colors.grey.withOpacity(0.2),
+        //       blurRadius: 8,
+        //       offset: Offset(0, 4),
+        //     ),
+        //   ],
+        // ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Row(
           children: [
-            DropdownButtonFormField<String>(
-              value: selectedCountryCode,
-              onChanged: (String? newValue) {
-                setState(() {
+          
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                color: Color(0xFFD4D2D0),
+                borderRadius: BorderRadius.circular(8.0),
+                border: Border.all(color: Colors.transparent),
+              ),
+              child: DropdownButton<String>(
+                value: selectedCountryCode,
+                underline: SizedBox(), // Removes the default underline
+                onChanged: (String? newValue) {
                   selectedCountryCode = newValue!;
-                });
-              },
-              items: countryCodes.map((country) {
-                return DropdownMenuItem<String>(
-                  value: country['code'],
-                  child: Text('${country['name']} (${country['code']})'),
-                );
-              }).toList(),
-              decoration: InputDecoration(
-                labelText: 'Select Country Code',
-                border: OutlineInputBorder(),
+                },
+                items: countryCodes.map((country) {
+                  return DropdownMenuItem<String>(
+                    value: country['code'],
+                    child: Text(
+                      '${country['code']}',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  );
+                }).toList(),
+                icon: Icon(Icons.arrow_drop_down, color: Colors.grey.shade700),
               ),
             ),
-            SizedBox(height: 20),
-            TextField(
-              controller: phoneController,
-              decoration: InputDecoration(
-                labelText: 'Enter Phone Number',
-                border: OutlineInputBorder(),
+            SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                controller: phoneController,
+                decoration: InputDecoration(
+                  hintText: 'Enter your phone number',
+                  filled: true,
+                  fillColor: Colors.grey.shade100,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                keyboardType: TextInputType.phone,
               ),
-              keyboardType: TextInputType.phone,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                sendOtp(selectedCountryCode + phoneController.text);
-              },
-              child: Text('Send OTP'),
             ),
           ],
+        ),
+      ),
+              SizedBox(height: 30),
+              // Next button
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    sendOtp(selectedCountryCode + phoneController.text.trim());
+                  },
+                  style: ElevatedButton.styleFrom(
+                    // primary: Colors.lightBlueAccent.shade100,
+                    // onPrimary: Colors.black,
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                  child: Text(
+                    'Next',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

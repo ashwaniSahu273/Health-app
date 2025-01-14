@@ -18,14 +18,19 @@ class E_Clinics extends StatefulWidget {
   final User firebaseUser;
   final UserModel targetUser;
 
-  const E_Clinics({super.key, required this.userModel, required this.firebaseUser, required this.targetUser});
+  const E_Clinics(
+      {super.key,
+      required this.userModel,
+      required this.firebaseUser,
+      required this.targetUser});
 
   @override
   State<E_Clinics> createState() => _E_ClinicsState();
 }
 
 class _E_ClinicsState extends State<E_Clinics> {
-  final user_appointments = FirebaseFirestore.instance.collection("Registered Providers").snapshots();
+  final user_appointments =
+      FirebaseFirestore.instance.collection("Registered Providers").snapshots();
 
   @override
   Widget build(BuildContext context) {
@@ -47,41 +52,50 @@ class _E_ClinicsState extends State<E_Clinics> {
         ],
       ),
       drawer: MyDrawer(
-        userModel: widget.userModel, 
-        firebaseUser: widget.firebaseUser, 
+        userModel: widget.userModel,
+        firebaseUser: widget.firebaseUser,
         targetUser: widget.userModel,
       ),
-      body: Stack(
-        children: [
-          // Background image
-          Positioned.fill(
-            child: Image.asset(
-              'assets/images/back_image.png',
-              fit: BoxFit.cover,
-            ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter, // Adjust based on direction
+            end: Alignment.bottomCenter, // Adjust based on direction
+            colors: [
+              Color(0xFFB2D4E7), // Light blue
+              Color.fromARGB(255, 92, 132, 223), // Dark blue
+            ],
+            stops: [0.3542, 0.9932], // Corresponding to 35.42% and 99.32%
           ),
-          // Main content
-          Padding(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const MySearchBar(),
-                const SizedBox(height: 25),
-                Text(
+          // borderRadius: BorderRadius.circular(12), // Optional for rounded corners
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 50),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: const MySearchBar(),
+              ),
+              const SizedBox(height: 25),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
                   "Select the Consultant".tr,
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style:
+                      const TextStyle(fontSize: 16,fontFamily: "schyler", fontWeight: FontWeight.w700),
                 ),
-                const SizedBox(height: 25),
-                AvailableDoctors(
-                  userModel: widget.userModel,
-                  firebaseUser: widget.firebaseUser,
-                ),
-              ],
-            ),
+              ),
+              // const SizedBox(height: 15),
+              AvailableDoctors(
+                userModel: widget.userModel,
+                firebaseUser: widget.firebaseUser,
+              ),
+            ],
           ),
-        ],
+        ),
       ),
       bottomNavigationBar: MyBottomNavBar(
         userModel: widget.userModel,

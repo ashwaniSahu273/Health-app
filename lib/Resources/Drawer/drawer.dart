@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:harees_new_project/View/1.%20Splash%20Screen/splash_screen.dart';
+import 'package:harees_new_project/View/2.%20Authentication/User_Auth/user_login.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/About_Us/aboutus.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/Family/family.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/User_services/Contact_us/user_contact_us.dart';
@@ -144,7 +145,7 @@ class _MyDrawerState extends State<MyDrawer> {
               await GoogleSignIn().signOut();
               await FirebaseAuth.instance.signOut();
               _auth.signOut();
-              Get.to(() => Splash_Screen());
+              Get.to(() => LoginScreen());
             },
           ),
           Padding(
