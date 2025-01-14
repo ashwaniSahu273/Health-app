@@ -1,159 +1,168 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+// import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/c.selected_package.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 // import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
 
 class LabCartPage extends StatelessWidget {
-
   final String address;
   final UserModel userModel;
   final User firebaseUser;
 
   final LabController controller = Get.put(LabController());
 
-  LabCartPage({super.key,required this.address,
+  LabCartPage({
+    super.key,
+    required this.address,
     required this.userModel,
-    required this.firebaseUser,});
+    required this.firebaseUser,
+  });
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
-        title: const Text(
-          'Cart Items',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+        // title: Text(
+        //   'Cart Items'.tr,
+        //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+        // ),
+        leadingWidth: 200,
+        leading: Row(
+          children: [
+            IconButton(
+              icon: const Icon(
+                Icons.close,
+                size: 20,
+                color: Colors.grey,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            Text(
+              'Cart Items'.tr,
+              style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: "schyler",
+                  fontWeight: FontWeight.w700),
+            ),
+          ],
         ),
       ),
-      backgroundColor: Colors.white,
-      body: Stack(children: [
-        Column(
-          children: [
-            // Package Tests Section
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Obx(
-                    () => Text(
-                      'Your Package tests (${controller.cartItems.length})',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Obx(
-                    () => SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.7,
-                      child: ListView.builder(
-                          itemCount: controller.cartItems.length,
-                          itemBuilder: (context, index) {
-                            final item = controller.cartItems[index];
+      backgroundColor: Color(0xFFEEF8FF),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Package Tests Section
+          Obx(
+            () => Padding(
+              padding: const EdgeInsets.only(left: 16.0, bottom: 4, top: 16),
+              child: Text(
+                '${'Your Package tests'.tr} (${controller.cartItems.length})',
+                style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: "schyler",
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+          ),
+          // const SizedBox(height: 16),
+          Obx(
+            () => Expanded(
+              child: ListView.builder(
+                  itemCount: controller.cartItems.length,
+                  itemBuilder: (context, index) {
+                    final item = controller.cartItems[index];
 
-                            String languageCode =
-                                Get.locale?.languageCode ?? 'en';
+                    String languageCode = Get.locale?.languageCode ?? 'en';
 
-                            final localizedData = languageCode == 'ar'
-                                ? item["localized"]["ar"]
-                                : item["localized"]["en"];
+                    // Access localized data
+                    final localizedData = languageCode == 'ar'
+                        ? item["localized"]["ar"]
+                        : item["localized"]["en"];
 
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.6),
-                                      blurRadius: 6,
-                                      offset: const Offset(0, 4),
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Image.asset(
-                                          'assets/images/1.png',
-                                          height: 30,
-                                          width: 40,
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.only(left: 15),
-                                          width:
-                                              200, // Set your desired width here
-                                          child: Text(
-                                            '${localizedData["serviceName"]}',
-                                            style: const TextStyle(
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8),
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.6),
+                              // blurRadius: 6,
+                              // offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              'assets/images/vitamin1.png',
+                              height: 64,
+                              width: 40,
+                            ),
+                            Expanded(
+                              child: Column(
+                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                // mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.only(left: 15),
+                                        width:
+                                            200, // Set your desired width here
+                                        child: Text(
+                                          '${localizedData["serviceName"]}',
+                                          style: const TextStyle(
                                               fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                            // overflow: TextOverflow
-                                            //     .ellipsis, // Optional, if you want to truncate text that doesn't fit
-                                            softWrap:
-                                                true, // Allows the text to wrap if it's longer than the fixed width
-                                          ),
+                                              color: Color(0xFF007ABB),
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: "schyler"),
+                                          // overflow: TextOverflow
+                                          //     .ellipsis, // Optional, if you want to truncate text that doesn't fit
+                                          softWrap:
+                                              true, // Allows the text to wrap if it's longer than the fixed width
                                         ),
-                                        IconButton(
-                                          icon: const Icon(Icons.close),
-                                          onPressed: () {
-                                            controller.removeFromCart(index);
-                                          },
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(
+                                          Icons.close,
+                                          color: Colors.grey,
                                         ),
-                                      ],
-                                    ),
-                                    // const SizedBox(width: 12),
-                                    // Expanded(
-                                    //   child: Column(
-                                    //     crossAxisAlignment:
-                                    //         CrossAxisAlignment.start,
-                                    //     children: [
-                                    //       const SizedBox(height: 8),
-
-                                    //     ],
-                                    //   ),
-                                    // ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 55.0),
-                                          child: Text(
-                                            '${localizedData["price"]}',
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.blue,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        Row(
+                                        onPressed: () {
+                                          controller.removeFromCart(index);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 16.0),
+                                        child: Row(
                                           children: [
                                             Text(
-                                              "Qty :",
+                                              "Qty :".tr,
                                             ),
                                             IconButton(
                                               icon: const Icon(
-                                                  Icons.remove_circle_outline),
+                                                Icons.remove_circle_outline,
+                                                color: Colors.grey,
+                                              ),
                                               onPressed: () {
                                                 controller
                                                     .decreaseQuantityByCart(
@@ -167,7 +176,9 @@ class LabCartPage extends StatelessWidget {
                                             ),
                                             IconButton(
                                               icon: const Icon(
-                                                  Icons.add_circle_outline),
+                                                Icons.add_circle_outline,
+                                                color: Colors.grey,
+                                              ),
                                               onPressed: () {
                                                 controller
                                                     .increaseQuantityByCart(
@@ -176,119 +187,46 @@ class LabCartPage extends StatelessWidget {
                                             ),
                                           ],
                                         ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 6),
+                                        decoration: BoxDecoration(
+                                          color: Colors.lightBlue[
+                                              50], // Subtle light blue background
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: Text(
+                                          '${localizedData["price"]}',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors
+                                                .blue, // Highlighted teal price text
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            );
-                          }),
-                    ),
-                  ),
-                ],
-              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
             ),
-            const Spacer(),
-            // Amount Payable Section
-            // Container(
-            //   decoration: const BoxDecoration(
-            //     color: Color(0xFFE8F7FF),
-            //     borderRadius: BorderRadius.only(
-            //       topLeft: Radius.circular(16),
-            //       topRight: Radius.circular(16),
-            //     ),
-            //   ),
-            //   padding: const EdgeInsets.all(16),
-            //   child: Column(
-            //     mainAxisSize: MainAxisSize.min,
-            //     children: [
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: const [
-            //           Text(
-            //             'Amount payable',
-            //             style: TextStyle(
-            //                 fontSize: 16, fontWeight: FontWeight.w500),
-            //           ),
-            //           Text(
-            //             '1400.00 SAR',
-            //             style: TextStyle(
-            //                 fontSize: 16, fontWeight: FontWeight.bold),
-            //           ),
-            //         ],
-            //       ),
-            //       const SizedBox(height: 8),
-            //       const Text(
-            //         '(Excluding home visit fee)',
-            //         style: TextStyle(fontSize: 14, color: Colors.grey),
-            //       ),
-            //       const SizedBox(height: 16),
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //           OutlinedButton(
-            //             onPressed: () {},
-            //             child: const Text('Add more items'),
-            //           ),
-            //           ElevatedButton(
-            //             onPressed: () {},
-            //             child: const Text('Continue'),
-            //           ),
-            //         ],
-            //       ),
-            //     ],
-            //   ),
-            // ),
-          ],
-        ),
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: Container(
-            decoration: const BoxDecoration(
+          ),
+
+          Container(
               color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey, // Shadow color
-                  blurRadius: 10, // Blur radius
-                  spreadRadius: 2, // Spread radius
-                  offset: Offset(0, 5), // Offset in x and y direction
-                ),
-              ],
-            ),
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0, top: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Amount payable',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                      Text(
-                        '${controller.getTotalAmount()} SAR',
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue),
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    OutlinedButton(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       side: const BorderSide(
                           color: Color(0xFF009788)), // Border color
@@ -303,11 +241,11 @@ class LabCartPage extends StatelessWidget {
                     onPressed: () {
                       if (controller.cartItems.isNotEmpty) {
                         Get.to(LabCartPage(
-                                address: address,
-                                userModel: userModel,
-                                firebaseUser: firebaseUser,
-                                //
-                              ));
+                          address: address,
+                          userModel: userModel,
+                          firebaseUser: firebaseUser,
+                          //
+                        ));
                       }
                     },
                     child: Row(
@@ -326,7 +264,7 @@ class LabCartPage extends StatelessWidget {
                             () => Center(
                               child: Text(
                                 '${controller.cartItems.length}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white, // Text color
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -339,8 +277,9 @@ class LabCartPage extends StatelessWidget {
                             width: 8), // Space between the icon and text
                         Text(
                           'Selected item'.tr,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 14,
+                            fontFamily: "schyler",
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF009788),
                           ),
@@ -360,16 +299,23 @@ class LabCartPage extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
+                        // Get.to(SelectPackage(
+                        //     address: address,
+                        //     userModel: userModel,
+                        //     firebaseUser: firebaseUser,
+                        // ));
+
                         if (!controller.isCartEmpty()) {
                           Get.to(() => Selected_Package(
-                                      userModel:userModel,
-                                      firebaseUser:firebaseUser,
-                                    ));
+                                userModel: userModel,
+                                firebaseUser: firebaseUser,
+                              ));
                         }
                       },
                       child: Text(
                         'Continue'.tr,
                         style: TextStyle(
+                            fontFamily: "schyler",
                             color: controller.isCartEmpty()
                                 ? Color(0xFF9C9C9C)
                                 : Colors.white,
@@ -377,13 +323,10 @@ class LabCartPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ]),
+                ],
+              ))
+        ],
+      ),
     );
   }
 }

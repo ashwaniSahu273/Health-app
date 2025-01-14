@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,14 +27,14 @@ class ServicesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final _auth = FirebaseAuth.instance;
 
-  final user_appointments =
-      FirebaseFirestore.instance.collection("User_appointments").snapshots();
+  // final user_appointments =
+  //     FirebaseFirestore.instance.collection("User_appointments").snapshots();
 
-  final accepted_appointments =
-      FirebaseFirestore.instance.collection("Accepted_appointments");
+  // final accepted_appointments =
+  //     FirebaseFirestore.instance.collection("Accepted_appointments");
 
-  final CollectionReference user_appointment_delete =
-      FirebaseFirestore.instance.collection("User_appointments");
+  // final CollectionReference user_appointment_delete =
+  //     FirebaseFirestore.instance.collection("User_appointments");
 
 
 

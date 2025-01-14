@@ -13,11 +13,13 @@ class RoundButton extends StatelessWidget {
   final double? height;
   final double? width;
   final double? fontSize;
+  final FontWeight? fontWeight;
 
   const RoundButton(
       {super.key,
       required this.text,
       required this.onTap,
+      this.fontWeight,
       this.color,
       this.textColor,
       this.height,
@@ -51,7 +53,7 @@ class RoundButton extends StatelessWidget {
                         fontSize:fontSize ?? 24,
                         color:textColor ?? Colors.black,
                         fontFamily: "Schyler",
-                        fontWeight: FontWeight.w500),
+                        fontWeight:fontWeight?? FontWeight.w500),
                   ),
           )),
     );

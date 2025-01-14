@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+// import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/c.vitamin_time.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -48,7 +48,10 @@ class VitaminCartPage extends StatelessWidget {
             ),
             Text(
               'Cart Items'.tr,
-              style: TextStyle(fontSize: 16,fontFamily: "schyler", fontWeight: FontWeight.w700),
+              style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: "schyler",
+                  fontWeight: FontWeight.w700),
             ),
           ],
         ),
@@ -60,10 +63,13 @@ class VitaminCartPage extends StatelessWidget {
           // Package Tests Section
           Obx(
             () => Padding(
-              padding: const EdgeInsets.only(left: 16.0,bottom: 4,top: 16),
+              padding: const EdgeInsets.only(left: 16.0, bottom: 4, top: 16),
               child: Text(
                 '${'Your Package tests'.tr} (${cartController.cartItems.length})',
-                style: TextStyle(fontSize: 16,fontFamily: "schyler", fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: "schyler",
+                    fontWeight: FontWeight.w500),
               ),
             ),
           ),
@@ -83,7 +89,8 @@ class VitaminCartPage extends StatelessWidget {
                         : item["localized"]["en"];
 
                     return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8),
                       child: Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
@@ -110,11 +117,13 @@ class VitaminCartPage extends StatelessWidget {
                                 // mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
                                     children: [
                                       Container(
                                         padding: EdgeInsets.only(left: 15),
-                                        width: 200, // Set your desired width here
+                                        width:
+                                            200, // Set your desired width here
                                         child: Text(
                                           '${localizedData["serviceName"]}',
                                           style: const TextStyle(
@@ -129,7 +138,10 @@ class VitaminCartPage extends StatelessWidget {
                                         ),
                                       ),
                                       IconButton(
-                                        icon: const Icon(Icons.close,color: Colors.grey,),
+                                        icon: const Icon(
+                                          Icons.close,
+                                          color: Colors.grey,
+                                        ),
                                         onPressed: () {
                                           cartController.removeFromCart(index);
                                         },
@@ -140,9 +152,9 @@ class VitaminCartPage extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                     
                                       Padding(
-                                        padding: const EdgeInsets.only(left:16.0),
+                                        padding:
+                                            const EdgeInsets.only(left: 16.0),
                                         child: Row(
                                           children: [
                                             Text(
@@ -150,47 +162,53 @@ class VitaminCartPage extends StatelessWidget {
                                             ),
                                             IconButton(
                                               icon: const Icon(
-                                                  Icons.remove_circle_outline,color: Colors.grey,),
+                                                Icons.remove_circle_outline,
+                                                color: Colors.grey,
+                                              ),
                                               onPressed: () {
                                                 cartController
-                                                    .decreaseQuantityByCart(index);
+                                                    .decreaseQuantityByCart(
+                                                        index);
                                               },
                                             ),
                                             Text(
                                               '${item["quantity"]}',
-                                              style: const TextStyle(fontSize: 16),
+                                              style:
+                                                  const TextStyle(fontSize: 16),
                                             ),
                                             IconButton(
                                               icon: const Icon(
-                                                  Icons.add_circle_outline,color: Colors.grey,),
+                                                Icons.add_circle_outline,
+                                                color: Colors.grey,
+                                              ),
                                               onPressed: () {
                                                 cartController
-                                                    .increaseQuantityByCart(index);
+                                                    .increaseQuantityByCart(
+                                                        index);
                                               },
                                             ),
                                           ],
                                         ),
                                       ),
                                       Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 8, vertical: 6),
-                                          decoration: BoxDecoration(
-                                            color: Colors.lightBlue[
-                                                50], // Subtle light blue background
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          child: Text(
-                                            '${localizedData["price"]}',
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors
-                                                  .blue, // Highlighted teal price text
-                                            ),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 6),
+                                        decoration: BoxDecoration(
+                                          color: Colors.lightBlue[
+                                              50], // Subtle light blue background
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: Text(
+                                          '${localizedData["price"]}',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors
+                                                .blue, // Highlighted teal price text
                                           ),
                                         ),
-                                
+                                      ),
                                     ],
                                   ),
                                 ],
@@ -203,57 +221,6 @@ class VitaminCartPage extends StatelessWidget {
                   }),
             ),
           ),
-          // const Spacer(),
-          // Amount Payable Section
-          // Container(
-          //   decoration: const BoxDecoration(
-          //     color: Color(0xFFE8F7FF),
-          //     borderRadius: BorderRadius.only(
-          //       topLeft: Radius.circular(16),
-          //       topRight: Radius.circular(16),
-          //     ),
-          //   ),
-          //   padding: const EdgeInsets.all(16),
-          //   child: Column(
-          //     mainAxisSize: MainAxisSize.min,
-          //     children: [
-          //       Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //         children: const [
-          //           Text(
-          //             'Amount payable',
-          //             style: TextStyle(
-          //                 fontSize: 16, fontWeight: FontWeight.w500),
-          //           ),
-          //           Text(
-          //             '1400.00 SAR',
-          //             style: TextStyle(
-          //                 fontSize: 16, fontWeight: FontWeight.bold),
-          //           ),
-          //         ],
-          //       ),
-          //       const SizedBox(height: 8),
-          //       const Text(
-          //         '(Excluding home visit fee)',
-          //         style: TextStyle(fontSize: 14, color: Colors.grey),
-          //       ),
-          //       const SizedBox(height: 16),
-          //       Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //         children: [
-          //           OutlinedButton(
-          //             onPressed: () {},
-          //             child: const Text('Add more items'),
-          //           ),
-          //           ElevatedButton(
-          //             onPressed: () {},
-          //             child: const Text('Continue'),
-          //           ),
-          //         ],
-          //       ),
-          //     ],
-          //   ),
-          // ),
 
           Container(
               color: Colors.white,
@@ -299,7 +266,7 @@ class VitaminCartPage extends StatelessWidget {
                             () => Center(
                               child: Text(
                                 '${cartController.cartItems.length}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white, // Text color
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -312,7 +279,7 @@ class VitaminCartPage extends StatelessWidget {
                             width: 8), // Space between the icon and text
                         Text(
                           'Selected item'.tr,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 14,
                             fontFamily: "schyler",
                             fontWeight: FontWeight.w500,
@@ -349,7 +316,8 @@ class VitaminCartPage extends StatelessWidget {
                       },
                       child: Text(
                         'Continue'.tr,
-                        style: TextStyle(fontFamily: "schyler",
+                        style: TextStyle(
+                            fontFamily: "schyler",
                             color: cartController.isCartEmpty()
                                 ? Color(0xFF9C9C9C)
                                 : Colors.white,

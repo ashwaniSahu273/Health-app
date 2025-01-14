@@ -5,15 +5,15 @@ import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/Lab%20More%20Packages/lab_more_packages.dart';
 import 'package:harees_new_project/Resources/Lab%20Functions/lab_functions.dart';
-import 'package:harees_new_project/Resources/LabDynamicUi/lab_dynamic_ui.dart';
+// import 'package:harees_new_project/Resources/LabDynamicUi/lab_dynamic_ui.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 // import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/b.laboratory.dart';
+// import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/b.laboratory.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/c.selected_package.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/cart_page.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/dynamic.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/dynamin_page.dart';
+// import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/dynamin_page.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class LabTest extends StatefulWidget {
