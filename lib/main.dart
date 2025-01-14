@@ -34,7 +34,6 @@ void main() async {
       runApp(const MyApp());
     }
   } else {
-    // Not logged in
     runApp(const MyApp());
   }
 }

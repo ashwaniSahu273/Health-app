@@ -37,14 +37,11 @@ class _SearchPageState extends State<SearchPage> {
         .get();
 
     if (snapshot.docs.isNotEmpty) {
-      // Fetch the existing one
       var docData = snapshot.docs[0].data();
-      ChatRoomModel existingChatroom =
-          ChatRoomModel.fromMap(docData as Map<String, dynamic>);
-
-      chatRoom = existingChatroom;
+      if (docData != null) {
+        chatRoom = ChatRoomModel.fromMap(docData as Map<String, dynamic>);
+      }
     } else {
-      // Create a new one
       ChatRoomModel newChatroom = ChatRoomModel(
         chatroomid: uuid.v1(),
         lastMessage: "",
@@ -60,7 +57,6 @@ class _SearchPageState extends State<SearchPage> {
           .set(newChatroom.toMap());
 
       chatRoom = newChatroom;
-
       log("New Chatroom Created!");
     }
 
@@ -76,86 +72,114 @@ class _SearchPageState extends State<SearchPage> {
       ),
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 10,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Column(
             children: [
               TextField(
                 controller: searchController,
                 decoration: const InputDecoration(labelText: "Email Address"),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               CupertinoButton(
                 onPressed: () {
-                  setState(() {});
+                  if (searchController.text.trim().isNotEmpty) {
+                    setState(() {});
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content: Text("Please enter an email address")),
+                    );
+                  }
                 },
                 color: MyColors.blue,
                 child: const Text("Search"),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection("Registered Users")
-                      .where("email", isEqualTo: searchController.text)
-                      .where("email", isNotEqualTo: widget.userModel.email)
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.active) {
-                      if (snapshot.hasData) {
-                        QuerySnapshot dataSnapshot =
-                            snapshot.data as QuerySnapshot;
+                stream: FirebaseFirestore.instance
+                    .collection("Registered Users")
+                    .where("email", isEqualTo: searchController.text.trim())
+                    .where("email", isNotEqualTo: widget.userModel.email)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.active) {
+                    if (snapshot.hasData) {
+                      QuerySnapshot dataSnapshot =
+                          snapshot.data as QuerySnapshot;
 
-                        if (dataSnapshot.docs.isNotEmpty) {
-                          Map<String, dynamic> userMap = dataSnapshot.docs[0]
-                              .data() as Map<String, dynamic>;
+                      if (dataSnapshot.docs.isNotEmpty) {
+                        Map<String, dynamic> userMap =
+                            dataSnapshot.docs[0].data() as Map<String, dynamic>;
 
-                          UserModel searchedUser = UserModel.frommap(userMap);
+                        UserModel searchedUser = UserModel.frommap(userMap);
 
-                          return ListTile(
-                            onTap: () async {
-                              ChatRoomModel? chatroomModel =
-                                  await getChatroomModel(searchedUser);
+                        return ListTile(
+                          onTap: () async {
+                            ChatRoomModel? chatroomModel =
+                                await getChatroomModel(searchedUser);
 
-                              if (chatroomModel != null) {
-                                Navigator.pop(context);
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return ChatRoomPage(
-                                    targetUser: searchedUser,
-                                    userModel: widget.userModel,
-                                    firebaseUser: widget.firebaseUser,
-                                    chatroom: chatroomModel,
+                            if (chatroomModel != null) {
+                              Navigator.pop(context);
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return ChatRoomPage(
+                                  targetUser: searchedUser,
+                                  userModel: widget.userModel,
+                                  firebaseUser: widget.firebaseUser,
+                                  chatroom: chatroomModel,
+                                );
+                              }));
+                            }
+                          },
+                          leading: CircleAvatar(
+                            backgroundColor:
+                                Colors.grey[300], // Optional background color
+                            child: ClipOval(
+                              child: Image.network(
+                                searchedUser.profilePic.toString(),
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  // Fallback to local image
+                                  return Image.asset(
+                                    'assets/images/user2.png', // Replace with your asset path
+                                    fit: BoxFit.cover,
                                   );
-                                }));
-                              }
-                            },
-                            leading: CircleAvatar(
-                              backgroundImage:
-                                  NetworkImage(searchedUser.profilePic!),
-                              backgroundColor: Colors.grey[500],
+                                },
+                              ),
                             ),
-                            title: Text(searchedUser.fullname!),
-                            subtitle: Text(searchedUser.email!),
-                            trailing: const Icon(Icons.keyboard_arrow_right),
-                          );
-                        } else {
-                          return const Text("No results found!");
-                        }
-                      } else if (snapshot.hasError) {
-                        return const Text("An error occured!");
+                          ),
+
+                          //  CircleAvatar(
+                          //   backgroundImage: searchedUser.profilePic != null
+                          //       ? NetworkImage(searchedUser.profilePic!)
+                          //       : Image.asset(
+                          //                               'assets/images/user2.png', // Replace with your asset path
+                          //                               fit: BoxFit.cover,
+                          //                             ),
+                          //   backgroundColor: Colors.grey[500],
+                          //   child: searchedUser.profilePic == null
+                          //       ? const Icon(Icons.person, color: Colors.white)
+                          //       : null,
+                          // ),
+
+                          
+                          title: Text(searchedUser.fullname ?? "No Name"),
+                          subtitle: Text(searchedUser.email ?? "No Email"),
+                          trailing: const Icon(Icons.keyboard_arrow_right),
+                        );
                       } else {
                         return const Text("No results found!");
                       }
+                    } else if (snapshot.hasError) {
+                      return const Text("An error occurred!");
                     } else {
-                      return const CircularProgressIndicator();
+                      return const Text("No results found!");
                     }
-                  }),
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                },
+              ),
             ],
           ),
         ),

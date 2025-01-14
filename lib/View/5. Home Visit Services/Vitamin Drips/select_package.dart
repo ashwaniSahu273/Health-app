@@ -27,7 +27,7 @@ class SelectPackagesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     VitaminCartController cartController = Get.put(VitaminCartController());
-  String? selectedService;
+  // String? selectedService;
 
   // Method to handle the service selection
   void _onServiceSelected(String serviceName, id, String description,
