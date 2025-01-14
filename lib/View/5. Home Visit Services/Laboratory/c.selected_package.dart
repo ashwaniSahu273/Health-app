@@ -36,7 +36,7 @@ class _Selected_PackageState extends State<Selected_Package> {
   String? selectedTime;
   int selectedIndex = 0;
   int genderIndex = 0;
-   String selectedDate = "December, 2024".tr; // Default date
+   String selectedDate = "December 1, 2024".tr; // Default date
 
   LabController cartController =
       Get.put(LabController());
@@ -686,6 +686,8 @@ class _Selected_PackageState extends State<Selected_Package> {
                       onTap: () {
                         if (selectedTime != null) {
 
+                          cartController.convertToFirebaseTimestamp(selectedDate, selectedTime!);
+
                           Get.to(() => GetPatientInfo(
                               address: cartController.stAddress.value,
                                 userModel: widget.userModel,
@@ -773,6 +775,8 @@ class _Selected_PackageState extends State<Selected_Package> {
         setState(() {
           selectedTime = time;
         });
+        cartController.convertToFirebaseTimestamp(selectedDate, time);
+
       },
       child: Container(
         decoration: BoxDecoration(

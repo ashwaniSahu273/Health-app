@@ -14,7 +14,7 @@ class LabController extends GetxController {
   var stAddress = "".obs;
   var latitude = "".obs;
   var longitude = "".obs;
-  var selectedTime = "".obs;
+  var currentTime = "".obs;
   var isLoading = false.obs;
   var servicesList = <LabService>[].obs;
 
@@ -61,12 +61,12 @@ class LabController extends GetxController {
         "latitude": latitude.value,
         "longitude": longitude.value,
         "packages": cartItems,
-        "type": "Vitamin Drips",
-        "selected_time": selectedTime.value
+        "type": "Lab Test",
+        "selected_time": currentTime.value
       });
       Get.snackbar(
-            "Sucess",
-            "Sucessfully completed",
+            "Success",
+            "Successfully completed",
             backgroundColor: Colors.lightGreen,
             colorText: Colors.white,
           );
@@ -92,9 +92,9 @@ class LabController extends GetxController {
           DateFormat("MMMM d, yyyy h:mm a", "en_US").parse(dateTimeString);
 
       String isoTimestamp = dateTime.toUtc().toIso8601String();
-      selectedTime.value = isoTimestamp;
+      currentTime.value = isoTimestamp;
 
-      print("Parsed ISO Timestamp: $selectedTime");
+      print("Parsed ISO Timestamp: $currentTime");
     } catch (e) {
       print("Error parsing date and time: $e");
     }

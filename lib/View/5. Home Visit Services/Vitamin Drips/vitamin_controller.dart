@@ -11,7 +11,7 @@ class VitaminCartController extends GetxController {
   var stAddress = "".obs;
   var latitude = "".obs;
   var longitude = "".obs;
-  var selectedTime = "".obs;
+  var currentTime = "".obs;
   var isLoading = false.obs;
   var servicesList = <Service>[].obs;
 
@@ -95,7 +95,7 @@ class VitaminCartController extends GetxController {
         "longitude": longitude.value,
         "packages": cartItems,
         "type": "Vitamin Drips",
-        "selected_time": selectedTime.value
+        "selected_time": currentTime.value
       });
 
        Get.snackbar(
@@ -126,9 +126,9 @@ class VitaminCartController extends GetxController {
           DateFormat("MMMM d, yyyy h:mm a", "en_US").parse(dateTimeString);
 
       String isoTimestamp = dateTime.toUtc().toIso8601String();
-      selectedTime.value = isoTimestamp;
+      currentTime.value = isoTimestamp;
 
-      print("Parsed ISO Timestamp: $selectedTime");
+      print("Parsed ISO Timestamp: $currentTime");
     } catch (e) {
       print("Error parsing date and time: $e");
     }

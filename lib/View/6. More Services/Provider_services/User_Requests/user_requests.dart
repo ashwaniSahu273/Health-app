@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
-import 'package:harees_new_project/Resources/Search_bar/search_bar.dart';
+// import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
+// import 'package:harees_new_project/Resources/Search_bar/search_bar.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/details_page.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -16,11 +16,17 @@ class UserRequests extends StatelessWidget {
   final User firebaseUser;
   final UserRequestsController controller = Get.put(UserRequestsController());
 
+  
+
   UserRequests({Key? key, required this.userModel, required this.firebaseUser})
       : super(key: key);
 
+  
+    
+
   @override
   Widget build(BuildContext context) {
+
     void _openInGoogleMaps(double latitude, double longitude) async {
       String googleUrl =
           "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
@@ -30,6 +36,7 @@ class UserRequests extends StatelessWidget {
         throw "Could not open the map.";
       }
     }
+
 
     return Scaffold(
       appBar: AppBar(
@@ -75,6 +82,8 @@ class UserRequests extends StatelessWidget {
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
                         DocumentSnapshot doc = snapshot.data!.docs[index];
+
+
                         LatLng location = LatLng(
                           double.parse(doc["latitude"]),
                           double.parse(doc["longitude"]),
@@ -83,6 +92,8 @@ class UserRequests extends StatelessWidget {
                         return GestureDetector(
                           onTap: () {
                             Get.to(AppointmentDetailsScreen(doc: doc));
+                           controller.convertFromFirebaseTimestamp(doc["selected_time"]);
+
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(14.0),

@@ -2,15 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AppointmentDetailsScreen extends StatelessWidget {
   final DocumentSnapshot doc;
 
+
   const AppointmentDetailsScreen({super.key, required this.doc});
 
   @override
   Widget build(BuildContext context) {
+
+  final UserRequestsController controller = Get.put(UserRequestsController());
+
+
     LatLng location = LatLng(
       double.parse(doc["latitude"]),
       double.parse(doc["longitude"]),
@@ -54,7 +60,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                 )), // Double-arrow icon
             Text(
               'Appointment Details'.tr,
-              style: TextStyle(
+              style: const  TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   fontFamily: "Roboto"),
@@ -91,7 +97,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                       leading: CircleAvatar(
                         backgroundColor: Colors.blue[700],
                         radius: 30,
-                        child: Icon(
+                        child:const Icon(
                           Icons.person,
                           color: Colors.white,
                           size: 30,
@@ -201,9 +207,9 @@ class AppointmentDetailsScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildDetailRow("Time", "10:00AM - 11:00AM",
+                        _buildDetailRow("Time", controller.time.value,
                             isHighlighted: true),
-                        _buildDetailRow("Date", "11/01/2025"),
+                        _buildDetailRow("Date", controller.date.value,),
                         const SizedBox(height: 12),
                         const Text(
                           "Requested Services",
