@@ -83,11 +83,9 @@ class UserRequests extends StatelessWidget {
                       itemBuilder: (context, index) {
                         DocumentSnapshot doc = snapshot.data!.docs[index];
 
+                        if(doc["status"] != "accepted"){
 
-                        LatLng location = LatLng(
-                          double.parse(doc["latitude"]),
-                          double.parse(doc["longitude"]),
-                        );
+                        print("Requested ==>${doc["status"]}");
 
                         return GestureDetector(
                           onTap: () {
@@ -260,37 +258,37 @@ class UserRequests extends StatelessWidget {
                                       // const SizedBox(height: 16),
                           
                                       // Accept Appointment Button
-                                      // Align(
-                                      //   alignment: Alignment.centerRight,
-                                      //   child: ElevatedButton.icon(
-                                      //     onPressed: () {
-                                      //       Get.defaultDialog(
-                                      //         title: 'Accept Appointment'.tr,
-                                      //         middleText: "Are you sure?".tr,
-                                      //         textConfirm: 'Yes'.tr,
-                                      //         textCancel: 'No'.tr,
-                                      //         onConfirm: () {
-                                      //           controller.acceptAppointment(doc);
-                                      //           Get.back();
-                                      //         },
-                                      //         onCancel: () => Get.back(),
-                                      //       );
-                                      //     },
-                                      //     icon: const Icon(Icons.check, size: 18,color: Colors.white,),
-                                      //     label: Text("Accept",style: TextStyle(color: Colors.white),),
-                                      //     style: ElevatedButton.styleFrom(
-                                      //       backgroundColor: Colors.blue[700],
-                                      //       shape: RoundedRectangleBorder(
-                                      //         borderRadius:
-                                      //             BorderRadius.circular(8),
-                                      //       ),
-                                      //       padding: const EdgeInsets.symmetric(
-                                      //         horizontal: 20,
-                                      //         vertical: 12,
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: ElevatedButton.icon(
+                                          onPressed: () {
+                                            Get.defaultDialog(
+                                              title: 'Accept Appointment'.tr,
+                                              middleText: "Are you sure?".tr,
+                                              textConfirm: 'Yes'.tr,
+                                              textCancel: 'No'.tr,
+                                              onConfirm: () {
+                                                controller.accept(doc.id);
+                                                Get.back();
+                                              },
+                                              onCancel: () => Get.back(),
+                                            );
+                                          },
+                                          icon: const Icon(Icons.check, size: 18,color: Colors.white,),
+                                          label: Text("Accept",style: TextStyle(color: Colors.white),),
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.blue[700],
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 20,
+                                              vertical: 12,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -298,6 +296,11 @@ class UserRequests extends StatelessWidget {
                             ),
                           ),
                         );
+
+                        }
+                        return Text(" ");
+                        
+
                       },
                     ),
                   );

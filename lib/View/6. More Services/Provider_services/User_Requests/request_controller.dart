@@ -8,42 +8,87 @@ import 'package:intl/intl.dart';
 
 class UserRequestsController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final userAppointments = FirebaseFirestore.instance.collection("User_appointments").snapshots();
-  final acceptedAppointments = FirebaseFirestore.instance.collection("Accepted_appointments");
-  final CollectionReference userAppointmentDelete = FirebaseFirestore.instance.collection("User_appointments");
+  final userAppointments =
+      FirebaseFirestore.instance.collection("User_appointments").snapshots();
+  final acceptedAppointments =
+      FirebaseFirestore.instance.collection("Accepted_appointments");
+  final CollectionReference userAppointmentDelete =
+      FirebaseFirestore.instance.collection("User_appointments");
   final date = "".obs;
   final time = "".obs;
 
+  void convertFromFirebaseTimestamp(String isoTimestamp) {
+    try {
+      // Parse the ISO timestamp into a DateTime object
+      DateTime dateTime = DateTime.parse(isoTimestamp).toLocal();
 
+      // Format the DateTime object into date and time separately
+      String formattedDate =
+          DateFormat("MMMM d, yyyy", "en_US").format(dateTime);
+      String formattedTime = DateFormat("h:mm a", "en_US").format(dateTime);
 
-void convertFromFirebaseTimestamp(String isoTimestamp) {
-  try {
-    // Parse the ISO timestamp into a DateTime object
-    DateTime dateTime = DateTime.parse(isoTimestamp).toLocal();
+      print("Readable Date: $formattedDate");
+      print("Readable Time: $formattedTime");
 
-    // Format the DateTime object into date and time separately
-    String formattedDate = DateFormat("MMMM d, yyyy", "en_US").format(dateTime);
-    String formattedTime = DateFormat("h:mm a", "en_US").format(dateTime);
-
-    print("Readable Date: $formattedDate");
-    print("Readable Time: $formattedTime");
-
-    date.value = formattedDate;
-    time.value = formattedTime;
-
-
-  } catch (e) {
-    print("Error converting ISO timestamp: $e");
+      date.value = formattedDate;
+      time.value = formattedTime;
+    } catch (e) {
+      print("Error converting ISO timestamp: $e");
+    }
   }
-}
 
+  Future<void> accept(String appointmentId) async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    final user = _auth.currentUser;
+
+    final userAppointmentsRef = firestore.collection('User_appointments');
+
+
+    try {
+      await firestore.runTransaction((transaction) async {
+        // Get the document from User_appointments
+        DocumentSnapshot userAppointmentSnapshot =
+            await transaction.get(userAppointmentsRef.doc(appointmentId));
+
+        if (!userAppointmentSnapshot.exists) {
+          throw Exception("User appointment does not exist");
+        }
+        Map<String, dynamic> appointmentData =
+            userAppointmentSnapshot.data() as Map<String, dynamic>;
+
+
+        transaction.set(
+            acceptedAppointments
+                .doc(user!.email)
+                .collection("accepted_appointments_list")
+                .doc(appointmentId),
+            {
+              ...appointmentData, // Copy all fields
+              'status': 'accepted',
+              'accepted_by':user.email // Update the status
+            });
+
+        // Update the status field in User_appointments
+        transaction.update(userAppointmentsRef.doc(appointmentId), {
+          'status': 'accepted',
+          'accepted_by':user.email // Update the status
+
+        });
+      });
+
+      print('Appointment accepted successfully.');
+    } catch (e) {
+      print('Error accepting appointment: $e');
+    }
+  }
 
   void acceptAppointment(DocumentSnapshot doc) async {
     try {
       String email = doc['email'].toString();
       String address = doc['address'].toString();
       String type = doc['type'].toString();
-      
+
       final user = _auth.currentUser;
 
       if (user != null) {

@@ -19,7 +19,7 @@ class MyAppointments extends StatefulWidget {
   const MyAppointments({
     Key? key,
     required this.userModel,
-    required this.firebaseUser, 
+    required this.firebaseUser,
     required this.targetUser,
   }) : super(key: key);
 
@@ -28,11 +28,14 @@ class MyAppointments extends StatefulWidget {
 }
 
 class _MyAppointmentsState extends State<MyAppointments> {
-  final userAppointments = FirebaseFirestore.instance.collection("User_appointments").snapshots();
+  final userAppointments =
+      FirebaseFirestore.instance.collection("User_appointments").snapshots();
 
-  final acceptedAppointments = FirebaseFirestore.instance.collection("Accepted_appointments");
+  final acceptedAppointments =
+      FirebaseFirestore.instance.collection("Accepted_appointments");
 
-  final CollectionReference userAppointmentDelete = FirebaseFirestore.instance.collection("User_appointments");
+  final CollectionReference userAppointmentDelete =
+      FirebaseFirestore.instance.collection("User_appointments");
   final _auth = FirebaseAuth.instance;
 
   final List<Color> colors = [
@@ -51,8 +54,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
         centerTitle: true,
         actions: [
           GestureDetector(
-            onTap: () {
-            },
+            onTap: () {},
             child: Padding(
               padding: const EdgeInsets.only(right: 10),
               child: CircleAvatar(
@@ -67,8 +69,8 @@ class _MyAppointmentsState extends State<MyAppointments> {
         ],
       ),
       drawer: MyDrawer(
-        userModel: widget.userModel, 
-        firebaseUser: widget.firebaseUser, 
+        userModel: widget.userModel,
+        firebaseUser: widget.firebaseUser,
         targetUser: widget.userModel,
       ),
       body: Container(
@@ -87,21 +89,31 @@ class _MyAppointmentsState extends State<MyAppointments> {
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
                   stream: userAppointments,
-                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasError) {
                       return Text('Something went wrong'.tr);
-                    } else if (snapshot.connectionState == ConnectionState.waiting) {
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
                       return Text("Loading".tr);
                     }
+
                     return ListView.builder(
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
-                        return AppointmentTile(
-                          name: snapshot.data!.docs[index]['email'].toString(),
-                          address: snapshot.data!.docs[index]['address'].toString(),
-                          reportName: snapshot.data!.docs[index]["type"].toString(),
-                          color: colors[index % colors.length],
-                        );
+                        if (snapshot.data!.docs[index]['email'] ==
+                            widget.firebaseUser.email) {
+                          return AppointmentTile(
+                            name:
+                                snapshot.data!.docs[index]['email'].toString(),
+                            address: snapshot.data!.docs[index]['address']
+                                .toString(),
+                            reportName:
+                                snapshot.data!.docs[index]["type"].toString(),
+                            color: colors[index % colors.length],
+                          );
+                        }
+                        return Text(" ");
                       },
                     );
                   },
@@ -125,7 +137,8 @@ class AppointmentTile extends StatefulWidget {
   final String reportName;
   final Color color;
 
-  const AppointmentTile({super.key, 
+  const AppointmentTile({
+    super.key,
     required this.name,
     required this.address,
     required this.reportName,
@@ -139,7 +152,8 @@ class AppointmentTile extends StatefulWidget {
 class _AppointmentTileState extends State<AppointmentTile> {
   @override
   Widget build(BuildContext context) {
-    final userAppointments = FirebaseFirestore.instance.collection("User_appointments");
+    final userAppointments =
+        FirebaseFirestore.instance.collection("User_appointments");
     return Card(
       color: widget.color,
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -184,7 +198,7 @@ class _AppointmentTileState extends State<AppointmentTile> {
                               ),
                               child: const Center(
                                 child: Icon(
-                                  Icons.medical_services_outlined, 
+                                  Icons.medical_services_outlined,
                                   size: 20,
                                   color: Colors.black,
                                 ),
@@ -220,7 +234,6 @@ class _AppointmentTileState extends State<AppointmentTile> {
                               userAppointments.doc(widget.name).delete();
                             });
                             // delete the particular one
-                            
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.indigo[900],

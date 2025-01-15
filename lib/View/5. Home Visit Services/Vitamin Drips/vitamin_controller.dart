@@ -83,7 +83,7 @@ class VitaminCartController extends GetxController {
 
       await FirebaseFirestore.instance
           .collection("User_appointments")
-          .doc(firebaseUser.email)
+          .doc()
           .set({
         "email": firebaseUser.email,
         "name": userModel.fullname,
@@ -95,7 +95,8 @@ class VitaminCartController extends GetxController {
         "longitude": longitude.value,
         "packages": cartItems,
         "type": "Vitamin Drips",
-        "selected_time": currentTime.value
+        "selected_time": currentTime.value,
+        "status":"Requested"
       });
 
        Get.snackbar(

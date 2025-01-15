@@ -50,7 +50,7 @@ class LabController extends GetxController {
 
       await FirebaseFirestore.instance
           .collection("User_appointments")
-          .doc(firebaseUser.email)
+          .doc()
           .set({
         "email": firebaseUser.email,
         "name": userModel.fullname,
