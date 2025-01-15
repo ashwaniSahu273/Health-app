@@ -248,7 +248,7 @@ class _User_RegisterState extends State<User_Register> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            AuthServiceUserRegister(
+                            AuthServiceUserLogin(
                                     userModel: UserModel(),
                                     firebaseUser:
                                         FirebaseAuth.instance.currentUser)

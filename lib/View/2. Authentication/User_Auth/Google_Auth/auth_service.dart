@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -130,77 +129,11 @@ class AuthServiceUserLogin {
 //   }
 // }
 
-class AuthServiceUserRegister {
-  final UserModel userModel;
-  final User? firebaseUser;
-
-  AuthServiceUserRegister(
-      {required this.userModel, required this.firebaseUser});
-
-  void signInWithGoogle() async {
-    try {
-      GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-      if (googleUser == null) {
-        // User canceled the Google Sign In process
-        return;
-      }
-
-      GoogleSignInAuthentication? googleAuth = await googleUser.authentication;
-
-      AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-
-      if (userCredential.user != null) {
-        String uid = userCredential.user!.uid;
-        UserModel newUser = UserModel(
-          uid: firebaseUser!.uid,
-          email: FirebaseAuth.instance.currentUser!.email,
-          fullname: FirebaseAuth.instance.currentUser!.displayName,
-          profilePic: FirebaseAuth.instance.currentUser!.photoURL,
-        );
-        await FirebaseFirestore.instance
-            .collection("Registered Users")
-            .doc(uid)
-            .set(newUser.tomap())
-            .then((value) {
-          print("New User Created!");
-        });
-
-        // Go to CompleteProfile
-        print("Log In Successful!");
-
-        // Get.to(() => CompleteProfile(
-        //       userModel: userModel,
-        //       firebaseUser: userCredential.user!,
-        //     ));
-
-        // Get.to(() => HomePage(
-        //   userModel: userModel,
-        //   firebaseUser: userCredential.user!,
-        // ));
-
-        Get.to(() =>  HomePage(
-              userModel: userModel,
-              firebaseUser: userCredential.user!,
-            ));
-      }
-    } catch (error) {
-      print("Error signing in with Google: $error");
-    }
-  }
-}
-
-// class AuthServiceProviderRegister {
+// class AuthServiceUserRegister {
 //   final UserModel userModel;
 //   final User? firebaseUser;
 
-//   AuthServiceProviderRegister(
+//   AuthServiceUserRegister(
 //       {required this.userModel, required this.firebaseUser});
 
 //   void signInWithGoogle() async {
@@ -215,8 +148,8 @@ class AuthServiceUserRegister {
 //       GoogleSignInAuthentication? googleAuth = await googleUser.authentication;
 
 //       AuthCredential credential = GoogleAuthProvider.credential(
-//         accessToken: googleAuth?.accessToken,
-//         idToken: googleAuth?.idToken,
+//         accessToken: googleAuth.accessToken,
+//         idToken: googleAuth.idToken,
 //       );
 
 //       UserCredential userCredential =
@@ -224,20 +157,34 @@ class AuthServiceUserRegister {
 
 //       if (userCredential.user != null) {
 //         String uid = userCredential.user!.uid;
-//         UserModel newUser =
-//             UserModel(uid: uid, email: "", fullname: "", profilePic: "");
+//         UserModel newUser = UserModel(
+//           uid: firebaseUser!.uid,
+//           email: FirebaseAuth.instance.currentUser!.email,
+//           fullname: FirebaseAuth.instance.currentUser!.displayName,
+//           profilePic: FirebaseAuth.instance.currentUser!.photoURL,
+//         );
 //         await FirebaseFirestore.instance
-//             .collection("Registered Providers")
+//             .collection("Registered Users")
 //             .doc(uid)
 //             .set(newUser.tomap())
 //             .then((value) {
 //           print("New User Created!");
 //         });
 
-//         // Go to CompleteProfileProvider
-//         print("Registration Successful!");
+//         // Go to CompleteProfile
+//         print("Log In Successful!");
 
-//         Get.to(() => CompleteProfileProvider(
+//         // Get.to(() => CompleteProfile(
+//         //       userModel: userModel,
+//         //       firebaseUser: userCredential.user!,
+//         //     ));
+
+//         // Get.to(() => HomePage(
+//         //   userModel: userModel,
+//         //   firebaseUser: userCredential.user!,
+//         // ));
+
+//         Get.to(() =>  HomePage(
 //               userModel: userModel,
 //               firebaseUser: userCredential.user!,
 //             ));
@@ -247,3 +194,55 @@ class AuthServiceUserRegister {
 //     }
 //   }
 // }
+
+// // class AuthServiceProviderRegister {
+// //   final UserModel userModel;
+// //   final User? firebaseUser;
+
+// //   AuthServiceProviderRegister(
+// //       {required this.userModel, required this.firebaseUser});
+
+// //   void signInWithGoogle() async {
+// //     try {
+// //       GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+// //       if (googleUser == null) {
+// //         // User canceled the Google Sign In process
+// //         return;
+// //       }
+
+// //       GoogleSignInAuthentication? googleAuth = await googleUser.authentication;
+
+// //       AuthCredential credential = GoogleAuthProvider.credential(
+// //         accessToken: googleAuth?.accessToken,
+// //         idToken: googleAuth?.idToken,
+// //       );
+
+// //       UserCredential userCredential =
+// //           await FirebaseAuth.instance.signInWithCredential(credential);
+
+// //       if (userCredential.user != null) {
+// //         String uid = userCredential.user!.uid;
+// //         UserModel newUser =
+// //             UserModel(uid: uid, email: "", fullname: "", profilePic: "");
+// //         await FirebaseFirestore.instance
+// //             .collection("Registered Providers")
+// //             .doc(uid)
+// //             .set(newUser.tomap())
+// //             .then((value) {
+// //           print("New User Created!");
+// //         });
+
+// //         // Go to CompleteProfileProvider
+// //         print("Registration Successful!");
+
+// //         Get.to(() => CompleteProfileProvider(
+// //               userModel: userModel,
+// //               firebaseUser: userCredential.user!,
+// //             ));
+// //       }
+// //     } catch (error) {
+// //       print("Error signing in with Google: $error");
+// //     }
+// //   }
+// // }
