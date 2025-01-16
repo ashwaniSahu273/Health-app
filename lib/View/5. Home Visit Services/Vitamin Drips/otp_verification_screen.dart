@@ -102,8 +102,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 ),
               ),
               const SizedBox(height: 70),
-              const Text(
-                "We Sent OTP code to verify your number",
+               Text(
+                "We Sent OTP code to verify your number".tr,
                 style: TextStyle(
                     fontSize: 22,
                     fontFamily: "schyler",
@@ -128,7 +128,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFB2E1DA),
-                    text: "Enter",
+                    text: "Enter".tr,
                     onTap: () {
                       if (otpCode.isNotEmpty && otpCode.length == 6) {
                         verifyOtp(otpCode);

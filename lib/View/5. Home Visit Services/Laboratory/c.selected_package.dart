@@ -36,7 +36,7 @@ class _Selected_PackageState extends State<Selected_Package> {
   String? selectedTime;
   int selectedIndex = 0;
   int genderIndex = 0;
-   String selectedDate = "December 1, 2024".tr; // Default date
+   String selectedDate = "${'December'.tr} 1, 2024".tr; // Default date
 
   LabController cartController =
       Get.put(LabController());

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/Button/mybutton.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/otp_verification_screen.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -22,6 +23,7 @@ class PhoneInputScreen extends StatefulWidget {
 class _PhoneInputScreenState extends State<PhoneInputScreen> {
   final TextEditingController phoneController = TextEditingController();
   String? verificationId;
+  var isLoading = false;
 
   // Default selected country code
   String selectedCountryCode = '+966';
@@ -59,8 +61,8 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
               ),
               const SizedBox(height: 80),
           
-              const Text(
-                'Enter Phone Number',
+               Text(
+                'Enter Phone Number'.tr,
                 textAlign: TextAlign.start,
                 style: TextStyle(
                     fontSize: 24,
@@ -126,16 +128,19 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
               SizedBox(height: 30),
           
               Center(
-                child: RoundButton(
+                child: isLoading? CircularProgressIndicator(): RoundButton(
                     width: 250,
                     borderColor: Colors.white,
                     textColor: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFB2E1DA),
-                    text: "Next",
+                    text: "Next".tr,
                     onTap: () {
+
+
                       sendOtp(selectedCountryCode + phoneController.text.trim());
+
                     }),
               ),
               // // Next button
@@ -173,6 +178,10 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
   void sendOtp(String phoneNumber) async {
     FirebaseAuth auth = FirebaseAuth.instance;
 
+    setState(() {
+      isLoading = true;
+    });
+
     await auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) {
@@ -189,6 +198,10 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
       },
       codeSent: (String verificationId, int? resendToken) {
         this.verificationId = verificationId;
+
+        setState(() {
+          isLoading = false;
+        });
         Navigator.push(
           context,
           MaterialPageRoute(
