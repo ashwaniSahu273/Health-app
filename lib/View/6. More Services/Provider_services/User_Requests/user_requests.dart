@@ -83,7 +83,7 @@ class UserRequests extends StatelessWidget {
                       itemBuilder: (context, index) {
                         DocumentSnapshot doc = snapshot.data!.docs[index];
 
-                        if(doc["status"] != "accepted"){
+                        if(doc["status"] != "Accepted"){
 
                         print("Requested ==>${doc["status"]}");
 

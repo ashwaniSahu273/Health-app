@@ -39,7 +39,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
         ),
         BottomNavigationBarItem(
           icon: const Icon(Icons.calendar_month, size: 40),
-          label: "Appointments".tr,
+          label: "Patient Record".tr,
         ),
         // BottomNavigationBarItem(
         //   icon: const Icon(Icons.receipt_outlined, size: 40),

@@ -17,6 +17,7 @@ class UserRequestsController extends GetxController {
   final date = "".obs;
   final time = "".obs;
 
+
   void convertFromFirebaseTimestamp(String isoTimestamp) {
 
     try {
@@ -38,6 +39,8 @@ class UserRequestsController extends GetxController {
       print("Error converting ISO timestamp: $e");
     }
   }
+
+
 
   Future<void> accept(String appointmentId) async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -67,13 +70,13 @@ class UserRequestsController extends GetxController {
                 .doc(appointmentId),
             {
               ...appointmentData, // Copy all fields
-              'status': 'accepted',
+              'status': 'Accepted',
               'accepted_by':user.email // Update the status
             });
 
         // Update the status field in User_appointments
         transaction.update(userAppointmentsRef.doc(appointmentId), {
-          'status': 'accepted',
+          'status': 'Accepted',
           'accepted_by':user.email // Update the status
 
         });

@@ -434,7 +434,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
   Widget _buildDetailRow(String key, String value,
       {bool isHighlighted = false}) {
 
-        print("==================================================>$key, $value");
+        // print("==================================================>$key, $value");
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(

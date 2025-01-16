@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/Drawer/drawer.dart';
+import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/requested_appointment_details.dart';
+import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/user_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/Bottom_Navigation_Bar/bottom_nav.dart';
@@ -37,6 +39,8 @@ class _MyAppointmentsState extends State<MyAppointments> {
   final CollectionReference userAppointmentDelete =
       FirebaseFirestore.instance.collection("User_appointments");
   final _auth = FirebaseAuth.instance;
+
+
 
   final List<Color> colors = [
     const Color(0xFFb3e4ff),
@@ -98,8 +102,11 @@ class _MyAppointmentsState extends State<MyAppointments> {
                       if (snapshot.data!.docs[index]['email'] ==
                           widget.firebaseUser.email) {
                         return AppointmentTile(
+                          userModel: widget.userModel,
+                          firebaseUser: widget.firebaseUser,
+                          doc:snapshot.data!.docs[index],
                           name:
-                              snapshot.data!.docs[index]['email'].toString(),
+                              snapshot.data!.docs[index]['status'].toString(),
                           address: snapshot.data!.docs[index]['address']
                               .toString(),
                           reportName:
@@ -129,9 +136,15 @@ class AppointmentTile extends StatefulWidget {
   final String address;
   final String reportName;
   final Color color;
+ final DocumentSnapshot doc;
+  final UserModel userModel;
+  final User firebaseUser;
 
   const AppointmentTile({
     super.key,
+    required this.doc,
+        required this.userModel,
+    required this.firebaseUser,
     required this.name,
     required this.address,
     required this.reportName,
@@ -143,6 +156,9 @@ class AppointmentTile extends StatefulWidget {
 }
 
 class _AppointmentTileState extends State<AppointmentTile> {
+
+    final UserController controller = Get.put(UserController());
+
   @override
   Widget build(BuildContext context) {
     // final userAppointments =
@@ -167,73 +183,84 @@ class _AppointmentTileState extends State<AppointmentTile> {
         //   ),
         // ),
 
-        Card(
-          
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          elevation: 0,
-          margin: EdgeInsets.all(16),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                // Icon or Image
-                Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.lightBlue[50],
+        GestureDetector(
+          onTap: () {
+            Get.to(RequestedAppointmentDetails(
+              userModel: widget.userModel,
+              firebaseUser: widget.firebaseUser,
+              doc: widget.doc,
+            ));
+
+            controller.convertFromFirebaseTimestamp(widget.doc["selected_time"]);
+          },
+          child: Card(
+            
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            elevation: 0,
+            margin: EdgeInsets.all(16),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  // Icon or Image
+                  Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.lightBlue[50],
+                    ),
+                    child: Icon(
+                      Icons
+                          .medical_services, // Replace with the actual icon or asset
+                      color: Colors.blue,
+                    ),
                   ),
-                  child: Icon(
-                    Icons
-                        .medical_services, // Replace with the actual icon or asset
-                    color: Colors.blue,
-                  ),
-                ),
-                SizedBox(width: 16),
-                // Content
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Memory Boost IV Therapy',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF007ABB),
+                  SizedBox(width: 16),
+                  // Content
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.reportName,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF007ABB),
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 8),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '945 SAR',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
+                        SizedBox(height: 8),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '945 SAR',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          Text(
-                            'Completed',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.green,
-                              fontWeight: FontWeight.bold,
+                            Text(
+                              widget.name,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: widget.name == "Requested"? Color(0xFFC06440): widget.name =="accepted"?Color(0xFFFFC300): Colors.green,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                // Status
-              ],
+                  // Status
+                ],
+              ),
             ),
           ),
         )

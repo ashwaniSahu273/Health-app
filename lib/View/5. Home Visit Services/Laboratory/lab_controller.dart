@@ -61,8 +61,10 @@ class LabController extends GetxController {
         "latitude": latitude.value,
         "longitude": longitude.value,
         "packages": cartItems,
+        "status": "Requested",
         "type": "Lab Test",
-        "selected_time": currentTime.value
+        "selected_time": currentTime.value,
+        "accepted_by":null
       });
       Get.snackbar(
             "Success",

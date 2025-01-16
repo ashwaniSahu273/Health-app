@@ -96,7 +96,8 @@ class VitaminCartController extends GetxController {
         "packages": cartItems,
         "type": "Vitamin Drips",
         "selected_time": currentTime.value,
-        "status":"Requested"
+        "status":"Requested",
+        "accepted_by":null
       });
 
        Get.snackbar(
