@@ -18,6 +18,7 @@ class UserRequestsController extends GetxController {
   final time = "".obs;
 
   void convertFromFirebaseTimestamp(String isoTimestamp) {
+
     try {
       // Parse the ISO timestamp into a DateTime object
       DateTime dateTime = DateTime.parse(isoTimestamp).toLocal();
@@ -32,6 +33,7 @@ class UserRequestsController extends GetxController {
 
       date.value = formattedDate;
       time.value = formattedTime;
+    print("============================> ${date.value}================>");
     } catch (e) {
       print("Error converting ISO timestamp: $e");
     }

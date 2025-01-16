@@ -12,6 +12,7 @@ import 'package:harees_new_project/Resources/Button/mybutton.dart';
 import 'package:harees_new_project/Resources/Button/myroundbutton.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/c.%20Provider%20Details/providers_details.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Doctor_visit/b.doctor_time.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Doctor_visit/doctor_details.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import '../../../Resources/AppColors/app_colors.dart';
 
@@ -155,14 +156,14 @@ class _DoctorVisitState extends State<DoctorVisit> {
 
                       Navigator.pop(context);
                       Get.back();
-                      Get.to(() => Doctor_Time(
+                      Get.to(() => DoctorDetails(
                             userModel: widget.userModel,
                             firebaseUser: widget.firebaseUser,
-                            providerData: {
-                              "email": FirebaseAuth.instance.currentUser!.email,
-                              "address": stAddress,
-                              "type": "Doctor Visit",
-                            },
+                            // providerData: {
+                            //   "email": FirebaseAuth.instance.currentUser!.email,
+                            //   "address": stAddress,
+                            //   "type": "Doctor Visit",
+                            // },
                           ));
                     });
                   },

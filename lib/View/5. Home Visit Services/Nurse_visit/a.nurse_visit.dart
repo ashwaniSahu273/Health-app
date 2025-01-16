@@ -13,6 +13,7 @@ import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/Button/myroundbutton.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/b.nurse_time.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_details.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class NurseVisit extends StatefulWidget {
@@ -155,14 +156,14 @@ class _NurseVisitState extends State<NurseVisit> {
 
                       Navigator.pop(context);
                       Get.back();
-                      Get.to(() => Nurse_Time(
+                      Get.to(() => NurseDetails(
                             userModel: widget.userModel,
                             firebaseUser: widget.firebaseUser,
-                            providerData: {
-                              "email": FirebaseAuth.instance.currentUser!.email,
-                              "address": stAddress,
-                              "type": "Nurse Visit",
-                            },
+                            // providerData: {
+                            //   "email": FirebaseAuth.instance.currentUser!.email,
+                            //   "address": stAddress,
+                            //   "type": "Nurse Visit",
+                            // },
                           ));
                     });
                   },
@@ -179,6 +180,7 @@ class _NurseVisitState extends State<NurseVisit> {
       isDismissible: true,
     );
   }
+
 
   @override
   Widget build(BuildContext context) {

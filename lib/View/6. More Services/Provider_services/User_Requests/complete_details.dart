@@ -2,14 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/complete_details.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class AppointmentDetailsScreen extends StatelessWidget {
+class CompleteAppointmentDetailsScreen extends StatelessWidget {
   final DocumentSnapshot doc;
 
-  const AppointmentDetailsScreen({super.key, required this.doc});
+  const CompleteAppointmentDetailsScreen({super.key, required this.doc});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +56,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                   weight: 200,
                 )), // Double-arrow icon
             Text(
-              'Appointment Details'.tr,
+              ''.tr,
               style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
@@ -78,7 +77,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Top Card
-                      Container(
+                       Container(
                         padding: const EdgeInsets.all(8),
                         margin: const EdgeInsets.symmetric(
                             vertical: 8, horizontal: 8),
@@ -168,33 +167,11 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                       onCancel: () => Get.back(),
                                     );
                                   },
-                                  child: doc["status"] == "Requested"
-                                      ? Container(
-                                          width: 80, // Customize the width
-                                          height: 27, // Customize the height
-                                          decoration: BoxDecoration(
-                                            color: Color(
-                                                0xFF00AAAD), // Background color
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                          ),
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 12, vertical: 5),
-                                          child: const Text(
-                                            "Accept",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 11,
-                                            ),
-                                          ),
-                                        )
-                                      : Padding(
+                                  child: Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 10.0, vertical: 8),
                                           child: Text(
-                                            "Accepted",
+                                            "Completed",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               color: Color(0xFF00AAAD),
@@ -211,64 +188,30 @@ class AppointmentDetailsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
 
-                      // Patient Details Card
+                      // Additional Cards (Tests, Result, Notes)
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0,
-                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: _buildUploadCard(
+                            "Tests", "Upload test details in pdf"),
+                      ),
+                      const SizedBox(height: 16),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: _buildUploadCard(
+                            "Result", "Upload test result in pdf"),
+                      ),
+                      const SizedBox(height: 16),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: _buildDetailsCard(
                           context,
-                          title: "Patient Details",
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildDetailRow(
-                                "Name",
-                                doc["name"],
-                              ),
-                              _buildDetailRow("Gender", doc["gender"]),
-                              _buildDetailRow("DOB", doc["dob"]),
-                              _buildDetailRow(
-                                "Email",
-                                doc["email"],
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  _openInGoogleMaps(
-                                    double.parse(doc["latitude"]),
-                                    double.parse(doc["longitude"]),
-                                  );
-                                },
-                                child:
-                                    buildDetailRow("Address", doc["address"]),
-                              ),
-                              const SizedBox(height: 16),
-                              SizedBox(
-                                height: 200,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    _openInGoogleMaps(
-                                      double.parse(doc["latitude"]),
-                                      double.parse(doc["longitude"]),
-                                    );
-                                  },
-                                  child: GoogleMap(
-                                    // onTap:openGoogleMap,
-                                    initialCameraPosition: CameraPosition(
-                                      target: location,
-                                      zoom: 15,
-                                    ),
-                                    markers: {
-                                      Marker(
-                                        markerId: MarkerId("cartLocation"),
-                                        position: location,
-                                      ),
-                                    },
-                                    zoomControlsEnabled: false,
-                                  ),
-                                ),
-                              ),
-                            ],
+                          title: "Notes",
+                          child: TextFormField(
+                            maxLines: 3,
+                            decoration: const InputDecoration(
+                              hintText: "Write remarks",
+                              border: OutlineInputBorder(),
+                            ),
                           ),
                         ),
                       ),
@@ -283,15 +226,11 @@ class AppointmentDetailsScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Obx(
-                              ()=> _buildDetailRow("Time", controller.time.value,
-                                    isHighlighted: true),
-                              ),
-                              Obx(
-                                ()=> _buildDetailRow(
-                                  "Date",
-                                  controller.date.value,
-                                ),
+                              _buildDetailRow("Time", controller.time.value,
+                                  isHighlighted: true),
+                              _buildDetailRow(
+                                "Date",
+                                controller.date.value,
                               ),
                               const SizedBox(height: 12),
                               const Text(
@@ -377,13 +316,11 @@ class AppointmentDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                      
-                          Get.to(() => CompleteAppointmentDetailsScreen(
-                            doc: doc,
-                                // userModel: userModel,
-                                // firebaseUser: firebaseUser,
-                              ));
-                        
+                        Get.to(() => CompleteAppointmentDetailsScreen(
+                              doc: doc,
+                              // userModel: userModel,
+                              // firebaseUser: firebaseUser,
+                            ));
                       },
                       child: Text(
                         'Continue'.tr,
@@ -433,8 +370,6 @@ class AppointmentDetailsScreen extends StatelessWidget {
 
   Widget _buildDetailRow(String key, String value,
       {bool isHighlighted = false}) {
-
-        print("==================================================>$key, $value");
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
@@ -466,36 +401,74 @@ class AppointmentDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget buildDetailRow(String key, String value,
-      {bool isHighlighted = false}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
+  Widget _buildUploadCard(String title, String hint) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300,
+            blurRadius: 5,
+            spreadRadius: 2,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 60, // Fixed width for the first text
-            child: Text(
-              key,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey[700],
-              ),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(width: 8), // Spacing between the two texts
-          Expanded(
-            child: Text(
-              value,
-              style: TextStyle(
-                  fontWeight:
-                      isHighlighted ? FontWeight.bold : FontWeight.normal,
-                  color: Color(0xFF004AAD),
-                  decoration: TextDecoration.underline
-                  //                     .underline,
-                  ),
+          const SizedBox(height: 12),
+          Container(
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: Colors.white,
+         
+               border: Border.all(
+                color: Color(0xFFE3E3E5), // Border color
+                width: 1, // Border width
+              ),
+              borderRadius: BorderRadius.circular(10)
             ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+              
+                Text(
+                  hint,
+                  style: TextStyle(
+                    color: Colors.grey[700],
+                  ),
+                ),
+                const SizedBox(width: 8),
+
+                  Icon(
+                  Icons.upload_file,
+                  color: Colors.blue[700],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "PDF size should not exceed 10MB",
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey[500],
+                ),
+              ),
+            ],
           ),
         ],
       ),

@@ -49,78 +49,71 @@ class _MyAppointmentsState extends State<MyAppointments> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        title: const Text("Appointments"),
-        centerTitle: true,
-        actions: [
-          GestureDetector(
-            onTap: () {},
-            child: Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: CircleAvatar(
-                radius: 18,
-                backgroundColor: Colors.grey[300],
-                backgroundImage: NetworkImage(
-                  widget.targetUser.profilePic.toString(),
-                ),
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        leadingWidth: 200,
+        leading: Row(
+          children: [
+            IconButton(
+                onPressed: () => Get.back(),
+                icon: const Icon(
+                  Icons.keyboard_double_arrow_left,
+                  size: 25,
+                  weight: 200,
+                )), // Double-arrow icon
+            Text(
+              'Patient Record'.tr,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700,fontFamily: "Roboto"),
+            ),
+          ],
+        ),
+      ),
+      // drawer: MyDrawer(
+      //   userModel: widget.userModel,
+      //   firebaseUser: widget.firebaseUser,
+      //   targetUser: widget.userModel,
+      // ),
+      backgroundColor: Colors.blue[50],
+      body: SafeArea(
+        child: Column(
+          children: [
+            // const SizedBox(height: 20),
+            // const MySearchBar(),
+            const SizedBox(height: 15),
+            Expanded(
+              child: StreamBuilder<QuerySnapshot>(
+                stream: userAppointments,
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Something went wrong'.tr);
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return Text("Loading".tr);
+                  }
+      
+                  return ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      if (snapshot.data!.docs[index]['email'] ==
+                          widget.firebaseUser.email) {
+                        return AppointmentTile(
+                          name:
+                              snapshot.data!.docs[index]['email'].toString(),
+                          address: snapshot.data!.docs[index]['address']
+                              .toString(),
+                          reportName:
+                              snapshot.data!.docs[index]["type"].toString(),
+                          color: colors[index % colors.length],
+                        );
+                      }
+                      return Text(" ");
+                    },
+                  );
+                },
               ),
             ),
-          ),
-        ],
-      ),
-      drawer: MyDrawer(
-        userModel: widget.userModel,
-        firebaseUser: widget.firebaseUser,
-        targetUser: widget.userModel,
-      ),
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/back_image.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              const MySearchBar(),
-              const SizedBox(height: 15),
-              Expanded(
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: userAppointments,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasError) {
-                      return Text('Something went wrong'.tr);
-                    } else if (snapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return Text("Loading".tr);
-                    }
-
-                    return ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (context, index) {
-                        if (snapshot.data!.docs[index]['email'] ==
-                            widget.firebaseUser.email) {
-                          return AppointmentTile(
-                            name:
-                                snapshot.data!.docs[index]['email'].toString(),
-                            address: snapshot.data!.docs[index]['address']
-                                .toString(),
-                            reportName:
-                                snapshot.data!.docs[index]["type"].toString(),
-                            color: colors[index % colors.length],
-                          );
-                        }
-                        return Text(" ");
-                      },
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
+          ],
         ),
       ),
       bottomNavigationBar: MyBottomNavBar(
@@ -152,106 +145,130 @@ class AppointmentTile extends StatefulWidget {
 class _AppointmentTileState extends State<AppointmentTile> {
   @override
   Widget build(BuildContext context) {
-    final userAppointments =
-        FirebaseFirestore.instance.collection("User_appointments");
-    return Card(
-      color: widget.color,
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      child: Container(
-        height: 170,
-        padding: const EdgeInsets.only(bottom: 20, top: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
+    // final userAppointments =
+    //     FirebaseFirestore.instance.collection("User_appointments");
+    return Column(
+      // mainAxisAlignment: MainAxisAlignment.center,
+      // crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        // ListTile(
+        //   title: Text(
+        //     widget.name,
+        //     style: const TextStyle(
+        //       fontWeight: FontWeight.bold,
+        //       color: Colors.black,
+        //       fontSize: 14,
+        //     ),
+        //   ),
+        //   subtitle: Text(widget.address),
+        //   leading: Image.asset(
+        //     "assets/images/appoint.png",
+        //     height: 50,
+        //   ),
+        // ),
+
+        Card(
+          
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          elevation: 0,
+          margin: EdgeInsets.all(16),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
               children: [
+                // Icon or Image
+                Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.lightBlue[50],
+                  ),
+                  child: Icon(
+                    Icons
+                        .medical_services, // Replace with the actual icon or asset
+                    color: Colors.blue,
+                  ),
+                ),
+                SizedBox(width: 16),
+                // Content
                 Expanded(
-                  flex: 7,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ListTile(
-                        title: Text(
-                          widget.name,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: 14,
-                          ),
-                        ),
-                        subtitle: Text(widget.address),
-                        leading: Image.asset(
-                          "assets/images/user.png",
-                          height: 50,
+                      Text(
+                        'Memory Boost IV Therapy',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF007ABB),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 25),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 30,
-                              height: 30,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.medical_services_outlined,
-                                  size: 20,
-                                  color: Colors.black,
-                                ),
-                              ),
+                      SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '945 SAR',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
                             ),
-                            const SizedBox(width: 10),
-                            Text(
-                              widget.reportName,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 14,
-                              ),
+                          ),
+                          Text(
+                            'Completed',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-                Expanded(
-                  flex: 2,
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: Transform.rotate(
-                      angle: -4.71239,
-                      child: SizedBox(
-                        width: 250,
-                        height: 40,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              userAppointments.doc(widget.name).delete();
-                            });
-                            // delete the particular one
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.indigo[900],
-                          ),
-                          child: const Text(
-                            'Cancel',
-                            style: TextStyle(color: Colors.white, fontSize: 12),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                // Status
               ],
             ),
-          ],
-        ),
-      ),
+          ),
+        )
+        // Padding(
+        //   padding: const EdgeInsets.only(left: 25),
+        //   child: Row(
+        //     children: [
+        //       Container(
+        //         width: 30,
+        //         height: 30,
+        //         decoration: const BoxDecoration(
+        //           color: Colors.white,
+        //           shape: BoxShape.circle,
+        //         ),
+        //         child: const Center(
+        //           child: Icon(
+        //             Icons.medical_services_outlined,
+        //             size: 20,
+        //             color: Colors.black,
+        //           ),
+        //         ),
+        //       ),
+        //       const SizedBox(width: 10),
+        //       Text(
+        //         widget.reportName,
+        //         style: const TextStyle(
+        //           fontWeight: FontWeight.bold,
+        //           color: Colors.black,
+        //           fontSize: 14,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+      ],
     );
   }
 }
