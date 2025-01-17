@@ -14,6 +14,10 @@ import 'package:harees_new_project/View/8.%20Chats/Pages/Chat_Room.dart';
 import 'package:harees_new_project/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:dio/dio.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:open_file/open_file.dart';
+
 class RequestedAppointmentDetails extends StatelessWidget {
   final DocumentSnapshot doc;
   final UserModel userModel;
@@ -102,18 +106,14 @@ class RequestedAppointmentDetails extends StatelessWidget {
             .get();
 
         if (dataSnapshot.docs.isNotEmpty) {
-      
           Map<String, dynamic> userMap =
               dataSnapshot.docs[0].data() as Map<String, dynamic>;
 
-      
           UserModel searchedUser = UserModel.frommap(userMap);
 
-          
           ChatRoomModel? chatroomModel = await getChatroomModel(searchedUser);
 
           if (chatroomModel != null) {
-       
             Navigator.pop(context);
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return ChatRoomPage(
@@ -129,6 +129,28 @@ class RequestedAppointmentDetails extends StatelessWidget {
         }
       } catch (e) {
         print("Error creating chatroom: $e");
+      }
+    }
+
+    Future<void> downloadAndOpenPdf(BuildContext context, String pdfUrl) async {
+      try {
+        // Get temporary directory
+        final directory = await getTemporaryDirectory();
+        final filePath = '${directory.path}/downloaded_file.pdf';
+
+        // Download file
+        final dio = Dio();
+        await dio.download(pdfUrl, filePath);
+
+        // Open the file
+        OpenFile.open(filePath);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Download complete. File opened.")),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Failed to download file: $e")),
+        );
       }
     }
 
@@ -156,6 +178,7 @@ class RequestedAppointmentDetails extends StatelessWidget {
           ],
         ),
       ),
+      backgroundColor: Colors.blue[50],
       body: Column(
         children: [
           Expanded(
@@ -167,7 +190,6 @@ class RequestedAppointmentDetails extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Top Card
                       Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
@@ -246,122 +268,160 @@ class RequestedAppointmentDetails extends StatelessWidget {
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 16),
-
-                      // About Package
-
-                      const SizedBox(height: 8),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        elevation: 0,
-                        color: Colors.white,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                top: 8.0,
-                                left: 16,
+                      doc["status"] != "Completed"
+                          ? Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
                               ),
-                              child: Text(
-                                "About This Package".tr,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: "Roboto",
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 16.0, vertical: 8),
-                              child: Obx(
-                                () => Text(
-                                  controller.description.value,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black54,
-                                    fontFamily: "Roboto",
+                              elevation: 0,
+                              color: Colors.white,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 8.0,
+                                      left: 16,
+                                    ),
+                                    child: Text(
+                                      "About This Package".tr,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: "Roboto",
+                                      ),
+                                    ),
                                   ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 16.0, vertical: 8),
+                                    child: Obx(
+                                      () => Text(
+                                        controller.description.value,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black54,
+                                          fontFamily: "Roboto",
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              elevation: 0,
+                              color: Colors.white,
+                              child: Container(
+                                width: double.infinity,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 8.0,
+                                        left: 16,
+                                      ),
+                                      child: Text(
+                                        "Notes From Doctor".tr,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: "Roboto",
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 16.0, vertical: 8),
+                                      child: Text(
+                                        doc["doctor_notes"],
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black54,
+                                          fontFamily: "Roboto",
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                      ),
+                      const SizedBox(height: 16),
+                      doc["status"] != "Completed"
+                          ? Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 0.0,
+                              ),
+                              child: _buildDetailsCard(
+                                context,
+                                title: "Patient Details",
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    _buildDetailRow(
+                                      "Name",
+                                      doc["name"],
+                                    ),
+                                    _buildDetailRow("Gender", doc["gender"]),
+                                    _buildDetailRow("DOB", doc["dob"]),
+                                    _buildDetailRow(
+                                      "Email",
+                                      doc["email"],
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        _openInGoogleMaps(
+                                          double.parse(doc["latitude"]),
+                                          double.parse(doc["longitude"]),
+                                        );
+                                      },
+                                      child: buildDetailRow(
+                                          "Address", doc["address"]),
+                                    ),
+                                    // const SizedBox(height: 16),
+                                    // SizedBox(
+                                    //   height: 200,
+                                    //   child: GestureDetector(
+                                    //     onTap: () {
+                                    //       _openInGoogleMaps(
+                                    //         double.parse(doc["latitude"]),
+                                    //         double.parse(doc["longitude"]),
+                                    //       );
+                                    //     },
+                                    //     child: GoogleMap(
+                                    //       // onTap:openGoogleMap,
+                                    //       initialCameraPosition: CameraPosition(
+                                    //         target: location,
+                                    //         zoom: 15,
+                                    //       ),
+                                    //       markers: {
+                                    //         Marker(
+                                    //           markerId: MarkerId("cartLocation"),
+                                    //           position: location,
+                                    //         ),
+                                    //       },
+                                    //       zoomControlsEnabled: false,
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
 
                       const SizedBox(height: 16),
 
-                      // Patient Details Card
                       Padding(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0,
-                        ),
-                        child: _buildDetailsCard(
-                          context,
-                          title: "Patient Details",
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildDetailRow(
-                                "Name",
-                                doc["name"],
-                              ),
-                              _buildDetailRow("Gender", doc["gender"]),
-                              _buildDetailRow("DOB", doc["dob"]),
-                              _buildDetailRow(
-                                "Email",
-                                doc["email"],
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  _openInGoogleMaps(
-                                    double.parse(doc["latitude"]),
-                                    double.parse(doc["longitude"]),
-                                  );
-                                },
-                                child:
-                                    buildDetailRow("Address", doc["address"]),
-                              ),
-                              // const SizedBox(height: 16),
-                              // SizedBox(
-                              //   height: 200,
-                              //   child: GestureDetector(
-                              //     onTap: () {
-                              //       _openInGoogleMaps(
-                              //         double.parse(doc["latitude"]),
-                              //         double.parse(doc["longitude"]),
-                              //       );
-                              //     },
-                              //     child: GoogleMap(
-                              //       // onTap:openGoogleMap,
-                              //       initialCameraPosition: CameraPosition(
-                              //         target: location,
-                              //         zoom: 15,
-                              //       ),
-                              //       markers: {
-                              //         Marker(
-                              //           markerId: MarkerId("cartLocation"),
-                              //           position: location,
-                              //         ),
-                              //       },
-                              //       zoomControlsEnabled: false,
-                              //     ),
-                              //   ),
-                              // ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-
-                      // Service Request Details Card
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            vertical: 0.0, horizontal: 4),
                         child: _buildDetailsCard(
                           context,
                           title: "Service Request Details",
@@ -450,8 +510,60 @@ class RequestedAppointmentDetails extends StatelessWidget {
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 16),
+                      doc["status"] == "Completed"
+                          ? Card(
+                              elevation: 0, // Shadow effect
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(5), // Rounded corners
+                              ),
+                              color: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Reports",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        _buildDownloadButton(
+                                          icon: Icons.cloud_download,
+                                          label: "Download Test Details",
+                                          onPressed: () {
+                                            // downloadAndOpenPdf(context,doc["test_details_link"]);
+
+                                            Get.to(() => PdfViewerScreen(
+                                                pdfUrl:
+                                                    doc["test_details_link"]));
+                                          },
+                                        ),
+                                        _buildDownloadButton(
+                                          icon: Icons.cloud_download,
+                                          label: "Download Test Result",
+                                          onPressed: () {
+                                            // Handle Download Test Result
+                                              Get.to(() => PdfViewerScreen(
+                                                pdfUrl:
+                                                    doc["test_result_link"]));
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink()
                     ],
                   ),
                 ),
@@ -532,6 +644,32 @@ class RequestedAppointmentDetails extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           child,
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDownloadButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback onPressed,
+  }) {
+    return Container(
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+          border: Border.all(color: const Color.fromARGB(255, 241, 241, 241)),
+          borderRadius: BorderRadius.circular(10)),
+      child: Column(
+        children: [
+          IconButton(
+            icon: Icon(icon, size: 40, color: Colors.blue),
+            onPressed: onPressed,
+          ),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 12),
+          ),
         ],
       ),
     );

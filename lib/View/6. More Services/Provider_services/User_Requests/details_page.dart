@@ -1,19 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/complete_details.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
+import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AppointmentDetailsScreen extends StatelessWidget {
+  final UserModel userModel;
+  final User firebaseUser;
   final DocumentSnapshot doc;
 
-  const AppointmentDetailsScreen({super.key, required this.doc});
+  const AppointmentDetailsScreen({
+    super.key,
+    required this.doc,
+    required this.userModel,
+    required this.firebaseUser,
+  });
 
   @override
   Widget build(BuildContext context) {
     final UserRequestsController controller = Get.put(UserRequestsController());
+    controller.status.value = doc["status"];
 
     LatLng location = LatLng(
       double.parse(doc["latitude"]),
@@ -168,41 +178,43 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                       onCancel: () => Get.back(),
                                     );
                                   },
-                                  child: doc["status"] == "Requested"
-                                      ? Container(
-                                          width: 80, // Customize the width
-                                          height: 27, // Customize the height
-                                          decoration: BoxDecoration(
-                                            color: Color(
-                                                0xFF00AAAD), // Background color
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                          ),
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 12, vertical: 5),
-                                          child: const Text(
-                                            "Accept",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 11,
+                                  child: Obx(
+                                    () => controller.status.value == "Requested"
+                                        ? Container(
+                                            width: 80, // Customize the width
+                                            height: 27, // Customize the height
+                                            decoration: BoxDecoration(
+                                              color: Color(
+                                                  0xFF00AAAD), // Background color
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 12, vertical: 5),
+                                            child: const Text(
+                                              "Accept",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 11,
+                                              ),
+                                            ),
+                                          )
+                                        : Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10.0, vertical: 8),
+                                            child: Text(
+                                              "Accepted",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Color(0xFF00AAAD),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                              ),
                                             ),
                                           ),
-                                        )
-                                      : Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10.0, vertical: 8),
-                                          child: Text(
-                                            "Accepted",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: Color(0xFF00AAAD),
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                        ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -284,11 +296,12 @@ class AppointmentDetailsScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Obx(
-                              ()=> _buildDetailRow("Time", controller.time.value,
+                                () => _buildDetailRow(
+                                    "Time", controller.time.value,
                                     isHighlighted: true),
                               ),
                               Obx(
-                                ()=> _buildDetailRow(
+                                () => _buildDetailRow(
                                   "Date",
                                   controller.date.value,
                                 ),
@@ -361,38 +374,44 @@ class AppointmentDetailsScreen extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-              color: Colors.white,
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF007ABB),
-                        minimumSize: const Size(160, 55),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+          Obx(
+            ()=> Container(
+                color: Colors.white,
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: controller.status.value == "Requested"
+                              ? Colors.grey
+                              : Color(0xFF007ABB),
+                          minimumSize: const Size(160, 55),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        onPressed: () {
+                          if (controller.status.value != "Requested") {
+                            Get.to(() => CompleteAppointmentDetailsScreen(
+                                  userModel: userModel,
+                                  firebaseUser: firebaseUser,
+                                  doc: doc,
+                                  // userModel: userModel,
+                                  // firebaseUser: firebaseUser,
+                                ));
+                          }
+                        },
+                        child: Text(
+                          'Continue'.tr,
+                          style: TextStyle(color: Colors.white, fontSize: 15),
                         ),
                       ),
-                      onPressed: () {
-                      
-                          Get.to(() => CompleteAppointmentDetailsScreen(
-                            doc: doc,
-                                // userModel: userModel,
-                                // firebaseUser: firebaseUser,
-                              ));
-                        
-                      },
-                      child: Text(
-                        'Continue'.tr,
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      ),
                     ),
-                  ),
-                ],
-              ))
+                  ],
+                )),
+          )
         ],
       ),
     );
@@ -433,8 +452,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
 
   Widget _buildDetailRow(String key, String value,
       {bool isHighlighted = false}) {
-
-        // print("==================================================>$key, $value");
+    // print("==================================================>$key, $value");
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(

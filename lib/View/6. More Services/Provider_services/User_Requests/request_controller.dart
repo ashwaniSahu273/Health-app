@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class UserRequestsController extends GetxController {
+
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final userAppointments =
       FirebaseFirestore.instance.collection("User_appointments").snapshots();
@@ -16,7 +18,7 @@ class UserRequestsController extends GetxController {
       FirebaseFirestore.instance.collection("User_appointments");
   final date = "".obs;
   final time = "".obs;
-
+  final status = "".obs;
 
   void convertFromFirebaseTimestamp(String isoTimestamp) {
 
@@ -80,6 +82,9 @@ class UserRequestsController extends GetxController {
           'accepted_by':user.email // Update the status
 
         });
+
+
+        status.value = 'Accepted';
       });
 
       print('Appointment accepted successfully.');

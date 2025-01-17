@@ -105,7 +105,7 @@ class MoreServicesGrid extends StatelessWidget {
             serviceIcon: "assets/images/upload.png",
             serviceName: "Upload Results".tr,
             onPressed: () {
-              Get.to(() => const ResultUpload());
+              Get.to(() => ResultUpload());
             },
             userModel: userModel,
             firebaseUser: firebaseUser,

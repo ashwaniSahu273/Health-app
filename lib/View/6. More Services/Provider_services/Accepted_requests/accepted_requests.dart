@@ -38,7 +38,6 @@ class _AcceptedRequestsState extends State<AcceptedRequests> {
 
   final UserRequestsController controller = Get.put(UserRequestsController());
 
-
   @override
   Widget build(BuildContext context) {
     final user = _auth.currentUser;
@@ -77,13 +76,16 @@ class _AcceptedRequestsState extends State<AcceptedRequests> {
                 Expanded(
                   child: StreamBuilder<QuerySnapshot>(
                     stream: acceptedAppointmentsList,
-                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasError) {
                         return Center(child: Text('Something went wrong'.tr));
-                      } else if (snapshot.connectionState == ConnectionState.waiting) {
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
                         return Center(child: Text("Loading".tr));
                       }
-                      if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
+                      if (snapshot.data == null ||
+                          snapshot.data!.docs.isEmpty) {
                         return Center(child: Text('No accepted requests'.tr));
                       }
                       return ListView.builder(
@@ -93,37 +95,48 @@ class _AcceptedRequestsState extends State<AcceptedRequests> {
                           return Padding(
                             padding: const EdgeInsets.all(14.0),
                             child: GestureDetector(
-                              onTap: (){
-                                 Get.to(AppointmentDetailsScreen(doc: appointment));
-                                 controller.convertFromFirebaseTimestamp(appointment["selected_time"]);
+                              onTap: () {
+                                Get.to(AppointmentDetailsScreen(
+                                    doc: appointment,
+                                    firebaseUser: widget.firebaseUser,
+                                    userModel: widget.userModel));
+                                controller.convertFromFirebaseTimestamp(
+                                    appointment["selected_time"]);
                               },
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.8), // Ensure readability
+                                  color: Colors.white
+                                      .withOpacity(0.8), // Ensure readability
                                   border: Border.all(color: Colors.black),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 child: ListTile(
                                   title: Text(
                                     appointment['name'].toString(),
-                                    style: TextStyle(color: Colors.blue[700], fontSize: 16),
+                                    style: TextStyle(
+                                        color: Colors.blue[700], fontSize: 16),
                                   ),
                                   subtitle: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         appointment['address'].toString(),
-                                        style: TextStyle(color: Colors.green[800]),
+                                        style:
+                                            TextStyle(color: Colors.green[800]),
                                       ),
                                       const SizedBox(height: 5),
                                       Text(
                                         appointment["type"].toString(),
-                                        style: const TextStyle(color: Colors.red, fontSize: 16),
+                                        style: const TextStyle(
+                                            color: Colors.red, fontSize: 16),
                                       ),
                                     ],
                                   ),
-                                  leading: Icon(Icons.person, color: Colors.blue[700], size: 40),
-                                  trailing: const Icon(Icons.medical_services, size: 35),
+                                  leading: Icon(Icons.person,
+                                      color: Colors.blue[700], size: 40),
+                                  trailing: const Icon(Icons.medical_services,
+                                      size: 35),
                                 ),
                               ),
                             ),

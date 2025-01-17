@@ -58,8 +58,8 @@ class Requests extends StatelessWidget {
       
                     return GestureDetector(
                       onTap: () {
-                        Get.to(AppointmentDetailsScreen(doc: appointmentDoc));
-                        controller.convertFromFirebaseTimestamp(appointmentDoc["selected_time"]);
+                        // Get.to(AppointmentDetailsScreen(doc: appointmentDoc));
+                        // controller.convertFromFirebaseTimestamp(appointmentDoc["selected_time"]);
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(14.0),

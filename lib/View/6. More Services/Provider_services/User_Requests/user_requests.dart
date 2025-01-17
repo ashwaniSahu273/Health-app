@@ -89,7 +89,7 @@ class UserRequests extends StatelessWidget {
 
                         return GestureDetector(
                           onTap: () {
-                            Get.to(AppointmentDetailsScreen(doc: doc));
+                            Get.to(AppointmentDetailsScreen(doc: doc,userModel: userModel,firebaseUser: firebaseUser,));
                            controller.convertFromFirebaseTimestamp(doc["selected_time"]);
 
                           },
