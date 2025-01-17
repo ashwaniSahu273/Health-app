@@ -197,7 +197,7 @@ class SelectPackagesPage extends StatelessWidget {
                                       maxLines: 3,
                                       style: const TextStyle(
                                         height: 1.2,
-                                        fontSize: 13,
+                                        fontSize: 14,
                                         fontFamily: "Roboto",
                                         fontWeight: FontWeight.w600,
                                         color: Color(0xFF007ABB), // Blue text for title

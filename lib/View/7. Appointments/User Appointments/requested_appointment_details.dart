@@ -4,9 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/complete_details.dart';
-import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
+// import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
 import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/user_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/chat_room_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -32,11 +32,8 @@ class RequestedAppointmentDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserController controller = Get.put(UserController());
+   controller.convertFromFirebaseTimestamp(doc["selected_time"]);  
 
-    LatLng location = LatLng(
-      double.parse(doc["latitude"]),
-      double.parse(doc["longitude"]),
-    );
 
     void openGoogleMap() async {
       var latitude = double.parse(doc["latitude"]);
@@ -268,7 +265,7 @@ class RequestedAppointmentDetails extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 8),
                       doc["status"] != "Completed"
                           ? Card(
                               shape: RoundedRectangleBorder(
@@ -353,11 +350,12 @@ class RequestedAppointmentDetails extends StatelessWidget {
                                 ),
                               ),
                             ),
-                      const SizedBox(height: 16),
+                       doc["status"] != "Completed"
+                          ? const SizedBox(height: 12):const SizedBox(height: 0),
                       doc["status"] != "Completed"
                           ? Padding(
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 0.0,
+                                horizontal: 4.0,
                               ),
                               child: _buildDetailsCard(
                                 context,
@@ -417,11 +415,11 @@ class RequestedAppointmentDetails extends StatelessWidget {
                             )
                           : const SizedBox.shrink(),
 
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 12),
 
                       Padding(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 0.0, horizontal: 4),
+                            vertical: 8.0, horizontal: 4),
                         child: _buildDetailsCard(
                           context,
                           title: "Service Request Details",
@@ -510,7 +508,8 @@ class RequestedAppointmentDetails extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      doc["status"] != "Completed"
+                          ? const SizedBox(height: 16):const SizedBox(height: 8),
                       doc["status"] == "Completed"
                           ? Card(
                               elevation: 0, // Shadow effect

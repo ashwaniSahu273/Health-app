@@ -3,8 +3,9 @@ import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/Accepted_requests/accepted_requests.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/provider_home.dart';
+// import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/Accepted_requests/accepted_requests.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/Result_upload/result_upload_controller.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -29,10 +30,10 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
         Get.put(ResultUploadController());
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-    LatLng location = LatLng(
-      double.parse(doc["latitude"]),
-      double.parse(doc["longitude"]),
-    );
+    // LatLng location = LatLng(
+    //   double.parse(doc["latitude"]),
+    //   double.parse(doc["longitude"]),
+    // );
 
     void openGoogleMap() async {
       var latitude = double.parse(doc["latitude"]);
@@ -662,9 +663,11 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                             snackPosition: SnackPosition.BOTTOM,
                           );
 
-                          Get.to(AcceptedRequests(
-                              firebaseUser: firebaseUser,
-                              userModel: userModel));
+                          Get.to(Service_Provider_Home(
+                            userModel: userModel,
+                            firebaseUser: firebaseUser,
+                            userEmail: '',
+                          ));
 
                           // uploadController.resetData();
                         } else {

@@ -1,13 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/Resources/Services_grid/patient_history.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/8.%20Chats/Pages/Home.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/About_Us/aboutus.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/Accepted_requests/accepted_requests.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/Contact_Us/provider_contact_us.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/Family/family.dart';
-import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/Result_upload/result_upload.dart';
+// import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/Result_upload/result_upload.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/User_services/FAQ/faq_page.dart';
 
 import '../../View/6. More Services/Provider_services/User_Requests/user_requests.dart';
@@ -42,16 +43,19 @@ class ServiceIconButton extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-             Image.asset(
-            serviceIcon,
-            height: 50, // Adjust the size as needed
-            width: 50,
-          ),
+            Image.asset(
+              serviceIcon,
+              height: 50, // Adjust the size as needed
+              width: 50,
+            ),
             const SizedBox(height: 5),
             Text(
               serviceName,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 12,fontFamily: "Roboto", fontWeight: FontWeight.w700),
+              style: const TextStyle(
+                  fontSize: 12,
+                  fontFamily: "Roboto",
+                  fontWeight: FontWeight.w700),
             ),
           ],
         ),
@@ -103,9 +107,12 @@ class MoreServicesGrid extends StatelessWidget {
           ),
           ServiceIconButton(
             serviceIcon: "assets/images/upload.png",
-            serviceName: "Upload Results".tr,
+            serviceName: "Patient History".tr,
             onPressed: () {
-              Get.to(() => ResultUpload());
+              Get.to(() => AcceptedRequestsHistory(
+                    userModel: userModel,
+                    firebaseUser: firebaseUser,
+                  ));
             },
             userModel: userModel,
             firebaseUser: firebaseUser,
@@ -123,7 +130,7 @@ class MoreServicesGrid extends StatelessWidget {
             firebaseUser: firebaseUser,
           ),
           ServiceIconButton(
-            serviceIcon:"assets/images/family.png",
+            serviceIcon: "assets/images/family.png",
             serviceName: "Family".tr,
             onPressed: () {
               Get.to(() => Family(

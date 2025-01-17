@@ -15,9 +15,9 @@ class BackgroundSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String backgroundImage = Get.locale?.languageCode == 'ar'
-        ? 'assets/images/bgarabic.png'
-        : 'assets/images/bgenglish.png';
+    // String backgroundImage = Get.locale?.languageCode == 'ar'
+    //     ? 'assets/images/bgarabic.png'
+    //     : 'assets/images/bgenglish.png';
     return GestureDetector(
       onTap: () {
         Get.to(() => E_Clinics(

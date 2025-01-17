@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/details_page.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/details_page.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -51,10 +51,10 @@ class Requests extends StatelessWidget {
                     DocumentSnapshot appointmentDoc = snapshot.data!.docs[index];
       
                     // Parse latitude and longitude for the map
-                    LatLng location = LatLng(
-                      double.parse(appointmentDoc["latitude"]),
-                      double.parse(appointmentDoc["longitude"]),
-                    );
+                    // LatLng location = LatLng(
+                    //   double.parse(appointmentDoc["latitude"]),
+                    //   double.parse(appointmentDoc["longitude"]),
+                    // );
       
                     return GestureDetector(
                       onTap: () {

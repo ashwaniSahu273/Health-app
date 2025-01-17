@@ -145,14 +145,14 @@ class _NurseVisitState extends State<NurseVisit> {
                   onConfirm: () {
                     setState(() {
                       // Save data to Firestore
-                      fireStore
-                          .doc(FirebaseAuth.instance.currentUser!.email)
-                          .set({
-                        "email": FirebaseAuth.instance.currentUser!.email,
-                        "address": stAddress,
-                        "type": "Nurse Visit",
-                        "selected_time": ""
-                      });
+                      // fireStore
+                      //     .doc(FirebaseAuth.instance.currentUser!.email)
+                      //     .set({
+                      //   "email": FirebaseAuth.instance.currentUser!.email,
+                      //   "address": stAddress,
+                      //   "type": "Nurse Visit",
+                      //   "selected_time": ""
+                      // });
 
                       Navigator.pop(context);
                       Get.back();

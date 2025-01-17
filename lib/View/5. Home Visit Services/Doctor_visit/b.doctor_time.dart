@@ -13,11 +13,11 @@ import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 class Doctor_Time extends StatefulWidget {
   final UserModel userModel;
   final User firebaseUser;
-  final Map<String, dynamic> providerData;
+
 
 
   Doctor_Time({
-    required this.providerData,
+
     required this.userModel,
     required this.firebaseUser,
   });
@@ -675,9 +675,9 @@ class _Doctor_TimeState extends State<Doctor_Time> {
                         Get.to(() => DoctorVisitPaymentPage(
                               userModel: widget.userModel,
                               firebaseUser: widget.firebaseUser,
-                              providerData: widget.providerData,
+                             
                               selectedTime: selectedTime!,
-                              selectedProviderData: widget.providerData,
+                           
                             ));
                       } else {
                         Get.snackbar("Error", "Please select a time slot");

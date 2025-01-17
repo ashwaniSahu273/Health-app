@@ -2,13 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-// import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
-// import 'package:harees_new_project/Resources/Search_bar/search_bar.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/details_page.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
-// import 'package:harees_new_project/controllers/user_requests_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UserRequests extends StatelessWidget {
@@ -83,7 +79,7 @@ class UserRequests extends StatelessWidget {
                       itemBuilder: (context, index) {
                         DocumentSnapshot doc = snapshot.data!.docs[index];
 
-                        if(doc["status"] != "Accepted"){
+                        if(doc["status"] != "Accepted" && doc["status"] != "Completed"){
 
                         print("Requested ==>${doc["status"]}");
 
@@ -102,7 +98,7 @@ class UserRequests extends StatelessWidget {
                               ),
                               child: Card(
                                 color: Colors.white,
-                                elevation: 4,
+                                elevation: 1,
                                 margin: const EdgeInsets.symmetric(
                                     horizontal: 0, vertical: 8),
                                 shape: RoundedRectangleBorder(

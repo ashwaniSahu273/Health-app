@@ -7,8 +7,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class UserRequestsController extends GetxController {
-
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final userAppointments =
       FirebaseFirestore.instance.collection("User_appointments").snapshots();
@@ -21,7 +19,6 @@ class UserRequestsController extends GetxController {
   final status = "".obs;
 
   void convertFromFirebaseTimestamp(String isoTimestamp) {
-
     try {
       // Parse the ISO timestamp into a DateTime object
       DateTime dateTime = DateTime.parse(isoTimestamp).toLocal();
@@ -36,13 +33,11 @@ class UserRequestsController extends GetxController {
 
       date.value = formattedDate;
       time.value = formattedTime;
-    print("============================> ${date.value}================>");
+      print("============================> ${date.value}================>");
     } catch (e) {
       print("Error converting ISO timestamp: $e");
     }
   }
-
-
 
   Future<void> accept(String appointmentId) async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -50,7 +45,6 @@ class UserRequestsController extends GetxController {
     final user = _auth.currentUser;
 
     final userAppointmentsRef = firestore.collection('User_appointments');
-
 
     try {
       await firestore.runTransaction((transaction) async {
@@ -64,7 +58,6 @@ class UserRequestsController extends GetxController {
         Map<String, dynamic> appointmentData =
             userAppointmentSnapshot.data() as Map<String, dynamic>;
 
-
         transaction.set(
             acceptedAppointments
                 .doc(user!.email)
@@ -73,16 +66,14 @@ class UserRequestsController extends GetxController {
             {
               ...appointmentData, // Copy all fields
               'status': 'Accepted',
-              'accepted_by':user.email // Update the status
+              'accepted_by': user.email // Update the status
             });
 
         // Update the status field in User_appointments
         transaction.update(userAppointmentsRef.doc(appointmentId), {
           'status': 'Accepted',
-          'accepted_by':user.email // Update the status
-
+          'accepted_by': user.email // Update the status
         });
-
 
         status.value = 'Accepted';
       });

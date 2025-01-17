@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/c.vitamin_time.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Doctor_visit/b.doctor_time.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class DynamicDoctor extends StatelessWidget {
@@ -33,7 +31,7 @@ class DynamicDoctor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    VitaminCartController cartController = Get.put(VitaminCartController());
+
 
     return Scaffold(
       appBar: AppBar(
@@ -343,8 +341,7 @@ class DynamicDoctor extends StatelessWidget {
                   //     ],
                   //   ),
                   // ),
-                  Obx(
-                    () => Expanded(
+                  Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor:  Color(0xFF007ABB),
@@ -354,12 +351,12 @@ class DynamicDoctor extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          if (!cartController.isCartEmpty()) {
-                            Get.to(() => Vitamin_Time(
+                          
+                            Get.to(() => Doctor_Time(
                                   userModel: userModel,
                                   firebaseUser: firebaseUser,
                                 ));
-                          }
+                          
                         },
                         child: Text(
                           'Continue'.tr,
@@ -369,7 +366,7 @@ class DynamicDoctor extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
+                  
                 ],
               ))
         ],

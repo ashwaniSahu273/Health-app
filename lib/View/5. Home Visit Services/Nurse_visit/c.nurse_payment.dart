@@ -14,17 +14,16 @@ import 'package:intl/intl.dart';
 class NurseVisitPaymentPage extends StatelessWidget {
   final UserModel userModel;
   final User firebaseUser;
-  final Map<String, dynamic> providerData;
   final String selectedTime;
-  final Map<String, dynamic> selectedProviderData;
+
 
   const NurseVisitPaymentPage({
     super.key,
-    required this.providerData,
+
     required this.userModel,
     required this.firebaseUser,
     required this.selectedTime,
-    required this.selectedProviderData,
+
   });
 
   @override

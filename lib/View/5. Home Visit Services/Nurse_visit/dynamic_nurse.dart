@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/b.nurse_time.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class DynamicNurse extends StatelessWidget {
@@ -32,12 +33,12 @@ class DynamicNurse extends StatelessWidget {
   Widget build(BuildContext context) {
     // VitaminCartController cartController = Get.put(VitaminCartController());
 
-    final List<Map<String, String>> durations = [
-      {'title': '1 Week', 'details': '12 Hours per day', 'price': '2500 SAR'},
-      {'title': '2 Week', 'details': '12 Hours per day', 'price': '4000 SAR'},
-      {'title': '3 Week', 'details': '12 Hours per day', 'price': '5200 SAR'},
-      {'title': '4 Week', 'details': '12 Hours per day', 'price': '6500 SAR'},
-    ];
+    // final List<Map<String, String>> durations = [
+    //   {'title': '1 Week', 'details': '12 Hours per day', 'price': '2500 SAR'},
+    //   {'title': '2 Week', 'details': '12 Hours per day', 'price': '4000 SAR'},
+    //   {'title': '3 Week', 'details': '12 Hours per day', 'price': '5200 SAR'},
+    //   {'title': '4 Week', 'details': '12 Hours per day', 'price': '6500 SAR'},
+    // ];
 
     return Scaffold(
       appBar: AppBar(
@@ -430,12 +431,12 @@ class DynamicNurse extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        // if (!cartController.isCartEmpty()) {
-                        //   Get.to(() => Vitamin_Time(
-                        //         userModel: userModel,
-                        //         firebaseUser: firebaseUser,
-                        //       ));
-                        // }
+                       
+                          Get.to(() => Nurse_Time(
+                                userModel: userModel,
+                                firebaseUser: firebaseUser,
+                              ));
+                        
                       },
                       child: Text(
                         'Continue'.tr,
