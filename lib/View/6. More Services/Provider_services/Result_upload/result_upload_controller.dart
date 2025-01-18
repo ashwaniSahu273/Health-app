@@ -308,9 +308,9 @@ class ResultUploadController extends GetxController {
     }
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    getUploadedPdf();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   getUploadedPdf();
+  // }
 }

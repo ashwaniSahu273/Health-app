@@ -251,11 +251,14 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                   }
 
                                   if (uploadController.pdfData.isEmpty) {
-                                    return Center(
-                                      child: Text(
-                                        "No PDF uploaded yet.",
-                                        style:
-                                            TextStyle(color: Colors.grey[600]),
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Center(
+                                        child: Text(
+                                          "No PDF uploaded yet.",
+                                          style:
+                                              TextStyle(color: Colors.grey[600]),
+                                        ),
                                       ),
                                     );
                                   }
@@ -294,13 +297,15 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                             Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                uploadController
-                                                        .pdfData["name"] ??
-                                                    "Unknown File",
-                                                textAlign: TextAlign.center,
-                                                style: const TextStyle(
-                                                    fontSize: 14),
+                                              child: GestureDetector(
+                                                child: Text(
+                                                  uploadController
+                                                          .pdfData["name"] ??
+                                                      "Unknown File",
+                                                  textAlign: TextAlign.center,
+                                                  style: const TextStyle(
+                                                      fontSize: 14),
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -391,7 +396,7 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                 children: [
                                   // Title
                                   Text(
-                                    "Title",
+                                    "Results",
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -413,11 +418,14 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
 
                                     if (uploadController
                                         .resultPdfData.isEmpty) {
-                                      return Center(
-                                        child: Text(
-                                          "No PDF uploaded yet.",
-                                          style: TextStyle(
-                                              color: Colors.grey[600]),
+                                      return Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Center(
+                                          child: Text(
+                                            "No PDF uploaded yet.",
+                                            style: TextStyle(
+                                                color: Colors.grey[600]),
+                                          ),
                                         ),
                                       );
                                     }
@@ -663,7 +671,7 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                             snackPosition: SnackPosition.BOTTOM,
                           );
 
-                          Get.to(Service_Provider_Home(
+                          Get.offAll(Service_Provider_Home(
                             userModel: userModel,
                             firebaseUser: firebaseUser,
                             userEmail: '',

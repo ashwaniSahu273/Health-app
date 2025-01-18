@@ -51,8 +51,8 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
             children: [
               // Logo at the top
               const Padding(
-                padding:  EdgeInsets.only(top: 100.0),
-                child:  Center(
+                padding: EdgeInsets.only(top: 100.0),
+                child: Center(
                   child: CircleAvatar(
                     radius: 90,
                     backgroundImage: AssetImage("assets/logo/harees_logo.png"),
@@ -60,8 +60,8 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                 ),
               ),
               const SizedBox(height: 80),
-          
-               Text(
+
+              Text(
                 'Enter Phone Number'.tr,
                 textAlign: TextAlign.start,
                 style: TextStyle(
@@ -126,22 +126,22 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                 ],
               ),
               SizedBox(height: 30),
-          
+
               Center(
-                child: isLoading? CircularProgressIndicator(): RoundButton(
-                    width: 250,
-                    borderColor: Colors.white,
-                    textColor: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFFB2E1DA),
-                    text: "Next".tr,
-                    onTap: () {
-
-
-                      sendOtp(selectedCountryCode + phoneController.text.trim());
-
-                    }),
+                child: isLoading
+                    ? CircularProgressIndicator()
+                    : RoundButton(
+                        width: 250,
+                        borderColor: Colors.white,
+                        textColor: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFFB2E1DA),
+                        text: "Next".tr,
+                        onTap: () {
+                          sendOtp(selectedCountryCode +
+                              phoneController.text.trim());
+                        }),
               ),
               // // Next button
               // SizedBox(
@@ -153,7 +153,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
               //     style: ElevatedButton.styleFrom(
               //       // primary: Colors.lightBlueAccent.shade100,
               //       // onPrimary: Colors.black,
-          
+
               //       padding: const EdgeInsets.symmetric(vertical: 12),
               //       shape: RoundedRectangleBorder(
               //         borderRadius: BorderRadius.circular(8.0),
@@ -186,15 +186,26 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) {
         auth.signInWithCredential(credential).then((value) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Phone verified automatically!')),
+          Get.snackbar(
+            "Success",
+            "Phone verified automatically!",
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
           );
         });
       },
       verificationFailed: (FirebaseAuthException e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.message ?? 'Verification failed')),
+        Get.snackbar(
+          "Verification failed",
+          "Please Enter valid Phone Number and Country Code",
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
         );
+
+        setState(() {
+          isLoading = false;
+        });
+        return;
       },
       codeSent: (String verificationId, int? resendToken) {
         this.verificationId = verificationId;

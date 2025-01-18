@@ -238,34 +238,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Image.asset("assets/images/google.png")
                                       .image),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            AuthServiceUserLogin(
-                                    userModel: UserModel(),
-                                    firebaseUser:
-                                        FirebaseAuth.instance.currentUser)
-                                .signInWithGoogle();
-                          },
-                          child: CircleAvatar(
-                              radius: 20,
-                              backgroundImage:
-                                  Image.asset("assets/images/google.png")
-                                      .image),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            AuthServiceUserLogin(
-                                    userModel: UserModel(),
-                                    firebaseUser:
-                                        FirebaseAuth.instance.currentUser)
-                                .signInWithGoogle();
-                          },
-                          child: CircleAvatar(
-                              radius: 20,
-                              backgroundImage:
-                                  Image.asset("assets/images/google.png")
-                                      .image),
-                        ),
+                       
+                       
 
                         // GestureDetector(
                         //   onTap: () {},

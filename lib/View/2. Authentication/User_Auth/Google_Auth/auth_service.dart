@@ -13,59 +13,67 @@ class AuthServiceUserLogin {
 
   AuthServiceUserLogin({required this.userModel, required this.firebaseUser});
 
-  void signInWithGoogle() async {
-    try {
-      GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+ void signInWithGoogle() async {
+  try {
+    GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-      if (googleUser == null) {
-        // User canceled the Google Sign In process
-        return;
-      }
-
-      GoogleSignInAuthentication? googleAuth = await googleUser.authentication;
-
-      AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-
-      if (userCredential.user != null) {
-        String uid = userCredential.user!.uid;
-
-        DocumentSnapshot userData = await FirebaseFirestore.instance
-            .collection("Registered Users")
-            .doc(uid)
-            .get();
-
-        if (!userData.exists) {
-          // User is not registered, display a Get.snackbar with an error message
-          Get.snackbar(
-            "Login Error",
-            "This email is not registered.",
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-          );
-
-          return;
-        }
-
-        UserModel userModel =
-            UserModel.frommap(userData.data() as Map<String, dynamic>);
-        // Go to HomePage
-        print("Log In Successful!");
-
-        Get.to(() => HomePage(
-              userModel: userModel,
-              firebaseUser: userCredential.user!,
-            ));
-      }
-    } catch (error) {
-      print("Error signing in with Google: $error");
+    if (googleUser == null) {
+      // User canceled the Google Sign-In process
+      return;
     }
+
+    // Check if the user is registered in Firestore based on their email
+    String email = googleUser.email;
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("Registered Users")
+        .where("email", isEqualTo: email)
+        .get();
+
+    if (querySnapshot.docs.isEmpty) {
+      // User is not registered, display a Get.snackbar with an error message
+      Get.snackbar(
+        "Login Error",
+        "This email is not registered.",
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return;
+    }
+
+    // Proceed with Google authentication
+    GoogleSignInAuthentication? googleAuth = await googleUser.authentication;
+
+    AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+    if (userCredential.user != null) {
+      String uid = userCredential.user!.uid;
+
+      DocumentSnapshot userData = await FirebaseFirestore.instance
+          .collection("Registered Users")
+          .doc(uid)
+          .get();
+
+      UserModel userModel =
+          UserModel.frommap(userData.data() as Map<String, dynamic>);
+      
+      // Go to HomePage
+      print("Log In Successful!");
+      Get.to(() => HomePage(
+            userModel: userModel,
+            firebaseUser: userCredential.user!,
+          ));
+    }
+  } catch (error) {
+    print("Error signing in with Google: $error");
   }
+}
+
 }
 
 // class AuthServiceProviderLogin {

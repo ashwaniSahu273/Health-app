@@ -73,6 +73,10 @@ class UserRequests extends StatelessWidget {
                       ConnectionState.waiting) {
                     return Text("Loading".tr);
                   }
+                   if (snapshot.data == null ||
+                          snapshot.data!.docs.isEmpty) {
+                        return Center(child: Text('No User Appointments'.tr));
+                      }
                   return Expanded(
                     child: ListView.builder(
                       itemCount: snapshot.data!.docs.length,

@@ -102,7 +102,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 ),
               ),
               const SizedBox(height: 70),
-               Text(
+              Text(
                 "We Sent OTP code to verify your number".tr,
                 style: TextStyle(
                     fontSize: 22,
@@ -133,10 +133,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       if (otpCode.isNotEmpty && otpCode.length == 6) {
                         verifyOtp(otpCode);
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                              content:
-                                  Text('Please enter a valid 6-digit OTP')),
+                        Get.snackbar(
+                          "Message",
+                          "Please enter a valid 6-digit OTP",
+                          backgroundColor: Colors.red,
+                          colorText: Colors.white,
                         );
                       }
                     }),
