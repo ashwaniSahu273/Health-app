@@ -1,4 +1,4 @@
-// ignore_for_file: library_prefixes, avoid_print, prefer_const_constructors, unused_import
+ // ignore_for_file: library_prefixes, avoid_print, prefer_const_constructors, unused_import
 
 import 'package:file_picker/file_picker.dart' as FilePicker;
 import 'package:firebase_auth/firebase_auth.dart';

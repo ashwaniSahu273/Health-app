@@ -14,12 +14,12 @@ import 'package:harees_new_project/View/8.%20Chats/Pages/Search_Page.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/View/9.%20Settings/settings.dart';
 
-class Home extends StatefulWidget {
+class AllChatRooms extends StatefulWidget {
   final UserModel userModel;
   final User firebaseUser;
   final UserModel targetUser;
 
-  const Home({
+  const AllChatRooms({
     Key? key,
     required this.userModel,
     required this.firebaseUser,
@@ -27,10 +27,10 @@ class Home extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _AllChatRoomsState createState() => _AllChatRoomsState();
 }
 
-class _HomeState extends State<Home> {
+class _AllChatRoomsState extends State<AllChatRooms> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,8 +110,6 @@ class _HomeState extends State<Home> {
                       child: StreamBuilder(
                         stream: FirebaseFirestore.instance
                             .collection("Chat Rooms")
-                            .where("participants.${widget.userModel.uid}",
-                                isEqualTo: true)
                             .snapshots(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
@@ -184,21 +182,15 @@ class _HomeState extends State<Home> {
                                                   ),
                                                 ),
                                               ),
-                                              title: Text(
-                                                targetUser.fullname.toString(),
-                                                style: TextStyle(
-                                                    color: Color(0xFF004AAD)),
-                                              ),
+                                              title: Text(targetUser.fullname
+                                                  .toString(),style: TextStyle(color: Color(0xFF004AAD)),),
                                               subtitle: (chatRoomModel
                                                           .lastMessage
                                                           .toString() !=
                                                       "")
-                                                  ? Text(
-                                                      chatRoomModel.lastMessage
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          color: Color(
-                                                              0xFF424242)))
+                                                  ? Text(chatRoomModel
+                                                      .lastMessage
+                                                      .toString(),style:TextStyle(color: Color(0xFF424242)))
                                                   : Text(
                                                       "Say hi to your new friend!",
                                                       style: TextStyle(
