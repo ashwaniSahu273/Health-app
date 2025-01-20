@@ -10,6 +10,7 @@ import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/C
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/Family/family.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/Result_upload/result_upload.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/User_services/FAQ/faq_page.dart';
+import 'package:harees_new_project/View/Admin%20Screen/CRUD%20Operations/services_screen.dart';
 import 'package:harees_new_project/View/Admin%20Screen/all_chat_rooms.dart';
 import 'package:harees_new_project/View/Admin%20Screen/total_orders.dart';
 import 'package:harees_new_project/View/Admin%20Screen/total_providers.dart';
@@ -155,18 +156,18 @@ class AdminServices extends StatelessWidget {
             userModel: userModel,
             firebaseUser: firebaseUser,
           ),
-          // ServiceIconButton(
-          //   serviceIcon: "assets/images/about.png",
-          //   serviceName: "About us".tr,
-          //   onPressed: () {
-          //     Get.to(() => AboutUsPage(
-          //           userModel: userModel,
-          //           firebaseUser: firebaseUser,
-          //         ));
-          //   },
-          //   userModel: userModel,
-          //   firebaseUser: firebaseUser,
-          // ),
+          ServiceIconButton(
+            serviceIcon: "assets/images/about.png",
+            serviceName: "Add Service".tr,
+            onPressed: () {
+              Get.to(() => ServiceCategoriesPage(
+                    userModel: userModel,
+                    firebaseUser: firebaseUser,
+                  ));
+            },
+            userModel: userModel,
+            firebaseUser: firebaseUser,
+          ),
           // ServiceIconButton(
           //   serviceIcon: "assets/images/faq1.png",
           //   serviceName: "FAQ".tr,
