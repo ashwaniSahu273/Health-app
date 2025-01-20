@@ -13,6 +13,7 @@ import 'package:harees_new_project/Resources/Button/mybutton.dart';
 import 'package:harees_new_project/Resources/TextField/MyTextField.dart';
 import 'package:harees_new_project/View/2.%20Authentication/User_Auth/user_register.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
+import 'package:harees_new_project/View/Admin%20Screen/admin_home.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -86,25 +87,37 @@ class _LoginScreenState extends State<LoginScreen> {
       print("Log In Successful!");
 
       Navigator.popUntil(context, (route) => route.isFirst);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) {
-          return HomePage(
-            userModel: userModel,
-            firebaseUser: credential!.user!,
-          );
-        }),
-      );
+
+      if (userModel.email == "testhareesflow@gmail.com") {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return Admin_Home(
+              userModel: userModel,
+              firebaseUser: credential!.user!,
+              userEmail: userModel.email!,
+            );
+          }),
+        );
+      } else {
+        Navigator.popUntil(context, (route) => route.isFirst);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return HomePage(
+              userModel: userModel,
+              firebaseUser: credential!.user!,
+            );
+          }),
+        );
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            
-
       backgroundColor: Color(0xFFEEF8FF),
-
       body: SafeArea(
         child: Stack(
           children: [
@@ -238,8 +251,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Image.asset("assets/images/google.png")
                                       .image),
                         ),
-                       
-                       
 
                         // GestureDetector(
                         //   onTap: () {},
@@ -292,8 +303,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         RoundButton(
                           textColor: Colors.white,
-                          color:  Color(0xFF009788),
-                          borderColor:Color(0xFF009788) ,
+                          color: Color(0xFF009788),
+                          borderColor: Color(0xFF009788),
                           height: 32,
                           width: 123,
                           fontSize: 12,
