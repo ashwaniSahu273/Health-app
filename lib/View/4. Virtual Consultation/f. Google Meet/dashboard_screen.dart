@@ -61,7 +61,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             stream: storage.retrieveEvents(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                if (snapshot.data?.documents.length > 0) {
+                if (snapshot.data.documents.length > 0) {
                   return ListView.builder(
                     physics: BouncingScrollPhysics(),
                     itemCount: snapshot.data.documents.length,
@@ -131,7 +131,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                                       child: Text(
-                                        event.link,
+                                        event.link??" this is link",
                                         style: TextStyle(
                                           color: CustomColor.dark_blue.withOpacity(0.5),
                                           fontWeight: FontWeight.bold,

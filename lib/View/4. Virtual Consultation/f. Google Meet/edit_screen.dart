@@ -159,7 +159,7 @@ class _EditScreenState extends State<EditScreen> {
     currentTitle = widget.event.name;
     currentDesc = widget.event.description;
     currentLocation = widget.event.location;
-    eventId = widget.event.id;
+    eventId = widget.event.id!;
     hasConferenceSupport = widget.event.hasConfereningSupport;
 
     widget.event.attendeeEmails.forEach((element) {

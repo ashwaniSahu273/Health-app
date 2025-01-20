@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class EventInfo {
-  final String id;
+  final String? id;
   final String name;
   final String description;
   final String location;
-  final String link;
+  final String? link;
   final List<dynamic> attendeeEmails;
   final bool shouldNotifyAttendees;
   final bool hasConfereningSupport;
@@ -13,11 +13,11 @@ class EventInfo {
   final int endTimeInEpoch;
 
   EventInfo({
-    required this.id,
+   this.id,
     required this.name,
     required this.description,
     required this.location,
-    required this.link,
+    this.link,
     required this.attendeeEmails,
     required this.shouldNotifyAttendees,
     required this.hasConfereningSupport,

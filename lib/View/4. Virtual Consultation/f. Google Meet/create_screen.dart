@@ -934,6 +934,13 @@ class _CreateScreenState extends State<CreateScreen> {
                         onPressed: isDataStorageInProgress
                             ? null
                             : () async {
+                                if (selectedDate == null ||
+                                    selectedStartTime == null ||
+                                    selectedEndTime == null ||
+                                    currentTitle == null) {
+                                  throw Exception('Missing required fields');
+                                }
+
                                 setState(() {
                                   isErrorTime = false;
                                   isDataStorageInProgress = true;
@@ -976,24 +983,28 @@ class _CreateScreenState extends State<CreateScreen> {
                                     if (_validateTitle(currentTitle) == null) {
                                       await calendarClient
                                           .insert(
-                                              title: currentTitle,
-                                              description: currentDesc ?? '',
-                                              location: currentLocation,
-                                              attendeeEmailList: attendeeEmails,
-                                              shouldNotifyAttendees:
-                                                  shouldNofityAttendees,
-                                              hasConferenceSupport:
-                                                  hasConferenceSupport,
-                                              startTime: DateTime
-                                                  .fromMillisecondsSinceEpoch(
-                                                      startTimeInEpoch),
-                                              endTime: DateTime
-                                                  .fromMillisecondsSinceEpoch(
-                                                      endTimeInEpoch))
+                                        title: currentTitle ?? '',
+                                        description: currentDesc ?? '',
+                                        location: currentLocation ?? '',
+                                        attendeeEmailList: attendeeEmails ?? [],
+                                        shouldNotifyAttendees:
+                                            shouldNofityAttendees ?? false,
+                                        hasConferenceSupport:
+                                            hasConferenceSupport ?? false,
+                                        startTime:
+                                            DateTime.fromMillisecondsSinceEpoch(
+                                                startTimeInEpoch),
+                                        endTime:
+                                            DateTime.fromMillisecondsSinceEpoch(
+                                                endTimeInEpoch),
+                                      )
                                           .then((eventData) async {
-                                        String eventId = eventData['id']!;
-                                        String eventLink = eventData['link']!;
-
+                                        if (eventData != null &&
+                                            eventData.containsKey('id')) {
+                                          var eventId = eventData['id'];
+                                          var eventLink = eventData['link'];
+                                          // Proceed to store event data
+                                      
                                         List<String> emails = [];
 
                                         for (int i = 0;
@@ -1024,6 +1035,10 @@ class _CreateScreenState extends State<CreateScreen> {
                                             .catchError(
                                               (e) => print(e),
                                             );
+                                        } else {
+                                          throw Exception(
+                                              'Event creation failed');
+                                        }
                                       }).catchError(
                                         (e) => print(e),
                                       );

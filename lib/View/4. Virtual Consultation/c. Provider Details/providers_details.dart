@@ -6,7 +6,8 @@ import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/c.%20Provider%20Details/create_session_button.dart';
-import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
+// import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
+// import 'package:harees_new_project/View/4.%20Virtual%20Consultation/f.%20Google%20Meet/dashboard_screen.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class Provider_Details extends StatefulWidget {
