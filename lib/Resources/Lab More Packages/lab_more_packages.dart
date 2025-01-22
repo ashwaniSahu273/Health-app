@@ -59,7 +59,7 @@ class LabMorePackages extends StatelessWidget {
                           mainAxisSpacing: 4,
                           crossAxisCount: 2,
                           childAspectRatio: 1),
-                      itemCount: controller.testItems.length,
+                      itemCount: controller.servicesList.length,
                       itemBuilder: (context, index) {
                         var item = controller.servicesList[index];
 
@@ -76,7 +76,7 @@ class LabMorePackages extends StatelessWidget {
                               description: localizedData.description,
                               price: localizedData.price,
                               components: localizedData.instructions,
-                              address:controller.stAddress.value,
+                              address: controller.stAddress.value,
                               userModel: userModel,
                               firebaseUser: firebaseUser,
                             ));
@@ -90,7 +90,8 @@ class LabMorePackages extends StatelessWidget {
                                   color: MyColors.greenColorauth,
                                   borderRadius: BorderRadius.circular(20)),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -117,12 +118,24 @@ class LabMorePackages extends StatelessWidget {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Image.asset("assets/images/1.png"),
+                                  item.imagePath != null
+                                      ? Image.network(
+                                          item.imagePath,
+                                          height: 50,
+                                          width: 64,
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Image.asset(
+                                          "assets/images/vitamin.png",
+                                          height: 200,
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
+                                        ),
                                   Row(
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal:16, vertical: 12),
+                                            horizontal: 16, vertical: 12),
                                         child: Container(
                                           height: 22,
                                           width: 120,

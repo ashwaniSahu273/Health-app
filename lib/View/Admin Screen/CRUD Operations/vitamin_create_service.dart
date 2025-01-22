@@ -1,21 +1,12 @@
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 
-class AddOrEditServiceForm extends StatefulWidget {
+class VitaminCreateService extends StatelessWidget {
   final bool isEditing;
-  final dynamic service;
+  final service;
 
-  AddOrEditServiceForm({required this.isEditing, this.service});
+  VitaminCreateService({required this.isEditing, this.service});
 
-  @override
-  _AddOrEditServiceFormState createState() => _AddOrEditServiceFormState();
-}
-
-class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _arServiceNameController =
@@ -31,86 +22,24 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
   final TextEditingController _enInstructionsController =
       TextEditingController();
   final TextEditingController _priceController = TextEditingController();
-
-  File? _imageFile;
-  String? _uploadedImageUrl;
-
-  @override
-  void initState() {
-    super.initState();
-
-    if (widget.isEditing && widget.service != null) {
-      _arServiceNameController.text =
-          widget.service!.localized.ar.serviceName ?? '';
-      _enServiceNameController.text =
-          widget.service!.localized.en.serviceName ?? '';
-      _arDescriptionController.text =
-          widget.service!.localized.ar.description ?? '';
-      _enDescriptionController.text =
-          widget.service!.localized.en.description ?? '';
-      _arInstructionsController.text =
-          widget.service!.localized.ar.instructions ?? '';
-      _enInstructionsController.text =
-          widget.service!.localized.en.instructions ?? '';
-      _priceController.text = widget.service!.localized.en.price ?? '';
-      _uploadedImageUrl = widget.service!.imagePath ?? "";
-    }
-  }
-
-  Future<void> selectImage(ImageSource source) async {
-    final XFile? pickedFile = await ImagePicker().pickImage(source: source);
-
-    if (pickedFile != null) {
-      cropImage(File(pickedFile.path));
-    }
-  }
-
-  Future<void> cropImage(File file) async {
-    final CroppedFile? croppedFile = await ImageCropper().cropImage(
-      sourcePath: file.path,
-      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-      compressQuality: 50,
-    );
-
-    if (croppedFile != null) {
-      setState(() {
-        _imageFile = File(croppedFile.path);
-      });
-      await uploadImage();
-    }
-  }
-
-  Future<void> uploadImage() async {
-    if (_imageFile == null) return;
-
-    try {
-      final storageRef = FirebaseStorage.instance
-          .ref()
-          .child('service_images/${DateTime.now().millisecondsSinceEpoch}.jpg');
-      final uploadTask = storageRef.putFile(_imageFile!);
-
-      final snapshot = await uploadTask;
-      final downloadUrl = await snapshot.ref.getDownloadURL();
-
-      setState(() {
-        _uploadedImageUrl = downloadUrl;
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Image uploaded successfully!')),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Image upload failed: $e')),
-      );
-    }
-  }
+  final TextEditingController _imagePathController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    if (isEditing && service != null) {
+      _arServiceNameController.text = service!.localized.ar.serviceName ?? '';
+      _enServiceNameController.text = service!.localized.en.serviceName ?? '';
+      _arDescriptionController.text = service!.localized.ar.description ?? '';
+      _enDescriptionController.text = service!.localized.en.description ?? '';
+      _arInstructionsController.text = service!.localized.ar.components ?? '';
+      _enInstructionsController.text = service!.localized.en.components ?? '';
+      _priceController.text = service!.localized.en.price ?? '';
+      _imagePathController.text = service!.imagePath ?? '';
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.isEditing ? 'Edit Service' : 'Add Service'),
+        title: Text(isEditing ? 'Edit Service' : 'Add Service'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -118,35 +47,6 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
           key: _formKey,
           child: ListView(
             children: [
-              // Image Section
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _imageFile != null
-                      ? Image.file(
-                          _imageFile!,
-                          height: 200,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                        )
-                      : _uploadedImageUrl != null
-                          ? Image.network(
-                              _uploadedImageUrl!,
-                              height: 200,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                            )
-                          : Text("There is no image"),
-                  SizedBox(height: 10),
-                  ElevatedButton.icon(
-                    onPressed: () => selectImage(ImageSource.gallery),
-                    icon: Icon(Icons.image),
-                    label: Text('Select Image'),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-
               // Arabic Service Name
               TextFormField(
                 controller: _arServiceNameController,
@@ -229,55 +129,61 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter the price' : null,
               ),
+              SizedBox(height: 10),
+              // Image Path
+              TextFormField(
+                controller: _imagePathController,
+                decoration: InputDecoration(
+                  labelText: 'Image Path',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) =>
+                    value!.isEmpty ? 'Please enter the image path' : null,
+              ),
               SizedBox(height: 20),
-
               // Save Button
               ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState!.validate() &&
-                      _uploadedImageUrl != null) {
+                  if (_formKey.currentState!.validate()) {
                     var newService = {
                       'localized': {
                         'ar': {
                           'serviceName': _arServiceNameController.text,
                           'description': _arDescriptionController.text,
-                          'Instructions': _arInstructionsController.text,
+                          'components': _arInstructionsController.text,
                           'price': _priceController.text,
                         },
                         'en': {
                           'serviceName': _enServiceNameController.text,
                           'description': _enDescriptionController.text,
-                          'Instructions': _enInstructionsController.text,
+                          'components': _enInstructionsController.text,
                           'price': _priceController.text,
                         },
                       },
-                      'imagePath': _uploadedImageUrl,
+                      'imagePath': _imagePathController.text,
                     };
 
-                    if (widget.isEditing) {
+                    if (isEditing) {
                       FirebaseFirestore.instance
-                          .collection('LaboratoryServices')
-                          .doc(widget.service.id.toString())
+                          .collection('VitaminServices')
+                          .doc(service.id
+                              .toString()) // Replace with the actual serviceId you want to update
                           .update(newService);
                     } else {
                       final docRef = FirebaseFirestore.instance
-                          .collection('LaboratoryServices')
+                          .collection('VitaminServices')
                           .doc();
-                      final id = docRef.id;
+                      final id = docRef.id; // Get the generated document ID
 
-                      newService = {...newService, 'id': id};
+                      newService = {...newService, id: id};
+
                       docRef.set(newService);
                     }
 
                     Navigator.pop(context, newService);
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Please upload an image!')),
-                    );
                   }
                 },
-                child:
-                    Text(widget.isEditing ? 'Update Service' : 'Add Service'),
+                child: Text(isEditing ? 'Update Service' : 'Add Service'),
               ),
             ],
           ),

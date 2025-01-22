@@ -134,6 +134,7 @@ class _VitaminServicesState extends State<VitaminServices> {
                         children: [
                           _buildServiceCard(
                             id: service.id,
+                            imagePath: service.imagePath,
                             serviceName: localizedData.serviceName,
                             description: localizedData.description,
                             components: localizedData.components,
@@ -343,7 +344,7 @@ class _VitaminServicesState extends State<VitaminServices> {
                             ),
                             const SizedBox(
                                 width: 8), // Space between the icon and text
-                           Text(
+                            Text(
                               'Selected item'.tr,
                               style: TextStyle(
                                 fontSize: 14,
@@ -425,14 +426,27 @@ class _VitaminServicesState extends State<VitaminServices> {
                     color: const Color.fromARGB(255, 169, 214, 246),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Image(image: AssetImage("assets/images/vitamin.png")),
+                  child: imagePath != null
+                      ? Image.network(
+                          imagePath,
+                          height: 200,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset(
+                          "assets/images/vitamin.png",
+                          height: 200,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
                 ),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                         child: Text(serviceName,
-                            style: const TextStyle(color: Colors.blue))),
+                            style: const TextStyle(
+                                color: Color.fromARGB(255, 41, 41, 41)))),
                     // Icon(
                     //   Icons.circle_outlined,
                     //   color: Colors.blue,

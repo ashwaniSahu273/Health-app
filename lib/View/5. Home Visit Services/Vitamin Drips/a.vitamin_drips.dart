@@ -55,7 +55,7 @@ class _VitaminState extends State<Vitamin> {
 
   void initState() {
 
-    vitaminCartController.storeServices();
+    // vitaminCartController.storeServices();
     vitaminCartController.fetchServices();
     super.initState();
     // Initial marker (optional)

@@ -12,6 +12,7 @@ import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/R
 import 'package:harees_new_project/View/6.%20More%20Services/User_services/FAQ/faq_page.dart';
 import 'package:harees_new_project/View/Admin%20Screen/CRUD%20Operations/services_screen.dart';
 import 'package:harees_new_project/View/Admin%20Screen/all_chat_rooms.dart';
+import 'package:harees_new_project/View/Admin%20Screen/all_users.dart';
 import 'package:harees_new_project/View/Admin%20Screen/total_orders.dart';
 import 'package:harees_new_project/View/Admin%20Screen/total_providers.dart';
 
@@ -168,18 +169,19 @@ class AdminServices extends StatelessWidget {
             userModel: userModel,
             firebaseUser: firebaseUser,
           ),
-          // ServiceIconButton(
-          //   serviceIcon: "assets/images/faq1.png",
-          //   serviceName: "FAQ".tr,
-          //   onPressed: () {
-          //     Get.to(() => FAQ(
-          //           userModel: userModel,
-          //           firebaseUser: firebaseUser,
-          //         ));
-          //   },
-          //   userModel: userModel,
-          //   firebaseUser: firebaseUser,
-          // ),
+          ServiceIconButton(
+            serviceIcon: "assets/images/user.png",
+            serviceName: "Users".tr,
+            onPressed: () {
+              Get.to(() => TotalUsers(
+                    userModel: userModel,
+                    firebaseUser: firebaseUser,
+                    targetUser: userModel,
+                  ));
+            },
+            userModel: userModel,
+            firebaseUser: firebaseUser,
+          ),
         ],
       ),
     );

@@ -46,7 +46,7 @@ class _LabImpState extends State<LabImp> {
 
   @override
   void initState() {
-    labController.storeServices();
+    // labController.storeServices();
     super.initState();
     _marker.addAll(_list);
   }

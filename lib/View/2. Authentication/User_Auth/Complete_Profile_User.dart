@@ -29,11 +29,11 @@ class CompleteProfile extends StatefulWidget {
   State<CompleteProfile> createState() => _CompleteProfileState();
 }
 class _CompleteProfileState extends State<CompleteProfile> {
-  File? imageFile;
   TextEditingController fullNameController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
   TextEditingController dobController = TextEditingController();
   String? selectedGender;
+  File? imageFile;
 
   void selectImage(ImageSource source) async {
     XFile? pickedFile = await ImagePicker().pickImage(source: source);

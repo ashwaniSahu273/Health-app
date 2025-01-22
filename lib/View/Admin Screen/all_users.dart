@@ -13,12 +13,12 @@ import 'package:harees_new_project/Resources/Bottom_Navigation_Bar/bottom_nav.da
 import 'package:harees_new_project/Resources/Search_bar/search_bar.dart';
 import 'package:harees_new_project/View/9.%20Settings/settings.dart';
 
-class TotalProviders extends StatefulWidget {
+class TotalUsers extends StatefulWidget {
   final UserModel userModel;
   final User firebaseUser;
   final UserModel targetUser;
 
-  const TotalProviders({
+  const TotalUsers({
     Key? key,
     required this.userModel,
     required this.firebaseUser,
@@ -26,12 +26,12 @@ class TotalProviders extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<TotalProviders> createState() => _TotalProvidersState();
+  State<TotalUsers> createState() => _TotalUsersState();
 }
 
-class _TotalProvidersState extends State<TotalProviders> {
+class _TotalUsersState extends State<TotalUsers> {
   final user_appointments =
-      FirebaseFirestore.instance.collection("Registered Providers").snapshots();
+      FirebaseFirestore.instance.collection("Registered Users").snapshots();
 
   final acceptedAppointments =
       FirebaseFirestore.instance.collection("Accepted_appointments");
@@ -64,7 +64,7 @@ class _TotalProvidersState extends State<TotalProviders> {
                   weight: 200,
                 )), // Double-arrow icon
             Text(
-              'All Providers'.tr,
+              'All Users'.tr,
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
@@ -112,12 +112,17 @@ class _TotalProvidersState extends State<TotalProviders> {
                       itemCount: doctorsData.length,
                       itemBuilder: (context, index) {
                         final doc = doctorsData[index];
+                        final data = doc.data() as Map<String, dynamic>;
+                        final phone = data.containsKey('mobileNumber')
+                            ? data['mobileNumber'] ?? 'N/A'
+                            : 'N/A';
+
                         final doctor = {
                           'image': doc['profilePic'] ??
                               'https://via.placeholder.com/150', // Placeholder image if none provided
                           'name': doc['fullname'] ?? 'N/A',
                           'email': doc['email'] ?? 'N/A',
-                          'experience': doc['experience'] ?? 'N/A',
+                          'phone': phone,
                         };
 
                         return Container(
@@ -132,11 +137,11 @@ class _TotalProvidersState extends State<TotalProviders> {
                           child: Row(
                             children: [
                               // Doctor's picture
-                               Image.asset(
-                                      "assets/images/user.png", // Replace with your asset
-                                      height: 74,
-                                      width: 60,
-                                    ),
+                              Image.asset(
+                                "assets/images/user.png", // Replace with your asset
+                                height: 74,
+                                width: 60,
+                              ),
                               // Container(
                               //   width: 60,
                               //   height: 60,
@@ -173,7 +178,7 @@ class _TotalProvidersState extends State<TotalProviders> {
                                     ),
                                     const SizedBox(height: 5),
                                     Text(
-                                      'Experience: ${doctor['experience']}',
+                                      'phone: ${doctor['experience']}',
                                       style: TextStyle(
                                           fontSize: 14.0,
                                           color: Color(0xFF426ACA)),
