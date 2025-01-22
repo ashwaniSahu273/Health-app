@@ -462,90 +462,90 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Get.to(() => MyAppointments(
-                                      userModel: widget.userModel,
-                                      firebaseUser: widget.firebaseUser,
-                                      targetUser: UserModel(),
-                                    ));
-                              },
-                              child: Container(
-                                height: 120.0,
-                                width: 150.0,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Color.fromARGB(255, 170, 226, 244),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(20),
-                                  child: Column(
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/appointment.png",
-                                        height: 50,
-                                      ),
-                                      SizedBox(height: 4),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 10.0),
-                                        child: Text(
-                                          "Appointments".tr,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 30),
-                            GestureDetector(
-                              onTap: () {
-                                Get.to(() => UserResult(
-                                      userModel: widget.userModel,
-                                      firebaseUser: widget.firebaseUser,
-                                    ));
-                              },
-                              child: Container(
-                                height: 120.0,
-                                width: 150.0,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Color.fromARGB(255, 124, 209, 255),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(20),
-                                  child: Column(
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/result.png",
-                                        height: 50,
-                                      ),
-                                      SizedBox(height: 4),
-                                      Text(
-                                        "Results".tr,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 40),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     GestureDetector(
+                        //       onTap: () {
+                        //         Get.to(() => MyAppointments(
+                        //               userModel: widget.userModel,
+                        //               firebaseUser: widget.firebaseUser,
+                        //               targetUser: UserModel(),
+                        //             ));
+                        //       },
+                        //       child: Container(
+                        //         height: 120.0,
+                        //         width: 150.0,
+                        //         decoration: BoxDecoration(
+                        //           borderRadius: BorderRadius.circular(15),
+                        //           color: Color.fromARGB(255, 170, 226, 244),
+                        //         ),
+                        //         child: Padding(
+                        //           padding: const EdgeInsets.all(20),
+                        //           child: Column(
+                        //             children: [
+                        //               Image.asset(
+                        //                 "assets/images/appointment.png",
+                        //                 height: 50,
+                        //               ),
+                        //               SizedBox(height: 4),
+                        //               Padding(
+                        //                 padding:
+                        //                     const EdgeInsets.only(left: 10.0),
+                        //                 child: Text(
+                        //                   "Appointments".tr,
+                        //                   style: TextStyle(
+                        //                     color: Colors.black,
+                        //                     fontSize: 14,
+                        //                     fontWeight: FontWeight.bold,
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     SizedBox(width: 30),
+                        //     GestureDetector(
+                        //       onTap: () {
+                        //         Get.to(() => UserResult(
+                        //               userModel: widget.userModel,
+                        //               firebaseUser: widget.firebaseUser,
+                        //             ));
+                        //       },
+                        //       child: Container(
+                        //         height: 120.0,
+                        //         width: 150.0,
+                        //         decoration: BoxDecoration(
+                        //           borderRadius: BorderRadius.circular(15),
+                        //           color: Color.fromARGB(255, 124, 209, 255),
+                        //         ),
+                        //         child: Padding(
+                        //           padding: const EdgeInsets.all(20),
+                        //           child: Column(
+                        //             children: [
+                        //               Image.asset(
+                        //                 "assets/images/result.png",
+                        //                 height: 50,
+                        //               ),
+                        //               SizedBox(height: 4),
+                        //               Text(
+                        //                 "Results".tr,
+                        //                 style: TextStyle(
+                        //                   color: Colors.black,
+                        //                   fontSize: 14,
+                        //                   fontWeight: FontWeight.bold,
+                        //                 ),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // SizedBox(height: 40),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -706,25 +706,25 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 40),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Text(
-                      'Pending Appointments'.tr,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  AppointmentCarousel(
-                    userAppointments: FirebaseFirestore.instance
-                        .collection("User_appointments")
-                        .snapshots(),
-                  ),
-                  SizedBox(height: 20),
+                  // SizedBox(height: 40),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 10.0),
+                  //   child: Text(
+                  //     'Pending Appointments'.tr,
+                  //     style: TextStyle(
+                  //       fontSize: 18,
+                  //       fontWeight: FontWeight.bold,
+                  //       color: Colors.black,
+                  //     ),
+                  //   ),
+                  // ),
+                  // SizedBox(height: 20),
+                  // AppointmentCarousel(
+                  //   userAppointments: FirebaseFirestore.instance
+                  //       .collection("User_appointments")
+                  //       .snapshots(),
+                  // ),
+                  // SizedBox(height: 20),
                 ],
               ),
             ),

@@ -40,8 +40,6 @@ class _MyAppointmentsState extends State<MyAppointments> {
       FirebaseFirestore.instance.collection("User_appointments");
   final _auth = FirebaseAuth.instance;
 
-
-
   final List<Color> colors = [
     const Color(0xFFb3e4ff),
     const Color(0xFFfcfcdc),
@@ -67,7 +65,10 @@ class _MyAppointmentsState extends State<MyAppointments> {
                 )), // Double-arrow icon
             Text(
               'Patient Record'.tr,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700,fontFamily: "Roboto"),
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Roboto"),
             ),
           ],
         ),
@@ -95,7 +96,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
                       ConnectionState.waiting) {
                     return Text("Loading".tr);
                   }
-      
+
                   return ListView.builder(
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
@@ -104,17 +105,16 @@ class _MyAppointmentsState extends State<MyAppointments> {
                         return AppointmentTile(
                           userModel: widget.userModel,
                           firebaseUser: widget.firebaseUser,
-                          doc:snapshot.data!.docs[index],
-                          name:
-                              snapshot.data!.docs[index]['status'].toString(),
-                          address: snapshot.data!.docs[index]['address']
-                              .toString(),
+                          doc: snapshot.data!.docs[index],
+                          name: snapshot.data!.docs[index]['status'].toString(),
+                          address:
+                              snapshot.data!.docs[index]['address'].toString(),
                           reportName:
                               snapshot.data!.docs[index]["type"].toString(),
                           color: colors[index % colors.length],
                         );
                       }
-                      return Text(" ");
+                      return null;
                     },
                   );
                 },
@@ -136,14 +136,14 @@ class AppointmentTile extends StatefulWidget {
   final String address;
   final String reportName;
   final Color color;
- final DocumentSnapshot doc;
+  final DocumentSnapshot doc;
   final UserModel userModel;
   final User firebaseUser;
 
   const AppointmentTile({
     super.key,
     required this.doc,
-        required this.userModel,
+    required this.userModel,
     required this.firebaseUser,
     required this.name,
     required this.address,
@@ -156,8 +156,7 @@ class AppointmentTile extends StatefulWidget {
 }
 
 class _AppointmentTileState extends State<AppointmentTile> {
-
-    final UserController controller = Get.put(UserController());
+  final UserController controller = Get.put(UserController());
 
   @override
   Widget build(BuildContext context) {
@@ -191,10 +190,10 @@ class _AppointmentTileState extends State<AppointmentTile> {
               doc: widget.doc,
             ));
 
-            controller.convertFromFirebaseTimestamp(widget.doc["selected_time"]);
+            controller
+                .convertFromFirebaseTimestamp(widget.doc["selected_time"]);
           },
           child: Card(
-            
             color: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -249,7 +248,11 @@ class _AppointmentTileState extends State<AppointmentTile> {
                               widget.name,
                               style: TextStyle(
                                 fontSize: 14,
-                                color: widget.name == "Requested"? Color(0xFFC06440): widget.name =="accepted"?Color(0xFFFFC300): Colors.green,
+                                color: widget.name == "Requested"
+                                    ? Color(0xFFC06440)
+                                    : widget.name == "accepted"
+                                        ? Color(0xFFFFC300)
+                                        : Colors.green,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

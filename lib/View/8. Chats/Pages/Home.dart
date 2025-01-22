@@ -116,6 +116,11 @@ class _HomeState extends State<Home> {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.active) {
+                            if (snapshot.data == null ||
+                                snapshot.data!.docs.isEmpty) {
+                              return Center(
+                                  child: Text('No Chats available'.tr));
+                            }
                             if (snapshot.hasData) {
                               QuerySnapshot chatRoomSnapshot =
                                   snapshot.data as QuerySnapshot;
@@ -184,15 +189,21 @@ class _HomeState extends State<Home> {
                                                   ),
                                                 ),
                                               ),
-                                              title: Text(targetUser.fullname
-                                                  .toString(),style: TextStyle(color: Color(0xFF004AAD)),),
+                                              title: Text(
+                                                targetUser.fullname.toString(),
+                                                style: TextStyle(
+                                                    color: Color(0xFF004AAD)),
+                                              ),
                                               subtitle: (chatRoomModel
                                                           .lastMessage
                                                           .toString() !=
                                                       "")
-                                                  ? Text(chatRoomModel
-                                                      .lastMessage
-                                                      .toString(),style:TextStyle(color: Color(0xFF424242)))
+                                                  ? Text(
+                                                      chatRoomModel.lastMessage
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                          color: Color(
+                                                              0xFF424242)))
                                                   : Text(
                                                       "Say hi to your new friend!",
                                                       style: TextStyle(
@@ -237,17 +248,17 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        foregroundColor: Colors.white,
-        backgroundColor: MyColors.blue,
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return SearchPage(
-                userModel: widget.userModel, firebaseUser: widget.firebaseUser);
-          }));
-        },
-        child: const Icon(Icons.search),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   foregroundColor: Colors.white,
+      //   backgroundColor: MyColors.blue,
+      //   onPressed: () {
+      //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+      //       return SearchPage(
+      //           userModel: widget.userModel, firebaseUser: widget.firebaseUser);
+      //     }));
+      //   },
+      //   child: const Icon(Icons.search),
+      // ),
     );
   }
 }

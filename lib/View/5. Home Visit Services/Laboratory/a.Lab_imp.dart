@@ -143,7 +143,7 @@ class _LabImpState extends State<LabImp> {
                     labController.stAddress.value = stAddress;
                     labController.latitude.value = Latitude;
                     labController.longitude.value = Longitude;
-
+                    Navigator.pop(context);
                     Get.to(() => LabTest(
                           userModel: widget.userModel,
                           firebaseUser: widget.firebaseUser,

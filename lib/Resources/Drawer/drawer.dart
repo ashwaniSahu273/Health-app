@@ -148,6 +148,8 @@ class _MyDrawerState extends State<MyDrawer> {
               Get.to(() => LoginScreen());
             },
           ),
+          Divider(thickness: 2, color: Colors.grey[300]),
+
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Row(
@@ -225,6 +227,8 @@ class _MyDrawerState extends State<MyDrawer> {
               ],
             ),
           ),
+          Divider(thickness: 2, color: Colors.grey[300]),
+
         ],
       ),
     );

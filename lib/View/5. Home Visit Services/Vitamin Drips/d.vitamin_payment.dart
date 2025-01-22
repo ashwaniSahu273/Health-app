@@ -593,7 +593,7 @@ class VitaminPaymentPage extends StatelessWidget {
                       onTap: () {
 
                         vitaminCartController.setUserOrderInfo(userModel, firebaseUser);
-                        Get.to(() => HomePage(
+                        Get.offAll(() => HomePage(
                               userModel: userModel,
                               firebaseUser: firebaseUser,
                             ));

@@ -587,7 +587,7 @@ LabController cartController =
                       onTap: () {
                         cartController.setUserOrderInfo(userModel, firebaseUser);
 
-                        Get.to(() => HomePage(
+                        Get.offAll(() => HomePage(
                               userModel: userModel,
                               firebaseUser: firebaseUser,
                             ));
