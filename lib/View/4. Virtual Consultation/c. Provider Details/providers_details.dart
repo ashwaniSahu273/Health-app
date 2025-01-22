@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+import 'package:harees_new_project/View/4.%20Virtual%20Consultation/c.%20Provider%20Details/create_session.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
@@ -28,6 +29,9 @@ class _Provider_DetailsState extends State<Provider_Details> {
   int selectedIndex = 0;
   int genderIndex = 0;
   String selectedDate = "December, 2024".tr;
+  String description = "This is  description";
+  DateTime startDateTime = DateTime.now();
+  DateTime endDateTime = DateTime.now();
 
   final List<String> timeSlots = [
     "09:00 am".tr,
@@ -683,15 +687,20 @@ class _Provider_DetailsState extends State<Provider_Details> {
                   GestureDetector(
                     onTap: () {
                       if (selectedTime != null) {
-                        Get.to(() => PaymentDetailsPage(
-                              userModel: widget.userModel,
-                              firebaseUser: widget.firebaseUser,
-                              providerData: widget.providerData,
-                              packageName: '',
-                              packagePrice: '',
-                              selectedTime: selectedTime!,
-                              selectedProviderData: widget.providerData,
-                            ));
+                        // Get.to(() => PaymentDetailsPage(
+                        //       userModel: widget.userModel,
+                        //       firebaseUser: widget.firebaseUser,
+                        //       providerData: widget.providerData,
+                        //       packageName: '',
+                        //       packagePrice: '',
+                        //       selectedTime: selectedTime!,
+                        //       selectedProviderData: widget.providerData,
+                        //     ));
+                        Get.to(CreateSessionButton(
+                          description: description,
+                          startDateTime: startDateTime,
+                          endDateTime: endDateTime,
+                        ));
                       } else {
                         Get.snackbar("Error", "Please select a time slot");
                       }
