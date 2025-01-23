@@ -119,7 +119,7 @@ class _TotalUsersState extends State<TotalUsers> {
 
                         final doctor = {
                           'image': doc['profilePic'] ??
-                              'https://via.placeholder.com/150', // Placeholder image if none provided
+                              'assets/images/vitamin.png', // Placeholder image if none provided
                           'name': doc['fullname'] ?? 'N/A',
                           'email': doc['email'] ?? 'N/A',
                           'phone': phone,

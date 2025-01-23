@@ -3,6 +3,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/Resources/Services_grid/user_meeting_request.dart';
+import 'package:harees_new_project/Resources/Services_grid/user_side_meeting_request.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/8.%20Chats/Pages/Home.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
@@ -30,7 +32,8 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
       backgroundColor: Colors.white, // Update this color as needed
       currentIndex: _currentIndex,
       selectedItemColor: Colors.blue,
-      unselectedItemColor: MyColors.blue, // Changed unselected color to grey for better contrast
+      unselectedItemColor:
+          MyColors.blue, // Changed unselected color to grey for better contrast
       showUnselectedLabels: true,
       items: [
         BottomNavigationBarItem(
@@ -49,30 +52,40 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
           icon: const Icon(Icons.chat, size: 40),
           label: "Chats".tr,
         ),
-       
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.group, size: 40),
+          label: "Meetings".tr,
+        ),
       ],
       onTap: (index) {
         setState(() {
           _currentIndex = index;
-          if (index == 0) {
-            Get.to(() => HomePage(
-                  userModel: widget.userModel,
-                  firebaseUser: widget.firebaseUser,
-                ));
-          } else if (index == 1) {
-            Get.to(() => MyAppointments(
-                  userModel: widget.userModel,
-                  firebaseUser: widget.firebaseUser, 
-                  targetUser: widget.userModel,
-                ));
-          } else if (index == 2) {
-            Get.to(() => Home(
-                  userModel: widget.userModel,
-                  firebaseUser: widget.firebaseUser,
-                  targetUser: widget.userModel,
-                ));
-          } 
         });
+
+        if (index == 0) {
+          Get.to(() => HomePage(
+                userModel: widget.userModel,
+                firebaseUser: widget.firebaseUser,
+              ));
+        } else if (index == 1) {
+          Get.to(() => MyAppointments(
+                userModel: widget.userModel,
+                firebaseUser: widget.firebaseUser,
+                targetUser: widget.userModel,
+              ));
+        } else if (index == 2) {
+          Get.to(() => Home(
+                userModel: widget.userModel,
+                firebaseUser: widget.firebaseUser,
+                targetUser: widget.userModel,
+              ));
+        } else if (index == 3) {
+          Get.to(() => UserSideMeetingRequest(
+                userModel: widget.userModel,
+                firebaseUser: widget.firebaseUser,
+                // targetUser: widget.userModel,
+              ));
+        }
       },
     );
   }

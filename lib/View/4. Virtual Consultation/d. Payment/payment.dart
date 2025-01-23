@@ -159,9 +159,9 @@ class PaymentDetailsPage extends StatelessWidget {
                       ),
                       leading: CircleAvatar(
                         radius: 35,
-                        backgroundImage: NetworkImage(
-                          selectedProviderData['image'] ?? 'https://via.placeholder.com/150',
-                        ),
+                        // backgroundImage: NetworkImage(
+                        //   selectedProviderData['image'] ?? 'assets/images/vitamin.png',
+                        // ),
                       ),
                     ),
                   ),

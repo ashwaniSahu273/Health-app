@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class UserMeetingRequestController extends GetxController {
+class UserSideMeetingRequestController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final userAppointments =
       FirebaseFirestore.instance.collection("User_meetings").snapshots();
@@ -17,7 +17,6 @@ class UserMeetingRequestController extends GetxController {
   final date = "".obs;
   final time = "".obs;
   final status = "".obs;
-
 
   void convertFromFirebaseTimestampStart(String isoTimestamp) {
     try {
@@ -59,6 +58,7 @@ class UserMeetingRequestController extends GetxController {
       print("Error converting ISO timestamp: $e");
     }
   }
+
 
 
 

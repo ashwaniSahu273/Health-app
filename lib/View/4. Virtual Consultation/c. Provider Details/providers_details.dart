@@ -7,9 +7,12 @@ import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
+import 'package:harees_new_project/View/4.%20Virtual%20Consultation/c.%20Provider%20Details/consultant_controller.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/c.%20Provider%20Details/create_session.dart';
+import 'package:harees_new_project/View/4.%20Virtual%20Consultation/c.%20Provider%20Details/open_dialog.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
+import 'package:intl/intl.dart';
 
 class Provider_Details extends StatefulWidget {
   final UserModel userModel;
@@ -34,6 +37,8 @@ class _Provider_DetailsState extends State<Provider_Details> {
   String description = "This is  description";
   DateTime startDateTime = DateTime.now();
   DateTime endDateTime = DateTime.now();
+  final ConsultationController consultationController =
+      Get.put(ConsultationController());
 
   final List<String> timeSlots = [
     "09:00 am".tr,
@@ -471,9 +476,9 @@ class _Provider_DetailsState extends State<Provider_Details> {
                     ),
                     leading: CircleAvatar(
                       radius: 35,
-                      backgroundImage: NetworkImage(
-                          widget.providerData['image'] ??
-                              'https://via.placeholder.com/150'),
+                      // backgroundImage: NetworkImage(
+                      //     widget.providerData['image'] ??
+                      //         'assets/images/vitamin.png'),
                     ),
                   ),
                   SizedBox(height: 10),
@@ -679,25 +684,17 @@ class _Provider_DetailsState extends State<Provider_Details> {
                     ),
                     leading: CircleAvatar(
                       radius: 35,
-                      backgroundImage: NetworkImage(
-                          widget.providerData['image'] ??
-                              'https://via.placeholder.com/150'),
+                      // backgroundImage: NetworkImage(
+                      //     widget.providerData['image'] ??
+                      //         'assets/images/vitamin.png'),
                     ),
                   ),
                   SizedBox(height: 40),
 
                   GestureDetector(
                     onTap: () {
-                      if (selectedTime != null) {
-                        // Get.to(() => PaymentDetailsPage(
-                        //       userModel: widget.userModel,
-                        //       firebaseUser: widget.firebaseUser,
-                        //       providerData: widget.providerData,
-                        //       packageName: '',
-                        //       packagePrice: '',
-                        //       selectedTime: selectedTime!,
-                        //       selectedProviderData: widget.providerData,
-                        //     ));
+                      consultationController.openConsultationDialog();
+                      if (consultationController.consultationData.isNotEmpty) {
                         setState(() {
                           FirebaseFirestore.instance
                               .collection("User_meetings")
@@ -711,9 +708,11 @@ class _Provider_DetailsState extends State<Provider_Details> {
                             "type": "Virtual Consultation",
                             "selected_time": "2024-12-01T04:30:00.000Z",
                             "status": "Requested",
-                            "requested_to": widget.providerData["email"],
+                            "requested_to": widget.providerData["name"],
                             "accepted_by": null,
-                            "meeting_link": null
+                            "meeting_link": null,
+                            "meeting_data":
+                                consultationController.consultationData
                           });
 
                           Get.offAll(() => HomePage(
@@ -721,15 +720,13 @@ class _Provider_DetailsState extends State<Provider_Details> {
                                 firebaseUser: widget.firebaseUser,
                               ));
                         });
-
-                        // Get.to(CreateSessionButton(
-                        //   description: description,
-                        //   startDateTime: startDateTime,
-                        //   endDateTime: endDateTime,
-                        // ));
-                      } else {
-                        Get.snackbar("Error", "Please select a time slot");
                       }
+
+                      // Get.to(CreateSessionButton(
+                      //   description: description,
+                      //   startDateTime: startDateTime,
+                      //   endDateTime: endDateTime,
+                      // ));
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10, right: 10),
