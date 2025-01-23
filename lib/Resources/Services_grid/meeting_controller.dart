@@ -17,7 +17,51 @@ class UserMeetingRequestController extends GetxController {
   final date = "".obs;
   final time = "".obs;
   final status = "".obs;
+  final TextEditingController descriptionController = TextEditingController();
+  final textData = "".obs;
 
+  Future<void> openConsultationDialog(id) async {
+    await Get.dialog(
+      AlertDialog(
+        title: Text('Please Enter Google Meeting Link'),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: descriptionController,
+                decoration: InputDecoration(labelText: 'Meeting link...'),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back(); // Close dialog without saving
+            },
+            child: Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              try {
+                textData.value = descriptionController.text;
+                accept(id, textData.value);
+                Get.back(); // Close dialog
+              } catch (e) {
+                Get.snackbar(
+                  'Error',
+                  'Invalid date format. Please select a valid date and time.',
+                  snackPosition: SnackPosition.BOTTOM,
+                );
+              }
+            },
+            child: Text('Save'),
+          ),
+        ],
+      ),
+    );
+  }
 
   void convertFromFirebaseTimestampStart(String isoTimestamp) {
     try {
@@ -33,12 +77,13 @@ class UserMeetingRequestController extends GetxController {
       print("Readable Time: $formattedTime");
 
       date.value = "$formattedDate,  $formattedTime";
-      
+
       print("============================> ${date.value}================>");
     } catch (e) {
       print("Error converting ISO timestamp: $e");
     }
   }
+
   void convertFromFirebaseTimestampEnd(String isoTimestamp) {
     try {
       // Parse the ISO timestamp into a DateTime object
@@ -52,7 +97,6 @@ class UserMeetingRequestController extends GetxController {
       print("Readable Date: $formattedDate");
       print("Readable Time: $formattedTime");
 
-   
       time.value = "$formattedDate,  $formattedTime";
       print("============================> ${date.value}================>");
     } catch (e) {
@@ -60,11 +104,7 @@ class UserMeetingRequestController extends GetxController {
     }
   }
 
-
-
-  
-
-  Future<void> accept(String appointmentId) async {
+  Future<void> accept(String appointmentId, String link) async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     final user = _auth.currentUser;
@@ -97,11 +137,22 @@ class UserMeetingRequestController extends GetxController {
         // Update the status field in User_appointments
         transaction.update(userAppointmentsRef.doc(appointmentId), {
           'status': 'Accepted',
-          'accepted_by': user?.email // Update the status
+          'accepted_by': user?.email,
+          "meeting_link": link // Update the status
         });
 
         status.value = 'Accepted';
       });
+      Get.snackbar(
+        "Success".tr,
+        "Successfully Submitted".tr,
+        backgroundColor: Colors.green,
+        colorText: Colors.black,
+        borderColor: Colors.black,
+        borderWidth: 1,
+        // duration: const Duration(seconds: 1),
+      );
+      Get.back();
 
       print('Appointment accepted successfully.');
     } catch (e) {

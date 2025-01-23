@@ -8,12 +8,20 @@ import 'package:intl/intl.dart';
 
 class UserSideMeetingRequestController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final userAppointments =
-      FirebaseFirestore.instance.collection("User_meetings").snapshots();
-  final acceptedAppointments =
-      FirebaseFirestore.instance.collection("Accepted_appointments");
-  final CollectionReference userAppointmentDelete =
-      FirebaseFirestore.instance.collection("User_appointments");
+
+  late Stream<QuerySnapshot> userAppointments;
+
+  @override
+  void onInit() {
+    super.onInit();
+    userAppointments =
+        FirebaseFirestore.instance.collection('User_meetings').snapshots();
+  }
+
+  // final acceptedAppointments =
+  //     FirebaseFirestore.instance.collection("Accepted_appointments");
+  // final CollectionReference userAppointmentDelete =
+  //     FirebaseFirestore.instance.collection("User_appointments");
   final date = "".obs;
   final time = "".obs;
   final status = "".obs;
@@ -32,12 +40,13 @@ class UserSideMeetingRequestController extends GetxController {
       print("Readable Time: $formattedTime");
 
       date.value = "$formattedDate,  $formattedTime";
-      
+
       print("============================> ${date.value}================>");
     } catch (e) {
       print("Error converting ISO timestamp: $e");
     }
   }
+
   void convertFromFirebaseTimestampEnd(String isoTimestamp) {
     try {
       // Parse the ISO timestamp into a DateTime object
@@ -51,18 +60,12 @@ class UserSideMeetingRequestController extends GetxController {
       print("Readable Date: $formattedDate");
       print("Readable Time: $formattedTime");
 
-   
       time.value = "$formattedDate,  $formattedTime";
       print("============================> ${date.value}================>");
     } catch (e) {
       print("Error converting ISO timestamp: $e");
     }
   }
-
-
-
-
-  
 
   Future<void> accept(String appointmentId) async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -109,38 +112,38 @@ class UserSideMeetingRequestController extends GetxController {
     }
   }
 
-  void acceptAppointment(DocumentSnapshot doc) async {
-    try {
-      String email = doc['email'].toString();
-      String address = doc['address'].toString();
-      String type = doc['type'].toString();
+  // void acceptAppointment(DocumentSnapshot doc) async {
+  //   try {
+  //     String email = doc['email'].toString();
+  //     String address = doc['address'].toString();
+  //     String type = doc['type'].toString();
 
-      final user = _auth.currentUser;
+  //     final user = _auth.currentUser;
 
-      if (user != null) {
-        await acceptedAppointments
-            .doc(user.email)
-            .collection("accepted_appointments_list")
-            .add({'email': email, 'address': address, 'type': type});
+  //     if (user != null) {
+  //       await acceptedAppointments
+  //           .doc(user.email)
+  //           .collection("accepted_appointments_list")
+  //           .add({'email': email, 'address': address, 'type': type});
 
-        await userAppointmentDelete.doc(doc.id).delete();
-        Get.snackbar(
-          "Success".tr,
-          "Appointment Accepted. Check your accepted appointments.".tr,
-          backgroundColor: const Color.fromARGB(255, 104, 247, 109),
-          colorText: Colors.black,
-          borderColor: Colors.black,
-          borderWidth: 1,
-          duration: const Duration(seconds: 1),
-        );
-      }
-    } catch (e) {
-      Get.snackbar(
-        "Error".tr,
-        "Error accepting appointment: $e".tr,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
-  }
+  //       await userAppointmentDelete.doc(doc.id).delete();
+  //       Get.snackbar(
+  //         "Success".tr,
+  //         "Appointment Accepted. Check your accepted appointments.".tr,
+  //         backgroundColor: const Color.fromARGB(255, 104, 247, 109),
+  //         colorText: Colors.black,
+  //         borderColor: Colors.black,
+  //         borderWidth: 1,
+  //         duration: const Duration(seconds: 1),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     Get.snackbar(
+  //       "Error".tr,
+  //       "Error accepting appointment: $e".tr,
+  //       backgroundColor: Colors.red,
+  //       colorText: Colors.white,
+  //     );
+  //   }
+  // }
 }

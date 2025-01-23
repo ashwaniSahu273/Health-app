@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/Resources/Bottom_Navigation_Bar/bottom_nav.dart';
 import 'package:harees_new_project/Resources/Drawer/drawer.dart';
 import 'package:harees_new_project/Resources/Search_bar/search_bar.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/chat_room_model.dart';
@@ -246,8 +247,14 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
+
         ],
       ),
+bottomNavigationBar: MyBottomNavBar(
+        userModel: widget.userModel,
+        firebaseUser: widget.firebaseUser,
+      ),
+
       // floatingActionButton: FloatingActionButton(
       //   foregroundColor: Colors.white,
       //   backgroundColor: MyColors.blue,

@@ -54,8 +54,8 @@ class MeetingDetailsScreen extends StatelessWidget {
 
     // const String googleMeetLink = "https://meet.google.com/oph-nuzx-vpw";
 
-    Future<void> _launchURL() async {
-      const url = "https://meet.google.com/oph-nuzx-vpw";
+    Future<void> _launchURL(url) async {
+      // const url = "https://meet.google.com/oph-nuzx-vpw";
       if (await launch(url)) {
         await canLaunch(url);
       } else {
@@ -178,17 +178,19 @@ class MeetingDetailsScreen extends StatelessWidget {
                                 // Accept Button
                                 GestureDetector(
                                   onTap: () {
-                                    Get.defaultDialog(
-                                      title: 'Accept Appointment'.tr,
-                                      middleText: "Are you sure?".tr,
-                                      textConfirm: 'Yes'.tr,
-                                      textCancel: 'No'.tr,
-                                      onConfirm: () {
-                                        controller.accept(doc.id);
-                                        Get.back();
-                                      },
-                                      onCancel: () => Get.back(),
-                                    );
+
+                                    controller.openConsultationDialog(doc.id);
+                                    // Get.defaultDialog(
+                                    //   title: 'Accept Appointment'.tr,
+                                    //   middleText: "Are you sure?".tr,
+                                    //   textConfirm: 'Yes'.tr,
+                                    //   textCancel: 'No'.tr,
+                                    //   onConfirm: () {
+                                    //     controller.accept(doc.id);
+                                    //     Get.back();
+                                    //   },
+                                    //   onCancel: () => Get.back(),
+                                    // );
                                   },
                                   child: Obx(
                                     () => controller.status.value == "Requested"
@@ -338,7 +340,7 @@ class MeetingDetailsScreen extends StatelessWidget {
                         child: _buildDetailsCard(
                           context,
                           title: "Meeting link",
-                          child: Container(
+                          child: controller.textData.value.isNotEmpty ? Container(
                               width: double.infinity,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -347,7 +349,7 @@ class MeetingDetailsScreen extends StatelessWidget {
                                     onTap: () async {
                                       print("Attempting to launch URL...");
                                       final Uri url = Uri.parse(
-                                          "https://meet.google.com/nvi-wssu-vxi");
+                                          "https://${doc["meeting_link"]}");
                                       if (await canLaunchUrl(url)) {
                                         print(
                                             "URL can be launched. Launching...");
@@ -368,13 +370,13 @@ class MeetingDetailsScreen extends StatelessWidget {
                                     },
                                     child: ElevatedButton(
                                       onPressed: () =>
-                                          _launchURL(),
+                                          _launchURL("https://${doc["meeting_link"]}"),
                                       child: Text("Join Google Meet"),
                                     ),
                                   ),
                                   const SizedBox(height: 12),
                                 ],
-                              )),
+                              )) : Text("Please accecept the request"),
                         ),
                       ),
                     ],

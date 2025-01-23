@@ -24,7 +24,7 @@ class MyTextField extends StatelessWidget {
             style: const TextStyle(
               color: Colors.black,
               fontSize: 16,
-              fontFamily: "Schyler",
+              // fontFamily: "Schyler",
             ),
             keyboardType: TextInputType.text,
             obscureText: obscureText,

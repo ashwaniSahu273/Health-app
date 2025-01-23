@@ -47,9 +47,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: firebaseUser != null && userModel != null
-          ? HomePage(userModel: userModel!, firebaseUser: firebaseUser!)
-          : LoginScreen(),
+      home: 
+           LoginScreen(),
       
       
       // home: VitaminServices(

@@ -55,8 +55,8 @@ class UserSideMeetingDetails extends StatelessWidget {
 
     // const String googleMeetLink = "https://meet.google.com/oph-nuzx-vpw";
 
-    Future<void> _launchURL() async {
-      const url = "https://meet.google.com/oph-nuzx-vpw";
+    Future<void> _launchURL(url) async {
+      // const url = "https://meet.google.com/oph-nuzx-vpw";
       if (await launch(url)) {
         await canLaunch(url);
       } else {
@@ -336,7 +336,7 @@ class UserSideMeetingDetails extends StatelessWidget {
                                             print(
                                                 "Attempting to launch URL...");
                                             final Uri url = Uri.parse(
-                                                "https://meet.google.com/nvi-wssu-vxi");
+                                                "https://${doc["meeting_link"]}");
                                             if (await canLaunchUrl(url)) {
                                               print(
                                                   "URL can be launched. Launching...");
@@ -357,7 +357,7 @@ class UserSideMeetingDetails extends StatelessWidget {
                                             }
                                           },
                                           child: ElevatedButton(
-                                            onPressed: () => _launchURL(),
+                                            onPressed: () => _launchURL("https://${doc["meeting_link"]}"),
                                             child: Text("Join Google Meet"),
                                           ),
                                         )
