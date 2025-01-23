@@ -27,6 +27,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: MyColors.PageBg,
       elevation: 1,
+      title: Text("Hi, ${userModel.fullname!}",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400,),),
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 10),

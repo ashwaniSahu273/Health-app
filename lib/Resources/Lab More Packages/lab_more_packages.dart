@@ -52,7 +52,7 @@ class LabMorePackages extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   height: double.infinity,
-                  decoration: BoxDecoration(color: Colors.white),
+                  decoration: BoxDecoration(color: Color(0xFFEEF8FF)),
                   child: GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisSpacing: 2,
@@ -87,7 +87,7 @@ class LabMorePackages extends StatelessWidget {
                               height: 50,
                               width: 70,
                               decoration: BoxDecoration(
-                                  color: MyColors.greenColorauth,
+                                  color: Colors.white,
                                   borderRadius: BorderRadius.circular(20)),
                               child: Column(
                                 mainAxisAlignment:
@@ -101,7 +101,8 @@ class LabMorePackages extends StatelessWidget {
                                         child: Text(
                                           "${localizedData.serviceName}",
                                           style: TextStyle(
-                                              fontWeight: FontWeight.bold),
+                                              fontWeight: FontWeight.w600,
+                                        color: Color(0xFF007ABB)),
                                         )),
                                   ),
                                   // Padding(
@@ -120,17 +121,28 @@ class LabMorePackages extends StatelessWidget {
                                   ),
                                   item.imagePath != null
                                       ? Image.network(
-                                          item.imagePath,
+                                          item.imagePath!,
                                           height: 50,
                                           width: 64,
                                           fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            // Fallback to a local asset image if the network image fails to load
+                                            return Image.asset(
+                                              "assets/images/1.png",
+                                              height: 50,
+                                              width: 64,
+                                              fit: BoxFit.cover,
+                                            );
+                                          },
                                         )
                                       : Image.asset(
-                                          "assets/images/vitamin.png",
-                                          height: 200,
-                                          width: double.infinity,
+                                          "assets/images/1.png",
+                                          height: 50,
+                                          width: 64,
                                           fit: BoxFit.cover,
                                         ),
+
                                   Row(
                                     children: [
                                       Padding(
@@ -142,13 +154,16 @@ class LabMorePackages extends StatelessWidget {
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(12),
-                                              color: Colors.white),
+                                              color:  Colors.lightBlue[
+                                            50]),
                                           child: Center(
                                             child: Text(
                                               "Starting ${localizedData.price}",
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 12,
+                                                 color: Colors
+                                              .teal
                                               ),
                                             ),
                                           ),

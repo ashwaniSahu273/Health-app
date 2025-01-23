@@ -90,12 +90,13 @@ class _LabTestState extends State<LabTest> {
           fit: StackFit.expand,
           children: [
             Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/back_image.png"),
-                  fit: BoxFit.cover,
-                ),
-              ),
+              // decoration: BoxDecoration(
+              //   image: DecorationImage(
+              //     image: AssetImage("assets/images/back_image.png"),
+              //     fit: BoxFit.cover,
+              //   ),
+              // ),
+              color: Colors.blue[50],
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -113,7 +114,7 @@ class _LabTestState extends State<LabTest> {
                   height: height * 0.07,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.grey.withOpacity(0.2),
                   ),
                   child: Center(
                     child: Padding(
@@ -155,8 +156,8 @@ class _LabTestState extends State<LabTest> {
                         "Lab Tests".tr,
                         style: TextStyle(
                             fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black),
                       )),
                 ),
                 Padding(
@@ -166,79 +167,79 @@ class _LabTestState extends State<LabTest> {
                       child: Text("and Packages".tr,
                           style: TextStyle(
                               fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white))), // texts end here
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black))), // texts end here
                 ),
                 SizedBox(
                   height: height * 0.02,
                 ),
-                Container(
-                  height: height * 0.2,
-                  width: 340,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25)),
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 18, vertical: 10),
-                        child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Body function or health concern".tr,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: "Roboto",
-                                  fontWeight: FontWeight.w700),
-                            )),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SingleChildScrollView(
-                          scrollDirection:
-                              Axis.horizontal, // Enable horizontal scrolling
-                          child: Row(
-                            children: [
-                              LabFunctions(
-                                imagePath: "assets/images/1.png",
-                                text: "Full body".tr,
-                              ),
-                              SizedBox(width: 8), // Add spacing between items
-                              LabFunctions(
-                                imagePath: "assets/images/1.png",
-                                text: "Diabetes".tr,
-                              ),
-                              SizedBox(width: 8),
-                              LabFunctions(
-                                imagePath: "assets/images/1.png",
-                                text: "Cholesterol".tr,
-                              ),
-                              SizedBox(width: 8),
-                              LabFunctions(
-                                imagePath: "assets/images/1.png",
-                                text: "Full body".tr,
-                              ),
-                              SizedBox(width: 8),
-                              LabFunctions(
-                                imagePath: "assets/images/1.png",
-                                text: "Full body".tr,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 25,
-                  width: double.infinity,
-                  decoration: BoxDecoration(color: MyColors.greenColorauth),
-                ),
+                // Container(
+                //   height: height * 0.2,
+                //   width: 340,
+                //   decoration: BoxDecoration(
+                //     color: Colors.white,
+                //     borderRadius: BorderRadius.only(
+                //         topLeft: Radius.circular(25),
+                //         topRight: Radius.circular(25)),
+                //   ),
+                //   child: Column(
+                //     children: [
+                //       Padding(
+                //         padding: const EdgeInsets.symmetric(
+                //             horizontal: 18, vertical: 10),
+                //         child: Align(
+                //             alignment: Alignment.centerLeft,
+                //             child: Text(
+                //               "Body function or health concern".tr,
+                //               style: TextStyle(
+                //                   fontSize: 16,
+                //                   fontFamily: "Roboto",
+                //                   fontWeight: FontWeight.w700),
+                //             )),
+                //       ),
+                //       Padding(
+                //         padding: const EdgeInsets.all(8.0),
+                //         child: SingleChildScrollView(
+                //           scrollDirection:
+                //               Axis.horizontal, // Enable horizontal scrolling
+                //           child: Row(
+                //             children: [
+                //               LabFunctions(
+                //                 imagePath: "assets/images/1.png",
+                //                 text: "Full body".tr,
+                //               ),
+                //               SizedBox(width: 8), // Add spacing between items
+                //               LabFunctions(
+                //                 imagePath: "assets/images/1.png",
+                //                 text: "Diabetes".tr,
+                //               ),
+                //               SizedBox(width: 8),
+                //               LabFunctions(
+                //                 imagePath: "assets/images/1.png",
+                //                 text: "Cholesterol".tr,
+                //               ),
+                //               SizedBox(width: 8),
+                //               LabFunctions(
+                //                 imagePath: "assets/images/1.png",
+                //                 text: "Full body".tr,
+                //               ),
+                //               SizedBox(width: 8),
+                //               LabFunctions(
+                //                 imagePath: "assets/images/1.png",
+                //                 text: "Full body".tr,
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // Container(
+                //   height: 25,
+                //   width: double.infinity,
+                //   decoration: BoxDecoration(color: MyColors.greenColorauth),
+                // ),
                 Container(
                   height: 40,
                   width: double.infinity,
@@ -254,7 +255,7 @@ class _LabTestState extends State<LabTest> {
                         "Most helpful packages".tr,
                         style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w400,
                             fontFamily: "Roboto"),
                       ),
                       SizedBox(
@@ -295,104 +296,115 @@ class _LabTestState extends State<LabTest> {
                     width: double.infinity,
                     height: double.infinity,
                     padding: EdgeInsets.only(bottom: 80),
-                    decoration: BoxDecoration(color: Colors.white),
-                    child: GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 0,
-                            crossAxisCount: 2,
-                            childAspectRatio: 1.3),
-                        itemCount: 4,
-                        itemBuilder: (context, index) {
-                          var item = controller.servicesList[index];
-                          String languageCode =
-                              Get.locale?.languageCode ?? 'en';
-
-                          final localizedData = languageCode == 'ar'
-                              ? item.localized.ar
-                              : item.localized.en;
-
-                          return GestureDetector(
-                            onTap: () {
-                              _onServiceSelected(
-                                  localizedData.serviceName,
-                                  item.id,
-                                  localizedData.description,
-                                  localizedData.instructions,
-                                  localizedData.price);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 10),
-                              child: Container(
-                                height: 50,
-                                width: 70,
-                                decoration: BoxDecoration(
-                                    color: MyColors.greenColorauth,
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 10),
-                                      child: Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text(
-                                            localizedData.serviceName,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontFamily: "Roboto",
-                                                fontSize: 16),
-                                          )),
-                                    ),
-                                    // Padding(
-                                    //   padding: const EdgeInsets.symmetric(
-                                    //       horizontal: 10, vertical: 2),
-                                    //   child: Align(
-                                    //       alignment: Alignment.topLeft,
-                                    //       child: Text(
-                                    //         "Packages",
-                                    //         style: TextStyle(
-                                    //             fontWeight: FontWeight.bold),
-                                    //       )),
-                                    // ),
-                                    // SizedBox(
-                                    //   height: 10,
-                                    // ),
-                                    // Image.asset("assets/images/1.png"),
-                                    Row(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5, vertical: 12),
-                                          child: Container(
-                                            height: 22,
-                                            width: 120,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                                color: Colors.white),
-                                            child: Center(
-                                              child: Text(
-                                                "${'Starting'.tr} ${localizedData.price}",
-                                                style: TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ),
+                    decoration: BoxDecoration(color: Color(0xFFEEF8FF)),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: GridView.builder(
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 0,
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 1.3),
+                              itemCount: 6,
+                              itemBuilder: (context, index) {
+                                var item = controller.servicesList[index];
+                                String languageCode =
+                                    Get.locale?.languageCode ?? 'en';
+                          
+                                final localizedData = languageCode == 'ar'
+                                    ? item.localized.ar
+                                    : item.localized.en;
+                          
+                                return GestureDetector(
+                                  onTap: () {
+                                    _onServiceSelected(
+                                        localizedData.serviceName,
+                                        item.id,
+                                        localizedData.description,
+                                        localizedData.instructions,
+                                        localizedData.price);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10.0, horizontal: 10),
+                                    child: Container(
+                                      height: 50,
+                                      width: 70,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(15)),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 10),
+                                            child: Align(
+                                                alignment: Alignment.topLeft,
+                                                child: Text(
+                                                  localizedData.serviceName,
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontFamily: "Roboto",
+                                                      fontSize: 16,
+                                                     color:  Color(0xFF007ABB)),
+                                                )),
                                           ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        }),
+                                          // Padding(
+                                          //   padding: const EdgeInsets.symmetric(
+                                          //       horizontal: 10, vertical: 2),
+                                          //   child: Align(
+                                          //       alignment: Alignment.topLeft,
+                                          //       child: Text(
+                                          //         "Packages",
+                                          //         style: TextStyle(
+                                          //             fontWeight: FontWeight.bold),
+                                          //       )),
+                                          // ),
+                                          // SizedBox(
+                                          //   height: 10,
+                                          // ),
+                                          // Image.asset("assets/images/1.png"),
+                                          Row(
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.symmetric(
+                                                    horizontal: 5, vertical: 12),
+                                                child: Container(
+                                                  height: 22,
+                                                  width: 120,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(12),
+                                                      color: Colors.lightBlue[
+                                                50]),
+                                                  child: Center(
+                                                    child: Text(
+                                                      "${'Starting'.tr} ${localizedData.price}",
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w700,color: Colors
+                                                  .teal),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }),
+                        ),
+                     SizedBox(height: 10,)
+                     
+                      ],
+                    ),
                   ),
                 )
               ],

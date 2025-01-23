@@ -92,7 +92,7 @@ class SelectPackage extends StatelessWidget {
                           child: Row(
                             children: [
                               Image.asset(
-                                "assets/images/vitamin1.png", // Replace with your asset
+                              image!, // Replace with your asset
                                 height: 64,
                                 width: 40,
                               ),

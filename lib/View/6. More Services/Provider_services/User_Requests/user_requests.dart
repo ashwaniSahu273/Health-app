@@ -186,7 +186,7 @@ class UserRequests extends StatelessWidget {
                         );
 
                         }
-                        return Text(" ");
+                        return null;
                         
 
                       },

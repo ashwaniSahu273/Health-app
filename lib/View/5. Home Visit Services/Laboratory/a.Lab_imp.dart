@@ -143,12 +143,16 @@ class _LabImpState extends State<LabImp> {
                     labController.stAddress.value = stAddress;
                     labController.latitude.value = Latitude;
                     labController.longitude.value = Longitude;
-                    Navigator.pop(context);
-                    Get.to(() => LabTest(
-                          userModel: widget.userModel,
-                          firebaseUser: widget.firebaseUser,
-                          address: stAddress,
-                        ));
+                    if (labController.stAddress.isNotEmpty) {
+                      Navigator.pop(context);
+                      Get.to(() => LabTest(
+                            userModel: widget.userModel,
+                            firebaseUser: widget.firebaseUser,
+                            address: stAddress,
+                          ));
+                    }else{
+                      Get.snackbar("message".tr, "Please select your address".tr,backgroundColor: const Color.fromARGB(255, 224, 104, 102),);
+                    }
                   },
                   textCancel: "Cancel".tr,
                   textConfirm: "Confirm".tr,

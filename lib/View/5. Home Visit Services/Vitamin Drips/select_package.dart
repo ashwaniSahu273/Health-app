@@ -31,9 +31,10 @@ class SelectPackagesPage extends StatelessWidget {
 
   // Method to handle the service selection
   void _onServiceSelected(String serviceName, id, String description,
-      String components, String price) {
+      String components, String price, String imagePath) {
 
     Get.to(SelectPackage(
+      image: imagePath,
       id: id,
       title: serviceName,
       description: description,
@@ -45,6 +46,12 @@ class SelectPackagesPage extends StatelessWidget {
     ));
   }
 
+
+  final List<String> imagePaths = [
+    "assets/images/vitamin1.png",
+    "assets/images/vitamin2.png",
+    "assets/images/vitaminthree.png",
+  ];
 
     return Scaffold(
       appBar: AppBar(
@@ -148,11 +155,11 @@ class SelectPackagesPage extends StatelessWidget {
                       final localizedData = languageCode == 'ar'
                           ? service.localized.ar
                           : service.localized.en;
-                  
+                  String imagePath = imagePaths[index % imagePaths.length];
                   return GestureDetector(
                     onTap: (){
                       _onServiceSelected(
-                    localizedData.serviceName, service.id, localizedData.description, localizedData.components, localizedData.price);
+                    localizedData.serviceName, service.id, localizedData.description, localizedData.components, localizedData.price, imagePath);
                     },
                     child: Card(
                       
@@ -173,8 +180,10 @@ class SelectPackagesPage extends StatelessWidget {
                               .spaceBetween, // Space between image and text
                           children: [
                             // Image Section
+
+
                             Image.asset(
-                              "assets/images/vitamin1.png", // Replace with your asset path
+                              imagePath, // Replace with your asset path
                               height: 64, // Adjust size to match the design
                               width: 40,
                             ),

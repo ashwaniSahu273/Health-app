@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/Services_grid/patient_history.dart';
+import 'package:harees_new_project/Resources/Services_grid/user_meeting_request.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/8.%20Chats/Pages/Home.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/About_Us/aboutus.dart';
@@ -83,9 +84,21 @@ class MoreServicesGrid extends StatelessWidget {
         children: [
           ServiceIconButton(
             serviceIcon: "assets/images/appoint.png",
-            serviceName: "Appointments".tr,
+            serviceName: "Service Appointments".tr,
             onPressed: () {
               Get.to(() => UserRequests(
+                    userModel: userModel,
+                    firebaseUser: firebaseUser,
+                  ));
+            },
+            userModel: userModel,
+            firebaseUser: firebaseUser,
+          ),
+          ServiceIconButton(
+            serviceIcon: "assets/images/appoint.png",
+            serviceName: "Meeting Appointments".tr,
+            onPressed: () {
+              Get.to(() => UserMeetingRequest(
                     userModel: userModel,
                     firebaseUser: firebaseUser,
                   ));

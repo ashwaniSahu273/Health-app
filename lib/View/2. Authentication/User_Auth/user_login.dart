@@ -101,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       } else {
         Navigator.popUntil(context, (route) => route.isFirst);
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
             return HomePage(

@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, camel_case_types
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/c.%20Provider%20Details/create_session.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -696,11 +698,35 @@ class _Provider_DetailsState extends State<Provider_Details> {
                         //       selectedTime: selectedTime!,
                         //       selectedProviderData: widget.providerData,
                         //     ));
-                        Get.to(CreateSessionButton(
-                          description: description,
-                          startDateTime: startDateTime,
-                          endDateTime: endDateTime,
-                        ));
+                        setState(() {
+                          FirebaseFirestore.instance
+                              .collection("User_meetings")
+                              .doc()
+                              .set({
+                            "email": widget.firebaseUser.email,
+                            "name": widget.userModel.fullname,
+                            "phone": widget.userModel.mobileNumber,
+                            "gender": widget.userModel.gender,
+                            "dob": widget.userModel.dob,
+                            "type": "Virtual Consultation",
+                            "selected_time": "2024-12-01T04:30:00.000Z",
+                            "status": "Requested",
+                            "requested_to": widget.providerData["email"],
+                            "accepted_by": null,
+                            "meeting_link": null
+                          });
+
+                          Get.offAll(() => HomePage(
+                                userModel: widget.userModel,
+                                firebaseUser: widget.firebaseUser,
+                              ));
+                        });
+
+                        // Get.to(CreateSessionButton(
+                        //   description: description,
+                        //   startDateTime: startDateTime,
+                        //   endDateTime: endDateTime,
+                        // ));
                       } else {
                         Get.snackbar("Error", "Please select a time slot");
                       }

@@ -87,7 +87,10 @@ class _MyAppointmentsState extends State<MyAppointments> {
             const SizedBox(height: 15),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream: userAppointments,
+                stream: FirebaseFirestore.instance
+                    .collection('User_appointments')
+                    .where('email', isEqualTo: widget.firebaseUser.email)
+                    .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasError) {
@@ -100,21 +103,17 @@ class _MyAppointmentsState extends State<MyAppointments> {
                   return ListView.builder(
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
-                      if (snapshot.data!.docs[index]['email'] ==
-                          widget.firebaseUser.email) {
-                        return AppointmentTile(
-                          userModel: widget.userModel,
-                          firebaseUser: widget.firebaseUser,
-                          doc: snapshot.data!.docs[index],
-                          name: snapshot.data!.docs[index]['status'].toString(),
-                          address:
-                              snapshot.data!.docs[index]['address'].toString(),
-                          reportName:
-                              snapshot.data!.docs[index]["type"].toString(),
-                          color: colors[index % colors.length],
-                        );
-                      }
-                      return null;
+                      return AppointmentTile(
+                        userModel: widget.userModel,
+                        firebaseUser: widget.firebaseUser,
+                        doc: snapshot.data!.docs[index],
+                        name: snapshot.data!.docs[index]['status'].toString(),
+                        address:
+                            snapshot.data!.docs[index]['address'].toString(),
+                        reportName:
+                            snapshot.data!.docs[index]["type"].toString(),
+                        color: colors[index % colors.length],
+                      );
                     },
                   );
                 },
