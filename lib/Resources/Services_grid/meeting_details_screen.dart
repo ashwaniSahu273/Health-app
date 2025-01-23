@@ -52,6 +52,17 @@ class MeetingDetailsScreen extends StatelessWidget {
       }
     }
 
+    // const String googleMeetLink = "https://meet.google.com/oph-nuzx-vpw";
+
+    Future<void> _launchURL() async {
+      const url = "https://meet.google.com/oph-nuzx-vpw";
+      if (await launch(url)) {
+        await canLaunch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -355,12 +366,10 @@ class MeetingDetailsScreen extends StatelessWidget {
                                         );
                                       }
                                     },
-                                    child: Text(
-                                      "https://meet.google.com/nvi-wssu-vxi",
-                                      style: TextStyle(
-                                        color: Colors.blue,
-                                        decoration: TextDecoration.underline,
-                                      ),
+                                    child: ElevatedButton(
+                                      onPressed: () =>
+                                          _launchURL(),
+                                      child: Text("Join Google Meet"),
                                     ),
                                   ),
                                   const SizedBox(height: 12),
