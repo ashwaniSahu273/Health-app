@@ -11,12 +11,13 @@ class UserSideMeetingRequestController extends GetxController {
 
   late Stream<QuerySnapshot> userAppointments;
 
-  @override
-  void onInit() {
-    super.onInit();
-    userAppointments =
-        FirebaseFirestore.instance.collection('User_meetings').snapshots();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   userAppointments =
+  //       FirebaseFirestore.instance.collection('User_meetings').where('email', isEqualTo: firebaseUser.email)
+  //                     .snapshots();
+  // }
 
   // final acceptedAppointments =
   //     FirebaseFirestore.instance.collection("Accepted_appointments");

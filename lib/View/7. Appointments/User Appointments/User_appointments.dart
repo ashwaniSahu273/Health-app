@@ -138,7 +138,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
                           address:
                               snapshot.data!.docs[index]['address'].toString(),
                           reportName:
-                              snapshot.data!.docs[index]["type"].toString(),
+                              snapshot.data!.docs[index]["name"].toString(),
                           color: colors[index % colors.length],
                         );
                       },

@@ -177,7 +177,6 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
 
   void sendOtp(String phoneNumber) async {
     FirebaseAuth auth = FirebaseAuth.instance;
-
     setState(() {
       isLoading = true;
     });
@@ -209,6 +208,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
       },
       codeSent: (String verificationId, int? resendToken) {
         this.verificationId = verificationId;
+        widget.userModel.mobileNumber = phoneNumber;
 
         setState(() {
           isLoading = false;

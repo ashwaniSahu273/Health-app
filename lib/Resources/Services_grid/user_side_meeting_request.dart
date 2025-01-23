@@ -88,7 +88,8 @@ class UserSideMeetingRequest extends StatelessWidget {
                 // const MySearchBar(),
                 const SizedBox(height: 15),
                 StreamBuilder<QuerySnapshot>(
-                  stream: controller.userAppointments,
+                  stream: FirebaseFirestore.instance.collection('User_meetings').where('email', isEqualTo: firebaseUser.email)
+                      .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasError) {
