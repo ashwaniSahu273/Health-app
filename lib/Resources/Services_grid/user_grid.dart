@@ -64,11 +64,11 @@ class UserServicesGrid extends StatelessWidget {
           serviceIcon: Icons.calendar_month_outlined,
           serviceName: "Appointments".tr,
           onPressed: () {
-            Get.to(() => MyAppointments(
-                  userModel: userModel,
-                  firebaseUser: firebaseUser, 
-                  targetUser: UserModel(),
-                ));
+            // Get.to(() => MyAppointments(
+            //       userModel: userModel,
+            //       firebaseUser: firebaseUser, 
+            //       targetUser: UserModel(),
+            //     ));
           },
         ),
         UserGridServices(

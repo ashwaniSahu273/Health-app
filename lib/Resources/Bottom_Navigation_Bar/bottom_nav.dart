@@ -3,12 +3,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/Resources/Bottom_Navigation_Bar/bottom_controller.dart';
 import 'package:harees_new_project/Resources/Services_grid/user_meeting_request.dart';
 import 'package:harees_new_project/Resources/Services_grid/user_side_meeting_request.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/8.%20Chats/Pages/Home.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
+import 'package:harees_new_project/View/8.%20Chats/Pages/User_Home_Chat.dart';
 import 'package:harees_new_project/View/9.%20Settings/settings.dart';
 import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/User_appointments.dart';
 
@@ -24,13 +26,37 @@ class MyBottomNavBar extends StatefulWidget {
 }
 
 class _MyBottomNavBarState extends State<MyBottomNavBar> {
-  int _currentIndex = 0;
+  final BottomNavIndexController indexController =
+      Get.put(BottomNavIndexController());
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> pages = [
+      HomePage(
+        userModel: widget.userModel,
+        firebaseUser: widget.firebaseUser,
+      ),
+      MyAppointments(
+        userModel: widget.userModel,
+        firebaseUser: widget.firebaseUser,
+        targetUser: widget.userModel,
+      ),
+      UserHomeChat(
+        userModel: widget.userModel,
+        firebaseUser: widget.firebaseUser,
+        targetUser: widget.userModel,
+      ),
+      UserSideMeetingRequest(
+        userModel: widget.userModel,
+        firebaseUser: widget.firebaseUser,
+      ),
+    ];
+
+    
     return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
       backgroundColor: Colors.white, // Update this color as needed
-      currentIndex: _currentIndex,
+      currentIndex: indexController.currentIndex.value,
       selectedItemColor: Colors.blue,
       unselectedItemColor:
           MyColors.blue, // Changed unselected color to grey for better contrast
@@ -58,29 +84,27 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
         ),
       ],
       onTap: (index) {
-        setState(() {
-          _currentIndex = index;
-        });
+        indexController.updateIndex(index);
 
         if (index == 0) {
-          Get.to(() => HomePage(
+          Get.offAll(() => HomePage(
                 userModel: widget.userModel,
                 firebaseUser: widget.firebaseUser,
               ));
         } else if (index == 1) {
-          Get.to(() => MyAppointments(
+          Get.offAll(() => MyAppointments(
                 userModel: widget.userModel,
                 firebaseUser: widget.firebaseUser,
                 targetUser: widget.userModel,
               ));
         } else if (index == 2) {
-          Get.to(() => Home(
+          Get.offAll(() => UserHomeChat(
                 userModel: widget.userModel,
                 firebaseUser: widget.firebaseUser,
                 targetUser: widget.userModel,
               ));
         } else if (index == 3) {
-          Get.to(() => UserSideMeetingRequest(
+          Get.offAll(() => UserSideMeetingRequest(
                 userModel: widget.userModel,
                 firebaseUser: widget.firebaseUser,
                 // targetUser: widget.userModel,

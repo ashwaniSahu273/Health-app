@@ -4,7 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/Resources/Bottom_Navigation_Bar/bottom_controller.dart';
 import 'package:harees_new_project/Resources/Drawer/drawer.dart';
+import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/requested_appointment_details.dart';
 import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/user_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -39,7 +41,8 @@ class _MyAppointmentsState extends State<MyAppointments> {
   final CollectionReference userAppointmentDelete =
       FirebaseFirestore.instance.collection("User_appointments");
   final _auth = FirebaseAuth.instance;
-
+  final BottomNavIndexController indexController =
+      Get.put(BottomNavIndexController());
   final List<Color> colors = [
     const Color(0xFFb3e4ff),
     const Color(0xFFfcfcdc),
@@ -49,82 +52,107 @@ class _MyAppointmentsState extends State<MyAppointments> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        leadingWidth: 200,
-        leading: Row(
-          children: [
-            IconButton(
-                onPressed: () => Get.back(),
-                icon: const Icon(
-                  Icons.keyboard_double_arrow_left,
-                  size: 25,
-                  weight: 200,
-                )), // Double-arrow icon
-            Text(
-              'Patient Record'.tr,
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "Roboto"),
-            ),
-          ],
-        ),
-      ),
-      // drawer: MyDrawer(
-      //   userModel: widget.userModel,
-      //   firebaseUser: widget.firebaseUser,
-      //   targetUser: widget.userModel,
-      // ),
-      backgroundColor: Colors.blue[50],
-      body: SafeArea(
-        child: Column(
-          children: [
-            // const SizedBox(height: 20),
-            // const MySearchBar(),
-            const SizedBox(height: 15),
-            Expanded(
-              child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection('User_appointments')
-                    .where('email', isEqualTo: widget.firebaseUser.email)
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    return Text('Something went wrong'.tr);
-                  } else if (snapshot.connectionState ==
-                      ConnectionState.waiting) {
-                    return Text("Loading".tr);
-                  }
+    return WillPopScope(
+       onWillPop: () async {
+        // When the back button is pressed, navigate to Home page
+        Get.offAll(() => HomePage(
+              userModel: widget.userModel,
+              firebaseUser: widget.firebaseUser,
+              // targetUser: widget.userModel,
+            ));
+        indexController.currentIndex.value = 0;
 
-                  return ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (context, index) {
-                      return AppointmentTile(
-                        userModel: widget.userModel,
-                        firebaseUser: widget.firebaseUser,
-                        doc: snapshot.data!.docs[index],
-                        name: snapshot.data!.docs[index]['status'].toString(),
-                        address:
-                            snapshot.data!.docs[index]['address'].toString(),
-                        reportName:
-                            snapshot.data!.docs[index]["type"].toString(),
-                        color: colors[index % colors.length],
-                      );
-                    },
-                  );
-                },
+        return false; // Returning false to prevent default back behavior
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          leadingWidth: 200,
+          leading: Row(
+            children: [
+              IconButton(
+                  onPressed: () {
+                    Get.offAll(() => HomePage(
+                          userModel: widget.userModel,
+                          firebaseUser: widget.firebaseUser,
+                        ));
+                        indexController.currentIndex.value = 0;
+                  },
+                  icon: const Icon(
+                    Icons.keyboard_double_arrow_left,
+                    size: 25,
+                    weight: 200,
+                  )), // Double-arrow icon
+              Text(
+                'Patient Record'.tr,
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Roboto"),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-      bottomNavigationBar: MyBottomNavBar(
-        userModel: widget.userModel,
-        firebaseUser: widget.firebaseUser,
+        // drawer: MyDrawer(
+        //   userModel: widget.userModel,
+        //   firebaseUser: widget.firebaseUser,
+        //   targetUser: widget.userModel,
+        // ),
+        backgroundColor: Colors.blue[50],
+        body: SafeArea(
+          child: Column(
+            children: [
+              // const SizedBox(height: 20),
+              // const MySearchBar(),
+              const SizedBox(height: 15),
+              Expanded(
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('User_appointments')
+                      .where('email', isEqualTo: widget.firebaseUser.email)
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('Something went wrong'.tr);
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                          
+                      return Text("Loading".tr);
+                    }
+                       if (snapshot.data == null ||
+                                  snapshot.data!.docs.isEmpty) {
+                                return Center(
+                                    child: Text('No User Appointments'.tr));
+                              }
+      
+                    return ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        return AppointmentTile(
+                          userModel: widget.userModel,
+                          firebaseUser: widget.firebaseUser,
+                          doc: snapshot.data!.docs[index],
+                          name: snapshot.data!.docs[index]['status'].toString(),
+                          address:
+                              snapshot.data!.docs[index]['address'].toString(),
+                          reportName:
+                              snapshot.data!.docs[index]["type"].toString(),
+                          color: colors[index % colors.length],
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: MyBottomNavBar(
+          userModel: widget.userModel,
+          firebaseUser: widget.firebaseUser,
+        ),
       ),
     );
   }

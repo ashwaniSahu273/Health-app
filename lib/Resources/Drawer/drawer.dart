@@ -145,7 +145,7 @@ class _MyDrawerState extends State<MyDrawer> {
               await GoogleSignIn().signOut();
               await FirebaseAuth.instance.signOut();
               _auth.signOut();
-              Get.to(() => LoginScreen());
+              Get.offAll(() => LoginScreen());
             },
           ),
           Divider(thickness: 2, color: Colors.grey[300]),
