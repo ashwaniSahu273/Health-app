@@ -140,8 +140,39 @@ class _AcceptedRequestsState extends State<AcceptedRequests> {
                                   ),
                                   leading: Icon(Icons.person,
                                       color: Colors.blue[700], size: 40),
-                                  trailing: const Icon(Icons.medical_services,
-                                      size: 35),
+                                  trailing: Column(
+                                    children: [
+                                      const Icon(Icons.medical_services,
+                                          size: 35),
+
+                                          appointment["status"] == "Accepted"   ? 
+                                         Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 0.0, vertical: 0),
+                                            child: Text(
+                                              "Accepted",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Color(0xFF00AAAD),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ):  Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 0.0, vertical: 0),
+                                            child: Text(
+                                              "Completed",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Colors.green,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          )   
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

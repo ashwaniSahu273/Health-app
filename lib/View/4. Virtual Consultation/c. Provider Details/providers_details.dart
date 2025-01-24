@@ -253,74 +253,74 @@ class _Provider_DetailsState extends State<Provider_Details> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GestureDetector(
-                    onTap: () => _showDatePicker(context),
-                    child: Row(
-                      children: [
-                        Text(
-                          selectedDate,
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        const Icon(
-                          Icons.keyboard_arrow_down,
-                          size: 28,
-                          color: Colors.black,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: List.generate(
-                      5,
-                      (index) => GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedIndex = index; // Update selected index
-                          });
-                        },
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: selectedIndex == index
-                                    ? Colors.green
-                                    : Colors.transparent,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    'Today'.tr,
-                                    style: TextStyle(
-                                        color: selectedIndex == index
-                                            ? Colors.white
-                                            : Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    '31',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: selectedIndex == index
-                                          ? Colors.white
-                                          : Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 50),
+                  // GestureDetector(
+                  //   onTap: () => _showDatePicker(context),
+                  //   child: Row(
+                  //     children: [
+                  //       Text(
+                  //         selectedDate,
+                  //         style: const TextStyle(
+                  //             fontSize: 18, fontWeight: FontWeight.bold),
+                  //       ),
+                  //       const Icon(
+                  //         Icons.keyboard_arrow_down,
+                  //         size: 28,
+                  //         color: Colors.black,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 16),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: List.generate(
+                  //     5,
+                  //     (index) => GestureDetector(
+                  //       onTap: () {
+                  //         setState(() {
+                  //           selectedIndex = index; // Update selected index
+                  //         });
+                  //       },
+                  //       child: Column(
+                  //         children: [
+                  //           Container(
+                  //             padding: const EdgeInsets.all(10),
+                  //             decoration: BoxDecoration(
+                  //               color: selectedIndex == index
+                  //                   ? Colors.green
+                  //                   : Colors.transparent,
+                  //               borderRadius: BorderRadius.circular(8),
+                  //             ),
+                  //             child: Column(
+                  //               children: [
+                  //                 Text(
+                  //                   'Today'.tr,
+                  //                   style: TextStyle(
+                  //                       color: selectedIndex == index
+                  //                           ? Colors.white
+                  //                           : Colors.black,
+                  //                       fontWeight: FontWeight.bold),
+                  //                 ),
+                  //                 const SizedBox(height: 8),
+                  //                 Text(
+                  //                   '31',
+                  //                   style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.bold,
+                  //                     color: selectedIndex == index
+                  //                         ? Colors.white
+                  //                         : Colors.black,
+                  //                   ),
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 50),
                   Container(
                     decoration: BoxDecoration(
                       color: Color(0xFFCAE8E5),
@@ -547,21 +547,21 @@ class _Provider_DetailsState extends State<Provider_Details> {
                   const SizedBox(height: 16),
                   SizedBox(height: 10),
 
-                  SingleChildScrollView(
-                    scrollDirection:
-                        Axis.horizontal, // Enable horizontal scrolling
-                    child: Wrap(
-                      spacing: 10,
-                      children: [
-                        ...timeSlots.map((item) => buildTimeContainer(item)),
-                        //       buildTimeSelectionRow(
-                        //           "09:00 am", "10:00 am", "11:00 am"),
-                        //       buildTimeSelectionRow(
-                        //           "12:00 pm", "1:00 pm", "02:00 pm"),
-                        // buildTimeSelectionRow("04:00 pm", "05:00 pm", "06:00 pm"),
-                      ],
-                    ),
-                  ),
+                  // SingleChildScrollView(
+                  //   scrollDirection:
+                  //       Axis.horizontal, // Enable horizontal scrolling
+                  //   child: Wrap(
+                  //     spacing: 10,
+                  //     children: [
+                  //       ...timeSlots.map((item) => buildTimeContainer(item)),
+                  //       //       buildTimeSelectionRow(
+                  //       //           "09:00 am", "10:00 am", "11:00 am"),
+                  //       //       buildTimeSelectionRow(
+                  //       //           "12:00 pm", "1:00 pm", "02:00 pm"),
+                  //       // buildTimeSelectionRow("04:00 pm", "05:00 pm", "06:00 pm"),
+                  //     ],
+                  //   ),
+                  // ),
                   // Padding(
                   //   padding: const EdgeInsets.only(left: 10, right: 10),
                   //   child: Text(
@@ -663,33 +663,33 @@ class _Provider_DetailsState extends State<Provider_Details> {
                   //       color: Colors.black,
                   //     ),
                   //   ),
+                  // // ),
+                  // SizedBox(height: 20),
+                  // // buildTimeSelectionRow("04:00 pm", "05:00 pm", "06:00 pm"),
+                  // ListTile(
+                  //   title: Text(
+                  //     '${widget.providerData['name'] ?? 'N/A'}',
+                  //     style: TextStyle(
+                  //       fontSize: 18,
+                  //       fontWeight: FontWeight.bold,
+                  //       color: Colors.blue,
+                  //     ),
+                  //   ),
+                  //   subtitle: Text(
+                  //     'Subspecialty Consultant, Psychiatry',
+                  //     style: TextStyle(
+                  //       color: Colors.black,
+                  //       fontSize: 16,
+                  //     ),
+                  //   ),
+                  //   leading: CircleAvatar(
+                  //     radius: 35,
+                  //     // backgroundImage: NetworkImage(
+                  //     //     widget.providerData['image'] ??
+                  //     //         'assets/images/vitamin.png'),
+                  //   ),
                   // ),
-                  SizedBox(height: 20),
-                  // buildTimeSelectionRow("04:00 pm", "05:00 pm", "06:00 pm"),
-                  ListTile(
-                    title: Text(
-                      '${widget.providerData['name'] ?? 'N/A'}',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
-                      ),
-                    ),
-                    subtitle: Text(
-                      'Subspecialty Consultant, Psychiatry',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                      ),
-                    ),
-                    leading: CircleAvatar(
-                      radius: 35,
-                      // backgroundImage: NetworkImage(
-                      //     widget.providerData['image'] ??
-                      //         'assets/images/vitamin.png'),
-                    ),
-                  ),
-                  SizedBox(height: 40),
+                  // SizedBox(height: 40),
 
                   GestureDetector(
                     onTap: () {
@@ -720,6 +720,17 @@ class _Provider_DetailsState extends State<Provider_Details> {
                                 firebaseUser: widget.firebaseUser,
                               ));
                         });
+
+                        Get.snackbar(
+                          "Success".tr,
+                          "Successfully Requested Appointment".tr,
+                          backgroundColor:
+                              const Color.fromARGB(255, 104, 247, 109),
+                          colorText: Colors.black,
+                          // borderColor: Colors.black,
+                          // borderWidth: 1,
+                          // duration: const Duration(seconds: 1),
+                        );
                       }
 
                       // Get.to(CreateSessionButton(
@@ -742,7 +753,7 @@ class _Provider_DetailsState extends State<Provider_Details> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Proceed to Payment Details",
+                                  "Continue",
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w500,

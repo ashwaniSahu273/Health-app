@@ -100,8 +100,6 @@ class _AcceptedRequestsHistoryState extends State<AcceptedRequestsHistory> {
                               padding: const EdgeInsets.all(14.0),
                               child: GestureDetector(
                                 onTap: () {
-                               
-
                                   Get.to(RequestedAppointmentDetails(
                                       doc: appointment,
                                       firebaseUser: widget.firebaseUser,
@@ -140,8 +138,31 @@ class _AcceptedRequestsHistoryState extends State<AcceptedRequestsHistory> {
                                     ),
                                     leading: Icon(Icons.person,
                                         color: Colors.blue[700], size: 40),
-                                    trailing: const Icon(Icons.medical_services,
-                                        size: 35),
+                                    trailing: Column(
+                                      children: [
+                                        const Icon(Icons.medical_services,
+                                            size: 35),
+                                        appointment["status"] == "Accepted"
+                                            ? const Text(
+                                                "Accepted",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Color(0xFF00AAAD),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14,
+                                                ),
+                                              )
+                                            : const Text(
+                                                "Completed",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.green,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14,
+                                                ),
+                                              )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),

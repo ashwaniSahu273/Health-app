@@ -46,8 +46,6 @@ class ConsultationController extends GetxController {
 
   // Open dialog
   Future<void> openConsultationDialog() async {
-
-    
     await Get.dialog(
       AlertDialog(
         title: Text('Enter Consultation Details'),
@@ -57,12 +55,17 @@ class ConsultationController extends GetxController {
             children: [
               TextField(
                 controller: descriptionController,
-                decoration: InputDecoration(labelText: 'Description'),
+                decoration: InputDecoration(
+                  labelText: 'Description',
+                  labelStyle: TextStyle(color: Colors.grey),
+                ),
               ),
               TextField(
                 controller: startDateController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Start Date & Time',
+                  labelStyle: TextStyle(color: Colors.grey),
+                  hintStyle: TextStyle(color: Colors.red),
                   hintText: 'Select start date and time',
                 ),
                 readOnly: true,
@@ -70,8 +73,9 @@ class ConsultationController extends GetxController {
               ),
               TextField(
                 controller: endDateController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'End Date & Time',
+                  labelStyle: TextStyle(color: Colors.grey),
                   hintText: 'Select end date and time',
                 ),
                 readOnly: true,
@@ -89,24 +93,28 @@ class ConsultationController extends GetxController {
           ),
           ElevatedButton(
             onPressed: () {
-              try {
-                // Save data to RxMap
-                consultationData.value = {
-                  'description': descriptionController.text,
-                  'startDateTime': dateFormat
-                      .parse(startDateController.text)
-                      .toIso8601String(),
-                  'endDateTime': dateFormat
-                      .parse(endDateController.text)
-                      .toIso8601String(),
-                };
-                Get.back(); // Close dialog
-              } catch (e) {
-                Get.snackbar(
-                  'Error',
-                  'Invalid date format. Please select a valid date and time.',
-                  snackPosition: SnackPosition.BOTTOM,
-                );
+              if (descriptionController.text.isNotEmpty &&
+                  startDateController.text.isNotEmpty &&
+                  endDateController.text.isNotEmpty) {
+                try {
+                  // Save data to RxMap
+                  consultationData.value = {
+                    'description': descriptionController.text,
+                    'startDateTime': dateFormat
+                        .parse(startDateController.text)
+                        .toIso8601String(),
+                    'endDateTime': dateFormat
+                        .parse(endDateController.text)
+                        .toIso8601String(),
+                  };
+                  Get.back(); // Close dialog
+                } catch (e) {
+                  Get.snackbar(
+                    'Error',
+                    'Invalid date format. Please select a valid date and time.',
+                    snackPosition: SnackPosition.BOTTOM,
+                  );
+                }
               }
             },
             child: Text('Save'),

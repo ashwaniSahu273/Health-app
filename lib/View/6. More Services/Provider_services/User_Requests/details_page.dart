@@ -201,19 +201,37 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                               ),
                                             ),
                                           )
-                                        : Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10.0, vertical: 8),
-                                            child: Text(
-                                              "Accepted",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Color(0xFF00AAAD),
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14,
+                                        : doc["status"] == "Accepted"
+                                            ? Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10.0,
+                                                        vertical: 8),
+                                                child: Text(
+                                                  "Accepted",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Color(0xFF00AAAD),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              )
+                                            : Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 0.0,
+                                                        vertical: 0),
+                                                child: Text(
+                                                  "Completed",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Colors.green,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
                                               ),
-                                            ),
-                                          ),
                                   ),
                                 ),
                               ],
@@ -375,7 +393,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
             ),
           ),
           Obx(
-            ()=> Container(
+            () => Container(
                 color: Colors.white,
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
@@ -384,9 +402,10 @@ class AppointmentDetailsScreen extends StatelessWidget {
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: controller.status.value == "Requested"
-                              ? Colors.grey
-                              : Color(0xFF007ABB),
+                          backgroundColor:
+                              controller.status.value == "Requested"
+                                  ? Colors.grey
+                                  : Color(0xFF007ABB),
                           minimumSize: const Size(160, 55),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),

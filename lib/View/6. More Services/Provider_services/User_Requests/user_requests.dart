@@ -12,17 +12,11 @@ class UserRequests extends StatelessWidget {
   final User firebaseUser;
   final UserRequestsController controller = Get.put(UserRequestsController());
 
-  
-
   UserRequests({Key? key, required this.userModel, required this.firebaseUser})
       : super(key: key);
 
-  
-    
-
   @override
   Widget build(BuildContext context) {
-
     void _openInGoogleMaps(double latitude, double longitude) async {
       String googleUrl =
           "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
@@ -32,7 +26,6 @@ class UserRequests extends StatelessWidget {
         throw "Could not open the map.";
       }
     }
-
 
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +43,10 @@ class UserRequests extends StatelessWidget {
                 )), // Double-arrow icon
             Text(
               'Appointments'.tr,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700,fontFamily: "Roboto"),
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Roboto"),
             ),
           ],
         ),
@@ -60,7 +56,7 @@ class UserRequests extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              const SizedBox(height: 20),
+              // const SizedBox(height: 20),
               // const MySearchBar(),
               const SizedBox(height: 15),
               StreamBuilder<QuerySnapshot>(
@@ -73,122 +69,122 @@ class UserRequests extends StatelessWidget {
                       ConnectionState.waiting) {
                     return Text("Loading".tr);
                   }
-                   if (snapshot.data == null ||
-                          snapshot.data!.docs.isEmpty) {
-                        return Center(child: Text('No User Appointments'.tr));
-                      }
+                  if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
+                    return Center(child: Text('No User Appointments'.tr));
+                  }
                   return Expanded(
                     child: ListView.builder(
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
                         DocumentSnapshot doc = snapshot.data!.docs[index];
 
-                        if(doc["status"] != "Accepted" && doc["status"] != "Completed"){
+                        if (doc["status"] != "Accepted" &&
+                            doc["status"] != "Completed") {
+                          print("Requested ==>${doc["status"]}");
 
-                        print("Requested ==>${doc["status"]}");
-
-                        return GestureDetector(
-                          onTap: () {
-                            Get.to(AppointmentDetailsScreen(doc: doc,userModel: userModel,firebaseUser: firebaseUser,));
-                           controller.convertFromFirebaseTimestamp(doc["selected_time"]);
-
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(14.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                // border: Border.all(color: Colors.black),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Card(
-                                color: Colors.white,
-                                elevation: 1,
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 0, vertical: 8),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                          return GestureDetector(
+                            onTap: () {
+                              Get.to(AppointmentDetailsScreen(
+                                doc: doc,
+                                userModel: userModel,
+                                firebaseUser: firebaseUser,
+                              ));
+                              controller.convertFromFirebaseTimestamp(
+                                  doc["selected_time"]);
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 14),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  // border: Border.all(color: Colors.black),
+                                  borderRadius: BorderRadius.circular(15),
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          // Leading icon
-                                          CircleAvatar(
-                                            backgroundColor: Colors.blue[100],
-                                            radius: 25,
-                                            child: Icon(
-                                              Icons.person,
-                                              color: Colors.blue[700],
-                                              size: 30,
+                                child: Card(
+                                  color: Colors.white,
+                                  elevation: 1,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 0, vertical: 8),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            // Leading icon
+                                            CircleAvatar(
+                                              backgroundColor: Colors.blue[100],
+                                              radius: 25,
+                                              child: Icon(
+                                                Icons.person,
+                                                color: Colors.blue[700],
+                                                size: 30,
+                                              ),
                                             ),
-                                          ),
-                                          const SizedBox(width: 12),
-                                          // Name and type
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  doc['name'].toString(),
-                                                  style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.blue[700],
+                                            const SizedBox(width: 12),
+                                            // Name and type
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    doc['name'].toString(),
+                                                    style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.blue[700],
+                                                    ),
                                                   ),
-                                                ),
-                                                const SizedBox(height: 4),
-                                                Text(
+                                                  const SizedBox(height: 4),
+                                                  Text(
                                                     doc['address'].toString(),
                                                     style: TextStyle(
                                                       fontSize: 14,
                                                       color: Colors.green[800],
-                                               
                                                     ),
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     maxLines: 2,
                                                   ),
-                                                const SizedBox(height: 4),
-                          
-                                                Text(
-                                                  doc['type'].toString(),
-                                                  style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.red,
-                                                    fontWeight: FontWeight.w500,
+                                                  const SizedBox(height: 4),
+                                                  Text(
+                                                    doc['type'].toString(),
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.red,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                          // Medical service icon
-                                          Icon(
-                                            Icons.medical_services,
-                                            color: Colors.blue[700],
-                                            size: 35,
-                                          ),
-                                        ],
-                                      ),
-                                     
-                                     
-                                    ],
+                                            // Medical service icon
+                                            Icon(
+                                              Icons.medical_services,
+                                              color: Colors.blue[700],
+                                              size: 35,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
-
+                          );
                         }
                         return null;
-                        
-
                       },
                     ),
                   );
