@@ -64,22 +64,22 @@ class _LabTestState extends State<LabTest> {
               weight: 200,
             ),
           ),
-          actions: [
-            Row(
-              children: [
-                Text(
-                  "Search".tr,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.person_search_outlined),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ],
+          // actions: [
+          //   Row(
+          //     children: [
+          //       Text(
+          //         "Search".tr,
+          //         style: TextStyle(
+          //           fontSize: 16,
+          //         ),
+          //       ),
+          //       IconButton(
+          //         icon: const Icon(Icons.person_search_outlined),
+          //         onPressed: () {},
+          //       ),
+          //     ],
+          //   ),
+          // ],
           // title: Text(
           //   "Laboratory",
           //   style: TextStyle(color: Colors.black),

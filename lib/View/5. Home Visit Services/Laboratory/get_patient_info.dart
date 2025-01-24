@@ -70,7 +70,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
   }
 
   void uploadData() async {
-    UIHelper.showLoadingDialog(context, "Uploading data..");
+    // UIHelper.showLoadingDialog(context, "Uploading data..");
 
     // String? imageUrl;
     // if (imageFile != null) {

@@ -18,28 +18,21 @@ class Selected_Package extends StatefulWidget {
   final User firebaseUser;
 
   Selected_Package({
-
     required this.userModel,
     required this.firebaseUser,
   });
-
-
-  
-  
 
   @override
   _Selected_PackageState createState() => _Selected_PackageState();
 }
 
-
 class _Selected_PackageState extends State<Selected_Package> {
   String? selectedTime;
-  int selectedIndex = 0;
   int genderIndex = 0;
-   String selectedDate = "${'December'.tr} 1, 2024".tr; // Default date
-
-  LabController cartController =
-      Get.put(LabController());
+  int selectedIndexNow = 0;
+  DateTime selectedDateNow = DateTime.now();
+  List<DateTime> monthDates = [];
+  LabController cartController = Get.put(LabController());
 
   final List<String> timeSlots = [
     "09:00 am".tr,
@@ -53,185 +46,80 @@ class _Selected_PackageState extends State<Selected_Package> {
     "06:00 pm".tr,
   ];
 
- void _showDatePicker(BuildContext context) {
-  final List<String> months = [
-    "January".tr,
-    "February".tr,
-    "March".tr,
-    "April".tr,
-    "May".tr,
-    "June".tr,
-    "July".tr,
-    "August".tr,
-    "September".tr,
-    "October".tr,
-    "November".tr,
-    "December".tr
-  ];
-  final List<int> dates = List.generate(31, (index) => index + 1);
-  final List<int> years = List.generate(10, (index) => 2024 + index);
+  @override
+  void initState() {
+    super.initState();
+    _generateMonthDates(
+        selectedDateNow); // Generate dates for the current month
+  }
 
-  int selectedMonthIndex = 11; // Default: December
-  int selectedDateIndex = 26; // Default: 27th (index = 26)
-  int selectedYearIndex = 0; // Default: 2024 (index = 0)
-
-  showModalBottomSheet(
-    context: context,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-    ),
-    builder: (context) {
-      return StatefulBuilder(
-        builder: (BuildContext context, StateSetter setState) {
-          return Container(
-            height: 400,
-            padding: EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Center(
-                  child: Container(
-                    width: 40,
-                    height: 5,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[400],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16),
-                Text(
-                  "Select a Date".tr,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 16),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Months
-                      Expanded(
-                        child: ListWheelScrollView.useDelegate(
-                          itemExtent: 50,
-                          perspective: 0.005,
-                          diameterRatio: 1.2,
-                          onSelectedItemChanged: (index) {
-                            setState(() {
-                              selectedMonthIndex = index;
-                            });
-                          },
-                          childDelegate: ListWheelChildBuilderDelegate(
-                            childCount: months.length,
-                            builder: (context, index) {
-                              return Center(
-                                child: Text(
-                                  months[index],
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: index == selectedMonthIndex
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                    color: index == selectedMonthIndex
-                                        ? Colors.blue
-                                        : Colors.black,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                      // Dates
-                      Expanded(
-                        child: ListWheelScrollView.useDelegate(
-                          itemExtent: 50,
-                          perspective: 0.005,
-                          diameterRatio: 1.2,
-                          onSelectedItemChanged: (index) {
-                            setState(() {
-                              selectedDateIndex = index;
-                            });
-                          },
-                          childDelegate: ListWheelChildBuilderDelegate(
-                            childCount: dates.length,
-                            builder: (context, index) {
-                              return Center(
-                                child: Text(
-                                  dates[index].toString(),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: index == selectedDateIndex
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                    color: index == selectedDateIndex
-                                        ? Colors.blue
-                                        : Colors.black,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                      // Years
-                      Expanded(
-                        child: ListWheelScrollView.useDelegate(
-                          itemExtent: 50,
-                          perspective: 0.005,
-                          diameterRatio: 1.2,
-                          onSelectedItemChanged: (index) {
-                            setState(() {
-                              selectedYearIndex = index;
-                            });
-                          },
-                          childDelegate: ListWheelChildBuilderDelegate(
-                            childCount: years.length,
-                            builder: (context, index) {
-                              return Center(
-                                child: Text(
-                                  years[index].toString(),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: index == selectedYearIndex
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                    color: index == selectedYearIndex
-                                        ? Colors.blue
-                                        : Colors.black,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    final selectedDate =
-                        "${months[selectedMonthIndex]} ${dates[selectedDateIndex]}, ${years[selectedYearIndex]}";
-                    Navigator.pop(context, selectedDate);
-                  },
-                  child: Center(child: Text("Confirm".tr)),
-                ),
-              ],
-            ),
-          );
-        },
+  void _generateMonthDates(DateTime date) {
+    setState(() {
+      final lastDayOfMonth =
+          DateTime(date.year, date.month + 1, 0).day; // End of the month
+      monthDates = List.generate(
+        lastDayOfMonth - date.day + 1,
+        (index) => DateTime(date.year, date.month, date.day + index),
       );
-    },
-  ).then((selectedDate) {
-    if (selectedDate != null) {
-      setState(() {
-        this.selectedDate = selectedDate;
-      });
-    }
-  });
-}
+      selectedIndexNow = 0; // Reset the selected index
+    });
+  }
+
+  String _getWeekdayName(int weekday) {
+    const daysOfWeek = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday'
+    ];
+    return daysOfWeek[weekday - 1]; // Subtract 1 since weekday starts from 1
+  }
+
+  String _getMonthName(int month) {
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+    return months[month - 1]; // Subtract 1 since month starts from 1
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
+
+  String selectedDate = "${_getMonthName(selectedDateNow.month)} ${selectedDateNow.day}, ${selectedDateNow.year}";
+  void _showDatePicker(BuildContext context) {
+    showDatePicker(
+      context: context,
+      initialDate: selectedDateNow,
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2030),
+    ).then((pickedDate) {
+      if (pickedDate != null) {
+        setState(() {
+          selectedDateNow = pickedDate;
+          _generateMonthDates(selectedDateNow);
+
+          selectedDate =
+              "${_getMonthName(selectedDateNow.month)} ${selectedDateNow.day}, ${selectedDateNow.year}"; // Regenerate dates based on new selection
+        });
+      }
+    });
+  }
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -245,130 +133,134 @@ class _Selected_PackageState extends State<Selected_Package> {
                 size: 25,
                 weight: 200,
               ),
-            ), 
-             Text(
+            ),
+            SizedBox(
+              width: 4,
+            ),
+            Text(
               'Select Date'.tr,
-              style: TextStyle(fontSize: 16,fontFamily: 'Roboto', fontWeight: FontWeight.w700),
+              style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w700),
             ),
           ],
         ),
         backgroundColor: Colors.white,
         elevation: 1,
-        actions: [
-          Row(
-            children: [
-              Text(
-                "Search".tr,
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.search),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ],
+        // actions: [
+        //   Row(
+        //     children: [
+        //       Text(
+        //         "Search".tr,
+        //         style: TextStyle(
+        //           fontSize: 16,
+        //         ),
+        //       ),
+        //       IconButton(
+        //         icon: const Icon(Icons.search),
+        //         onPressed: () {},
+        //       ),
+        //     ],
+        //   ),
+        // ],
       ),
       body: Stack(
         children: [
-          // Background image
-          // Positioned.fill(
-          //   child: Image.asset(
-          //     'assets/images/back_image.png',
-          //     fit: BoxFit.cover,
-          //   ),
-          // ),
-          // Main content
           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(0.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   Container(
-                    // decoration: BoxDecoration(
-                    //   color: Colors.white,
-                    // ),
-                    child: StepProgressBar(currentStep: 3, totalSteps: 4)
-                    ),
+                      // decoration: BoxDecoration(
+                      //   color: Colors.white,
+                      // ),
+                      child: StepProgressBar(currentStep: 3, totalSteps: 4)),
                   const SizedBox(height: 16),
 
-                   Padding(
-                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                     child: GestureDetector(
-                      onTap: ()=> _showDatePicker(context),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: GestureDetector(
+                      onTap: () => _showDatePicker(context),
                       child: Row(
                         children: [
                           Text(
-                            selectedDate,
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w700),
+                            "${_getMonthName(selectedDateNow.month)} ${selectedDateNow.day}, ${selectedDateNow.year}",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
                           ),
-                          const Icon(
-                            Icons.keyboard_arrow_down,
-                            size: 28,
-                            color: Colors.black,
-                          ),
+                          Icon(Icons.keyboard_arrow_down),
                         ],
-                      ),
-                                       ),
-                   ),
-                  const SizedBox(height: 16),
-                  Padding(
-                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: List.generate(
-                        5,
-                        (index) => GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedIndex = index; // Update selected index
-                            });
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: selectedIndex == index
-                                      ? Colors.green
-                                      : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'Today'.tr,
-                                      style: TextStyle(
-                                          color: selectedIndex == index
-                                              ? Colors.white
-                                              : Colors.black,
-                                          fontWeight: FontWeight.w700, fontFamily: "Roboto"),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      '31',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: selectedIndex == index
-                                            ? Colors.white
-                                            : Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                       ),
                     ),
                   ),
+                  const SizedBox(height: 16),
+
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: List.generate(monthDates.length, (index) {
+                          final day = monthDates[index];
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedIndexNow =
+                                    index; // Update the selected index
+                                selectedDateNow =
+                                    day; // Update the selected date
+                              });
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: selectedIndexNow == index
+                                        ? Colors.green
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      // Display day number
+                                      Text(
+                                        _getWeekdayName(day.weekday),
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                          color: selectedIndexNow == index
+                                              ? Colors.white
+                                              : Colors.black,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      // Display weekday
+                                      Text(
+                                        '${day.day}',
+                                        style: TextStyle(
+                                          color: selectedIndexNow == index
+                                              ? Colors.white
+                                              : Colors.black,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: "Roboto",
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+                      ),
+                    ),
+                  ),
+
                   const SizedBox(height: 40),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -529,11 +421,11 @@ class _Selected_PackageState extends State<Selected_Package> {
                     child: GestureDetector(
                       onTap: () {
                         Get.to(LabCartPage(
-                                address: cartController.stAddress.value,
-                                userModel: widget.userModel,
-                                firebaseUser: widget.firebaseUser,
-                                //
-                              ));
+                          address: cartController.stAddress.value,
+                          userModel: widget.userModel,
+                          firebaseUser: widget.firebaseUser,
+                          //
+                        ));
                       },
                       child: Text(
                         'View Selected Details'.tr,
@@ -643,12 +535,8 @@ class _Selected_PackageState extends State<Selected_Package> {
                       child: Wrap(
                         spacing: 10,
                         children: [
-                          ...timeSlots.map((item) => buildTimeContainer(item)),
-                          //       buildTimeSelectionRow(
-                          //           "09:00 am", "10:00 am", "11:00 am"),
-                          //       buildTimeSelectionRow(
-                          //           "12:00 pm", "1:00 pm", "02:00 pm"),
-                          // buildTimeSelectionRow("04:00 pm", "05:00 pm", "06:00 pm"),
+                          ...timeSlots.map((item) => buildTimeContainer(item,selectedDate)),
+                      
                         ],
                       ),
                     ),
@@ -685,11 +573,11 @@ class _Selected_PackageState extends State<Selected_Package> {
                     child: GestureDetector(
                       onTap: () {
                         if (selectedTime != null) {
-
-                          cartController.convertToFirebaseTimestamp(selectedDate, selectedTime!);
+                          cartController.convertToFirebaseTimestamp(
+                              selectedDate, selectedTime!);
 
                           Get.to(() => GetPatientInfo(
-                              address: cartController.stAddress.value,
+                                address: cartController.stAddress.value,
                                 userModel: widget.userModel,
                                 firebaseUser: widget.firebaseUser,
                                 selectedTime: selectedTime!,
@@ -706,7 +594,7 @@ class _Selected_PackageState extends State<Selected_Package> {
                           //       userModel: widget.userModel,
                           //       firebaseUser: widget.firebaseUser,
                           //       selectedTime: selectedTime!,
-           
+
                           //     ));
                         } else {
                           Get.snackbar("Error", "Please select a time slot");
@@ -755,28 +643,27 @@ class _Selected_PackageState extends State<Selected_Package> {
     );
   }
 
-  Widget buildTimeSelectionRow(String time1, String time2, String time3) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          buildTimeContainer(time1),
-          buildTimeContainer(time2),
-          buildTimeContainer(time3),
-        ],
-      ),
-    );
-  }
+  // Widget buildTimeSelectionRow(String time1, String time2, String time3,selectedDate) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 10),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //       children: [
+  //         buildTimeContainer(time1,selectedDate),
+  //         buildTimeContainer(time2,selectedDate),
+  //         buildTimeContainer(time3,selectedDate),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  Widget buildTimeContainer(String time) {
+  Widget buildTimeContainer(String time,selectedDate) {
     return GestureDetector(
       onTap: () {
         setState(() {
           selectedTime = time;
         });
         cartController.convertToFirebaseTimestamp(selectedDate, time);
-
       },
       child: Container(
         decoration: BoxDecoration(

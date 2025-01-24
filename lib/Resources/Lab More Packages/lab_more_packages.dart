@@ -21,17 +21,31 @@ class LabMorePackages extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(Icons.arrow_back_ios_new_sharp),
-            color: Colors.black,
+          leadingWidth: 200,
+          leading: Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Get.back();
+                },
+                iconSize: 20,
+                icon: Icon(
+                  Icons.keyboard_double_arrow_left,
+                  size: 25,
+                  weight: 200,
+                ),
+                color: Colors.black,
+              ),
+              Text(
+                "All packages",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
-          title: Text(
-            "All packages",
-            style: TextStyle(color: Colors.black),
-          ),
+          // title:
           backgroundColor: Colors.white,
         ),
         body: Column(
@@ -102,7 +116,7 @@ class LabMorePackages extends StatelessWidget {
                                           "${localizedData.serviceName}",
                                           style: TextStyle(
                                               fontWeight: FontWeight.w600,
-                                        color: Color(0xFF007ABB)),
+                                              color: Color(0xFF007ABB)),
                                         )),
                                   ),
                                   // Padding(
@@ -154,17 +168,14 @@ class LabMorePackages extends StatelessWidget {
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(12),
-                                              color:  Colors.lightBlue[
-                                            50]),
+                                              color: Colors.lightBlue[50]),
                                           child: Center(
                                             child: Text(
                                               "Starting ${localizedData.price}",
                                               style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 12,
-                                                 color: Colors
-                                              .teal
-                                              ),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12,
+                                                  color: Colors.teal),
                                             ),
                                           ),
                                         ),

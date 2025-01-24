@@ -18,7 +18,6 @@ class VitaminPaymentPage extends StatelessWidget {
   final User firebaseUser;
   final String selectedTime;
 
-
   const VitaminPaymentPage({
     super.key,
     required this.userModel,
@@ -57,7 +56,10 @@ class VitaminPaymentPage extends StatelessWidget {
             ), // Double-arrow icon
             Text(
               'Payment Details'.tr,
-              style: TextStyle(fontSize: 16,fontFamily: "Roboto", fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: "Roboto",
+                  fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -232,7 +234,7 @@ class VitaminPaymentPage extends StatelessWidget {
                   ),
                   Container(
                     // Background color
-                    padding: EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -299,7 +301,10 @@ class VitaminPaymentPage extends StatelessWidget {
                           contentPadding: EdgeInsets.zero,
                           title: Text(
                             "Pay with bank points".tr,
-                            style: TextStyle(fontSize: 16,fontFamily: "Roboto", color: Colors.black),
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: "Roboto",
+                                color: Colors.black),
                           ),
                           trailing: Icon(Icons.arrow_forward_ios,
                               size: 16, color: Colors.grey),
@@ -312,7 +317,10 @@ class VitaminPaymentPage extends StatelessWidget {
                           contentPadding: EdgeInsets.zero,
                           title: Text(
                             "Pay with bank points".tr,
-                            style: TextStyle(fontSize: 16,fontFamily: "Roboto", color: Colors.black),
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: "Roboto",
+                                color: Colors.black),
                           ),
                           trailing: Icon(Icons.arrow_forward_ios,
                               size: 16, color: Colors.grey),
@@ -328,18 +336,18 @@ class VitaminPaymentPage extends StatelessWidget {
                     width: double.infinity,
                     color: Color(0xFFCAE8E5),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             'Select payment method'.tr,
                             style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                              fontFamily: "Roboto"
-                            ),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                                fontFamily: "Roboto"),
                           ),
                           Row(
                             children: [
@@ -443,7 +451,8 @@ class VitaminPaymentPage extends StatelessWidget {
                     width: double.infinity,
                     // color: Colors.blue[100],
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 4),
                       child: Text(
                         'Price Breakup'.tr,
                         style: TextStyle(
@@ -491,13 +500,12 @@ class VitaminPaymentPage extends StatelessWidget {
                                   final item =
                                       vitaminCartController.cartItems[index];
 
-                                      
-                            String languageCode =
-                                Get.locale?.languageCode ?? 'en';
+                                  String languageCode =
+                                      Get.locale?.languageCode ?? 'en';
 
-                            final localizedData = languageCode == 'ar'
-                                ? item["localized"]["ar"]
-                                : item["localized"]["en"];
+                                  final localizedData = languageCode == 'ar'
+                                      ? item["localized"]["ar"]
+                                      : item["localized"]["en"];
 
                                   return Row(
                                     mainAxisAlignment:
@@ -517,17 +525,34 @@ class VitaminPaymentPage extends StatelessWidget {
                                         ),
                                       ),
                                       SizedBox(width: 8),
+                                      Text(
+                                        item['quantity'] != null
+                                            ? item['quantity'].toString()
+                                            : "1",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                        textAlign: TextAlign
+                                            .end, // Aligns text to the end
+                                      ),
                                       Flexible(
                                         flex: 1, // Takes 1 part of the row
-                                        child: Text(
-                                          localizedData['price'],
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                          textAlign: TextAlign
-                                              .end, // Aligns text to the end
+                                        child: Row(
+                                          children: [
+                                            SizedBox(width: 10),
+                                            Text(
+                                              localizedData['price'],
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                              textAlign: TextAlign
+                                                  .end, // Aligns text to the end
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
@@ -591,46 +616,47 @@ class VitaminPaymentPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: GestureDetector(
                       onTap: () {
-
-                        vitaminCartController.setUserOrderInfo(userModel, firebaseUser);
+                        vitaminCartController.setUserOrderInfo(
+                            userModel, firebaseUser);
                         Get.offAll(() => HomePage(
                               userModel: userModel,
                               firebaseUser: firebaseUser,
                             ));
                       },
-                      child: vitaminCartController.isLoading.value?
-                      CircularProgressIndicator()
-                       :Padding(
-                        padding: const EdgeInsets.only(left: 2, right: 2),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Color(0xFFc1e9e4),
-                          ),
-                          child: Column(
-                            children: [
-                              SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Checkout".tr,
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.green,
+                      child: vitaminCartController.isLoading.value
+                          ? CircularProgressIndicator()
+                          : Padding(
+                              padding: const EdgeInsets.only(left: 2, right: 2),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Color(0xFFc1e9e4),
+                                ),
+                                child: Column(
+                                  children: [
+                                    SizedBox(height: 10),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Checkout".tr,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.green,
+                                          ),
+                                        ),
+                                        SizedBox(width: 10),
+                                        Icon(Icons.keyboard_double_arrow_right,
+                                            color: Colors.black, size: 30),
+                                      ],
                                     ),
-                                  ),
-                                  SizedBox(width: 10),
-                                  Icon(Icons.keyboard_double_arrow_right,
-                                      color: Colors.black, size: 30),
-                                ],
+                                    SizedBox(height: 10),
+                                  ],
+                                ),
                               ),
-                              SizedBox(height: 10),
-                            ],
-                          ),
-                        ),
-                      ),
+                            ),
                     ),
                   ),
                   SizedBox(height: 40)
