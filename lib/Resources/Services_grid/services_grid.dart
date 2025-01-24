@@ -119,6 +119,19 @@ class MoreServicesGrid extends StatelessWidget {
             firebaseUser: firebaseUser,
           ),
           ServiceIconButton(
+            serviceIcon: "assets/images/chat.png",
+            serviceName: "Chats".tr,
+            onPressed: () {
+              Get.to(() => Home(
+                    userModel: userModel,
+                    firebaseUser: firebaseUser,
+                    targetUser: userModel,
+                  ));
+            },
+            userModel: userModel,
+            firebaseUser: firebaseUser,
+          ),
+          ServiceIconButton(
             serviceIcon: "assets/images/upload.png",
             serviceName: "Patient History".tr,
             onPressed: () {
@@ -149,19 +162,6 @@ class MoreServicesGrid extends StatelessWidget {
               Get.to(() => Family(
                     userModel: userModel,
                     firebaseUser: firebaseUser,
-                  ));
-            },
-            userModel: userModel,
-            firebaseUser: firebaseUser,
-          ),
-          ServiceIconButton(
-            serviceIcon: "assets/images/chat.png",
-            serviceName: "Chats".tr,
-            onPressed: () {
-              Get.to(() => Home(
-                    userModel: userModel,
-                    firebaseUser: firebaseUser,
-                    targetUser: userModel,
                   ));
             },
             userModel: userModel,

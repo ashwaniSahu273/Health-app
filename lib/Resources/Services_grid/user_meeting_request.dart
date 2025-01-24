@@ -31,6 +31,15 @@ class UserMeetingRequest extends StatelessWidget {
       }
     }
 
+    Future<void> _launchURL(url) async {
+      // const url = "https://meet.google.com/oph-nuzx-vpw";
+      if (await launch(url)) {
+        await canLaunch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -64,7 +73,10 @@ class UserMeetingRequest extends StatelessWidget {
               // const MySearchBar(),
               const SizedBox(height: 15),
               StreamBuilder<QuerySnapshot>(
-                stream: controller.userAppointments,
+                stream: FirebaseFirestore.instance
+                    .collection("User_meetings")
+                    .where('requested_to_email', isEqualTo: firebaseUser.email)
+                    .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasError) {
@@ -82,174 +94,214 @@ class UserMeetingRequest extends StatelessWidget {
                         itemBuilder: (context, index) {
                           DocumentSnapshot doc = snapshot.data!.docs[index];
 
-                          if (doc["requested_to"] == userModel.fullname) {
-                            return GestureDetector(
-                              onTap: () {
-                                Get.to(MeetingDetailsScreen(
-                                  doc: doc,
-                                  userModel: userModel,
-                                  firebaseUser: firebaseUser,
-                                ));
-                                controller.convertFromFirebaseTimestampStart(
-                                    doc["meeting_data"]["startDateTime"]);
-                                controller.convertFromFirebaseTimestampEnd(
-                                    doc["meeting_data"]["endDateTime"]);
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 14.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    // border: Border.all(color: Colors.black),
-                                    borderRadius: BorderRadius.circular(15),
+                          // if (doc["requested_to"] == userModel.fullname) {
+                          return GestureDetector(
+                            onTap: () {
+                              Get.to(MeetingDetailsScreen(
+                                doc: doc,
+                                userModel: userModel,
+                                firebaseUser: firebaseUser,
+                              ));
+                              controller.convertFromFirebaseTimestampStart(
+                                  doc["meeting_data"]["startDateTime"]);
+                              controller.convertFromFirebaseTimestampEnd(
+                                  doc["meeting_data"]["endDateTime"]);
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 14.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  // border: Border.all(color: Colors.black),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Card(
+                                  color: Colors.white,
+                                  elevation: 1,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 0, vertical: 8),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                                  child: Card(
-                                    color: Colors.white,
-                                    elevation: 1,
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 0, vertical: 8),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              // Leading icon
-                                              CircleAvatar(
-                                                backgroundColor:
-                                                    Colors.blue[100],
-                                                radius: 25,
-                                                child: Icon(
-                                                  Icons.person,
-                                                  color: Colors.blue[700],
-                                                  size: 30,
-                                                ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            // Leading icon
+                                            CircleAvatar(
+                                              backgroundColor: Colors.blue[100],
+                                              radius: 25,
+                                              child: Icon(
+                                                Icons.person,
+                                                color: Colors.blue[700],
+                                                size: 30,
                                               ),
-                                              const SizedBox(width: 12),
-                                              // Name and type
-                                              Expanded(
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      doc['name'].toString(),
-                                                      style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.blue[700],
-                                                      ),
-                                                    ),
-                                                    const SizedBox(height: 4),
-                                                    // Text(
-                                                    //   doc['address'].toString(),
-                                                    //   style: TextStyle(
-                                                    //     fontSize: 14,
-                                                    //     color: Colors.green[800],
-                                                    //   ),
-                                                    //   overflow:
-                                                    //       TextOverflow.ellipsis,
-                                                    //   maxLines: 2,
-                                                    // ),
-                                                    const SizedBox(height: 4),
-                                                    Text(
-                                                      doc['type'].toString(),
-                                                      style: const TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.red,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              // Medical service icon
-                                              Column(
+                                            ),
+                                            const SizedBox(width: 12),
+                                            // Name and type
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Icon(
-                                                    Icons.medical_services,
-                                                    color: Colors.blue[700],
-                                                    size: 35,
+                                                  Text(
+                                                    doc['name'].toString(),
+                                                    style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.blue[700],
+                                                    ),
                                                   ),
-                                                  doc["status"] == "Requested"
-                                                      ? Container(
-                                                          width:
-                                                              80, // Customize the width
-                                                          height:
-                                                              27, // Customize the height
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Color(
-                                                                0xFF00AAAD), // Background color
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50),
-                                                          ),
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  horizontal:
-                                                                      12,
-                                                                  vertical: 5),
-                                                          child: const Text(
-                                                            "Accept",
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 11,
+                                                  const SizedBox(height: 4),
+                                                  // Text(
+                                                  //   doc['address'].toString(),
+                                                  //   style: TextStyle(
+                                                  //     fontSize: 14,
+                                                  //     color: Colors.green[800],
+                                                  //   ),
+                                                  //   overflow:
+                                                  //       TextOverflow.ellipsis,
+                                                  //   maxLines: 2,
+                                                  // ),
+                                                  Text(
+                                                    doc['type'].toString(),
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.red,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 4),
+
+                                                  doc["meeting_link"] != null
+                                                      ? GestureDetector(
+                                                          onTap: () => _launchURL(
+                                                              "https://${doc["meeting_link"]}"),
+                                                          child: Container(
+                                                            height: 30,
+                                                            width: 100,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: Colors
+                                                                  .blue, // Background color
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8), // Rounded corners
+                                                              boxShadow: [
+                                                                BoxShadow(
+                                                                  color: Colors
+                                                                      .black26,
+                                                                  blurRadius: 4,
+                                                                  offset: Offset(
+                                                                      0,
+                                                                      2), // Shadow position
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            alignment: Alignment
+                                                                .center, // Center the text
+                                                            child: Text(
+                                                              "Join Meet",
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .white, // Text color
+                                                                fontSize:
+                                                                    16, // Text size
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
                                                             ),
                                                           ),
                                                         )
-                                                      : Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  horizontal:
-                                                                      10.0,
-                                                                  vertical: 8),
-                                                          child: Text(
-                                                            "Accepted",
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: TextStyle(
-                                                              color: Color(
-                                                                  0xFF00AAAD),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 14,
-                                                            ),
-                                                          ),
-                                                        ),
+                                                      : Text(
+                                                          "Please accept request"),
                                                 ],
                                               ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
+                                            ),
+                                            // Medical service icon
+                                            Column(
+                                              children: [
+                                                Icon(
+                                                  Icons.medical_services,
+                                                  color: Colors.blue[700],
+                                                  size: 35,
+                                                ),
+                                                doc["status"] == "Requested"
+                                                    ? Container(
+                                                        width:
+                                                            80, // Customize the width
+                                                        height:
+                                                            27, // Customize the height
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Color(
+                                                              0xFF00AAAD), // Background color
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(50),
+                                                        ),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 12,
+                                                                vertical: 5),
+                                                        child: const Text(
+                                                          "Accept",
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 11,
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal:
+                                                                    10.0,
+                                                                vertical: 8),
+                                                        child: Text(
+                                                          "Accepted",
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: TextStyle(
+                                                            color: Color(
+                                                                0xFF00AAAD),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 14,
+                                                          ),
+                                                        ),
+                                                      ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
                               ),
-                            );
-                          }
-                          return null;
-                        }),
+                            ),
+                          );
+                        }
+                        //   return null;
+                        // }
+                        ),
                   );
                 },
               )

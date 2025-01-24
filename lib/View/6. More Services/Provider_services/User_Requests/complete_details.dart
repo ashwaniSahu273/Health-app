@@ -545,6 +545,7 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                               child: Column(
                                 children: [
                                   TextFormField(
+                                    
                                     controller:
                                         uploadController.doctorNotesController,
                                     maxLines: 3,
@@ -554,6 +555,7 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                     ),
                                     validator: (value) => uploadController
                                         .validateDoctorNotes(value),
+                                        
                                   ),
                                 ],
                               ),

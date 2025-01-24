@@ -709,6 +709,7 @@ class _Provider_DetailsState extends State<Provider_Details> {
                             "selected_time": "2024-12-01T04:30:00.000Z",
                             "status": "Requested",
                             "requested_to": widget.providerData["name"],
+                            "requested_to_email": widget.providerData["email"],
                             "accepted_by": null,
                             "meeting_link": null,
                             "meeting_data":

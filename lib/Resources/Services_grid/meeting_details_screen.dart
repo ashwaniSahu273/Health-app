@@ -71,7 +71,10 @@ class MeetingDetailsScreen extends StatelessWidget {
         leading: Row(
           children: [
             IconButton(
-                onPressed: () => Get.back(),
+                onPressed: () {
+                  Get.back();
+                  controller.resetData();
+                },
                 icon: const Icon(
                   Icons.keyboard_double_arrow_left,
                   size: 25,
@@ -178,7 +181,6 @@ class MeetingDetailsScreen extends StatelessWidget {
                                 // Accept Button
                                 GestureDetector(
                                   onTap: () {
-
                                     controller.openConsultationDialog(doc.id);
                                     // Get.defaultDialog(
                                     //   title: 'Accept Appointment'.tr,
@@ -311,13 +313,13 @@ class MeetingDetailsScreen extends StatelessWidget {
                             children: [
                               Obx(
                                 () => _buildDetailRow(
-                                    "Time", controller.time.value,
+                                    "Start At", controller.date.value,
                                     isHighlighted: true),
                               ),
                               Obx(
                                 () => _buildDetailRow(
-                                  "Date",
-                                  controller.date.value,
+                                  "End At",
+                                  controller.time.value,
                                 ),
                               ),
                               const SizedBox(height: 12),
@@ -340,43 +342,24 @@ class MeetingDetailsScreen extends StatelessWidget {
                         child: _buildDetailsCard(
                           context,
                           title: "Meeting link",
-                          child: controller.textData.value.isNotEmpty ? Container(
+                          child: Container(
                               width: double.infinity,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () async {
-                                      print("Attempting to launch URL...");
-                                      final Uri url = Uri.parse(
-                                          "https://${doc["meeting_link"]}");
-                                      if (await canLaunchUrl(url)) {
-                                        print(
-                                            "URL can be launched. Launching...");
-                                        await launchUrl(
-                                          url,
-                                          mode: LaunchMode.externalApplication,
-                                        );
-                                      } else {
-                                        print("Cannot launch URL.");
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content:
-                                                Text('Could not launch $url'),
-                                          ),
-                                        );
-                                      }
-                                    },
-                                    child: ElevatedButton(
-                                      onPressed: () =>
-                                          _launchURL("https://${doc["meeting_link"]}"),
-                                      child: Text("Join Google Meet"),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 12),
-                                ],
-                              )) : Text("Please accecept the request"),
+                              child: Obx(
+                                () => Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    controller.textData.value.isNotEmpty ||
+                                            doc["meeting_link"] != null
+                                        ? ElevatedButton(
+                                            onPressed: () => _launchURL(
+                                                "https://${controller.textData.value.isNotEmpty ? controller.textData.value : doc["meeting_link"]}"),
+                                            child: Text("Join Google Meet"),
+                                          )
+                                        : Text("Please accept the request"),
+                                    const SizedBox(height: 12),
+                                  ],
+                                ),
+                              )),
                         ),
                       ),
                     ],
@@ -385,52 +368,52 @@ class MeetingDetailsScreen extends StatelessWidget {
               ),
             ),
           ),
-          Obx(
-            () => Container(
-                color: Colors.white,
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              controller.status.value == "Requested"
-                                  ? const Color.fromARGB(255, 85, 177, 223)
-                                  : Color(0xFF007ABB),
-                          minimumSize: const Size(160, 55),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        onPressed: () {
-                          // if (controller.status.value != "Requested") {
-                          //   Get.to(() => CompleteAppointmentDetailsScreen(
-                          //         userModel: userModel,
-                          //         firebaseUser: firebaseUser,
-                          //         doc: doc,
-                          //         // userModel: userModel,
-                          //         // firebaseUser: firebaseUser,
-                          //       ));
-                          // }
-                        },
-                        child: controller.status.value == "Requested"
-                            ? Text(
-                                'Accept'.tr,
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 15),
-                              )
-                            : Text(
-                                'Accepted'.tr,
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 15),
-                              ),
-                      ),
-                    ),
-                  ],
-                )),
-          )
+          // Obx(
+          //   () => Container(
+          //       color: Colors.white,
+          //       padding: const EdgeInsets.all(16.0),
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         children: [
+          //           Expanded(
+          //             child: ElevatedButton(
+          //               style: ElevatedButton.styleFrom(
+          //                 backgroundColor:
+          //                     controller.status.value == "Requested"
+          //                         ? const Color.fromARGB(255, 85, 177, 223)
+          //                         : Color(0xFF007ABB),
+          //                 minimumSize: const Size(160, 55),
+          //                 shape: RoundedRectangleBorder(
+          //                   borderRadius: BorderRadius.circular(12),
+          //                 ),
+          //               ),
+          //               onPressed: () {
+          //                 // if (controller.status.value != "Requested") {
+          //                 //   Get.to(() => CompleteAppointmentDetailsScreen(
+          //                 //         userModel: userModel,
+          //                 //         firebaseUser: firebaseUser,
+          //                 //         doc: doc,
+          //                 //         // userModel: userModel,
+          //                 //         // firebaseUser: firebaseUser,
+          //                 //       ));
+          //                 // }
+          //               },
+          //               child: controller.status.value == "Requested"
+          //                   ? Text(
+          //                       'Accept'.tr,
+          //                       style: TextStyle(
+          //                           color: Colors.white, fontSize: 15),
+          //                     )
+          //                   : Text(
+          //                       'Accepted'.tr,
+          //                       style: TextStyle(
+          //                           color: Colors.white, fontSize: 15),
+          //                     ),
+          //             ),
+          //           ),
+          //         ],
+          //       )),
+          // )
         ],
       ),
     );

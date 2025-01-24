@@ -250,10 +250,10 @@ class _HomeState extends State<Home> {
 
         ],
       ),
-bottomNavigationBar: MyBottomNavBar(
-        userModel: widget.userModel,
-        firebaseUser: widget.firebaseUser,
-      ),
+// bottomNavigationBar: MyBottomNavBar(
+//         userModel: widget.userModel,
+//         firebaseUser: widget.firebaseUser,
+//       ),
 
       // floatingActionButton: FloatingActionButton(
       //   foregroundColor: Colors.white,

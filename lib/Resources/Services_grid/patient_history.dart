@@ -46,7 +46,9 @@ class _AcceptedRequestsHistoryState extends State<AcceptedRequestsHistory> {
     final acceptedAppointmentsList = acceptedAppointments
         .doc(user!.email)
         .collection("accepted_appointments_list")
+        .where('status', isEqualTo: "Completed")
         .snapshots();
+
 
     return Scaffold(
       appBar: MyAppBar(
@@ -94,8 +96,8 @@ class _AcceptedRequestsHistoryState extends State<AcceptedRequestsHistory> {
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (context, index) {
                           final appointment = snapshot.data!.docs[index];
-
-                          if (appointment["status"] == "Completed") {
+                          print("appointment: $appointment");
+                          // if (appointment["status"] == "Completed") {
                             return Padding(
                               padding: const EdgeInsets.all(14.0),
                               child: GestureDetector(
@@ -142,25 +144,25 @@ class _AcceptedRequestsHistoryState extends State<AcceptedRequestsHistory> {
                                       children: [
                                         const Icon(Icons.medical_services,
                                             size: 35),
-                                        appointment["status"] == "Accepted"
-                                            ? const Text(
-                                                "Accepted",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Color(0xFF00AAAD),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 14,
-                                                ),
-                                              )
-                                            : const Text(
-                                                "Completed",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.green,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 14,
-                                                ),
-                                              )
+                                        // appointment["status"] == "Accepted"
+                                        //     ? const Text(
+                                        //         "Accepted",
+                                        //         textAlign: TextAlign.center,
+                                        //         style: TextStyle(
+                                        //           color: Color(0xFF00AAAD),
+                                        //           fontWeight: FontWeight.bold,
+                                        //           fontSize: 14,
+                                        //         ),
+                                        //       )
+                                        //     : const Text(
+                                        //         "Completed",
+                                        //         textAlign: TextAlign.center,
+                                        //         style: TextStyle(
+                                        //           color: Colors.green,
+                                        //           fontWeight: FontWeight.bold,
+                                        //           fontSize: 14,
+                                        //         ),
+                                        //       )
                                       ],
                                     ),
                                   ),
@@ -168,8 +170,8 @@ class _AcceptedRequestsHistoryState extends State<AcceptedRequestsHistory> {
                               ),
                             );
                           }
-                          return null;
-                        },
+                        //   return null;
+                        // },
                       );
                     },
                   ),

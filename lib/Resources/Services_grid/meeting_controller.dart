@@ -17,50 +17,89 @@ class UserMeetingRequestController extends GetxController {
   final date = "".obs;
   final time = "".obs;
   final status = "".obs;
-  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController meetingLinkController = TextEditingController();
   final textData = "".obs;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  void resetData(){
+    meetingLinkController.clear();
+    textData.value = "";
+  }
+
+  // Regular expression to validate a Google Meet link
+  final RegExp googleMeetRegex = RegExp(
+    r'^(https:\/\/)?meet\.google\.com\/[a-zA-Z0-9\-]{12}$',
+  );
+
+  String? validateGoogleMeetLink(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Meeting link is required.';
+    }
+    if (!googleMeetRegex.hasMatch(value.trim())) {
+      return 'Please enter a valid Google Meet link.';
+    }
+    return null;
+  }
 
   Future<void> openConsultationDialog(id) async {
-    await Get.dialog(
-      AlertDialog(
-        title: Text('Please Enter Google Meeting Link'),
-        content: SingleChildScrollView(
+    await Get.dialog(AlertDialog(
+      title: Text('Please Enter Google Meeting Link'),
+      content: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextField(
-                controller: descriptionController,
-                decoration: InputDecoration(labelText: 'Meeting link...'),
+              TextFormField(
+                controller: meetingLinkController,
+                decoration: const InputDecoration(
+                  labelText: 'Meeting Link',
+                  hintText: 'https://meet.google.com/xyz-abc-defg',
+                  hintStyle: TextStyle(color: Colors.grey),
+                  border: OutlineInputBorder(),
+                ),
+                validator: validateGoogleMeetLink,
               ),
+              const SizedBox(height: 20),
             ],
           ),
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Get.back(); // Close dialog without saving
-            },
-            child: Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Get.back(); 
+          },
+          child: Text('Cancel'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+            
               try {
-                textData.value = descriptionController.text;
-                accept(id, textData.value);
-                Get.back(); // Close dialog
+                textData.value =
+                    meetingLinkController.text.trim(); 
+                accept(id, textData.value); 
+                Get.back(); 
               } catch (e) {
                 Get.snackbar(
                   'Error',
-                  'Invalid date format. Please select a valid date and time.',
+                  'Something went wrong. Please try again.',
                   snackPosition: SnackPosition.BOTTOM,
                 );
               }
-            },
-            child: Text('Save'),
-          ),
-        ],
-      ),
-    );
+            } else {
+              Get.snackbar(
+                'Message',
+                'Please enter a valid Google Meet link',
+                snackPosition: SnackPosition.BOTTOM,
+              );
+            }
+          },
+          child: Text('Save'),
+        ),
+      ],
+    ));
   }
 
   void convertFromFirebaseTimestampStart(String isoTimestamp) {

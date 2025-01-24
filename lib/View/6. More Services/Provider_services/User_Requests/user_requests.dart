@@ -60,7 +60,7 @@ class UserRequests extends StatelessWidget {
               // const MySearchBar(),
               const SizedBox(height: 15),
               StreamBuilder<QuerySnapshot>(
-                stream: controller.userAppointments,
+                stream: FirebaseFirestore.instance.collection("User_appointments").where('status', isEqualTo: "Requested").snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasError) {
@@ -78,9 +78,9 @@ class UserRequests extends StatelessWidget {
                       itemBuilder: (context, index) {
                         DocumentSnapshot doc = snapshot.data!.docs[index];
 
-                        if (doc["status"] != "Accepted" &&
-                            doc["status"] != "Completed") {
-                          print("Requested ==>${doc["status"]}");
+                        // if (doc["status"] != "Accepted" &&
+                        //     doc["status"] != "Completed") {
+                        //   print("Requested ==>${doc["status"]}");
 
                           return GestureDetector(
                             onTap: () {
@@ -184,8 +184,8 @@ class UserRequests extends StatelessWidget {
                             ),
                           );
                         }
-                        return null;
-                      },
+                      //   return null;
+                      // },
                     ),
                   );
                 },
