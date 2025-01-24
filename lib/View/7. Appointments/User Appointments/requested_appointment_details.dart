@@ -426,6 +426,10 @@ class RequestedAppointmentDetails extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              _buildDetailRow(
+                                    "Service", doc["type"],
+                                    isHighlighted: true),
+                              
                               Obx(
                                 () => _buildDetailRow(
                                     "Time", controller.time.value,

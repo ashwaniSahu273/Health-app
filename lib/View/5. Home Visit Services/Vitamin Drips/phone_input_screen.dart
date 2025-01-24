@@ -213,17 +213,17 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
         setState(() {
           isLoading = false;
         });
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => OtpVerificationScreen(
+
+        Get.off(
+  OtpVerificationScreen(
               verificationId: verificationId,
               userModel: widget.userModel,
               firebaseUser: widget.firebaseUser,
               selectedTime: widget.selectedTime,
-            ),
-          ),
+            )
+      
         );
+      
       },
       codeAutoRetrievalTimeout: (String verificationId) {
         this.verificationId = verificationId;

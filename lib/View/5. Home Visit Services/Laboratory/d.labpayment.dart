@@ -511,6 +511,18 @@ LabController cartController =
                                         ),
                                       ),
                                       SizedBox(width: 8),
+                                             Text(
+                                        item['quantity'] != null
+                                            ? item['quantity'].toString()
+                                            : "1",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                        textAlign: TextAlign
+                                            .end, // Aligns text to the end
+                                      ),
                                       Flexible(
                                         flex: 1, // Takes 1 part of the row
                                         child: Text(

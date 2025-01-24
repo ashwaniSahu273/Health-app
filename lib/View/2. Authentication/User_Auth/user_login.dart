@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
     String password = passwordController.text.trim();
 
     if (email == "" || password == "") {
-        Get.snackbar(
+      Get.snackbar(
         "Message",
         "Please fill all the fields",
         backgroundColor: Colors.red,
@@ -94,27 +94,16 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.popUntil(context, (route) => route.isFirst);
 
       if (userModel.email == "testhareesflow@gmail.com") {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return Admin_Home(
-              userModel: userModel,
-              firebaseUser: credential!.user!,
-              userEmail: userModel.email!,
-            );
-          }),
-        );
+        Get.offAll(Admin_Home(
+          userModel: userModel,
+          firebaseUser: credential.user!,
+          userEmail: userModel.email!,
+        ));
       } else {
-        Navigator.popUntil(context, (route) => route.isFirst);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return HomePage(
-              userModel: userModel,
-              firebaseUser: credential!.user!,
-            );
-          }),
-        );
+        Get.offAll(HomePage(
+          userModel: userModel,
+          firebaseUser: credential.user!,
+        ));
       }
     }
   }
