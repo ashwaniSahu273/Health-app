@@ -2,9 +2,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+// import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/Lab%20More%20Packages/lab_more_packages.dart';
-import 'package:harees_new_project/Resources/Lab%20Functions/lab_functions.dart';
+// import 'package:harees_new_project/Resources/Lab%20Functions/lab_functions.dart';
 // import 'package:harees_new_project/Resources/LabDynamicUi/lab_dynamic_ui.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 // import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';

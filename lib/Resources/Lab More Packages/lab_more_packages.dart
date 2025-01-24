@@ -3,7 +3,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/dynamic.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -133,9 +132,9 @@ class LabMorePackages extends StatelessWidget {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  item.imagePath != null
-                                      ? Image.network(
-                                          item.imagePath!,
+                               
+                                     item.imagePath.isNotEmpty   ? Image.network(
+                                          item.imagePath,
                                           height: 50,
                                           width: 64,
                                           fit: BoxFit.cover,

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/Services_grid/meeting_controller.dart';
 import 'package:harees_new_project/Resources/Services_grid/meeting_details_screen.dart';
-import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/details_page.dart';
+// import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/details_page.dart';
 // import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:url_launcher/url_launcher.dart';

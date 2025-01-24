@@ -11,7 +11,7 @@ import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/F
 import 'package:harees_new_project/View/6.%20More%20Services/User_services/Contact_us/user_contact_us.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/User_services/FAQ/faq_page.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/User_services/Results/results.dart';
-import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/User_appointments.dart';
+// import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/User_appointments.dart';
 
 class UserGridServices extends StatelessWidget {
   final IconData serviceIcon;

@@ -31,28 +31,6 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> pages = [
-      HomePage(
-        userModel: widget.userModel,
-        firebaseUser: widget.firebaseUser,
-      ),
-      MyAppointments(
-        userModel: widget.userModel,
-        firebaseUser: widget.firebaseUser,
-        targetUser: widget.userModel,
-      ),
-      UserHomeChat(
-        userModel: widget.userModel,
-        firebaseUser: widget.firebaseUser,
-        targetUser: widget.userModel,
-      ),
-      UserSideMeetingRequest(
-        userModel: widget.userModel,
-        firebaseUser: widget.firebaseUser,
-      ),
-    ];
-
-    
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       backgroundColor: Colors.white, // Update this color as needed

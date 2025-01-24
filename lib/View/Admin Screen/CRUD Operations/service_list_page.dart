@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/lab_service_model.dart';
-import 'package:harees_new_project/View/8.%20Chats/Models/vitamin_service_model.dart';
+// import 'package:harees_new_project/View/8.%20Chats/Models/vitamin_service_model.dart';
 // import 'package:harees_new_project/View/8.%20Chats/Models/vitamin_service_model.dart';
 import 'package:harees_new_project/View/Admin%20Screen/CRUD%20Operations/create_service.dart';
 
@@ -129,11 +129,8 @@ Future<List<LabService>> _fetchServices() async {
 
               // Extract fields from localized data
               final serviceName =
-                  localizedData.serviceName ?? 'Unknown Service';
-              final description =
-                  localizedData.description ?? 'No description available';
-              final instructions =
-                  localizedData.instructions ?? 'No instructions provided';
+                  localizedData.serviceName;
+      
 
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 6),

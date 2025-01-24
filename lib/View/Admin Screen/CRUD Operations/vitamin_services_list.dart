@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 // import 'package:harees_new_project/View/8.%20Chats/Models/lab_service_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/vitamin_service_model.dart';
 // import 'package:harees_new_project/View/8.%20Chats/Models/vitamin_service_model.dart';
-import 'package:harees_new_project/View/Admin%20Screen/CRUD%20Operations/create_service.dart';
+// import 'package:harees_new_project/View/Admin%20Screen/CRUD%20Operations/create_service.dart';
 import 'package:harees_new_project/View/Admin%20Screen/CRUD%20Operations/vitamin_create_service.dart';
 
 class VitaminServicesList extends StatefulWidget {
@@ -130,7 +130,7 @@ Future<List<Service>> _fetchServices() async {
 
               // Extract fields from localized data
               final serviceName =
-                  localizedData.serviceName ?? 'Unknown Service';
+                  localizedData.serviceName;
               // final description =
               //     localizedData.description ?? 'No description available';
               // final instructions =

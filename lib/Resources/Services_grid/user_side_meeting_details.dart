@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:harees_new_project/Resources/Services_grid/meeting_controller.dart';
+// import 'package:harees_new_project/Resources/Services_grid/meeting_controller.dart';
 import 'package:harees_new_project/Resources/Services_grid/user_side_meeting_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:url_launcher/url_launcher.dart';
