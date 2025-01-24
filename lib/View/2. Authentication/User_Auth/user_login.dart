@@ -31,7 +31,12 @@ class _LoginScreenState extends State<LoginScreen> {
     String password = passwordController.text.trim();
 
     if (email == "" || password == "") {
-      print("Please fill all the fields");
+        Get.snackbar(
+        "Message",
+        "Please fill all the fields",
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } else {
       logIn(email, password);
     }

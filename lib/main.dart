@@ -1,4 +1,3 @@
-
 // ignore_for_file: library_prefixes, avoid_print, prefer_const_constructors, unused_import
 
 import 'package:file_picker/file_picker.dart' as FilePicker;
@@ -15,7 +14,7 @@ import 'package:harees_new_project/ViewModel/Localization/localization.dart';
 import 'package:uuid/uuid.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
- 
+
 var uuid = const Uuid();
 
 void main() async {
@@ -47,15 +46,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: 
-           LoginScreen(),
-      
-      
-      // home: VitaminServices(
-      //   address: "",
-      //   firebaseUser: firebaseUser!,
-      //   userModel: userModel!,
-      // ),
+      home: LoginScreen(),
       debugShowCheckedModeBanner: false,
       locale: const Locale("en", "US"),
       fallbackLocale: const Locale("en", "US"),

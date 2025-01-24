@@ -46,81 +46,115 @@ class ConsultationController extends GetxController {
 
   // Open dialog
   Future<void> openConsultationDialog() async {
-    await Get.dialog(
-      AlertDialog(
-        title: Text('Enter Consultation Details'),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: descriptionController,
-                decoration: InputDecoration(
-                  labelText: 'Description',
-                  labelStyle: TextStyle(color: Colors.grey),
-                ),
+    await Get.dialog(AlertDialog(
+      title: const Text(
+        'Enter Consultation Details',
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Description Field
+            TextField(
+              controller: descriptionController,
+              decoration: const InputDecoration(
+                labelText: 'Description',
+                labelStyle: TextStyle(color: Colors.grey),
+                border: OutlineInputBorder(),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 12, vertical: 0),
               ),
-              TextField(
-                controller: startDateController,
-                decoration: const InputDecoration(
-                  labelText: 'Start Date & Time',
-                  labelStyle: TextStyle(color: Colors.grey),
-                  hintStyle: TextStyle(color: Colors.red),
-                  hintText: 'Select start date and time',
-                ),
-                readOnly: true,
-                onTap: () => selectDateTime(startDateController),
+              maxLines: 3,
+            ),
+            const SizedBox(height: 12),
+            // Start Date & Time
+            TextField(
+              controller: startDateController,
+              decoration: const InputDecoration(
+                labelText: 'Start Date & Time',
+                labelStyle: TextStyle(color: Colors.grey),
+                hintStyle: TextStyle(color: Colors.red),
+                hintText: 'Select start date and time',
+                border: OutlineInputBorder(),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                suffixIcon: Icon(Icons.calendar_today, color: Colors.blue),
               ),
-              TextField(
-                controller: endDateController,
-                decoration: const InputDecoration(
-                  labelText: 'End Date & Time',
-                  labelStyle: TextStyle(color: Colors.grey),
-                  hintText: 'Select end date and time',
-                ),
-                readOnly: true,
-                onTap: () => selectDateTime(endDateController),
+              readOnly: true,
+              onTap: () => selectDateTime(startDateController),
+            ),
+            const SizedBox(height: 12),
+            // End Date & Time
+            TextField(
+              controller: endDateController,
+              decoration: const InputDecoration(
+                labelText: 'End Date & Time',
+                labelStyle: TextStyle(color: Colors.grey),
+                hintText: 'Select end date and time',
+                border: OutlineInputBorder(),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                suffixIcon: Icon(Icons.calendar_today, color: Colors.blue),
               ),
-            ],
+              readOnly: true,
+              onTap: () => selectDateTime(endDateController),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        // Cancel Button
+        TextButton(
+          onPressed: () {
+            Get.back(); // Close the dialog without saving
+          },
+          child: const Text(
+            'Cancel',
+            style: TextStyle(color: Colors.red),
           ),
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Get.back(); // Close dialog without saving
-            },
-            child: Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              if (descriptionController.text.isNotEmpty &&
-                  startDateController.text.isNotEmpty &&
-                  endDateController.text.isNotEmpty) {
-                try {
-                  // Save data to RxMap
-                  consultationData.value = {
-                    'description': descriptionController.text,
-                    'startDateTime': dateFormat
-                        .parse(startDateController.text)
-                        .toIso8601String(),
-                    'endDateTime': dateFormat
-                        .parse(endDateController.text)
-                        .toIso8601String(),
-                  };
-                  Get.back(); // Close dialog
-                } catch (e) {
-                  Get.snackbar(
-                    'Error',
-                    'Invalid date format. Please select a valid date and time.',
-                    snackPosition: SnackPosition.BOTTOM,
-                  );
-                }
+        // Save Button
+        ElevatedButton(
+          onPressed: () {
+            if (descriptionController.text.isNotEmpty &&
+                startDateController.text.isNotEmpty &&
+                endDateController.text.isNotEmpty) {
+              try {
+                // Save data to RxMap
+                consultationData.value = {
+                  'description': descriptionController.text,
+                  'startDateTime': dateFormat
+                      .parse(startDateController.text)
+                      .toIso8601String(),
+                  'endDateTime': dateFormat
+                      .parse(endDateController.text)
+                      .toIso8601String(),
+                };
+                Get.back(); // Close the dialog
+              } catch (e) {
+                Get.snackbar(
+                  'Error',
+                  'Invalid date format. Please select a valid date and time.',
+                  snackPosition: SnackPosition.BOTTOM,
+                  backgroundColor: Colors.red.shade100,
+                  colorText: Colors.black,
+                );
               }
-            },
-            child: Text('Save'),
-          ),
-        ],
-      ),
+            } else {
+              Get.snackbar(
+                'Error',
+                'All fields are required. Please fill in all details.',
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: Colors.red.shade100,
+                colorText: Colors.black,
+              );
+            }
+          },
+          child: const Text('Save'),
+        ),
+      ],
+    )
     );
 
     // Debugging
