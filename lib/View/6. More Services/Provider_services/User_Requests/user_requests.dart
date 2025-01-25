@@ -34,13 +34,16 @@ class UserRequests extends StatelessWidget {
         leadingWidth: 200,
         leading: Row(
           children: [
-            IconButton(
-                onPressed: () => Get.back(),
-                icon: const Icon(
-                  Icons.keyboard_double_arrow_left,
-                  size: 25,
-                  weight: 200,
-                )), // Double-arrow icon
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: IconButton(
+                  onPressed: () => Get.back(),
+                  icon: const Icon(
+                    Icons.keyboard_double_arrow_left,
+                    size: 25,
+                    weight: 200,
+                  )),
+            ), // Double-arrow icon
             Text(
               'Appointments'.tr,
               style: TextStyle(
@@ -55,10 +58,16 @@ class UserRequests extends StatelessWidget {
         color: Colors.blue[50],
         child: SafeArea(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // const SizedBox(height: 20),
               // const MySearchBar(),
               const SizedBox(height: 15),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0,vertical: 8),
+                child: Text("Appointment Requests",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: Color(0xFF424242)),),
+              ),
               StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance.collection("User_appointments").where('status', isEqualTo: "Requested").snapshots(),
                 builder: (BuildContext context,
@@ -94,7 +103,7 @@ class UserRequests extends StatelessWidget {
                             },
                             child: Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 14),
+                                  const EdgeInsets.symmetric(horizontal: 24),
                               child: Container(
                                 decoration: BoxDecoration(
                                   // border: Border.all(color: Colors.black),

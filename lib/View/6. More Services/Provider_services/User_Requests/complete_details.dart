@@ -256,8 +256,8 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                       child: Center(
                                         child: Text(
                                           "No PDF uploaded yet.",
-                                          style:
-                                              TextStyle(color: Colors.grey[600]),
+                                          style: TextStyle(
+                                              color: Colors.grey[600]),
                                         ),
                                       ),
                                     );
@@ -337,7 +337,7 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                         Text(
                                           "Upload test details in pdf",
                                           style: TextStyle(
-                                            color: Colors.grey[700],
+                                            color: Color(0xFF007ABB),
                                           ),
                                         ),
                                         const SizedBox(width: 8),
@@ -503,7 +503,7 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                           Text(
                                             "Upload test result in pdf",
                                             style: TextStyle(
-                                              color: Colors.grey[700],
+                                              color: Color(0xFF007ABB),
                                             ),
                                           ),
                                           const SizedBox(width: 8),
@@ -545,17 +545,35 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                               child: Column(
                                 children: [
                                   TextFormField(
-                                    
                                     controller:
                                         uploadController.doctorNotesController,
                                     maxLines: 3,
                                     decoration: const InputDecoration(
-                                      hintText: "Write remarks",
-                                      border: OutlineInputBorder(),
+                                      hintText: "Write Notes",
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: const Color(0xFFE3E3E5),
+                                              width: 1) ,// Border color
+
+                                          ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: const Color(
+                                              0xFFE3E3E5), // Border color when focused
+                                          width: 1,
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: const Color(
+                                              0xFFE3E3E5), // Border color when not focused
+                                          width: 1,
+                                        ),
+                                      ),
                                     ),
                                     validator: (value) => uploadController
                                         .validateDoctorNotes(value),
-                                        
                                   ),
                                 ],
                               ),
@@ -615,13 +633,33 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(name),
+                                            Flexible(
+                                                child: Text(
+                                              name,
+                                              style: TextStyle(
+                                                  color: Color(0xFF004AAD)),
+                                            )),
                                             Text("$quantity"),
-                                            Text(
-                                              price,
-                                              style: const TextStyle(
-                                                color: Colors.blue,
-                                                fontWeight: FontWeight.bold,
+                                            SizedBox(
+                                              width: 8,
+                                            ),
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 6),
+                                              decoration: BoxDecoration(
+                                                color: Colors.lightBlue[
+                                                    50], // Subtle light blue background
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                              ),
+                                              child: Text(
+                                                price,
+                                                style: const TextStyle(
+                                                  color: Colors.blue,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                             ),
                                           ],

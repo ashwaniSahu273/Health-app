@@ -50,13 +50,16 @@ class ServiceIconButton extends StatelessWidget {
               width: 50,
             ),
             const SizedBox(height: 5),
-            Text(
-              serviceName,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                  fontSize: 12,
-                  fontFamily: "Roboto",
-                  fontWeight: FontWeight.w700),
+            Container(
+              width: 100,
+              child: Text(
+                serviceName,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    fontSize: 12,
+                    fontFamily: "Roboto",
+                    fontWeight: FontWeight.w700),
+              ),
             ),
           ],
         ),
@@ -118,7 +121,20 @@ class MoreServicesGrid extends StatelessWidget {
             userModel: userModel,
             firebaseUser: firebaseUser,
           ),
+  
           ServiceIconButton(
+            serviceIcon: "assets/images/upload.png",
+            serviceName: "Completed Appointments".tr,
+            onPressed: () {
+              Get.to(() => AcceptedRequestsHistory(
+                    userModel: userModel,
+                    firebaseUser: firebaseUser,
+                  ));
+            },
+            userModel: userModel,
+            firebaseUser: firebaseUser,
+          ),
+                  ServiceIconButton(
             serviceIcon: "assets/images/chat.png",
             serviceName: "Chats".tr,
             onPressed: () {
@@ -126,18 +142,6 @@ class MoreServicesGrid extends StatelessWidget {
                     userModel: userModel,
                     firebaseUser: firebaseUser,
                     targetUser: userModel,
-                  ));
-            },
-            userModel: userModel,
-            firebaseUser: firebaseUser,
-          ),
-          ServiceIconButton(
-            serviceIcon: "assets/images/upload.png",
-            serviceName: "Patient History".tr,
-            onPressed: () {
-              Get.to(() => AcceptedRequestsHistory(
-                    userModel: userModel,
-                    firebaseUser: firebaseUser,
                   ));
             },
             userModel: userModel,

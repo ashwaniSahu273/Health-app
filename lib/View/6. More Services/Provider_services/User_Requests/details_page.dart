@@ -178,61 +178,42 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                       onCancel: () => Get.back(),
                                     );
                                   },
-                                  child: Obx(
-                                    () => controller.status.value == "Requested"
-                                        ? Container(
-                                            width: 80, // Customize the width
-                                            height: 27, // Customize the height
-                                            decoration: BoxDecoration(
-                                              color: Color(
-                                                  0xFF00AAAD), // Background color
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
+                                  child: Obx(() => controller.status.value ==
+                                          "Requested"
+                                      ? Container(
+                                          width: 80, // Customize the width
+                                          height: 27, // Customize the height
+                                          decoration: BoxDecoration(
+                                            color: Color(
+                                                0xFF00AAAD), // Background color
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 12, vertical: 5),
+                                          child: const Text(
+                                            "Accept",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 11,
                                             ),
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 12, vertical: 5),
-                                            child: const Text(
-                                              "Accept",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 11,
-                                              ),
+                                          ),
+                                        )
+                                      : const Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10.0, vertical: 8),
+                                          child: Text(
+                                            "Accepted",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Color(0xFF00AAAD),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14,
                                             ),
-                                          )
-                                        : doc["status"] == "Accepted"
-                                            ? Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 10.0,
-                                                        vertical: 8),
-                                                child: Text(
-                                                  "Accepted",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    color: Color(0xFF00AAAD),
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 14,
-                                                  ),
-                                                ),
-                                              )
-                                            : Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 0.0,
-                                                        vertical: 0),
-                                                child: Text(
-                                                  "Completed",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    color: Colors.green,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 14,
-                                                  ),
-                                                ),
-                                              ),
-                                  ),
+                                          ),
+                                        )),
                                 ),
                               ],
                             ),
@@ -361,13 +342,33 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(name),
+                                            Flexible(
+                                                child: Text(
+                                              name,
+                                              style: TextStyle(
+                                                  color: Color(0xFF004AAD)),
+                                            )),
                                             Text("$quantity"),
-                                            Text(
-                                              price,
-                                              style: const TextStyle(
-                                                color: Colors.blue,
-                                                fontWeight: FontWeight.bold,
+                                            SizedBox(
+                                              width: 8,
+                                            ),
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 6),
+                                              decoration: BoxDecoration(
+                                                color: Colors.lightBlue[
+                                                    50], // Subtle light blue background
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                              ),
+                                              child: Text(
+                                                price,
+                                                style: const TextStyle(
+                                                  color: Colors.blue,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                             ),
                                           ],

@@ -49,137 +49,252 @@ class _AcceptedRequestsHistoryState extends State<AcceptedRequestsHistory> {
         .where('status', isEqualTo: "Completed")
         .snapshots();
 
-
     return Scaffold(
-      appBar: MyAppBar(
-        userModel: widget.userModel,
-        firebaseUser: widget.firebaseUser,
-        targetUser: widget.userModel,
-      ),
-      drawer: MyDrawer(
-        userModel: widget.userModel,
-        firebaseUser: widget.firebaseUser,
-        targetUser: widget.userModel,
-      ),
-      body: Stack(
-        children: [
-          // Background Image
-          Positioned.fill(
-            child: Image.asset(
-              'assets/images/back_image.png', // Replace with your background image path
-              fit: BoxFit.cover,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        leadingWidth: 300,
+        leading: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: IconButton(
+                  onPressed: () => Get.back(),
+                  icon: const Icon(
+                    Icons.keyboard_double_arrow_left,
+                    size: 25,
+                    weight: 100,
+                  )),
+            ), // Double-arrow icon
+            Text(
+              'Completed Appointments'.tr,
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Roboto"),
             ),
-          ),
-          // Foreground Content
-          SafeArea(
-            child: Column(
-              children: [
-                // const SizedBox(height: 20),
-                // const MySearchBar(),
-                const SizedBox(height: 15),
-                Expanded(
-                  child: StreamBuilder<QuerySnapshot>(
-                    stream: acceptedAppointmentsList,
-                    builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.hasError) {
-                        return Center(child: Text('Something went wrong'.tr));
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.waiting) {
-                        return Center(child: Text("Loading".tr));
-                      }
-                      if (snapshot.data == null ||
-                          snapshot.data!.docs.isEmpty) {
-                        return Center(child: Text('No accepted requests'.tr));
-                      }
-                      return ListView.builder(
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (context, index) {
-                          final appointment = snapshot.data!.docs[index];
-                          print("appointment: $appointment");
-                          // if (appointment["status"] == "Completed") {
-                            return Padding(
-                              padding: const EdgeInsets.all(14.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Get.to(RequestedAppointmentDetails(
-                                      doc: appointment,
-                                      firebaseUser: widget.firebaseUser,
-                                      userModel: widget.userModel));
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white
-                                        .withOpacity(0.8), // Ensure readability
-                                    border: Border.all(color: Colors.black),
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  child: ListTile(
-                                    title: Text(
-                                      appointment['name'].toString(),
-                                      style: TextStyle(
-                                          color: Colors.blue[700],
-                                          fontSize: 16),
-                                    ),
-                                    subtitle: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          appointment['address'].toString(),
-                                          style: TextStyle(
-                                              color: Colors.green[800]),
-                                        ),
-                                        const SizedBox(height: 5),
-                                        Text(
-                                          appointment["type"].toString(),
-                                          style: const TextStyle(
-                                              color: Colors.red, fontSize: 16),
-                                        ),
-                                      ],
-                                    ),
-                                    leading: Icon(Icons.person,
-                                        color: Colors.blue[700], size: 40),
-                                    trailing: Column(
-                                      children: [
-                                        const Icon(Icons.medical_services,
-                                            size: 35),
-                                        // appointment["status"] == "Accepted"
-                                        //     ? const Text(
-                                        //         "Accepted",
-                                        //         textAlign: TextAlign.center,
-                                        //         style: TextStyle(
-                                        //           color: Color(0xFF00AAAD),
-                                        //           fontWeight: FontWeight.bold,
-                                        //           fontSize: 14,
-                                        //         ),
-                                        //       )
-                                        //     : const Text(
-                                        //         "Completed",
-                                        //         textAlign: TextAlign.center,
-                                        //         style: TextStyle(
-                                        //           color: Colors.green,
-                                        //           fontWeight: FontWeight.bold,
-                                        //           fontSize: 14,
-                                        //         ),
-                                        //       )
-                                      ],
-                                    ),
+          ],
+        ),
+      ),
+      backgroundColor: Colors.blue[50],
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 15),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
+              child: Text(
+                "Completed Appointments",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF424242)),
+              ),
+            ),
+            Expanded(
+              child: StreamBuilder<QuerySnapshot>(
+                stream: acceptedAppointmentsList,
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return Center(child: Text('Something went wrong'.tr));
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return Center(child: Text("Loading".tr));
+                  }
+                  if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
+                    return Center(child: Text('No Completed Appointments'.tr));
+                  }
+                  return ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        final appointment = snapshot.data!.docs[index];
+                        print("appointment: $appointment");
+                        // if (appointment["status"] == "Completed") {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.to(RequestedAppointmentDetails(
+                                  doc: appointment,
+                                  firebaseUser: widget.firebaseUser,
+                                  userModel: widget.userModel));
+
+                              controller.convertFromFirebaseTimestamp(
+                                  appointment["selected_time"]);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                // border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Card(
+                                color: Colors.white,
+                                elevation: 1,
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 0, vertical: 8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          // Leading icon
+                                          CircleAvatar(
+                                            backgroundColor: Colors.blue[100],
+                                            radius: 25,
+                                            child: Icon(
+                                              Icons.person,
+                                              color: Colors.blue[700],
+                                              size: 30,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 12),
+                                          // Name and type
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  appointment['name']
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.blue[700],
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 4),
+                                                Text(
+                                                  appointment['address']
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.green[800],
+                                                  ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 2,
+                                                ),
+                                                const SizedBox(height: 4),
+                                                Text(
+                                                  appointment['type']
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.red,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          // Medical service icon
+                                          Icon(
+                                            Icons.medical_services,
+                                            color: Colors.blue[700],
+                                            size: 35,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                            );
-                          }
-                        //   return null;
-                        // },
+                            ),
+                          ),
+                        );
+
+                        // Padding(
+                        //   padding: const EdgeInsets.all(14.0),
+                        //   child: GestureDetector(
+                        //     onTap: () {
+                        //       Get.to(RequestedAppointmentDetails(
+                        //           doc: appointment,
+                        //           firebaseUser: widget.firebaseUser,
+                        //           userModel: widget.userModel));
+                        //     },
+                        //     child: Container(
+                        //       decoration: BoxDecoration(
+                        //         color: Colors.white
+                        //             .withOpacity(0.8), // Ensure readability
+                        //         border: Border.all(color: Colors.black),
+                        //         borderRadius: BorderRadius.circular(15),
+                        //       ),
+                        //       child: ListTile(
+                        //         title: Text(
+                        //           appointment['name'].toString(),
+                        //           style: TextStyle(
+                        //               color: Colors.blue[700],
+                        //               fontSize: 16),
+                        //         ),
+                        //         subtitle: Column(
+                        //           crossAxisAlignment:
+                        //               CrossAxisAlignment.start,
+                        //           children: [
+                        //             Text(
+                        //               appointment['address'].toString(),
+                        //               style: TextStyle(
+                        //                   color: Colors.green[800]),
+                        //             ),
+                        //             const SizedBox(height: 5),
+                        //             Text(
+                        //               appointment["type"].toString(),
+                        //               style: const TextStyle(
+                        //                   color: Colors.red, fontSize: 16),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         leading: Icon(Icons.person,
+                        //             color: Colors.blue[700], size: 40),
+                        //         trailing: Column(
+                        //           children: [
+                        //             const Icon(Icons.medical_services,
+                        //                 size: 35),
+                        //             // appointment["status"] == "Accepted"
+                        //             //     ? const Text(
+                        //             //         "Accepted",
+                        //             //         textAlign: TextAlign.center,
+                        //             //         style: TextStyle(
+                        //             //           color: Color(0xFF00AAAD),
+                        //             //           fontWeight: FontWeight.bold,
+                        //             //           fontSize: 14,
+                        //             //         ),
+                        //             //       )
+                        //             //     : const Text(
+                        //             //         "Completed",
+                        //             //         textAlign: TextAlign.center,
+                        //             //         style: TextStyle(
+                        //             //           color: Colors.green,
+                        //             //           fontWeight: FontWeight.bold,
+                        //             //           fontSize: 14,
+                        //             //         ),
+                        //             //       )
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // );
+                      }
+                      //   return null;
+                      // },
                       );
-                    },
-                  ),
-                ),
-              ],
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
