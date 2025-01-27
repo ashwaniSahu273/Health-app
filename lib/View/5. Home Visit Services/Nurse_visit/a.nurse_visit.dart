@@ -13,6 +13,7 @@ import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/Button/myroundbutton.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/b.nurse_time.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_controller.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_details.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
@@ -27,16 +28,22 @@ class NurseVisit extends StatefulWidget {
 }
 
 class _NurseVisitState extends State<NurseVisit> {
-  Completer<GoogleMapController> _controller = Completer();
-  static final CameraPosition kGooglePlex = CameraPosition(
+  final Completer<GoogleMapController> _controller = Completer();
+
+  NurseController nurseController =
+      Get.put(NurseController());
+
+    
+
+  static const CameraPosition kGooglePlex = CameraPosition(
     target: LatLng(24.8846, 67.1754),
     zoom: 14.4746,
   );
-  List<Marker> _marker = [];
-  // List<Marker> _list = [
+  final List<Marker> _marker = [];
+  // final List<Marker> _list = [
   //   Marker(
-  //       markerId: MarkerId("1"),
-  //       position: LatLng(24.8846, 70.1754),
+  //       markerId: const MarkerId("1"),
+  //       position: const LatLng(24.8846, 70.1754),
   //       infoWindow: InfoWindow(title: "Current Location".tr))
   // ];
   String stAddress = '';
@@ -45,8 +52,10 @@ class _NurseVisitState extends State<NurseVisit> {
   bool address = false;
   final fireStore = FirebaseFirestore.instance.collection("User_appointments");
 
-  @override
   void initState() {
+
+    nurseController.storeServices();
+    // nurseController.fetchServices();
     super.initState();
     // Initial marker (optional)
     _marker.add(Marker(
@@ -95,44 +104,44 @@ class _NurseVisitState extends State<NurseVisit> {
   }
 
   void _showAddressBottomSheet() async {
-    // final position = await getUserCurrentLocation();
-    // print("My Location".tr);
-    // print("${position.latitude} ${position.longitude}");
+    final position = await getUserCurrentLocation();
+    print("My Location".tr);
+    print("${position.latitude} ${position.longitude}");
 
-    // // Get address
-    // List<Placemark> placemarks =
-    //     await placemarkFromCoordinates(position.latitude, position.longitude);
-    // stAddress =
-    //     "${placemarks.reversed.last.country} ${placemarks.reversed.last.locality} ${placemarks.reversed.last.street}";
+    // Get address
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+    stAddress =
+        "${placemarks.reversed.last.country} ${placemarks.reversed.last.locality} ${placemarks.reversed.last.street}";
 
-    // setState(() {
-    //   _marker.add(Marker(
-    //       markerId: MarkerId("2"),
-    //       position: LatLng(position.latitude, position.longitude),
-    //       infoWindow: InfoWindow(title: "My Location".tr)));
-    //   Latitude = position.latitude.toString();
-    //   Longitude = position.longitude.toString();
-    // });
+    setState(() {
+      _marker.add(Marker(
+          markerId: const MarkerId("2"),
+          position: LatLng(position.latitude, position.longitude),
+          infoWindow: InfoWindow(title: "My Location".tr)));
+      Latitude = position.latitude.toString();
+      Longitude = position.longitude.toString();
+    });
 
     // Show bottom sheet
     Get.bottomSheet(
       Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         color: Colors.white,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Address:",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              "Address:".tr,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               stAddress.isNotEmpty ? stAddress : "Fetching address...",
-              style: TextStyle(fontSize: 14),
+              style: const TextStyle(fontSize: 14),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 // Show confirmation dialog
@@ -140,38 +149,51 @@ class _NurseVisitState extends State<NurseVisit> {
                   title: "Confirm".tr,
                   middleText: "Are you sure you want to confirm".tr,
                   onCancel: () {
-                    Navigator.pop(context);
+                    Navigator.pop(context); // Close the dialog
                   },
                   onConfirm: () {
-                    setState(() {
-                      // Save data to Firestore
-                      // fireStore
-                      //     .doc(FirebaseAuth.instance.currentUser!.email)
-                      //     .set({
-                      //   "email": FirebaseAuth.instance.currentUser!.email,
-                      //   "address": stAddress,
-                      //   "type": "Nurse Visit",
-                      //   "selected_time": ""
-                      // });
 
-                      Navigator.pop(context);
-                      Get.back();
-                      Get.to(() => NurseDetails(
-                            userModel: widget.userModel,
-                            firebaseUser: widget.firebaseUser,
-                            // providerData: {
-                            //   "email": FirebaseAuth.instance.currentUser!.email,
-                            //   "address": stAddress,
-                            //   "type": "Nurse Visit",
-                            // },
-                          ));
-                    });
+                    nurseController.stAddress.value = stAddress;
+                    nurseController.latitude.value = Latitude;
+                    nurseController.longitude.value = Longitude;
+
+                    // nurseController.setUserOrderInfo(
+                    //     widget.userModel, widget.firebaseUser);
+
+
+                    // setState(() {
+                    //   // fireStore.doc(widget.firebaseUser.email).set({
+                    //   //   "email": widget.firebaseUser.email,
+                    //   //   "name": widget.userModel.fullname,
+                    //   //   "phone": widget.userModel.mobileNumber,
+                    //   //   "gender": widget.userModel.gender,
+                    //   //   "dob": widget.userModel.dob,
+                    //   //   "address": stAddress,
+                    //   //   "latitude": Latitude,
+                    //   //   "longitude": Longitude,
+                    //   //   "packages": [],
+                    //   //   "type": "Vitamin Drips",
+                    //   //   "selected_time": ""
+                    //   // });
+                    // });
+
+                    Navigator.pop(context); // Close the dialog
+                    Navigator.pop(context); // Close the bottom sheet
+                    // Get.to(() => VitaminServices(
+                    //     address: stAddress,
+                    //     userModel: widget.userModel,
+                    //     firebaseUser: widget.firebaseUser));
+                     Get.to(NurseDetails(
+                      userModel: widget.userModel,
+                      firebaseUser: widget.firebaseUser,
+                      // address: stAddress,
+                     ));
                   },
                   textCancel: "Cancel".tr,
                   textConfirm: "Confirm".tr,
                 );
               },
-              child: Text("Send"),
+              child: const Text("Send"),
             ),
           ],
         ),
@@ -181,11 +203,10 @@ class _NurseVisitState extends State<NurseVisit> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-    final _auth = FirebaseAuth.instance;
-    final user = _auth.currentUser;
+    final auth = FirebaseAuth.instance;
+    final user = auth.currentUser;
 
     return Scaffold(
       body: SafeArea(
@@ -198,7 +219,7 @@ class _NurseVisitState extends State<NurseVisit> {
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
           },
-          onTap: _handleTap
+          
         ),
       ),
       floatingActionButton: Align(

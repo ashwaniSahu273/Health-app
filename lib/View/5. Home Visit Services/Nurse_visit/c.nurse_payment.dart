@@ -6,47 +6,61 @@ import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/Button/myroundbutton.dart';
+import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/b.%20E-Clinics/e_clinic.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_controller.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:intl/intl.dart';
 
-class NurseVisitPaymentPage extends StatelessWidget {
+class NursePayment extends StatelessWidget {
   final UserModel userModel;
   final User firebaseUser;
   final String selectedTime;
 
-
-  const NurseVisitPaymentPage({
+  const NursePayment({
     super.key,
-
     required this.userModel,
     required this.firebaseUser,
     required this.selectedTime,
-
   });
 
   @override
   Widget build(BuildContext context) {
     final String currentDate = DateFormat.yMMMd().format(DateTime.now());
+    NurseController nurseController =
+        Get.put(NurseController());
+
+    // Calculate the VAT and total amount
+    const double vat = 20.0;
+
+    // // Extract numeric value from packagePrice by removing non-numeric characters
+    // final double parsedPackagePrice =
+    //     double.parse(packagePrice.replaceAll(RegExp(r'[^\d.]'), ''));
+
+    final double totalAmount = nurseController.getTotalAmount() + vat;
 
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leadingWidth: 200,
-        leading: Row(
+        title: Row(
           children: [
             GestureDetector(
               onTap: () => Get.back(),
               child: Icon(
                 Icons.keyboard_double_arrow_left,
-                size: 35,
+                size: 25,
                 weight: 200,
               ),
             ), // Double-arrow icon
-            const Text(
-              'Payment Details',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              'Payment Details'.tr,
+              style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: "Roboto",
+                  fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -56,11 +70,16 @@ class NurseVisitPaymentPage extends StatelessWidget {
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(0.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Container(
+                      // decoration: BoxDecoration(
+                      //   color: Colors.white,
+                      // ),
+                      child: StepProgressBar(currentStep: 4, totalSteps: 4)),
                   // Text(
                   //   "Payment Details",
                   //   style: TextStyle(
@@ -75,25 +94,26 @@ class NurseVisitPaymentPage extends StatelessWidget {
                   //   thickness: 2.0,
                   //   height: 10.0,
                   // ),
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-
-                    title: Text(
-                      'Harees Health:',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF7EAFC9),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4.0),
+                    child: ListTile(
+                      title: Text(
+                        'Harees Health:'.tr,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF7EAFC9),
+                        ),
                       ),
-                    ),
-                    subtitle: Text(
-                      'Laboratory Riyadh, Saudi Arabia',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
+                      subtitle: Text(
+                        'Laboratory Riyadh, Saudi Arabia'.tr,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
                       ),
+                      leading: Image.asset("assets/logo/harees_logo.png"),
                     ),
-                    leading: Image.asset("assets/logo/harees_logo.png"),
                   ),
                   // SizedBox(height: 10),
                   // Divider(
@@ -101,38 +121,41 @@ class NurseVisitPaymentPage extends StatelessWidget {
                   //   thickness: 2.0,
                   //   height: 10.0,
                   // ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Nurse Visit',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF7EAFC9),
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.calendar_month_outlined,
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Vitamin IV Drips'.tr,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
                             color: Color(0xFF7EAFC9),
-                            size: 20,
                           ),
-                          SizedBox(width: 5),
-                          Text(
-                            '$currentDate - $selectedTime',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.calendar_month_outlined,
+                              color: Color(0xFF7EAFC9),
+                              size: 16,
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                            SizedBox(width: 5),
+                            Text(
+                              '$currentDate - $selectedTime',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  // SizedBox(height: 20),
+                  SizedBox(height: 10),
                   // Container(
                   //   decoration: BoxDecoration(
                   //     color: Colors.blue[100],
@@ -163,47 +186,56 @@ class NurseVisitPaymentPage extends StatelessWidget {
                   //         ],
                   //       ),
                   //       leading: Image.asset(
-                  //         "assets/images/nurse.png",
+                  //         "assets/images/vitamin.png",
                   //         height: 60,
                   //       ),
                   //     ),
                   //   ),
                   // ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Ziyad Faisal',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                  // SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                    child: Text(
+                      'Zyad Faisal'.tr,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Roboto",
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                   SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.location_on_rounded,
-                        color: Color(0xFF7EAFC9),
-                        size: 28,
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        'Riyadh, Saudi Arabia',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.black,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.location_on_rounded,
+                          color: Color(0xFF7EAFC9),
+                          size: 28,
                         ),
-                      ),
-                    ],
+                        SizedBox(width: 5),
+                        Text(
+                          'Riyadh, Saudi Arabia'.tr,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "Roboto",
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(height: 15),
-                 Container(
+                  Container(
                     width: double.infinity,
                     color: Color(0xFFCAE8E5),
                     height: 25,
                   ),
-                  Container( // Background color
-                    padding: EdgeInsets.all(8),
+                  Container(
+                    // Background color
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -217,14 +249,14 @@ class NurseVisitPaymentPage extends StatelessWidget {
                                     color: Color(0xFF7EAFC9), size: 20),
                                 SizedBox(width: 8),
                                 Text(
-                                  "Add promo code here",
+                                  "Add promo code here".tr,
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.black),
                                 ),
                               ],
                             ),
                             Text(
-                              "Apply",
+                              "Apply".tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Color(0xFF7EAFC9),
@@ -233,7 +265,7 @@ class NurseVisitPaymentPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                       
+
                         // Wallet Balance Section
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -250,7 +282,7 @@ class NurseVisitPaymentPage extends StatelessWidget {
                                 ),
                                 SizedBox(width: 8),
                                 Text(
-                                  "Use wallet balance",
+                                  "Use wallet balance".tr,
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.black),
                                 ),
@@ -264,13 +296,16 @@ class NurseVisitPaymentPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                 
+
                         // Pay with Bank Points Sections
                         ListTile(
-                          contentPadding:EdgeInsets.zero ,
+                          contentPadding: EdgeInsets.zero,
                           title: Text(
-                            "Pay with bank points",
-                            style: TextStyle(fontSize: 16, color: Colors.black),
+                            "Pay with bank points".tr,
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: "Roboto",
+                                color: Colors.black),
                           ),
                           trailing: Icon(Icons.arrow_forward_ios,
                               size: 16, color: Colors.grey),
@@ -278,12 +313,15 @@ class NurseVisitPaymentPage extends StatelessWidget {
                             // Handle navigation
                           },
                         ),
-                     
+
                         ListTile(
-                          contentPadding:EdgeInsets.zero ,
+                          contentPadding: EdgeInsets.zero,
                           title: Text(
-                            "Pay with bank points",
-                            style: TextStyle(fontSize: 16, color: Colors.black),
+                            "Pay with bank points".tr,
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: "Roboto",
+                                color: Colors.black),
                           ),
                           trailing: Icon(Icons.arrow_forward_ios,
                               size: 16, color: Colors.grey),
@@ -299,17 +337,18 @@ class NurseVisitPaymentPage extends StatelessWidget {
                     width: double.infinity,
                     color: Color(0xFFCAE8E5),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Select payment method',
+                            'Select payment method'.tr,
                             style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                            ),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                                fontFamily: "Roboto"),
                           ),
                           Row(
                             children: [
@@ -319,9 +358,9 @@ class NurseVisitPaymentPage extends StatelessWidget {
                                 size: 28,
                               ),
                               Text(
-                                'Cancellation policy',
+                                'Cancellation policy'.tr,
                                 style: TextStyle(
-                                  fontSize: 13,
+                                  fontSize: 12,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -334,14 +373,14 @@ class NurseVisitPaymentPage extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.only(left: 30, right: 30),
+                    padding: const EdgeInsets.only(left: 16, right: 16),
                     child: Column(
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Apple Pay',
+                              'Apple Pay'.tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
@@ -358,7 +397,7 @@ class NurseVisitPaymentPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Split into 3 payments',
+                              'Split into 3 payments'.tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
@@ -375,7 +414,7 @@ class NurseVisitPaymentPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '4 interest-free payments',
+                              '4 interest-free payments'.tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
@@ -392,7 +431,7 @@ class NurseVisitPaymentPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Card payments',
+                              'Card payments'.tr,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
@@ -408,156 +447,217 @@ class NurseVisitPaymentPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
+                  // SizedBox(height: 10),
                   Container(
                     width: double.infinity,
                     // color: Colors.blue[100],
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 4),
                       child: Text(
-                        'Price Breakup',
+                        'Price Breakup'.tr,
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 17,
                           fontWeight: FontWeight.bold,
                           color: Colors.blue,
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Container(
-                   decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(15)),
-                        color: Color(0xFFCAE8E5)),
-                    width: double.infinity,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          SizedBox(height: 10),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              'Selected Service',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Home Visit Fee',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Text(
-                                'SAR 300',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'VAT (+)',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Text(
-                                'SAR 20',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Amount Payable',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        'SAR 320',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color:Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 30),
-                  GestureDetector(
-                    onTap: () {
-                      Get.to(() => HomePage(
-                            userModel: userModel,
-                            firebaseUser: firebaseUser,
-                          ));
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 2, right: 2),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Color(0xFFc1e9e4),
-                        ),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(15),
+                              topRight: Radius.circular(15)),
+                          color: Color(0xFFCAE8E5)),
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: [
                             SizedBox(height: 10),
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                'Selected Service'.tr,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            SizedBox(height: 10),
+                            ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount:
+                                    nurseController.cartItems.length,
+                                itemBuilder: (context, index) {
+                                  final item =
+                                      nurseController.cartItems[index];
+
+                                  String languageCode =
+                                      Get.locale?.languageCode ?? 'en';
+
+                                  final localizedData = languageCode == 'ar'
+                                      ? item["localized"]["ar"]
+                                      : item["localized"]["en"];
+
+                                  return Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Flexible(
+                                        flex: 3, // Takes 3 parts of the row
+                                        child: Text(
+                                          localizedData['serviceName'],
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8),
+                                      Text(
+                                        item['quantity'] != null
+                                            ? item['quantity'].toString()
+                                            : "1",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                        textAlign: TextAlign
+                                            .end, // Aligns text to the end
+                                      ),
+                                      Flexible(
+                                        flex: 1, // Takes 1 part of the row
+                                        child: Row(
+                                          children: [
+                                            SizedBox(width: 10),
+                                            Text(
+                                              localizedData['price'],
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                              textAlign: TextAlign
+                                                  .end, // Aligns text to the end
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }),
+                            SizedBox(height: 10),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Checkout",
+                                  'VAT (+)',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 16,
+                                    color: Colors.grey,
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.green,
                                   ),
                                 ),
-                                SizedBox(width: 10),
-                                Icon(Icons.keyboard_double_arrow_right,
-                                    color: Colors.black, size: 30),
+                                Text(
+                                  '$vat ${'SAR'.tr}',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               ],
                             ),
                             SizedBox(height: 10),
                           ],
                         ),
                       ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Amount Payable'.tr,
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          '$totalAmount ${'SAR'.tr}',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 30),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        nurseController.setUserOrderInfo(
+                            userModel, firebaseUser);
+                        Get.offAll(() => HomePage(
+                              userModel: userModel,
+                              firebaseUser: firebaseUser,
+                            ));
+                      },
+                      child: nurseController.isLoading.value
+                          ? CircularProgressIndicator()
+                          : Padding(
+                              padding: const EdgeInsets.only(left: 2, right: 2),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Color(0xFFc1e9e4),
+                                ),
+                                child: Column(
+                                  children: [
+                                    SizedBox(height: 10),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Checkout".tr,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.green,
+                                          ),
+                                        ),
+                                        SizedBox(width: 10),
+                                        Icon(Icons.keyboard_double_arrow_right,
+                                            color: Colors.black, size: 30),
+                                      ],
+                                    ),
+                                    SizedBox(height: 10),
+                                  ],
+                                ),
+                              ),
+                            ),
                     ),
                   ),
                   SizedBox(height: 40)

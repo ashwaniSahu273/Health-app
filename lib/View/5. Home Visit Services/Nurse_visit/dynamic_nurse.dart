@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/b.nurse_time.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_cart_page.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class DynamicNurse extends StatelessWidget {
-  // final int? id;
+  final int? id;
   // final String title;
   // final String description;
   // final String? components;
@@ -18,7 +20,7 @@ class DynamicNurse extends StatelessWidget {
 
   const DynamicNurse({
     Key? key,
-    // this.id,
+    this.id,
     // required this.title,
     // required this.description,
     // required this.price,
@@ -31,14 +33,14 @@ class DynamicNurse extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // VitaminCartController cartController = Get.put(VitaminCartController());
+    NurseController controller = Get.put(NurseController());
 
-    // final List<Map<String, String>> durations = [
-    //   {'title': '1 Week', 'details': '12 Hours per day', 'price': '2500 SAR'},
-    //   {'title': '2 Week', 'details': '12 Hours per day', 'price': '4000 SAR'},
-    //   {'title': '3 Week', 'details': '12 Hours per day', 'price': '5200 SAR'},
-    //   {'title': '4 Week', 'details': '12 Hours per day', 'price': '6500 SAR'},
-    // ];
+    final services = [
+      {"duration": "1 Week", "hours": "12 Hours per day", "price": "2500 SAR"},
+      {"duration": "2 Week", "hours": "12 Hours per day", "price": "4000 SAR"},
+      {"duration": "3 Week", "hours": "12 Hours per day", "price": "5200 SAR"},
+      {"duration": "4 Week", "hours": "12 Hours per day", "price": "6500 SAR"},
+    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -138,44 +140,106 @@ class DynamicNurse extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-
-                                        GestureDetector(
-                                          // onTap: () {
-                                          //   cartController.addToCart(id);
-                                          // },
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 20, vertical: 6),
-                                            decoration: BoxDecoration(
-                                              color: Color(
-                                                  0xFF007ABB), // Subtle light blue background
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: Text(
-                                              "Select".tr,
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors
-                                                    .white, // Highlighted teal price text
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-
-                                        // ElevatedButton(
-                                        //   onPressed: () {},
-                                        //   style: ElevatedButton.styleFrom(
-                                        //     backgroundColor:
-                                        //         const Color(0xFF007ABB),
-                                        //     shape: RoundedRectangleBorder(
-                                        //       borderRadius:
-                                        //           BorderRadius.circular(8),
-                                        //     ),
-                                        //   ),
-                                        //   child: const Text("Select"),
-                                        // ),
+                                         Obx(
+                                          () => controller.isItemInCart(id)
+                                              ? Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      'Qty: '.tr,
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    Container(
+                                                      height: 30,
+                                                      width: 30,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        color: Colors.grey[200],
+                                                      ),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          controller
+                                                              .decreaseQuantity(
+                                                                  id);
+                                                        },
+                                                        child: Center(
+                                                          child: Icon(
+                                                            Icons.remove,
+                                                            size:
+                                                                16, // Adjust size to fit nicely inside the circle
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    Obx(
+                                                      () => Text(
+                                                        '${controller.getQuantityById(id)}',
+                                                        style: const TextStyle(
+                                                            fontSize: 18),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    Container(
+                                                      height: 30,
+                                                      width: 30,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        color: Colors.grey[200],
+                                                      ),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          controller
+                                                              .increaseQuantity(
+                                                                  id);
+                                                        },
+                                                        child: Center(
+                                                          child: Icon(
+                                                            Icons.add,
+                                                            size:
+                                                                16, // Adjust size to fit nicely inside the circle
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                )
+                                              : GestureDetector(
+                                                  onTap: () {
+                                                    controller.addToCart(id);
+                                                  },
+                                                  child: Container(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 20,
+                                                        vertical: 6),
+                                                    decoration: BoxDecoration(
+                                                      color: Color(
+                                                          0xFF007ABB), // Subtle light blue background
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                    ),
+                                                    child: Text(
+                                                      "Select".tr,
+                                                      style: const TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors
+                                                            .white, // Highlighted teal price text
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                        )
                                       ],
                                     ),
                                   ],
@@ -187,10 +251,6 @@ class DynamicNurse extends StatelessWidget {
                       ),
 
                       const SizedBox(height: 16),
-
-                      // About Package
-
-                      const SizedBox(height: 8),
                       Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
@@ -208,14 +268,14 @@ class DynamicNurse extends StatelessWidget {
                               ),
                               child: Text(
                                 "About This Package".tr,
-                                style: TextStyle(
+                                style:const  TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: "Roboto",
                                 ),
                               ),
                             ),
-                            Padding(
+                            const Padding(
                               padding: EdgeInsets.all(10.0),
                               child: Text(
                                 "Experience expert medical care in the comfort of your home with our doctor visit service. We provide personalized attention, accurate assessments, and effective treatments, ensuring your health needs are met with convenience and care.",
@@ -234,7 +294,7 @@ class DynamicNurse extends StatelessWidget {
 
                       // Components Included
 
-                      const SizedBox(height: 8),
+                      // const SizedBox(height: 8),
                       Container(
                         width: double.infinity,
                         child: Card(
@@ -274,6 +334,8 @@ class DynamicNurse extends StatelessWidget {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 16),
+
                       Container(
                         width: double.infinity,
                         child: Card(
@@ -313,6 +375,142 @@ class DynamicNurse extends StatelessWidget {
                           ),
                         ),
                       ),
+
+                      Container(
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 4, vertical: 16),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.white),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Select duration of service",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 16),
+                              SizedBox(
+                                height: 250,
+                                child: GridView.builder(
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    childAspectRatio: 3 / 2.5,
+                                    crossAxisSpacing: 16,
+                                    mainAxisSpacing: 16,
+                                  ),
+                                  itemCount: services.length,
+                                  itemBuilder: (context, index) {
+                                    final service = services[index];
+
+                                    return Obx(
+                                      () => GestureDetector(
+                                        onTap: () {
+                                          controller.selectedIndex.value =
+                                              index;
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: controller
+                                                        .selectedIndex.value ==
+                                                    index
+                                                ? Colors.blue[50]
+                                                : Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            border: Border.all(
+                                              color: controller.selectedIndex
+                                                          .value ==
+                                                      index
+                                                  ? Colors.blue
+                                                  : Colors.grey[300]!,
+                                              width: 2,
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey[100]!,
+                                                blurRadius: 1,
+                                                offset: Offset(0, 0),
+                                              ),
+                                            ],
+                                          ),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 16, horizontal: 8),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                service["duration"]!,
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Colors.blue[700],
+                                                ),
+                                              ),
+                                              SizedBox(height: 4),
+                                              Text(
+                                                service["hours"]!,
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Colors.grey[600],
+                                                ),
+                                              ),
+                                              Spacer(),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "Starting",
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.grey[500],
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 4),
+                                                  Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 4,
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.blue[100],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
+                                                    child: Text(
+                                                      service["price"]!,
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.blue[700],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
                       // Container(
                       //   width: double.infinity,
                       //   child: Card(
@@ -415,32 +613,106 @@ class DynamicNurse extends StatelessWidget {
               ),
             ),
           ),
-          Container(
+         Container(
               color: Colors.white,
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: ElevatedButton(
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(
+                          color: Color(0xFF009788)), // Border color
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(8), // Rounded corners
+                      ),
+                      minimumSize: Size(160, 55),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8), // Padding
+                    ),
+                    onPressed: () {
+                      if (controller.cartItems.isNotEmpty) {
+                        Get.to(NurseCartPage(
+                          address: controller.stAddress.value,
+                          userModel: userModel,
+                          firebaseUser: firebaseUser,
+                          //
+                        ));
+                      }
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Circular container
+                        Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF009788), // Background color
+                            borderRadius:
+                                BorderRadius.circular(8), // Make it circular
+                          ),
+                          child: Obx(
+                            () => Center(
+                              child: Text(
+                                '${controller.cartItems.length}',
+                                style: const TextStyle(
+                                  color: Colors.white, // Text color
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                            width: 8), // Space between the icon and text
+                        Text(
+                          'Selected item'.tr,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontFamily: "schyler",
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF009788),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Obx(
+                    () => ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF007ABB),
+                        backgroundColor: controller.isCartEmpty()
+                            ? Color(0xFFD9D9D9)
+                            : Color(0xFF007ABB),
                         minimumSize: const Size(160, 55),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       onPressed: () {
-                       
+                        // Get.to(SelectPackage(
+                        //     address: address,
+                        //     userModel: userModel,
+                        //     firebaseUser: firebaseUser,
+                        // ));
+
+                        if (!controller.isCartEmpty()) {
                           Get.to(() => Nurse_Time(
                                 userModel: userModel,
                                 firebaseUser: firebaseUser,
                               ));
-                        
+                        }
                       },
                       child: Text(
                         'Continue'.tr,
-                        style: TextStyle(color: Colors.white, fontSize: 15),
+                        style: TextStyle(
+                            fontFamily: "schyler",
+                            color: controller.isCartEmpty()
+                                ? Color(0xFF9C9C9C)
+                                : Colors.white,
+                            fontSize: 15),
                       ),
                     ),
                   ),

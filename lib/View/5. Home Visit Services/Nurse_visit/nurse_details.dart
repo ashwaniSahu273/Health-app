@@ -1,37 +1,82 @@
+import 'dart:typed_data';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/b.nurse_time.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/dynamic_nurse.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_cart_page.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class NurseDetails extends StatelessWidget {
-  // final int? id;
-  // final String title;
-  // final String description;
-  // final String? components;
-  // final String price;
-  // final String? image;
-  // final String address;
   final UserModel userModel;
   final User firebaseUser;
 
   const NurseDetails({
     Key? key,
-    // this.id,
-    // required this.title,
-    // required this.description,
-    // required this.price,
-    // this.image,
-    // required this.components,
-    // required this.address,
     required this.userModel,
     required this.firebaseUser,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // VitaminCartController cartController = Get.put(VitaminCartController());
+    NurseController cartController = Get.put(NurseController());
+
+    String imageUrl = '';
+    bool isUploading = false;
+
+    // @override
+    // void initState() {
+    //   super.initState();
+    //   uploadImage();
+    // }
+
+    Future<void> uploadImage() async {
+      // setState(() {
+      //   isUploading = true;
+      // });
+      print("Starting upload");
+
+      try {
+        // Load image from assets
+        ByteData byteData =
+            await rootBundle.load('assets/images/postpartum.png');
+        Uint8List imageData = byteData.buffer.asUint8List();
+
+        // Reference to Firebase Storage location
+        FirebaseStorage storage = FirebaseStorage.instance;
+        Reference ref = storage
+            .ref()
+            .child('images/${DateTime.now().millisecondsSinceEpoch}.png');
+
+        // Upload the image
+        UploadTask uploadTask = ref.putData(imageData);
+
+        // Wait for upload to complete
+        TaskSnapshot snapshot = await uploadTask.whenComplete(() => null);
+
+        // Get the download URL of the uploaded image
+        String url = await snapshot.ref.getDownloadURL();
+
+        // setState(() {
+
+        //   imageUrl = url; // Store the URL
+        //   isUploading = false; // Set uploading status to false
+        // });
+
+        // Optionally, print the URL
+        print('Image uploaded! URL:==========> $url<===============');
+      } catch (e) {
+        print('Error uploading image: $e');
+        // setState(() {
+        //   isUploading = false;
+        // });
+      }
+    }
 
     final List<Map<String, String>> services = [
       {
@@ -39,36 +84,48 @@ class NurseDetails extends StatelessWidget {
         "description":
             "Specialized attention for senior citizens, including mobility and health monitoring.",
         "icon": "Icons.elderly", // Replace with actual asset/image if needed
+        "image":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2Fback_image.png?alt=media&token=2c989863-03f0-47dc-8e61-e9cc6b56192a"
       },
       {
         "title": "Babysitter Services",
         "description":
             "Professional care for infants and children, ensuring their health and safety.",
         "icon": "Icons.child_care",
+        "image":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981186590.png?alt=media&token=dccc55e2-1c77-4623-967c-34413aea1cee"
       },
       {
         "title": "Post-Operative Care",
         "description":
             "Wound dressing, medication administration, and recovery monitoring after surgery.",
         "icon": "Icons.medical_services",
+        "image":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b"
       },
       {
         "title": "Postpartum Care",
         "description":
             "Support for new mothers, including breastfeeding guidance and post-delivery recovery.",
         "icon": "Icons.maternity_services",
+        "image":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981351078.png?alt=media&token=fd7730ea-58d1-4fb3-880f-c24f14856e87"
       },
       {
         "title": "Chronic Illness Support",
         "description":
             "Help with managing conditions like diabetes, hypertension, or asthma.",
         "icon": "Icons.health_and_safety",
+        "image":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b"
       },
       {
         "title": "Mobility Assistance",
         "description":
             "Support for individuals with limited mobility or recovering from injuries.",
         "icon": "Icons.accessibility",
+        "image":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b"
       },
     ];
 
@@ -86,12 +143,17 @@ class NurseDetails extends StatelessWidget {
                   size: 25,
                   weight: 200,
                 )), // Double-arrow icon
-            Text(
-              'Nurse Visit'.tr,
-              style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "Roboto"),
+            GestureDetector(
+              onTap: () {
+                uploadImage();
+              },
+              child: Text(
+                'Nurse Visit'.tr,
+                style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Roboto"),
+              ),
             ),
           ],
         ),
@@ -107,16 +169,21 @@ class NurseDetails extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(12),
-              itemCount: services.length,
+              itemCount: cartController.servicesList.length,
               itemBuilder: (context, index) {
-                final service = services[index];
-          
+                final service = cartController.servicesList[index];
+                String languageCode = Get.locale?.languageCode ?? 'en';
+
+                final localizedData = languageCode == 'ar'
+                    ? service.localized.ar
+                    : service.localized.en;
+
                 return GestureDetector(
                   onTap: () {
                     Get.to(DynamicNurse(
-                      firebaseUser: firebaseUser,
-                      userModel: userModel,
-                    ));
+                        firebaseUser: firebaseUser,
+                        userModel: userModel,
+                        id: 1));
                   },
                   child: Card(
                     elevation: 0,
@@ -131,29 +198,23 @@ class NurseDetails extends StatelessWidget {
                         children: [
                           // Profile Image
                           Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: const Color(
-                                  0xFFE6F5FF), // Circle background color
-                            ),
-                            child: const Icon(
-                              Icons
-                                  .person, // Replace with actual image/icon if available
-                              size: 40,
-                              color: Colors.blueAccent,
-                            ),
-                          ),
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: const Color(
+                                    0xFFE6F5FF), // Circle background color
+                              ),
+                              child: Image.network(
+                                  service.imagePath)),
                           const SizedBox(width: 12),
                           // Text Details
                           Expanded(
                             child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                 Text(
-                                  service["title"]!,
+                                Text(
+                                  localizedData.serviceName,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
@@ -161,8 +222,8 @@ class NurseDetails extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 4),
-                               Text(
-                                 service["description"]!,
+                                Text(
+                                  localizedData.description,
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.black54,
@@ -176,11 +237,10 @@ class NurseDetails extends StatelessWidget {
                                       horizontal: 12, vertical: 6),
                                   decoration: BoxDecoration(
                                     color: const Color(0xFFE6F5FF),
-                                    borderRadius:
-                                        BorderRadius.circular(8),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: const Text(
-                                    "400 SAR",
+                                    "Know more",
                                     style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
@@ -198,7 +258,112 @@ class NurseDetails extends StatelessWidget {
                 );
               },
             ),
-          )
+          ),
+          Container(
+              color: Colors.white,
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(
+                          color: Color(0xFF009788)), // Border color
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(8), // Rounded corners
+                      ),
+                      minimumSize: Size(160, 55),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8), // Padding
+                    ),
+                    onPressed: () {
+                      if (cartController.cartItems.isNotEmpty) {
+                        Get.to(NurseCartPage(
+                          address: cartController.stAddress.value,
+                          userModel: userModel,
+                          firebaseUser: firebaseUser,
+                          //
+                        ));
+                      }
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Circular container
+                        Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF009788), // Background color
+                            borderRadius:
+                                BorderRadius.circular(8), // Make it circular
+                          ),
+                          child: Obx(
+                            () => Center(
+                              child: Text(
+                                '${cartController.cartItems.length}',
+                                style: const TextStyle(
+                                  color: Colors.white, // Text color
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                            width: 8), // Space between the icon and text
+                        Text(
+                          'Selected item'.tr,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontFamily: "schyler",
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF009788),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Obx(
+                    () => ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: cartController.isCartEmpty()
+                            ? Color(0xFFD9D9D9)
+                            : Color(0xFF007ABB),
+                        minimumSize: const Size(160, 55),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () {
+                        // Get.to(SelectPackage(
+                        //     address: address,
+                        //     userModel: userModel,
+                        //     firebaseUser: firebaseUser,
+                        // ));
+
+                        if (!cartController.isCartEmpty()) {
+                          Get.to(() => Nurse_Time(
+                                userModel: userModel,
+                                firebaseUser: firebaseUser,
+                              ));
+                        }
+                      },
+                      child: Text(
+                        'Continue'.tr,
+                        style: TextStyle(
+                            fontFamily: "schyler",
+                            color: cartController.isCartEmpty()
+                                ? Color(0xFF9C9C9C)
+                                : Colors.white,
+                            fontSize: 15),
+                      ),
+                    ),
+                  ),
+                ],
+              ))
         ],
       ),
     );

@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/c.nurse_payment.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class Nurse_Time extends StatefulWidget {
@@ -27,23 +29,60 @@ class Nurse_Time extends StatefulWidget {
 
 class _Nurse_TimeState extends State<Nurse_Time> {
   String? selectedTime;
-  int selectedIndex = 0;
   int genderIndex = 0;
-  String selectedDate = "December, 2024"; // Default date
+  int selectedIndexNow = 0;
+  DateTime selectedDateNow = DateTime.now();
+  List<DateTime> monthDates = [];
+
+  NurseController nurseController =
+      Get.put(NurseController());
 
   final List<String> timeSlots = [
-    "09:00 am",
-    "10:00 am",
-    "11:00 am",
-    "12:00 pm",
-    "1:00 pm",
-    "02:00 pm",
-    "04:00 pm",
-    "05:00 pm",
-    "06:00 pm",
+    "09:00 am".tr,
+    "10:00 am".tr,
+    "11:00 am".tr,
+    "12:00 pm".tr,
+    "1:00 pm".tr,
+    "02:00 pm".tr,
+    "04:00 pm".tr,
+    "05:00 pm".tr,
+    "06:00 pm".tr,
   ];
-  void _showDatePicker(BuildContext context) {
-    final List<String> months = [
+
+  @override
+  void initState() {
+    super.initState();
+    _generateMonthDates(
+        selectedDateNow); // Generate dates for the current month
+  }
+
+  void _generateMonthDates(DateTime date) {
+    setState(() {
+      final lastDayOfMonth =
+          DateTime(date.year, date.month + 1, 0).day; // End of the month
+      monthDates = List.generate(
+        lastDayOfMonth - date.day + 1,
+        (index) => DateTime(date.year, date.month, date.day + index),
+      );
+      selectedIndexNow = 0; // Reset the selected index
+    });
+  }
+
+  String _getWeekdayName(int weekday) {
+    const daysOfWeek = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday'
+    ];
+    return daysOfWeek[weekday - 1]; // Subtract 1 since weekday starts from 1
+  }
+
+  String _getMonthName(int month) {
+    const months = [
       "January",
       "February",
       "March",
@@ -57,170 +96,32 @@ class _Nurse_TimeState extends State<Nurse_Time> {
       "November",
       "December"
     ];
-    final List<int> dates = List.generate(31, (index) => index + 1);
-    final List<int> years = List.generate(10, (index) => 2024 + index);
-
-    int selectedMonthIndex = 11; // Default: December
-    int selectedDateIndex = 26; // Default: 27th (index = 26)
-    int selectedYearIndex = 0; // Default: 2024 (index = 0)
-
-    showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            return Container(
-              height: 400,
-              padding: EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  Center(
-                    child: Container(
-                      width: 40,
-                      height: 5,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[400],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    "Select a Date",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 16),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Months
-                        Expanded(
-                          child: ListWheelScrollView.useDelegate(
-                            itemExtent: 50,
-                            perspective: 0.005,
-                            diameterRatio: 1.2,
-                            onSelectedItemChanged: (index) {
-                              setState(() {
-                                selectedMonthIndex = index;
-                              });
-                            },
-                            childDelegate: ListWheelChildBuilderDelegate(
-                              childCount: months.length,
-                              builder: (context, index) {
-                                return Center(
-                                  child: Text(
-                                    months[index],
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: index == selectedMonthIndex
-                                          ? FontWeight.bold
-                                          : FontWeight.normal,
-                                      color: index == selectedMonthIndex
-                                          ? Colors.blue
-                                          : Colors.black,
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        // Dates
-                        Expanded(
-                          child: ListWheelScrollView.useDelegate(
-                            itemExtent: 50,
-                            perspective: 0.005,
-                            diameterRatio: 1.2,
-                            onSelectedItemChanged: (index) {
-                              setState(() {
-                                selectedDateIndex = index;
-                              });
-                            },
-                            childDelegate: ListWheelChildBuilderDelegate(
-                              childCount: dates.length,
-                              builder: (context, index) {
-                                return Center(
-                                  child: Text(
-                                    dates[index].toString(),
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: index == selectedDateIndex
-                                          ? FontWeight.bold
-                                          : FontWeight.normal,
-                                      color: index == selectedDateIndex
-                                          ? Colors.blue
-                                          : Colors.black,
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        // Years
-                        Expanded(
-                          child: ListWheelScrollView.useDelegate(
-                            itemExtent: 50,
-                            perspective: 0.005,
-                            diameterRatio: 1.2,
-                            onSelectedItemChanged: (index) {
-                              setState(() {
-                                selectedYearIndex = index;
-                              });
-                            },
-                            childDelegate: ListWheelChildBuilderDelegate(
-                              childCount: years.length,
-                              builder: (context, index) {
-                                return Center(
-                                  child: Text(
-                                    years[index].toString(),
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: index == selectedYearIndex
-                                          ? FontWeight.bold
-                                          : FontWeight.normal,
-                                      color: index == selectedYearIndex
-                                          ? Colors.blue
-                                          : Colors.black,
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      final selectedDate =
-                          "${months[selectedMonthIndex]} ${dates[selectedDateIndex]}, ${years[selectedYearIndex]}";
-                      Navigator.pop(context, selectedDate);
-                    },
-                    child: Center(child: Text("Confirm")),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
-    ).then((selectedDate) {
-      if (selectedDate != null) {
-        setState(() {
-          this.selectedDate = selectedDate;
-        });
-      }
-    });
+    return months[month - 1]; // Subtract 1 since month starts from 1
   }
 
   @override
   Widget build(BuildContext context) {
+    String selectedDate =
+        "${_getMonthName(selectedDateNow.month)} ${selectedDateNow.day}, ${selectedDateNow.year}";
+    void _showDatePicker(BuildContext context) {
+      showDatePicker(
+        context: context,
+        initialDate: selectedDateNow,
+        firstDate: DateTime(2020),
+        lastDate: DateTime(2030),
+      ).then((pickedDate) {
+        if (pickedDate != null) {
+          setState(() {
+            selectedDateNow = pickedDate;
+            _generateMonthDates(selectedDateNow);
+
+            selectedDate =
+                "${_getMonthName(selectedDateNow.month)} ${selectedDateNow.day}, ${selectedDateNow.year}"; // Regenerate dates based on new selection
+          });
+        }
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -231,33 +132,36 @@ class _Nurse_TimeState extends State<Nurse_Time> {
                 onPressed: () => Get.back(),
                 icon: Icon(
                   Icons.keyboard_double_arrow_left,
-                  size: 35,
+                  size: 25,
                   weight: 200,
                 )), // Double-arrow icon
-            const Text(
-              'Select Date',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              'Select Date'.tr,
+              style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: "Roboto",
+                  fontWeight: FontWeight.bold),
             ),
           ],
         ),
-        backgroundColor: MyColors.PageBg,
+        backgroundColor: Colors.white,
         elevation: 1,
-        actions: [
-          Row(
-            children: [
-              Text(
-                "Search",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.search),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ],
+        // actions: [
+        //   Row(
+        //     children: [
+        //       Text(
+        //         "Search".tr,
+        //         style: TextStyle(
+        //           fontSize: 16,
+        //         ),
+        //       ),
+        //       IconButton(
+        //         icon: const Icon(Icons.search),
+        //         onPressed: () {},
+        //       ),
+        //     ],
+        //   ),
+        // ],
       ),
       body: Stack(
         children: [
@@ -269,70 +173,328 @@ class _Nurse_TimeState extends State<Nurse_Time> {
           // ),
           SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(0.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GestureDetector(
-                    onTap: () => _showDatePicker(context),
-                    child: Row(
-                      children: [
-                        Text(
-                          selectedDate,
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        const Icon(
-                          Icons.keyboard_arrow_down,
-                          size: 28,
-                          color: Colors.black,
-                        ),
-                      ],
+                  StepProgressBar(currentStep: 3, totalSteps: 4),
+                  //   padding: const EdgeInsets.only(left: 10, right: 10),
+                  //   child: Text(
+                  //     "Vitamin Drips Details",
+                  //     style: TextStyle(
+                  //       fontSize: 20,
+                  //       fontWeight: FontWeight.w500,
+                  //       color: Colors.black,
+                  //     ),
+                  //   ),
+                  // ),
+                  // SizedBox(height: 15),
+                  // Container(
+                  //   decoration: BoxDecoration(
+                  //     color: Colors.blue[50],
+                  //     borderRadius: BorderRadius.circular(10),
+                  //   ),
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(
+                  //         8.0), // Optional padding for more spacing
+                  //     child: Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Text(
+                  //           'Package: ${widget.providerData['type'] ?? 'N/A'}',
+                  //           style: TextStyle(
+                  //             fontSize: 18,
+                  //             fontWeight: FontWeight.bold,
+                  //           ),
+                  //         ),
+                  //         SizedBox(
+                  //             height:
+                  //                 8), // Adds spacing between Vitamin Type and Benefits
+                  //         Text(
+                  //           'Description: ${widget.providerData['benefits'] ?? 'N/A'}',
+                  //           style: TextStyle(
+                  //             fontSize: 16,
+                  //             fontWeight: FontWeight.w500,
+                  //           ),
+                  //         ),
+                  //         SizedBox(
+                  //             height:
+                  //                 8), // Adds spacing between Benefits and Price
+                  //         Text(
+                  //           'Price: ${widget.providerData['price'] ?? 'N/A'}',
+                  //           style: TextStyle(
+                  //             fontSize: 16,
+                  //             fontWeight: FontWeight.w500,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                  // SizedBox(height: 20),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 10, right: 10),
+                  //   child: Text(
+                  //     "Choose Your Slot",
+                  //     style: TextStyle(
+                  //       fontSize: 20,
+                  //       fontWeight: FontWeight.w500,
+                  //       color: Colors.black,
+                  //     ),
+                  //   ),
+                  // ),
+                  SizedBox(height: 10),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 10, right: 10),
+                  //   child: Text(
+                  //     "Morning",
+                  //     style: TextStyle(
+                  //       fontSize: 18,
+                  //       fontWeight: FontWeight.w500,
+                  //       color: Colors.black,
+                  //     ),
+                  //   ),
+                  // ),
+                  SizedBox(height: 10),
+                  // buildTimeSelectionRow("09:00 am", "10:00 am", "11:00 am"),
+                  // SizedBox(height: 15),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 10, right: 10),
+                  //   child: Text(
+                  //     "Afternoon",
+                  //     style: TextStyle(
+                  //       fontSize: 18,
+                  //       fontWeight: FontWeight.w500,
+                  //       color: Colors.black,
+                  //     ),
+                  //   ),
+                  // ),
+                  // SizedBox(height: 10),
+                  // buildTimeSelectionRow("12:00 pm", "1:00 pm", "02:00 pm"),
+                  // SizedBox(height: 15),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 10, right: 10),
+                  //   child: Text(
+                  //     "Evening",
+                  //     style: TextStyle(
+                  //       fontSize: 18,
+                  //       fontWeight: FontWeight.w500,
+                  //       color: Colors.black,
+                  //     ),
+                  //   ),
+                  // ),
+                  // SizedBox(height: 10),
+                  // buildTimeSelectionRow("04:00 pm", "05:00 pm", "06:00 pm"),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: GestureDetector(
+                      onTap: () => _showDatePicker(context),
+                      child: Row(
+                        children: [
+                          Text(
+                            "${_getMonthName(selectedDateNow.month)} ${selectedDateNow.day}, ${selectedDateNow.year}",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          Icon(Icons.keyboard_arrow_down),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: List.generate(
-                      5,
-                      (index) => GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedIndex = index; // Update selected index
-                          });
-                        },
-                        child: Column(
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: List.generate(monthDates.length, (index) {
+                          final day = monthDates[index];
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedIndexNow =
+                                    index; // Update the selected index
+                                selectedDateNow =
+                                    day; // Update the selected date
+                              });
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: selectedIndexNow == index
+                                        ? Colors.green
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      // Display day number
+                                      Text(
+                                        _getWeekdayName(day.weekday),
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                          color: selectedIndexNow == index
+                                              ? Colors.white
+                                              : Colors.black,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      // Display weekday
+                                      Text(
+                                        '${day.day}',
+                                        style: TextStyle(
+                                          color: selectedIndexNow == index
+                                              ? Colors.white
+                                              : Colors.black,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: "Roboto",
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFFCAE8E5),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 50, bottom: 40),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: selectedIndex == index
-                                    ? Colors.green
-                                    : Colors.transparent,
-                                borderRadius: BorderRadius.circular(8),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  genderIndex = 0;
+
+                                  if (genderIndex == 0) {
+                                    widget.userModel.gender = "Any";
+                                  }
+                                  if (genderIndex == 1) {
+                                    widget.userModel.gender = "Male";
+                                  }
+                                  if (genderIndex == 0) {
+                                    widget.userModel.gender = "Female";
+                                  }
+                                });
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: genderIndex == 0
+                                      ? Colors.green
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 16.0,
+                                      right: 16,
+                                      top: 8.0,
+                                      bottom: 8.0),
+                                  child: Row(
+                                    children: [
+                                      const Icon(Icons.person),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Any".tr,
+                                        style: TextStyle(
+                                          color: genderIndex == 0
+                                              ? Colors.white
+                                              : Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    'Today',
-                                    style: TextStyle(
-                                        color: selectedIndex == index
-                                            ? Colors.white
-                                            : Colors.black,
-                                        fontWeight: FontWeight.bold),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  genderIndex = 1;
+                                });
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: genderIndex == 1
+                                      ? Colors.green
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 16.0,
+                                      right: 16,
+                                      top: 8.0,
+                                      bottom: 8.0),
+                                  child: Row(
+                                    children: [
+                                      const Icon(Icons.male),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Male".tr,
+                                        style: TextStyle(
+                                          color: genderIndex == 1
+                                              ? Colors.white
+                                              : Colors.black,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    '31',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: selectedIndex == index
-                                          ? Colors.white
-                                          : Colors.black,
-                                    ),
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  genderIndex = 2;
+                                });
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: genderIndex == 2
+                                      ? Colors.green
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 16.0,
+                                      right: 16,
+                                      top: 8.0,
+                                      bottom: 8.0),
+                                  child: Row(
+                                    children: [
+                                      const Icon(Icons.female),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Female".tr,
+                                        style: TextStyle(
+                                          color: genderIndex == 2
+                                              ? Colors.white
+                                              : Colors.black,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ],
@@ -340,135 +502,10 @@ class _Nurse_TimeState extends State<Nurse_Time> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 40),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xFFCAE8E5),
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20)),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 50, bottom: 40),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                genderIndex = 0;
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: genderIndex == 0
-                                    ? Colors.green
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16.0,
-                                    right: 16,
-                                    top: 8.0,
-                                    bottom: 8.0),
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.person),
-                                    const SizedBox(width: 5),
-                                    Text(
-                                      "Any",
-                                      style: TextStyle(
-                                        color: genderIndex == 0
-                                            ? Colors.white
-                                            : Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                genderIndex = 1;
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: genderIndex == 1
-                                    ? Colors.green
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16.0,
-                                    right: 16,
-                                    top: 8.0,
-                                    bottom: 8.0),
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.male),
-                                    const SizedBox(width: 5),
-                                    Text(
-                                      "Male",
-                                      style: TextStyle(
-                                        color: genderIndex == 1
-                                            ? Colors.white
-                                            : Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                genderIndex = 2;
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: genderIndex == 2
-                                    ? Colors.green
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16.0,
-                                    right: 16,
-                                    top: 8.0,
-                                    bottom: 8.0),
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.female),
-                                    const SizedBox(width: 5),
-                                    Text(
-                                      "Female",
-                                      style: TextStyle(
-                                        color: genderIndex == 2
-                                            ? Colors.white
-                                            : Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                   const SizedBox(height: 16),
                   ListTile(
                     title: Text(
-                      'Harees Health:',
+                      'Harees Health:'.tr,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -476,7 +513,7 @@ class _Nurse_TimeState extends State<Nurse_Time> {
                       ),
                     ),
                     subtitle: Text(
-                      'Laboratory Riyadh, Saudi Arabia',
+                      'Laboratory Riyadh, Saudi Arabia'.tr,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -546,28 +583,40 @@ class _Nurse_TimeState extends State<Nurse_Time> {
                     height: 10.0,
                   ),
 
-                  GestureDetector(
-                    onTap: () {
-                      // Handle the tap action (e.g., navigate to another screen)
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content: Text('Navigating to Selected Details...')),
-                      );
-                    },
-                    child: Text(
-                      'View Selected Details',
-                      style: TextStyle(
-                        color: Colors.blue, // Text color for link
-                        decoration:
-                            TextDecoration.underline, // Underline the text
-                        fontSize: 16,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        // Handle the tap action (e.g., navigate to another screen)
+                        // Get.to(VitaminCartPage(
+                        //     address: nurseController.stAddress.value,
+                        //     userModel: widget.userModel,
+                        //     firebaseUser: widget.firebaseUser));
+
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   SnackBar(
+                        //       content:
+                        //           Text('Navigating to Selected Details...'.tr)),
+                        // );
+                      },
+                      child: Text(
+                        'View Selected Details'.tr,
+                        style: TextStyle(
+                          color: Colors.blue, // Text color for link
+                          decoration:
+                              TextDecoration.underline, // Underline the text
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    'Excluding visit fee',
-                    style: TextStyle(color: Colors.grey),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      'Excluding visit fee'.tr,
+                      style: TextStyle(color: Colors.grey),
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
@@ -575,7 +624,7 @@ class _Nurse_TimeState extends State<Nurse_Time> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          'SAR 300',
+                          '${nurseController.getTotalAmount()} ${'SAR'.tr}',
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -584,100 +633,33 @@ class _Nurse_TimeState extends State<Nurse_Time> {
                       ],
                     ),
                   ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 10, right: 10),
+                  //   child: Text(
+                  //     "Choose Your Slot".tr,
+                  //     style: TextStyle(
+                  //       fontSize: 20,
+                  //       fontWeight: FontWeight.w500,
+                  //       color: Colors.black,
+                  //     ),
+                  //   ),
+                  // ),
+                  SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Text(
-                      "Choose Your Slot",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: SingleChildScrollView(
+                      scrollDirection:
+                          Axis.horizontal, // Enable horizontal scrolling
+                      child: Wrap(
+                        spacing: 10,
+                        children: [
+                          ...timeSlots.map(
+                              (item) => buildTimeContainer(item, selectedDate)),
+                        ],
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
-                  SingleChildScrollView(
-                    scrollDirection:
-                        Axis.horizontal, // Enable horizontal scrolling
-                    child: Wrap(
-                      spacing: 10,
-                      children: [
-                        ...timeSlots.map((item) => buildTimeContainer(item)),
-                        //       buildTimeSelectionRow(
-                        //           "09:00 am", "10:00 am", "11:00 am"),
-                        //       buildTimeSelectionRow(
-                        //           "12:00 pm", "1:00 pm", "02:00 pm"),
-                        // buildTimeSelectionRow("04:00 pm", "05:00 pm", "06:00 pm"),
-                      ],
-                    ),
-                  ),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(left: 10, right: 10),
-                  //   child: Text(
-                  //     "Your Details",
-                  //     style: TextStyle(
-                  //       fontSize: 20,
-                  //       fontWeight: FontWeight.w500,
-                  //       color: Colors.black,
-                  //     ),
-                  //   ),
-                  // ),
-                  // SizedBox(height: 15),
-                  // Container(
-                  //   decoration: BoxDecoration(
-                  //     color: Colors.blue[50],
-                  //     borderRadius: BorderRadius.circular(10),
-                  //   ),
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.all(
-                  //         8.0), // Optional padding for more spacing
-                  //     child: Column(
-                  //       crossAxisAlignment: CrossAxisAlignment.start,
-                  //       children: [
-                  //         Text(
-                  //           'Email: ${widget.providerData['email'] ?? 'N/A'}',
-                  //           style: TextStyle(
-                  //             fontSize: 18,
-                  //             fontWeight: FontWeight.bold,
-                  //           ),
-                  //         ),
-                  //         SizedBox(
-                  //             height:
-                  //                 8), // Adds spacing between Email and Address
-                  //         Text(
-                  //           'Address: ${widget.providerData['address'] ?? 'N/A'}',
-                  //           style: TextStyle(
-                  //             fontSize: 16,
-                  //             fontWeight: FontWeight.w500,
-                  //           ),
-                  //         ),
-                  //         SizedBox(
-                  //             height:
-                  //                 8), // Adds spacing between Address and Service Type
-                  //         Text(
-                  //           'Service Type: ${widget.providerData['type'] ?? 'N/A'}',
-                  //           style: TextStyle(
-                  //             fontSize: 16,
-                  //             fontWeight: FontWeight.w500,
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-                  SizedBox(height: 30),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(left: 10, right: 10),
-                  //   child: Text(
-                  //     "Choose Your Slot",
-                  //     style: TextStyle(
-                  //       fontSize: 20,
-                  //       fontWeight: FontWeight.w500,
-                  //       color: Colors.black,
-                  //     ),
-                  //   ),
-                  // ),
-                  // SizedBox(height: 10),
+
                   // Padding(
                   //   padding: const EdgeInsets.only(left: 10, right: 10),
                   //   child: Text(
@@ -720,57 +702,73 @@ class _Nurse_TimeState extends State<Nurse_Time> {
                   // SizedBox(height: 10),
                   // buildTimeSelectionRow("04:00 pm", "05:00 pm", "06:00 pm"),
                   // SizedBox(height: 40),
-                  GestureDetector(
-                    onTap: () async {
-                      if (selectedTime != null) {
-                        // Update the Firestore document with the selected time
-                        await FirebaseFirestore.instance
-                            .collection("User_appointments")
-                            .doc(FirebaseAuth.instance.currentUser!.email)
-                            .update({
-                          "selected_time": selectedTime,
-                        });
 
-                        // Navigate to Payment Details
-                        Get.to(() => NurseVisitPaymentPage(
-                              userModel: widget.userModel,
-                              firebaseUser: widget.firebaseUser,
-                       
-                              selectedTime: selectedTime!,
-                            
-                            ));
-                      } else {
-                        Get.snackbar("Error", "Please select a time slot");
-                      }
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 2, right: 2),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Color(0xFFc1e9e4),
-                        ),
-                        child: Column(
-                          children: [
-                            SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Proceed to Payment Details",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
+                  SizedBox(height: 40),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: GestureDetector(
+                      // Inside the GestureDetector's onTap method
+                      onTap: () {
+                        if (selectedTime != null) {
+                          // Update the Firestore document with the selected time
+                          // await FirebaseFirestore.instance
+                          //     .collection("User_appointments")
+                          //     .doc(FirebaseAuth.instance.currentUser!.email)
+                          //     .update({
+                          //   "selected_time": selectedTime,
+                          // });
+
+                          nurseController.convertToFirebaseTimestamp(
+                              selectedDate, selectedTime!);
+
+                          // Navigate to Payment Details with the package name and price
+                          // Get.to(() => GetPatientInfo(
+                          //       address: nurseController.stAddress.value,
+                          //       userModel: widget.userModel,
+                          //       firebaseUser: widget.firebaseUser,
+                          //       selectedTime: selectedTime!,
+                          //     ));
+
+                          // Get.to(GetPatientInfo(
+                          //   userModel: widget.userModel,
+                          //   firebaseUser: widget.firebaseUser,
+                          //   address:nurseController.stAddress.value ,
+                          // ));
+                        } else {
+                          Get.snackbar("Error", "Please select a time slot");
+                        }
+                      },
+
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 2, right: 2),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Color(0xFFc1e9e4),
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Proceed to Payment Details".tr,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: 10),
-                                Icon(Icons.keyboard_double_arrow_right,
-                                    color: Colors.black, size: 30),
-                              ],
-                            ),
-                            SizedBox(height: 10),
-                          ],
+                                  SizedBox(width: 10),
+                                  Icon(Icons.keyboard_double_arrow_right,
+                                      color: Colors.black, size: 30),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -784,26 +782,27 @@ class _Nurse_TimeState extends State<Nurse_Time> {
     );
   }
 
-  Widget buildTimeSelectionRow(String time1, String time2, String time3) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          buildTimeContainer(time1),
-          buildTimeContainer(time2),
-          buildTimeContainer(time3),
-        ],
-      ),
-    );
-  }
+  // Widget buildTimeSelectionRow(String time1, String time2, String time3) {
+  //   return Padding(
+  //     padding: const EdgeInsets.only(left: 10, right: 10),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //       children: [
+  //         buildTimeContainer(time1),
+  //         buildTimeContainer(time2),
+  //         buildTimeContainer(time3),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  Widget buildTimeContainer(String time) {
+  Widget buildTimeContainer(String time, selectedDate) {
     return GestureDetector(
       onTap: () {
         setState(() {
           selectedTime = time;
         });
+        nurseController.convertToFirebaseTimestamp(selectedDate, time);
       },
       child: Container(
         decoration: BoxDecoration(

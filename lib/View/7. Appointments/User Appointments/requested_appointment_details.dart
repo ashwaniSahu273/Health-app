@@ -34,7 +34,7 @@ class RequestedAppointmentDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserController controller = Get.put(UserController());
     controller.convertFromFirebaseTimestamp(doc["selected_time"]);
-  LatLng location = LatLng(
+    LatLng location = LatLng(
       double.parse(doc["latitude"]),
       double.parse(doc["longitude"]),
     );
@@ -268,7 +268,7 @@ class RequestedAppointmentDetails extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 0.0, vertical: 0),
                                   child: Text(
-                                    "Completed",
+                                    doc["status"],
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Colors.green,

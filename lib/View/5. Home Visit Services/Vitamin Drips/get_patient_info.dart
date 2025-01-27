@@ -1,7 +1,9 @@
 import 'dart:developer';
+import 'dart:io';
 
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
@@ -12,6 +14,8 @@ import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20D
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/ui_helper.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 class GetPatientInfo extends StatefulWidget {
   final String address;
@@ -36,10 +40,63 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
   final TextEditingController mobileNumberController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
 
-
   VitaminCartController cartController = Get.put(VitaminCartController());
 
   String? selectedGender;
+  File? imageFile;
+
+  void selectImage(ImageSource source) async {
+    XFile? pickedFile = await ImagePicker().pickImage(source: source);
+
+    if (pickedFile != null) {
+      cropImage(pickedFile);
+    }
+  }
+
+  void cropImage(XFile file) async {
+    CroppedFile? croppedImage = (await ImageCropper().cropImage(
+      sourcePath: file.path,
+      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+      compressQuality: 40,
+    ));
+
+    if (croppedImage != null) {
+      setState(() {
+        imageFile = File(croppedImage.path);
+      });
+    }
+  }
+
+  void showPhotoOptions() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Upload Profile Picture".tr),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  onTap: () {
+                    Navigator.pop(context);
+                    selectImage(ImageSource.gallery);
+                  },
+                  leading: const Icon(Icons.photo_album),
+                  title: Text("Select from Gallery".tr),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.pop(context);
+                    selectImage(ImageSource.camera);
+                  },
+                  leading: const Icon(Icons.camera_alt),
+                  title: Text("Take a photo".tr),
+                ),
+              ],
+            ),
+          );
+        });
+  }
 
   void showDatePickerDialog() async {
     DateTime? pickedDate = await showDatePicker(
@@ -57,7 +114,6 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
   }
 
   void checkValues() {
-    
     String fullname = fullNameController.text.trim();
     // String mobileNumber = mobileNumberController.text.trim();
     String dob = dobController.text.trim();
@@ -106,13 +162,11 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
     //   log("Data uploaded!");
     // });
 
-     Get.to(
-      PhoneInputScreen(
-            userModel: widget.userModel,
-            firebaseUser: widget.firebaseUser,
-            selectedTime: widget.selectedTime,
-          )
-     );
+    Get.to(PhoneInputScreen(
+      userModel: widget.userModel,
+      firebaseUser: widget.firebaseUser,
+      selectedTime: widget.selectedTime,
+    ));
 
     //  Navigator.popUntil(context, (route) => route.isFirst);
     //   Navigator.pushReplacement(
@@ -173,10 +227,21 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(height: 30),
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundColor: Colors.blue.shade100,
-                        child: Icon(Icons.person, size: 60, color: Colors.blue),
+                      CupertinoButton(
+                        onPressed: () {
+                          showPhotoOptions();
+                        },
+                        child: CircleAvatar(
+                          backgroundImage: (imageFile != null)
+                              ? FileImage(imageFile!)
+                              : null,
+                          backgroundColor: Colors.blue[600],
+                          radius: 50,
+                          child: (imageFile == null)
+                              ? const Icon(Icons.person,
+                                  size: 60, color: Colors.white)
+                              : null,
+                        ),
                       ),
                       SizedBox(height: 30),
                       TextField(
