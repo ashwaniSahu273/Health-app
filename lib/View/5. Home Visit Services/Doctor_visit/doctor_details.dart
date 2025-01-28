@@ -31,7 +31,6 @@ class DoctorDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -66,98 +65,94 @@ class DoctorDetails extends StatelessWidget {
               child: StepProgressBar(currentStep: 2, totalSteps: 4)),
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Expanded(
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap:(){
-
-                      Get.to(
-
-                      DynamicDoctor(firebaseUser: firebaseUser,userModel: userModel,)
-                      );
-                    },
-                    child: Card(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      color: Colors.white, // Light blue background
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            // Profile Image
-                            Container(
-                              height: 60,
-                              width: 60,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color:
-                                    Color(0xFFE6F5FF), // Circle background color
-                              ),
-                              child: Icon(
-                                Icons
-                                    .person, // Replace with actual image/icon if available
-                                size: 40,
-                                color: Colors.blueAccent,
-                              ),
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Get.to(DynamicDoctor(
+                      firebaseUser: firebaseUser,
+                      userModel: userModel,
+                    ));
+                  },
+                  child: Card(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    color: Colors.white, // Light blue background
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // Profile Image
+                          Container(
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(
+                                  0xFFE6F5FF), // Circle background color
                             ),
-                            SizedBox(width: 12),
-                            // Text Details
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                 const Text(
-                                    "Doctor Visit",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: Color(0xFF007ABB),
-                                    ),
+                            child: Icon(
+                              Icons
+                                  .person, // Replace with actual image/icon if available
+                              size: 40,
+                              color: Colors.blueAccent,
+                            ),
+                          ),
+                          SizedBox(width: 12),
+                          // Text Details
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Doctor Visit",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xFF007ABB),
                                   ),
-                                  SizedBox(height: 4),
-                              const    Text(
-                                    "Experience expert medical care in the comfort of your home with our doctor visit service.",
+                                ),
+                                SizedBox(height: 4),
+                                const Text(
+                                  "Experience expert medical care in the comfort of your home with our doctor visit service.",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black54,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                SizedBox(height: 8),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 6),
+                                  decoration: BoxDecoration(
+                                    color: Color(
+                                        0xFFE6F5FF), // Light blue background
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: const Text(
+                                    "400 SAR",
                                     style: TextStyle(
                                       fontSize: 12,
-                                      color: Colors.black54,
-                                    ),
-                                    maxLines: 2,
-                                    overflow:TextOverflow.ellipsis,
-                                  ),
-                                  SizedBox(height: 8),
-                    
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 12, vertical: 6),
-                                    decoration: BoxDecoration(
-                                      color: Color(
-                                          0xFFE6F5FF), // Light blue background
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: const Text(
-                                      "400 SAR",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.blueAccent,
-                                      ),
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blueAccent,
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                            // Price Tag
-                          ],
-                        ),
+                          ),
+                          // Price Tag
+                        ],
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           )
         ],

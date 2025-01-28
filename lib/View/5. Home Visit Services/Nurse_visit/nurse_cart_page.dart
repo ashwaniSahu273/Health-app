@@ -208,8 +208,7 @@ class NurseCartPage extends StatelessWidget {
                                           borderRadius:
                                               BorderRadius.circular(5),
                                         ),
-                                        child: Obx(
-                                          ()=> Text(
+                                        child:  Text(
                                             '${localizedData["price"]}',
                                             style: const TextStyle(
                                               fontSize: 12,
@@ -219,7 +218,7 @@ class NurseCartPage extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                      ),
+                                      
                                     ],
                                   ),
                                 ],
