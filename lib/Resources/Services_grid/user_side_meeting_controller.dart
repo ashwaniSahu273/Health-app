@@ -11,18 +11,6 @@ class UserSideMeetingRequestController extends GetxController {
 
   late Stream<QuerySnapshot> userAppointments;
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   userAppointments =
-  //       FirebaseFirestore.instance.collection('User_meetings').where('email', isEqualTo: firebaseUser.email)
-  //                     .snapshots();
-  // }
-
-  // final acceptedAppointments =
-  //     FirebaseFirestore.instance.collection("Accepted_appointments");
-  // final CollectionReference userAppointmentDelete =
-  //     FirebaseFirestore.instance.collection("User_appointments");
   final date = "".obs;
   final time = "".obs;
   final status = "".obs;
@@ -84,21 +72,7 @@ class UserSideMeetingRequestController extends GetxController {
         if (!userAppointmentSnapshot.exists) {
           throw Exception("User appointment does not exist");
         }
-        // Map<String, dynamic> appointmentData =
-        //     userAppointmentSnapshot.data() as Map<String, dynamic>;
 
-        // transaction.set(
-        //     acceptedAppointments
-        //         .doc(user!.email)
-        //         .collection("accepted_appointments_list")
-        //         .doc(appointmentId),
-        //     {
-        //       ...appointmentData, // Copy all fields
-        //       'status': 'Accepted',
-        //       'accepted_by': user.email // Update the status
-        //     });
-
-        // Update the status field in User_appointments
         transaction.update(userAppointmentsRef.doc(appointmentId), {
           'status': 'Accepted',
           'accepted_by': user?.email // Update the status
@@ -112,39 +86,4 @@ class UserSideMeetingRequestController extends GetxController {
       print('Error accepting appointment: $e');
     }
   }
-
-  // void acceptAppointment(DocumentSnapshot doc) async {
-  //   try {
-  //     String email = doc['email'].toString();
-  //     String address = doc['address'].toString();
-  //     String type = doc['type'].toString();
-
-  //     final user = _auth.currentUser;
-
-  //     if (user != null) {
-  //       await acceptedAppointments
-  //           .doc(user.email)
-  //           .collection("accepted_appointments_list")
-  //           .add({'email': email, 'address': address, 'type': type});
-
-  //       await userAppointmentDelete.doc(doc.id).delete();
-  //       Get.snackbar(
-  //         "Success".tr,
-  //         "Appointment Accepted. Check your accepted appointments.".tr,
-  //         backgroundColor: const Color.fromARGB(255, 104, 247, 109),
-  //         colorText: Colors.black,
-  //         borderColor: Colors.black,
-  //         borderWidth: 1,
-  //         duration: const Duration(seconds: 1),
-  //       );
-  //     }
-  //   } catch (e) {
-  //     Get.snackbar(
-  //       "Error".tr,
-  //       "Error accepting appointment: $e".tr,
-  //       backgroundColor: Colors.red,
-  //       colorText: Colors.white,
-  //     );
-  //   }
-  // }
 }

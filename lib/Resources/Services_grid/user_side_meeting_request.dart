@@ -12,7 +12,7 @@ import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dar
 // import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/details_page.dart';
 // import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 class UserSideMeetingRequest extends StatelessWidget {
   final UserModel userModel;
@@ -27,18 +27,8 @@ class UserSideMeetingRequest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _openInGoogleMaps(double latitude, double longitude) async {
-      String googleUrl =
-          "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
-      if (await canLaunch(googleUrl)) {
-        await launch(googleUrl);
-      } else {
-        throw "Could not open the map.";
-      }
-    }
-
     return WillPopScope(
-       onWillPop: () async {
+      onWillPop: () async {
         // When the back button is pressed, navigate to Home page
         Get.offAll(() => HomePage(
               userModel: userModel,
@@ -71,7 +61,7 @@ class UserSideMeetingRequest extends StatelessWidget {
                   )), // Double-arrow icon
               Text(
                 'Appointments'.tr,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
                     fontFamily: "Roboto"),
@@ -88,7 +78,9 @@ class UserSideMeetingRequest extends StatelessWidget {
                 // const MySearchBar(),
                 const SizedBox(height: 15),
                 StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance.collection('User_meetings').where('email', isEqualTo: firebaseUser.email)
+                  stream: FirebaseFirestore.instance
+                      .collection('User_meetings')
+                      .where('email', isEqualTo: firebaseUser.email)
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -106,7 +98,7 @@ class UserSideMeetingRequest extends StatelessWidget {
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) {
                             DocumentSnapshot doc = snapshot.data!.docs[index];
-      
+
                             return GestureDetector(
                               onTap: () {
                                 Get.to(UserSideMeetingDetails(
@@ -120,8 +112,8 @@ class UserSideMeetingRequest extends StatelessWidget {
                                     doc["meeting_data"]["endDateTime"]);
                               },
                               child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 14.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 14.0),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     // border: Border.all(color: Colors.black),
@@ -147,7 +139,8 @@ class UserSideMeetingRequest extends StatelessWidget {
                                             children: [
                                               // Leading icon
                                               CircleAvatar(
-                                                backgroundColor: Colors.blue[100],
+                                                backgroundColor:
+                                                    Colors.blue[100],
                                                 radius: 25,
                                                 child: Icon(
                                                   Icons.person,
@@ -217,22 +210,22 @@ class UserSideMeetingRequest extends StatelessWidget {
                                                             fontSize: 14,
                                                           ),
                                                         )
-                                                      : Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
+                                                      : const Padding(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
                                                                   horizontal:
                                                                       10.0,
                                                                   vertical: 8),
                                                           child: Text(
                                                             "Accepted",
-                                                            textAlign:
-                                                                TextAlign.center,
+                                                            textAlign: TextAlign
+                                                                .center,
                                                             style: TextStyle(
                                                               color: Color(
                                                                   0xFF00AAAD),
                                                               fontWeight:
-                                                                  FontWeight.bold,
+                                                                  FontWeight
+                                                                      .bold,
                                                               fontSize: 14,
                                                             ),
                                                           ),
@@ -261,34 +254,6 @@ class UserSideMeetingRequest extends StatelessWidget {
           firebaseUser: firebaseUser,
         ),
       ),
-    );
-  }
-
-  Widget _buildInfoRow(IconData icon, String label, String value) {
-    return Row(
-      children: [
-        Icon(icon, color: Colors.blue[700], size: 20),
-        const SizedBox(width: 8),
-        Text(
-          "$label: ",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-            color: Colors.blue[800],
-          ),
-        ),
-        Expanded(
-          child: Text(
-            value,
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.black87,
-            ),
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-          ),
-        ),
-      ],
     );
   }
 }

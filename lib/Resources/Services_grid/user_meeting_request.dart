@@ -21,17 +21,8 @@ class UserMeetingRequest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _openInGoogleMaps(double latitude, double longitude) async {
-      String googleUrl =
-          "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
-      if (await canLaunch(googleUrl)) {
-        await launch(googleUrl);
-      } else {
-        throw "Could not open the map.";
-      }
-    }
 
-    Future<void> _launchURL(url) async {
+    Future<void> launchURL(url) async {
       // const url = "https://meet.google.com/oph-nuzx-vpw";
       if (await launch(url)) {
         await canLaunch(url);
@@ -56,7 +47,7 @@ class UserMeetingRequest extends StatelessWidget {
                 )), // Double-arrow icon
             Text(
               'Appointments'.tr,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   fontFamily: "Roboto"),
@@ -183,7 +174,7 @@ class UserMeetingRequest extends StatelessWidget {
 
                                                   doc["meeting_link"] != null
                                                       ? GestureDetector(
-                                                          onTap: () => _launchURL(
+                                                          onTap: () => launchURL(
                                                               "https://${doc["meeting_link"]}"),
                                                           child: Container(
                                                             height: 30,
@@ -196,7 +187,7 @@ class UserMeetingRequest extends StatelessWidget {
                                                                   BorderRadius
                                                                       .circular(
                                                                           8), // Rounded corners
-                                                              boxShadow: [
+                                                              boxShadow: const [
                                                                 BoxShadow(
                                                                   color: Colors
                                                                       .black26,
@@ -209,7 +200,7 @@ class UserMeetingRequest extends StatelessWidget {
                                                             ),
                                                             alignment: Alignment
                                                                 .center, // Center the text
-                                                            child: Text(
+                                                            child: const Text(
                                                               "Join Meet",
                                                               style: TextStyle(
                                                                 color: Colors
@@ -244,7 +235,7 @@ class UserMeetingRequest extends StatelessWidget {
                                                             27, // Customize the height
                                                         decoration:
                                                             BoxDecoration(
-                                                          color: Color(
+                                                          color:const Color(
                                                               0xFF00AAAD), // Background color
                                                           borderRadius:
                                                               BorderRadius

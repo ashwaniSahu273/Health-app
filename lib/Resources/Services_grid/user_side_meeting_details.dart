@@ -26,37 +26,7 @@ class UserSideMeetingDetails extends StatelessWidget {
         Get.put(UserSideMeetingRequestController());
     controller.status.value = doc["status"];
 
-    // LatLng location = LatLng(
-    //   double.parse(doc["latitude"]),
-    //   double.parse(doc["longitude"]),
-    // );
-
-    void openGoogleMap() async {
-      var latitude = double.parse(doc["latitude"]);
-      var longitude = double.parse(doc["longitude"]);
-      String googleUrl =
-          "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
-      if (await canLaunch(googleUrl)) {
-        await launch(googleUrl);
-      } else {
-        throw "Could not open the map.";
-      }
-    }
-
-    void _openInGoogleMaps(double latitude, double longitude) async {
-      String googleUrl =
-          "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
-      if (await canLaunch(googleUrl)) {
-        await launch(googleUrl);
-      } else {
-        throw "Could not open the map.";
-      }
-    }
-
-    // const String googleMeetLink = "https://meet.google.com/oph-nuzx-vpw";
-
-    Future<void> _launchURL(url) async {
-      // const url = "https://meet.google.com/oph-nuzx-vpw";
+    Future<void> launchURL(url) async {
       if (await launch(url)) {
         await canLaunch(url);
       } else {
@@ -102,7 +72,8 @@ class UserSideMeetingDetails extends StatelessWidget {
                     children: [
                       // Top Card
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 8),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 8),
                         margin: const EdgeInsets.symmetric(
                             vertical: 8, horizontal: 8),
                         decoration: BoxDecoration(
@@ -201,8 +172,8 @@ class UserSideMeetingDetails extends StatelessWidget {
                                             fontSize: 14,
                                           ),
                                         )
-                                      : Padding(
-                                          padding: const EdgeInsets.symmetric(
+                                      : const Padding(
+                                          padding: EdgeInsets.symmetric(
                                               horizontal: 10.0, vertical: 8),
                                           child: Text(
                                             "Accepted",
@@ -243,42 +214,6 @@ class UserSideMeetingDetails extends StatelessWidget {
                                 "Email",
                                 doc["email"],
                               ),
-                              // GestureDetector(
-                              //   onTap: () {
-                              //     _openInGoogleMaps(
-                              //       double.parse(doc["latitude"]),
-                              //       double.parse(doc["longitude"]),
-                              //     );
-                              //   },
-                              //   child:
-                              //       buildDetailRow("Address", doc["address"]),
-                              // ),
-                              // const SizedBox(height: 16),
-                              // SizedBox(
-                              //   height: 200,
-                              //   child: GestureDetector(
-                              //     onTap: () {
-                              //       _openInGoogleMaps(
-                              //         double.parse(doc["latitude"]),
-                              //         double.parse(doc["longitude"]),
-                              //       );
-                              //     },
-                              //     child: GoogleMap(
-                              //       // onTap:openGoogleMap,
-                              //       initialCameraPosition: CameraPosition(
-                              //         target: location,
-                              //         zoom: 15,
-                              //       ),
-                              //       markers: {
-                              //         Marker(
-                              //           markerId: MarkerId("cartLocation"),
-                              //           position: location,
-                              //         ),
-                              //       },
-                              //       zoomControlsEnabled: false,
-                              //     ),
-                              //   ),
-                              // ),
                             ],
                           ),
                         ),
@@ -306,13 +241,6 @@ class UserSideMeetingDetails extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 12),
-                              // const Text(
-                              //   "Requested Services",
-                              //   style: TextStyle(
-                              //     fontWeight: FontWeight.bold,
-                              //     fontSize: 16,
-                              //   ),
-                              // ),
                             ],
                           ),
                         ),
@@ -325,7 +253,7 @@ class UserSideMeetingDetails extends StatelessWidget {
                         child: _buildDetailsCard(
                           context,
                           title: "Meeting link",
-                          child: Container(
+                          child: SizedBox(
                               width: double.infinity,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -357,11 +285,12 @@ class UserSideMeetingDetails extends StatelessWidget {
                                             }
                                           },
                                           child: ElevatedButton(
-                                            onPressed: () => _launchURL("https://${doc["meeting_link"]}"),
+                                            onPressed: () => launchURL(
+                                                "https://${doc["meeting_link"]}"),
                                             child: Text("Join Google Meet"),
                                           ),
                                         )
-                                      : Text(
+                                      : const Text(
                                           "Waiting for provider accept",
                                           style: TextStyle(color: Colors.black),
                                         ),
@@ -376,52 +305,6 @@ class UserSideMeetingDetails extends StatelessWidget {
               ),
             ),
           ),
-          // Obx(
-          //   () => Container(
-          //       color: Colors.white,
-          //       padding: const EdgeInsets.all(16.0),
-          //       child: Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //         children: [
-          //           Expanded(
-          //             child: ElevatedButton(
-          //               style: ElevatedButton.styleFrom(
-          //                 backgroundColor:
-          //                     controller.status.value == "Requested"
-          //                         ? const Color.fromARGB(255, 85, 177, 223)
-          //                         : Color(0xFF007ABB),
-          //                 minimumSize: const Size(160, 55),
-          //                 shape: RoundedRectangleBorder(
-          //                   borderRadius: BorderRadius.circular(12),
-          //                 ),
-          //               ),
-          //               onPressed: () {
-          //                 // if (controller.status.value != "Requested") {
-          //                 //   Get.to(() => CompleteAppointmentDetailsScreen(
-          //                 //         userModel: userModel,
-          //                 //         firebaseUser: firebaseUser,
-          //                 //         doc: doc,
-          //                 //         // userModel: userModel,
-          //                 //         // firebaseUser: firebaseUser,
-          //                 //       ));
-          //                 // }
-          //               },
-          //               child: controller.status.value == "Requested"
-          //                   ? Text(
-          //                       'Accept'.tr,
-          //                       style: TextStyle(
-          //                           color: Colors.white, fontSize: 15),
-          //                     )
-          //                   : Text(
-          //                       'Accepted'.tr,
-          //                       style: TextStyle(
-          //                           color: Colors.white, fontSize: 15),
-          //                     ),
-          //             ),
-          //           ),
-          //         ],
-          //       )),
-          // )
         ],
       ),
     );
@@ -485,7 +368,7 @@ class UserSideMeetingDetails extends StatelessWidget {
               value,
               style: TextStyle(
                 fontWeight: isHighlighted ? FontWeight.bold : FontWeight.normal,
-                color: Color(0xFF004AAD),
+                color: const Color(0xFF004AAD),
               ),
             ),
           ),
@@ -519,7 +402,7 @@ class UserSideMeetingDetails extends StatelessWidget {
               style: TextStyle(
                   fontWeight:
                       isHighlighted ? FontWeight.bold : FontWeight.normal,
-                  color: Color(0xFF004AAD),
+                  color: const Color(0xFF004AAD),
                   decoration: TextDecoration.underline
                   //                     .underline,
                   ),
