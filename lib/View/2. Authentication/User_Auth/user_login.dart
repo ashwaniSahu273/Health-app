@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/2.%20Authentication/Provider_Auth/provider_login.dart';
+import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/provider_home.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/ui_helper.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/2.%20Authentication/User_Auth/Google_Auth/auth_service.dart';
@@ -56,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Display a Get.snackbar with an error message
       Get.snackbar(
         "Login Error",
-        ex.message!,
+        "Please Enter valid Email or Password",
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -93,13 +94,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
       Navigator.popUntil(context, (route) => route.isFirst);
 
-      if (userModel.email == "testhareesflow@gmail.com") {
+      if (userModel.role == "admin") {
         Get.offAll(Admin_Home(
           userModel: userModel,
           firebaseUser: credential.user!,
           userEmail: userModel.email!,
         ));
-      } else {
+      } else if (userModel.role == "provider") {
+        Get.offAll(Service_Provider_Home(
+          userModel: userModel,
+          firebaseUser: credential.user!,
+          userEmail: '',
+        ));
+      } else if (userModel.role == "user") {
         Get.offAll(HomePage(
           userModel: userModel,
           firebaseUser: credential.user!,

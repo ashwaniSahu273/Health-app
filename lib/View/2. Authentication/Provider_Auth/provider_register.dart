@@ -30,9 +30,19 @@ class _Provider_RegisterState extends State<Provider_Register> {
     String cPassword = cPasswordController.text.trim();
 
     if (email == "" || password == "" || cPassword == "") {
-      print("Please fill all the fields");
+      Get.snackbar(
+        "Message",
+        "Please fill all the fields",
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } else if (password != cPassword) {
-      print("The passwords you entered do not match!");
+      Get.snackbar(
+        "Message",
+        "The passwords you entered do not match!",
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } else {
       signUp(email, password);
     }
@@ -48,17 +58,23 @@ class _Provider_RegisterState extends State<Provider_Register> {
           .createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (ex) {
       Navigator.pop(context);
+      Get.snackbar(
+        "Sign Up Error",
+        ex.message!,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
       print(ex.message.toString());
     }
 
     if (credential != null) {
       String uid = credential.user!.uid;
       UserModel newUser = UserModel(
-        uid: uid,
-        email: email,
-        fullname: "",
-        profilePic: "",
-      );
+          uid: uid,
+          email: email,
+          fullname: "",
+          profilePic: "",
+          role: "provider");
 
       // Add user to "Registered Users" collection
       await FirebaseFirestore.instance
@@ -95,17 +111,15 @@ class _Provider_RegisterState extends State<Provider_Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      backgroundColor: Color(0xFFEEF8FF),
-
-         automaticallyImplyLeading: false,
-        leading:IconButton(
-                onPressed: () => Get.back(),
-                icon: const Icon(
-                  Icons.keyboard_double_arrow_left,
-                  size: 35,
-                  weight: 200,
-                ))
-      ),
+          backgroundColor: Color(0xFFEEF8FF),
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+              onPressed: () => Get.back(),
+              icon: const Icon(
+                Icons.keyboard_double_arrow_left,
+                size: 35,
+                weight: 200,
+              ))),
       backgroundColor: Color(0xFFEEF8FF),
 
       body: Stack(
@@ -129,69 +143,67 @@ class _Provider_RegisterState extends State<Provider_Register> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                                     const Padding(
-                      padding: EdgeInsets.only(top: 0.0),
-                      child: CircleAvatar(
-                        radius: 90,
-                        backgroundImage:
-                            AssetImage("assets/logo/harees_logo.png"),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      "Harees",
-                      style: TextStyle(
-                          fontSize: 36,
-                          fontFamily: "Schyler",
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFF007ABB)),
-                    ),
-                    Text(
-                      "Care about you and your family".tr,
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: "Schyler"),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Create Your Account".tr,
-                          style: const TextStyle(
-                              fontFamily: "Schyler",
-                              fontSize: 16,
-                              color: Color(0xFF424242),
-                              fontWeight: FontWeight.w500),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 0.0),
+                        child: CircleAvatar(
+                          radius: 90,
+                          backgroundImage:
+                              AssetImage("assets/logo/harees_logo.png"),
                         ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "Harees",
+                        style: TextStyle(
+                            fontSize: 36,
+                            fontFamily: "Schyler",
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF007ABB)),
+                      ),
+                      Text(
+                        "Care about you and your family".tr,
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: "Schyler"),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Create Your Account".tr,
+                            style: const TextStyle(
+                                fontFamily: "Schyler",
+                                fontSize: 16,
+                                color: Color(0xFF424242),
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       MyTextField(
                           controller: emailController,
                           obscureText: false,
                           labelText: "Email Address".tr,
                           conditionText: "Email Address cannot be empty"),
-                               const SizedBox(
-                      height: 10,
-                    ),
-                    
+                      const SizedBox(
+                        height: 10,
+                      ),
                       MyTextField(
                           controller: passwordController,
                           obscureText: true,
                           labelText: "Password".tr,
                           conditionText: "Password cannot be empty"),
-                               const SizedBox(
-                      height: 10,
-                    ),
-                    
+                      const SizedBox(
+                        height: 10,
+                      ),
                       MyTextField(
                           controller: cPasswordController,
                           obscureText: true,
@@ -199,66 +211,64 @@ class _Provider_RegisterState extends State<Provider_Register> {
                           conditionText: "Password cannot be empty"),
                       const SizedBox(height: 25),
                       RoundButton(
-                            width: 175,
-                        borderColor: Colors.white,
-                        textColor: Colors.white,
-                        fontSize: 16,
-                        color: Color(0xFF007ABB),
+                          width: 175,
+                          borderColor: Colors.white,
+                          textColor: Colors.white,
+                          fontSize: 16,
+                          color: Color(0xFF007ABB),
                           text: "Sign Up".tr,
                           onTap: () {
                             checkValues();
                           }),
-                     const SizedBox(height: 15),
-                    RichText(
-                      text: TextSpan(
-                          text: "Or Sign In With? ".tr,
-                          style: const TextStyle(
-                              fontFamily: "Schyler",
-                              color: Color.fromRGBO(0, 0, 0, 1),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500),
-                          children: [
-                            TextSpan(
-                                text: "Mobile".tr,
-                                style: const TextStyle(
-                                    fontFamily: "Schyler",
-                                    color: Colors.blue,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500))
-                          ]),
-                    ),
+                      const SizedBox(height: 15),
+                      RichText(
+                        text: TextSpan(
+                            text: "Or Sign In With? ".tr,
+                            style: const TextStyle(
+                                fontFamily: "Schyler",
+                                color: Color.fromRGBO(0, 0, 0, 1),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500),
+                            children: [
+                              TextSpan(
+                                  text: "Mobile".tr,
+                                  style: const TextStyle(
+                                      fontFamily: "Schyler",
+                                      color: Colors.blue,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500))
+                            ]),
+                      ),
+                      SizedBox(height: 25),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // GestureDetector(
+                          //   onTap: () {
+                          //     // AuthServiceProviderRegister(
+                          //     //         userModel: UserModel(),
+                          //     //         firebaseUser:
+                          //     //             FirebaseAuth.instance.currentUser)
+                          //     //     .signInWithGoogle();
+                          //   },
+                          //   child: CircleAvatar(
+                          //       radius: 20,
+                          //       backgroundImage:
+                          //           Image.asset("assets/images/google.png")
+                          //               .image),
+                          // ),
 
-                    SizedBox(height: 25),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            // AuthServiceProviderRegister(
-                            //         userModel: UserModel(),
-                            //         firebaseUser:
-                            //             FirebaseAuth.instance.currentUser)
-                            //     .signInWithGoogle();
-                          },
-                          child: CircleAvatar(
-                              radius: 20,
-                              backgroundImage:
-                                  Image.asset("assets/images/google.png")
-                                      .image),
-                        ),
-              
-                        // GestureDetector(
-                        //   onTap: () {},
-                        //   child: CircleAvatar(
-                        //       backgroundColor: Colors.white,
-                        //       radius: 20,
-                        //       backgroundImage:
-                        //           Image.asset("assets/images/fb.png").image),
-                        // )
-                      ],
-                    ),
+                          // GestureDetector(
+                          //   onTap: () {},
+                          //   child: CircleAvatar(
+                          //       backgroundColor: Colors.white,
+                          //       radius: 20,
+                          //       backgroundImage:
+                          //           Image.asset("assets/images/fb.png").image),
+                          // )
+                        ],
+                      ),
                     ],
                   ),
                 ),

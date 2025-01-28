@@ -23,73 +23,102 @@ class Provider_login extends StatefulWidget {
 class _Provider_loginState extends State<Provider_login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
   void checkValues() {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
 
-    if (email == "" || password == "") {
-      print("Please fill all the fields");
+    if (email.isEmpty || password.isEmpty) {
+      _showSnackBar("Message", "Please fill all the fields", Colors.red);
     } else {
       logIn(email, password);
     }
   }
 
   void logIn(String email, String password) async {
-    UserCredential? credential;
-
-    UIHelper.showLoadingDialog(context, "Logging In..");
-
     try {
-      credential = await FirebaseAuth.instance
+      UIHelper.showLoadingDialog(context, "Logging In...");
+
+      // Attempt to sign in
+      UserCredential credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+
+      await _fetchAndNavigateUserData(credential);
     } on FirebaseAuthException catch (ex) {
       Navigator.pop(context);
-      print(ex.message.toString());
+      _showSnackBar(
+          "Login Error",  "Please Enter valid Email or Password", Colors.red);
+    } catch (ex) {
+      Navigator.pop(context);
+      _showSnackBar("Error", "An unexpected error occurred", Colors.red);
+      print(ex);
     }
+  }
 
-    if (credential != null) {
+  Future<void> _fetchAndNavigateUserData(UserCredential credential) async {
+    try {
       String uid = credential.user!.uid;
 
       DocumentSnapshot userData = await FirebaseFirestore.instance
-          .collection("Registered Users")
+          .collection("Registered Providers")
           .doc(uid)
           .get();
+
+      if (!userData.exists) {
+        Navigator.pop(context);
+        _showSnackBar(
+          "Login Error",
+          "Invalid Credentials",
+          Colors.red,
+        );
+        return;
+      }
+
       UserModel userModel =
           UserModel.frommap(userData.data() as Map<String, dynamic>);
 
-      // Go to HomePage
       print("Log In Successful!");
 
+      // Navigate to the home page
       Navigator.popUntil(context, (route) => route.isFirst);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) {
-          return Service_Provider_Home(
+        MaterialPageRoute(
+          builder: (context) => Service_Provider_Home(
             userModel: userModel,
-            firebaseUser: credential!.user!,
-            userEmail: '',
-          );
-        }),
+            firebaseUser: credential.user!,
+            userEmail: credential.user!.email ?? '',
+          ),
+        ),
       );
+    } catch (ex) {
+      Navigator.pop(context);
+      _showSnackBar("Error", "Failed to fetch user data", Colors.red);
+      print(ex);
     }
+  }
+
+  void _showSnackBar(String title, String message, Color backgroundColor) {
+    Get.snackbar(
+      title,
+      message,
+      backgroundColor: backgroundColor,
+      colorText: Colors.white,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      backgroundColor: Color(0xFFEEF8FF),
-
-         automaticallyImplyLeading: false,
-        leading:IconButton(
-                onPressed: () => Get.back(),
-                icon: const Icon(
-                  Icons.keyboard_double_arrow_left,
-                  size: 35,
-                  weight: 200,
-                ))
-      ),
+          backgroundColor: Color(0xFFEEF8FF),
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+              onPressed: () => Get.back(),
+              icon: const Icon(
+                Icons.keyboard_double_arrow_left,
+                size: 35,
+                weight: 200,
+              ))),
       backgroundColor: Color(0xFFEEF8FF),
       body: Stack(
         children: [
@@ -112,51 +141,51 @@ class _Provider_loginState extends State<Provider_login> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                     const Padding(
-                      padding: EdgeInsets.only(top: 10.0),
-                      child: CircleAvatar(
-                        radius: 90,
-                        backgroundImage:
-                            AssetImage("assets/logo/harees_logo.png"),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      "Harees",
-                      style: TextStyle(
-                          fontSize: 36,
-                          fontFamily: "Schyler",
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFF007ABB)),
-                    ),
-                    Text(
-                      "Care about you and your family".tr,
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: "Schyler"),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Login To Your Account".tr,
-                          style: const TextStyle(
-                              fontFamily: "Schyler",
-                              fontSize: 16,
-                              color: Color(0xFF424242),
-                              fontWeight: FontWeight.w500),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 10.0),
+                        child: CircleAvatar(
+                          radius: 90,
+                          backgroundImage:
+                              AssetImage("assets/logo/harees_logo.png"),
                         ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "Harees",
+                        style: TextStyle(
+                            fontSize: 36,
+                            fontFamily: "Schyler",
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF007ABB)),
+                      ),
+                      Text(
+                        "Care about you and your family".tr,
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: "Schyler"),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Login To Your Account".tr,
+                            style: const TextStyle(
+                                fontFamily: "Schyler",
+                                fontSize: 16,
+                                color: Color(0xFF424242),
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       MyTextField(
                           controller: emailController,
                           obscureText: false,
@@ -175,10 +204,10 @@ class _Provider_loginState extends State<Provider_login> {
                       ),
                       RoundButton(
                           width: 175,
-                        borderColor: Colors.white,
-                        textColor: Colors.white,
-                        fontSize: 16,
-                        color: Color(0xFF007ABB),
+                          borderColor: Colors.white,
+                          textColor: Colors.white,
+                          fontSize: 16,
+                          color: Color(0xFF007ABB),
                           text: "Sign in".tr,
                           onTap: () {
                             checkValues();
@@ -187,93 +216,92 @@ class _Provider_loginState extends State<Provider_login> {
                         height: 15,
                       ),
                       RichText(
-                      text: TextSpan(
-                          text: "Or Sign In With? ".tr,
-                          style: const TextStyle(
-                              fontFamily: "Schyler",
-                              color: Color.fromRGBO(0, 0, 0, 1),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500),
-                          children: [
-                            TextSpan(
-                                text: "Mobile".tr,
-                                style: const TextStyle(
-                                    fontFamily: "Schyler",
-                                    color: Colors.blue,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500))
-                          ]),
-                    ),
-
-                        const SizedBox(
-                      height: 20,
-                    ),
-
-                      Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            AuthServiceUserLogin(
-                                    userModel: UserModel(),
-                                    firebaseUser:
-                                        FirebaseAuth.instance.currentUser)
-                                .signInWithGoogle();
-                          },
-                          child: CircleAvatar(
-                              radius: 20,
-                              backgroundImage:
-                                  Image.asset("assets/images/google.png")
-                                      .image),
-                        ),
-                       
-
-                        // GestureDetector(
-                        //   onTap: () {},
-                        //   child: CircleAvatar(
-                        //       radius: 20,
-                        //       backgroundImage:
-                        //           Image.asset("assets/images/fb.png").image),
-                        // ),
-                      ],
-                    ),
+                        text: TextSpan(
+                            text: "Or Sign In With? ".tr,
+                            style: const TextStyle(
+                                fontFamily: "Schyler",
+                                color: Color.fromRGBO(0, 0, 0, 1),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500),
+                            children: [
+                              TextSpan(
+                                  text: "Mobile".tr,
+                                  style: const TextStyle(
+                                      fontFamily: "Schyler",
+                                      color: Colors.blue,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500))
+                            ]),
+                      ),
 
                       const SizedBox(
-                      height: 20,
-                    ),
-                       Container(
-                      child: Column(
-                      mainAxisSize:
-                          MainAxisSize.min, // Reduce extra vertical spacing
-                      crossAxisAlignment: CrossAxisAlignment
-                          .center, // Align children to the center
-                      children: [
-                        Text(
-                          "Create a new account?".tr,
-                          style: const TextStyle(
-                            fontFamily: "Schyler",
-                            fontSize: 14,
-                            color: Colors.black,
+                        height: 20,
+                      ),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              AuthServiceUserLogin(
+                                      userModel: UserModel(),
+                                      firebaseUser:
+                                          FirebaseAuth.instance.currentUser)
+                                  .signInWithGoogle();
+                            },
+                            child: CircleAvatar(
+                                radius: 20,
+                                backgroundImage:
+                                    Image.asset("assets/images/google.png")
+                                        .image),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(Provider_Register());
-                          },
-                          child: Text(
-                            "Sign Up".tr,
-                            style: const TextStyle(
-                              fontFamily: "Schyler",
-                              fontSize: 14,
-                              color: Colors.blue,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                    ),
+
+                          // GestureDetector(
+                          //   onTap: () {},
+                          //   child: CircleAvatar(
+                          //       radius: 20,
+                          //       backgroundImage:
+                          //           Image.asset("assets/images/fb.png").image),
+                          // ),
+                        ],
+                      ),
+
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      //    Container(
+                      //   child: Column(
+                      //   mainAxisSize:
+                      //       MainAxisSize.min, // Reduce extra vertical spacing
+                      //   crossAxisAlignment: CrossAxisAlignment
+                      //       .center, // Align children to the center
+                      //   children: [
+                      //     Text(
+                      //       "Create a new account?".tr,
+                      //       style: const TextStyle(
+                      //         fontFamily: "Schyler",
+                      //         fontSize: 14,
+                      //         color: Colors.black,
+                      //       ),
+                      //     ),
+                      //     GestureDetector(
+                      //       onTap: () {
+                      //         Get.to(Provider_Register());
+                      //       },
+                      //       child: Text(
+                      //         "Sign Up".tr,
+                      //         style: const TextStyle(
+                      //           fontFamily: "Schyler",
+                      //           fontSize: 14,
+                      //           color: Colors.blue,
+                      //           fontWeight: FontWeight.w500,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // )
+                      // ),
                     ],
                   ),
                 ),

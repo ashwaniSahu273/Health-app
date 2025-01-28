@@ -5,11 +5,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/2.%20Authentication/User_Auth/user_login.dart';
+import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/provider_home.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/b.Vitamin_services.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/firebase_helper.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/1.%20Splash%20Screen/splash_screen.dart';
+import 'package:harees_new_project/View/Admin%20Screen/admin_home.dart';
 import 'package:harees_new_project/ViewModel/Localization/localization.dart';
 import 'package:uuid/uuid.dart';
 import 'firebase_options.dart';
@@ -37,6 +39,35 @@ void main() async {
   }
 }
 
+Widget decideHomeScreen(UserModel? userModel, User? credential) {
+  if (userModel == null || credential == null) {
+    return LoginScreen();
+  }
+
+  // Determine the home screen based on the user role
+  switch (userModel.role) {
+    case "admin":
+      return Admin_Home(
+        userModel: userModel,
+        firebaseUser: credential,
+        userEmail: userModel.email!,
+      );
+    case "provider":
+      return Service_Provider_Home(
+        userModel: userModel,
+        firebaseUser: credential,
+        userEmail: '',
+      );
+    case "user":
+      return HomePage(
+        userModel: userModel,
+        firebaseUser: credential,
+      );
+    default:
+      return LoginScreen();
+  }
+}
+
 class MyApp extends StatelessWidget {
   final UserModel? userModel;
   final User? firebaseUser;
@@ -46,7 +77,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: LoginScreen(),
+      home: decideHomeScreen(userModel, firebaseUser),
       debugShowCheckedModeBanner: false,
       locale: const Locale("en", "US"),
       fallbackLocale: const Locale("en", "US"),

@@ -31,64 +31,62 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      backgroundColor: Colors.white, // Update this color as needed
-      currentIndex: indexController.currentIndex.value,
-      selectedItemColor: Colors.blue,
-      unselectedItemColor:
-          MyColors.blue, // Changed unselected color to grey for better contrast
-      showUnselectedLabels: true,
-      items: [
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.home, size: 40),
-          label: "Services".tr,
-        ),
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.calendar_month, size: 40),
-          label: "Patient Record".tr,
-        ),
-        // BottomNavigationBarItem(
-        //   icon: const Icon(Icons.receipt_outlined, size: 40),
-        //   label: "Patient record".tr,
-        // ),
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.chat, size: 40),
-          label: "Chats".tr,
-        ),
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.group, size: 40),
-          label: "Meetings".tr,
-        ),
-      ],
-      onTap: (index) {
-        indexController.updateIndex(index);
+    return Obx(
+      () => BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white, // Update this color as needed
+        currentIndex: indexController.currentIndex.value,
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: MyColors.blue,
+        showUnselectedLabels: true,
+        items: [
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.home, size: 40),
+            label: "Services".tr,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.calendar_month, size: 40),
+            label: "Patient Record".tr,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.chat, size: 40),
+            label: "Chats".tr,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.group, size: 40),
+            label: "Meetings".tr,
+          ),
+        ],
+        onTap: (index) {
+          indexController.updateIndex(index);
 
-        if (index == 0) {
-          Get.offAll(() => HomePage(
-                userModel: widget.userModel,
-                firebaseUser: widget.firebaseUser,
-              ));
-        } else if (index == 1) {
-          Get.offAll(() => MyAppointments(
-                userModel: widget.userModel,
-                firebaseUser: widget.firebaseUser,
-                targetUser: widget.userModel,
-              ));
-        } else if (index == 2) {
-          Get.offAll(() => UserHomeChat(
-                userModel: widget.userModel,
-                firebaseUser: widget.firebaseUser,
-                targetUser: widget.userModel,
-              ));
-        } else if (index == 3) {
-          Get.offAll(() => UserSideMeetingRequest(
-                userModel: widget.userModel,
-                firebaseUser: widget.firebaseUser,
-                // targetUser: widget.userModel,
-              ));
-        }
-      },
+          if (index == 0) {
+            Get.to(() => HomePage(
+                  userModel: widget.userModel,
+                  firebaseUser: widget.firebaseUser,
+                ));
+          } else if (index == 1) {
+            Get.to(() => MyAppointments(
+                  currentIndex: 1,
+                  userModel: widget.userModel,
+                  firebaseUser: widget.firebaseUser,
+                  targetUser: widget.userModel,
+                ));
+          } else if (index == 2) {
+            Get.to(() => UserHomeChat(
+                  userModel: widget.userModel,
+                  firebaseUser: widget.firebaseUser,
+                  targetUser: widget.userModel,
+                ));
+          } else if (index == 3) {
+            Get.to(() => UserSideMeetingRequest(
+                  userModel: widget.userModel,
+                  firebaseUser: widget.firebaseUser,
+                  // targetUser: widget.userModel,
+                ));
+          }
+        },
+      ),
     );
   }
 }

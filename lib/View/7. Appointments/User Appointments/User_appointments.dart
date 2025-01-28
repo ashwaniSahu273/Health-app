@@ -19,9 +19,11 @@ class MyAppointments extends StatefulWidget {
   final UserModel userModel;
   final User firebaseUser;
   final UserModel targetUser;
+  final currentIndex;
 
   const MyAppointments({
     Key? key,
+    required this.currentIndex,
     required this.userModel,
     required this.firebaseUser,
     required this.targetUser,
@@ -52,13 +54,12 @@ class _MyAppointmentsState extends State<MyAppointments> {
 
   @override
   Widget build(BuildContext context) {
+    // indexController.updateIndex(widget.currentIndex);
     return WillPopScope(
-       onWillPop: () async {
-        // When the back button is pressed, navigate to Home page
+      onWillPop: () async {
         Get.offAll(() => HomePage(
               userModel: widget.userModel,
               firebaseUser: widget.firebaseUser,
-              // targetUser: widget.userModel,
             ));
         indexController.currentIndex.value = 0;
 
@@ -77,7 +78,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
                           userModel: widget.userModel,
                           firebaseUser: widget.firebaseUser,
                         ));
-                        indexController.currentIndex.value = 0;
+                    indexController.currentIndex.value = 0;
                   },
                   icon: const Icon(
                     Icons.keyboard_double_arrow_left,
@@ -118,15 +119,12 @@ class _MyAppointmentsState extends State<MyAppointments> {
                       return Text('Something went wrong'.tr);
                     } else if (snapshot.connectionState ==
                         ConnectionState.waiting) {
-                          
                       return Text("Loading".tr);
                     }
-                       if (snapshot.data == null ||
-                                  snapshot.data!.docs.isEmpty) {
-                                return Center(
-                                    child: Text('No User Appointments'.tr));
-                              }
-      
+                    if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
+                      return Center(child: Text('No User Appointments'.tr));
+                    }
+
                     return ListView.builder(
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {

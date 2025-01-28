@@ -32,9 +32,20 @@ class _User_RegisterState extends State<User_Register> {
     String cPassword = cPasswordController.text.trim();
 
     if (email == "" || password == "" || cPassword == "") {
-      print("Please fill all the fields");
+      Get.snackbar(
+        "Message",
+        "Please fill all the fields",
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } else if (password != cPassword) {
-      print("The passwords you entered do not match!");
+      Get.snackbar(
+        "Message",
+        "The passwords you entered do not match!",
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      // print("The passwords you entered do not match!");
     } else {
       signUp(email, password);
     }
@@ -56,7 +67,6 @@ class _User_RegisterState extends State<User_Register> {
       if (existingUser != null) {
         Navigator.pop(context);
 
-        // Display a Get.snackbar with an error message
         Get.snackbar(
           "Sign Up Error",
           "The email address is already in use by another account.",
@@ -66,13 +76,11 @@ class _User_RegisterState extends State<User_Register> {
         return;
       }
 
-      // If the user does not exist, create a new account
       credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (ex) {
       Navigator.pop(context);
 
-      // Display a Get.snackbar with an error message
       Get.snackbar(
         "Sign Up Error",
         ex.message!,
@@ -85,8 +93,8 @@ class _User_RegisterState extends State<User_Register> {
 
     if (credential != null) {
       String uid = credential.user!.uid;
-      UserModel newUser =
-          UserModel(uid: uid, email: email, fullname: "", profilePic: "");
+      UserModel newUser = UserModel(
+          uid: uid, email: email, fullname: "", profilePic: "", role: "user");
       await FirebaseFirestore.instance
           .collection("Registered Users")
           .doc(uid)
@@ -109,19 +117,16 @@ class _User_RegisterState extends State<User_Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          backgroundColor: Color(0xFFEEF8FF),
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+              onPressed: () => Get.back(),
+              icon: const Icon(
+                Icons.keyboard_double_arrow_left,
+                size: 35,
+                weight: 200,
+              ))),
       backgroundColor: Color(0xFFEEF8FF),
-
-         automaticallyImplyLeading: false,
-        leading:IconButton(
-                onPressed: () => Get.back(),
-                icon: const Icon(
-                  Icons.keyboard_double_arrow_left,
-                  size: 35,
-                  weight: 200,
-                ))
-      ),
-      backgroundColor: Color(0xFFEEF8FF),
-
       body: SafeArea(
         child: Stack(
           children: [
@@ -193,16 +198,16 @@ class _User_RegisterState extends State<User_Register> {
                         labelText: "Email".tr,
                         conditionText: "Email Address cannot be empty"),
 
-                         const SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    
+
                     MyTextField(
                         controller: passwordController,
                         obscureText: true,
                         labelText: "Password".tr,
                         conditionText: "Password cannot be empty"),
-                           const SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     MyTextField(
@@ -246,21 +251,21 @@ class _User_RegisterState extends State<User_Register> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            AuthServiceUserLogin(
-                                    userModel: UserModel(),
-                                    firebaseUser:
-                                        FirebaseAuth.instance.currentUser)
-                                .signInWithGoogle();
-                          },
-                          child: CircleAvatar(
-                              radius: 20,
-                              backgroundImage:
-                                  Image.asset("assets/images/google.png")
-                                      .image),
-                        ),
-              
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     AuthServiceUserLogin(
+                        //             userModel: UserModel(),
+                        //             firebaseUser:
+                        //                 FirebaseAuth.instance.currentUser)
+                        //         .signInWithGoogle();
+                        //   },
+                        //   child: CircleAvatar(
+                        //       radius: 20,
+                        //       backgroundImage:
+                        //           Image.asset("assets/images/google.png")
+                        //               .image),
+                        // ),
+
                         // GestureDetector(
                         //   onTap: () {},
                         //   child: CircleAvatar(
@@ -272,16 +277,16 @@ class _User_RegisterState extends State<User_Register> {
                       ],
                     ),
 
-                     const SizedBox(
-                      height: 10,
+                    const SizedBox(
+                      height: 30,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         RoundButton(
                           textColor: Colors.white,
-                          color:  Color(0xFF009788),
-                          borderColor:Color(0xFF009788) ,
+                          color: Color(0xFF009788),
+                          borderColor: Color(0xFF009788),
                           height: 32,
                           width: 123,
                           fontSize: 12,

@@ -4,8 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/provider_home.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
+import 'package:harees_new_project/View/Admin%20Screen/admin_home.dart';
 
 class AuthServiceUserLogin {
   final UserModel userModel;
@@ -13,67 +15,78 @@ class AuthServiceUserLogin {
 
   AuthServiceUserLogin({required this.userModel, required this.firebaseUser});
 
- void signInWithGoogle() async {
-  try {
-    GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  void signInWithGoogle() async {
+    try {
+      GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    if (googleUser == null) {
-      // User canceled the Google Sign-In process
-      return;
-    }
+      if (googleUser == null) {
+        // User canceled the Google Sign-In process
+        return;
+      }
 
-    // Check if the user is registered in Firestore based on their email
-    String email = googleUser.email;
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection("Registered Users")
-        .where("email", isEqualTo: email)
-        .get();
-
-    if (querySnapshot.docs.isEmpty) {
-      // User is not registered, display a Get.snackbar with an error message
-      Get.snackbar(
-        "Login Error",
-        "This email is not registered.",
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-      return;
-    }
-
-    // Proceed with Google authentication
-    GoogleSignInAuthentication? googleAuth = await googleUser.authentication;
-
-    AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-
-    UserCredential userCredential =
-        await FirebaseAuth.instance.signInWithCredential(credential);
-
-    if (userCredential.user != null) {
-      String uid = userCredential.user!.uid;
-
-      DocumentSnapshot userData = await FirebaseFirestore.instance
+      // Check if the user is registered in Firestore based on their email
+      String email = googleUser.email;
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection("Registered Users")
-          .doc(uid)
+          .where("email", isEqualTo: email)
           .get();
 
-      UserModel userModel =
-          UserModel.frommap(userData.data() as Map<String, dynamic>);
-      
-      // Go to HomePage
-      print("Log In Successful!");
-      Get.to(() => HomePage(
+      if (querySnapshot.docs.isEmpty) {
+        // User is not registered, display a Get.snackbar with an error message
+        Get.snackbar(
+          "Login Error",
+          "This email is not registered.",
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+        return;
+      }
+
+      // Proceed with Google authentication
+      GoogleSignInAuthentication? googleAuth = await googleUser.authentication;
+
+      AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      if (userCredential.user != null) {
+        String uid = userCredential.user!.uid;
+
+        DocumentSnapshot userData = await FirebaseFirestore.instance
+            .collection("Registered Users")
+            .doc(uid)
+            .get();
+
+        UserModel userModel =
+            UserModel.frommap(userData.data() as Map<String, dynamic>);
+
+        if (userModel.role == "admin") {
+          Get.offAll(Admin_Home(
+            userModel: userModel,
+            firebaseUser: userCredential.user!,
+            userEmail: userModel.email!,
+          ));
+        } else if (userModel.role == "provider") {
+          Get.offAll(Service_Provider_Home(
+            userModel: userModel,
+            firebaseUser: userCredential.user!,
+            userEmail: '',
+          ));
+        } else if (userModel.role == "user") {
+          Get.offAll(HomePage(
             userModel: userModel,
             firebaseUser: userCredential.user!,
           ));
+        }
+      }
+    } catch (error) {
+      print("Error signing in with Google: $error");
     }
-  } catch (error) {
-    print("Error signing in with Google: $error");
   }
-}
-
 }
 
 // class AuthServiceProviderLogin {
