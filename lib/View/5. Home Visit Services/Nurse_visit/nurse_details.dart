@@ -15,6 +15,7 @@ import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 class NurseDetails extends StatelessWidget {
   final UserModel userModel;
   final User firebaseUser;
+  
 
   const NurseDetails({
     Key? key,
@@ -26,8 +27,8 @@ class NurseDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     NurseController cartController = Get.put(NurseController());
 
-    String imageUrl = '';
-    bool isUploading = false;
+    // String imageUrl = '';
+    // bool isUploading = false;
 
     // @override
     // void initState() {
@@ -78,57 +79,6 @@ class NurseDetails extends StatelessWidget {
       }
     }
 
-    final List<Map<String, String>> services = [
-      {
-        "title": "Elderly Care",
-        "description":
-            "Specialized attention for senior citizens, including mobility and health monitoring.",
-        "icon": "Icons.elderly", // Replace with actual asset/image if needed
-        "image":
-            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2Fback_image.png?alt=media&token=2c989863-03f0-47dc-8e61-e9cc6b56192a"
-      },
-      {
-        "title": "Babysitter Services",
-        "description":
-            "Professional care for infants and children, ensuring their health and safety.",
-        "icon": "Icons.child_care",
-        "image":
-            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981186590.png?alt=media&token=dccc55e2-1c77-4623-967c-34413aea1cee"
-      },
-      {
-        "title": "Post-Operative Care",
-        "description":
-            "Wound dressing, medication administration, and recovery monitoring after surgery.",
-        "icon": "Icons.medical_services",
-        "image":
-            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b"
-      },
-      {
-        "title": "Postpartum Care",
-        "description":
-            "Support for new mothers, including breastfeeding guidance and post-delivery recovery.",
-        "icon": "Icons.maternity_services",
-        "image":
-            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981351078.png?alt=media&token=fd7730ea-58d1-4fb3-880f-c24f14856e87"
-      },
-      {
-        "title": "Chronic Illness Support",
-        "description":
-            "Help with managing conditions like diabetes, hypertension, or asthma.",
-        "icon": "Icons.health_and_safety",
-        "image":
-            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b"
-      },
-      {
-        "title": "Mobility Assistance",
-        "description":
-            "Support for individuals with limited mobility or recovering from injuries.",
-        "icon": "Icons.accessibility",
-        "image":
-            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b"
-      },
-    ];
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -172,6 +122,7 @@ class NurseDetails extends StatelessWidget {
               itemCount: cartController.servicesList.length,
               itemBuilder: (context, index) {
                 final service = cartController.servicesList[index];
+                
                 String languageCode = Get.locale?.languageCode ?? 'en';
 
                 final localizedData = languageCode == 'ar'
@@ -181,9 +132,10 @@ class NurseDetails extends StatelessWidget {
                 return GestureDetector(
                   onTap: () {
                     Get.to(DynamicNurse(
-                        firebaseUser: firebaseUser,
-                        userModel: userModel,
-                        id: 1));
+                      firebaseUser: firebaseUser,
+                      userModel: userModel,
+                      service: service,
+                    ));
                   },
                   child: Card(
                     elevation: 0,
@@ -205,8 +157,7 @@ class NurseDetails extends StatelessWidget {
                                 color: const Color(
                                     0xFFE6F5FF), // Circle background color
                               ),
-                              child: Image.network(
-                                  service.imagePath)),
+                              child: Image.network(service.imagePath)),
                           const SizedBox(width: 12),
                           // Text Details
                           Expanded(
@@ -280,6 +231,8 @@ class NurseDetails extends StatelessWidget {
                     onPressed: () {
                       if (cartController.cartItems.isNotEmpty) {
                         Get.to(NurseCartPage(
+                          // service:cartController.servicesList.value,
+
                           address: cartController.stAddress.value,
                           userModel: userModel,
                           firebaseUser: firebaseUser,

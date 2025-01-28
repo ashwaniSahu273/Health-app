@@ -54,7 +54,7 @@ class _NurseVisitState extends State<NurseVisit> {
 
   void initState() {
 
-    nurseController.storeServices();
+    // nurseController.storeServices();
     // nurseController.fetchServices();
     super.initState();
     // Initial marker (optional)

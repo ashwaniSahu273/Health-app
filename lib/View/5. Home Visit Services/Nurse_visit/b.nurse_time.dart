@@ -9,6 +9,8 @@ import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/c.nurse_payment.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/get_patient_info.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_cart_page.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
@@ -588,10 +590,10 @@ class _Nurse_TimeState extends State<Nurse_Time> {
                     child: GestureDetector(
                       onTap: () {
                         // Handle the tap action (e.g., navigate to another screen)
-                        // Get.to(VitaminCartPage(
-                        //     address: nurseController.stAddress.value,
-                        //     userModel: widget.userModel,
-                        //     firebaseUser: widget.firebaseUser));
+                        Get.to(NurseCartPage(
+                            address: nurseController.stAddress.value,
+                            userModel: widget.userModel,
+                            firebaseUser: widget.firebaseUser));
 
                         // ScaffoldMessenger.of(context).showSnackBar(
                         //   SnackBar(
@@ -723,12 +725,12 @@ class _Nurse_TimeState extends State<Nurse_Time> {
                               selectedDate, selectedTime!);
 
                           // Navigate to Payment Details with the package name and price
-                          // Get.to(() => GetPatientInfo(
-                          //       address: nurseController.stAddress.value,
-                          //       userModel: widget.userModel,
-                          //       firebaseUser: widget.firebaseUser,
-                          //       selectedTime: selectedTime!,
-                          //     ));
+                          Get.to(() => NurseGetPatientInfo(
+                                address: nurseController.stAddress.value,
+                                userModel: widget.userModel,
+                                firebaseUser: widget.firebaseUser,
+                                selectedTime: selectedTime!,
+                              ));
 
                           // Get.to(GetPatientInfo(
                           //   userModel: widget.userModel,
@@ -802,6 +804,8 @@ class _Nurse_TimeState extends State<Nurse_Time> {
         setState(() {
           selectedTime = time;
         });
+        nurseController.selectedDateController.value = selectedDate;
+        nurseController.selectedTimeController.value = time;
         nurseController.convertToFirebaseTimestamp(selectedDate, time);
       },
       child: Container(

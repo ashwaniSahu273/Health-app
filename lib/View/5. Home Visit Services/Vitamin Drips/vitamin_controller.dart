@@ -14,6 +14,9 @@ class VitaminCartController extends GetxController {
   var currentTime = "".obs;
   var isLoading = false.obs;
   var servicesList = <Service>[].obs;
+  
+ var selectedDateController = "".obs;
+ var selectedTimeController = "".obs;
 
   @override
   void onInit() {

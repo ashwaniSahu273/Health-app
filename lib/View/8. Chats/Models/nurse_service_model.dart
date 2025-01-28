@@ -2,11 +2,13 @@ class NurseServiceModel {
   String id;
   String imagePath;
   Localized localized;
+    int? quantity;
 
   NurseServiceModel({
     required this.id,
     required this.imagePath,
     required this.localized,
+     this.quantity,
   });
 
   // Factory constructor to create an instance from JSON
@@ -15,6 +17,7 @@ class NurseServiceModel {
       id: json['id'] ?? '', // Default to an empty string if null
       imagePath: json['imagePath'],
       localized: Localized.fromJson(json['localized']),
+      quantity: 1
     );
   }
 
@@ -24,6 +27,7 @@ class NurseServiceModel {
       'id': id,
       'imagePath': imagePath,
       'localized': localized.toJson(),
+      'quantity': quantity,
     };
   }
 }

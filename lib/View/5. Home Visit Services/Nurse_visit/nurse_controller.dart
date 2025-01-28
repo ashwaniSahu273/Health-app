@@ -16,6 +16,10 @@ class NurseController extends GetxController {
   var isLoading = false.obs;
   var servicesList = <NurseServiceModel>[].obs;
   var selectedIndex = 0.obs;
+    var imageUrl = ''.obs;
+
+ var selectedDateController = "".obs;
+ var selectedTimeController = "".obs;
 
   @override
   void onInit() {

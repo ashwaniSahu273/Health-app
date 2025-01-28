@@ -28,7 +28,7 @@ class NursePayment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String currentDate = DateFormat.yMMMd().format(DateTime.now());
+    // final String currentDate = DateFormat.yMMMd().format(DateTime.now());
     NurseController nurseController =
         Get.put(NurseController());
 
@@ -128,7 +128,7 @@ class NursePayment extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Vitamin IV Drips'.tr,
+                          'Nurse Visit'.tr,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -144,7 +144,7 @@ class NursePayment extends StatelessWidget {
                             ),
                             SizedBox(width: 5),
                             Text(
-                              '$currentDate - $selectedTime',
+                              '${nurseController.selectedDateController.value} - ${nurseController.selectedTimeController.value}',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
@@ -513,7 +513,7 @@ class NursePayment extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Flexible(
-                                        flex: 3, // Takes 3 parts of the row
+                                        flex: 2, // Takes 3 parts of the row
                                         child: Text(
                                           localizedData['serviceName'],
                                           maxLines: 2,
@@ -560,26 +560,36 @@ class NursePayment extends StatelessWidget {
                                   );
                                 }),
                             SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'VAT (+)',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w500,
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    flex: 3,
+                                    child: Text(
+                                      'VAT (+)',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  '$vat ${'SAR'.tr}',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
+                                  
+                                  Flexible(
+                                    flex: 1,
+                                    child: Text(
+                                      '$vat ${'SAR'.tr}',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             SizedBox(height: 10),
                           ],

@@ -803,6 +803,8 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
         setState(() {
           selectedTime = time;
         });
+        vitaminCartController.selectedDateController.value = selectedDate;
+        vitaminCartController.selectedTimeController.value = time;
         vitaminCartController.convertToFirebaseTimestamp(selectedDate, time);
       },
       child: Container(

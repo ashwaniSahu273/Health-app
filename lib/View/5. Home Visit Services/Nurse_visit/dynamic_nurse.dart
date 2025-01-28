@@ -5,28 +5,17 @@ import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.d
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/b.nurse_time.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_cart_page.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_controller.dart';
+import 'package:harees_new_project/View/8.%20Chats/Models/nurse_service_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class DynamicNurse extends StatelessWidget {
-  final int? id;
-  // final String title;
-  // final String description;
-  // final String? components;
-  // final String price;
-  // final String? image;
-  // final String address;
+  final NurseServiceModel service;
   final UserModel userModel;
   final User firebaseUser;
 
   const DynamicNurse({
     Key? key,
-    this.id,
-    // required this.title,
-    // required this.description,
-    // required this.price,
-    // this.image,
-    // required this.components,
-    // required this.address,
+    required this.service,
     required this.userModel,
     required this.firebaseUser,
   }) : super(key: key);
@@ -34,6 +23,10 @@ class DynamicNurse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     NurseController controller = Get.put(NurseController());
+    String languageCode = Get.locale?.languageCode ?? 'en';
+
+    final localizedData =
+        languageCode == 'ar' ? service.localized.ar : service.localized.en;
 
     final services = [
       {"duration": "1 Week", "hours": "12 Hours per day", "price": "2500 SAR"},
@@ -94,12 +87,17 @@ class DynamicNurse extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(16.0),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Image.asset(
-                                "assets/images/vitamin1.png", // Replace with your asset
-                                height: 64,
-                                width: 40,
-                              ),
+                              Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(
+                                        0xFFE6F5FF), // Circle background color
+                                  ),
+                                  child: Image.network(service.imagePath)),
                               const SizedBox(width: 12),
                               Expanded(
                                 child: Column(
@@ -107,41 +105,32 @@ class DynamicNurse extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text(
-                                      "Nurse Visit",
-                                      style: TextStyle(
+                                    Text(
+                                      localizedData.serviceName,
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
                                         fontFamily: "Roboto",
                                         color: Color(0xFF007ABB),
                                       ),
                                     ),
-                                    const SizedBox(height: 15),
+                                    Text(
+                                      maxLines: 2,
+                                      localizedData.description,
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+
+                                        // Highlighted teal price text
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 8, vertical: 6),
-                                          decoration: BoxDecoration(
-                                            color: Colors.lightBlue[
-                                                50], // Subtle light blue background
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          child: const Text(
-                                            "400 SAR",
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors
-                                                  .teal, // Highlighted teal price text
-                                            ),
-                                          ),
-                                        ),
-                                         Obx(
-                                          () => controller.isItemInCart(id)
+                                        Obx(
+                                          () => controller
+                                                  .isItemInCart(service.id)
                                               ? Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -165,7 +154,7 @@ class DynamicNurse extends StatelessWidget {
                                                         onTap: () {
                                                           controller
                                                               .decreaseQuantity(
-                                                                  id);
+                                                                  service.id);
                                                         },
                                                         child: Center(
                                                           child: Icon(
@@ -180,7 +169,7 @@ class DynamicNurse extends StatelessWidget {
                                                     const SizedBox(width: 10),
                                                     Obx(
                                                       () => Text(
-                                                        '${controller.getQuantityById(id)}',
+                                                        '${controller.getQuantityById(service.id)}',
                                                         style: const TextStyle(
                                                             fontSize: 18),
                                                       ),
@@ -197,7 +186,7 @@ class DynamicNurse extends StatelessWidget {
                                                         onTap: () {
                                                           controller
                                                               .increaseQuantity(
-                                                                  id);
+                                                                  service.id);
                                                         },
                                                         child: Center(
                                                           child: Icon(
@@ -213,7 +202,8 @@ class DynamicNurse extends StatelessWidget {
                                                 )
                                               : GestureDetector(
                                                   onTap: () {
-                                                    controller.addToCart(id);
+                                                    controller
+                                                        .addToCart(service.id);
                                                   },
                                                   child: Container(
                                                     padding: const EdgeInsets
@@ -239,7 +229,7 @@ class DynamicNurse extends StatelessWidget {
                                                     ),
                                                   ),
                                                 ),
-                                        )
+                                        ),
                                       ],
                                     ),
                                   ],
@@ -268,17 +258,17 @@ class DynamicNurse extends StatelessWidget {
                               ),
                               child: Text(
                                 "About This Package".tr,
-                                style:const  TextStyle(
+                                style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: "Roboto",
                                 ),
                               ),
                             ),
-                            const Padding(
+                            Padding(
                               padding: EdgeInsets.all(10.0),
                               child: Text(
-                                "Experience expert medical care in the comfort of your home with our doctor visit service. We provide personalized attention, accurate assessments, and effective treatments, ensuring your health needs are met with convenience and care.",
+                                localizedData.about,
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.black54,
@@ -322,7 +312,7 @@ class DynamicNurse extends StatelessWidget {
                                   spacing: 10,
                                   runSpacing: 8,
                                   children: [
-                                    ..."Dietary monitoring, Accompanying the elderly to the hospital, Selecting and changing clothes for the beneficiary, Measuring and monitoring vital signs and medication reminders, Maintaining personal hygiene and ensuring the safety of the beneficiary, Assisting with sage mobility, walking or turning the elderly in bed to minimize the occurrence of bedsores"
+                                    ...localizedData.serviceIncludes
                                         .split(',') // Split string into a list
                                         .map((service) => _buildBulletPoint(service
                                             .trim())) // Trim whitespace and map to _buildChip
@@ -363,7 +353,7 @@ class DynamicNurse extends StatelessWidget {
                                   spacing: 10,
                                   runSpacing: 8,
                                   children: [
-                                    ..."The client is obligated to provide a private room for the healthcare companion, fully prepared and equipped for them. The client has the right to replace the healthcare companion in case of any malfunction or negligence on their part. The client is obligated to give the healthcare companion one day off per week, with the day to be agreed upon the two parties. The client is obligated to ensure that the official working hours of the healthcare companion do not exceed 12 hours per day. and the working hours shall be flexible and agreed upon between the two parties"
+                                    ...localizedData.termsOfService
                                         .split('.') // Split string into a list
                                         .map((service) => _buildBulletPoint(service
                                             .trim())) // Trim whitespace and map to _buildChip
@@ -511,109 +501,14 @@ class DynamicNurse extends StatelessWidget {
                         ),
                       ),
 
-                      // Container(
-                      //   width: double.infinity,
-                      //   child: Card(
-                      //     shape: RoundedRectangleBorder(
-                      //       borderRadius: BorderRadius.circular(5),
-                      //     ),
-                      //     color: Colors.white,
-                      //     elevation: 0,
-                      //     child: Column(
-                      //       crossAxisAlignment: CrossAxisAlignment.start,
-                      //       children: [
-                      //         Padding(
-                      //           padding: const EdgeInsets.all(8.0),
-                      //           child: Text(
-                      //             "Terms of Service"
-                      //                 .tr, // Translation (if using localization)
-                      //             style: TextStyle(
-                      //               fontSize: 14,
-                      //               fontWeight: FontWeight.w600,
-                      //             ),
-                      //           ),
-                      //         ),
-                      //         Expanded(
-                      //           child: GridView.builder(
-                      //             gridDelegate:
-                      //                 SliverGridDelegateWithFixedCrossAxisCount(
-                      //               crossAxisCount: 2,
-                      //               crossAxisSpacing: 16,
-                      //               mainAxisSpacing: 16,
-                      //               childAspectRatio:
-                      //                   1.8, // Adjust as necessary
-                      //             ),
-                      //             itemCount: durations.length,
-                      //             itemBuilder: (context, index) {
-                      //               final duration = durations[index];
-                      //               return Card(
-                      //                 shape: RoundedRectangleBorder(
-                      //                   borderRadius: BorderRadius.circular(12),
-                      //                 ),
-                      //                 elevation: 2,
-                      //                 color: Colors.white,
-                      //                 child: Padding(
-                      //                   padding: const EdgeInsets.all(12.0),
-                      //                   child: Column(
-                      //                     crossAxisAlignment:
-                      //                         CrossAxisAlignment.start,
-                      //                     children: [
-                      //                       // Title
-                      //                       Text(
-                      //                         duration['title'] ?? 'No Title',
-                      //                         style: TextStyle(
-                      //                           fontSize: 16,
-                      //                           fontWeight: FontWeight.bold,
-                      //                           color: Colors.blueAccent,
-                      //                         ),
-                      //                       ),
-                      //                       SizedBox(height: 8),
-                      //                       // Details
-                      //                       Text(
-                      //                         duration['details'] ??
-                      //                             'No Details Available',
-                      //                         style: TextStyle(
-                      //                           fontSize: 14,
-                      //                           color: Colors.black54,
-                      //                         ),
-                      //                       ),
-                      //                       Spacer(),
-                      //                       // Starting Text
-                      //                       Text(
-                      //                         'Starting',
-                      //                         style: TextStyle(
-                      //                           fontSize: 12,
-                      //                           color: Colors.black54,
-                      //                         ),
-                      //                       ),
-                      //                       SizedBox(height: 4),
-                      //                       // Price
-                      //                       Text(
-                      //                         duration['price'] ?? 'N/A',
-                      //                         style: TextStyle(
-                      //                           fontSize: 14,
-                      //                           fontWeight: FontWeight.bold,
-                      //                           color: Colors.blueAccent,
-                      //                         ),
-                      //                       ),
-                      //                     ],
-                      //                   ),
-                      //                 ),
-                      //               );
-                      //             },
-                      //           ),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // )
+               
                     ],
                   ),
                 ),
               ),
             ),
           ),
-         Container(
+          Container(
               color: Colors.white,
               padding: const EdgeInsets.all(16.0),
               child: Row(
@@ -634,6 +529,7 @@ class DynamicNurse extends StatelessWidget {
                     onPressed: () {
                       if (controller.cartItems.isNotEmpty) {
                         Get.to(NurseCartPage(
+                          // service: service,
                           address: controller.stAddress.value,
                           userModel: userModel,
                           firebaseUser: firebaseUser,
@@ -755,7 +651,6 @@ class DynamicNurse extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildChip(String label) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),

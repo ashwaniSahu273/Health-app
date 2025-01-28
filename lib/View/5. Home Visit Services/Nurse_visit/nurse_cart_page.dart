@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/b.nurse_time.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_controller.dart';
 // import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/c.vitamin_time.dart';
+// import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/c.vitamin_time.dart';
+// import 'package:harees_new_project/View/8.%20Chats/Models/nurse_service_model.dart';
 // import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
@@ -11,11 +13,13 @@ class NurseCartPage extends StatelessWidget {
   final String address;
   final UserModel userModel;
   final User firebaseUser;
+//  final NurseServiceModel service;
 
   final NurseController nurseController = Get.put(NurseController());
 
   NurseCartPage({
     Key? key,
+    // required this.service,
     required this.address,
     required this.userModel,
     required this.firebaseUser,
@@ -107,11 +111,15 @@ class NurseCartPage extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            Image.asset(
-                              'assets/images/vitamin1.png',
-                              height: 64,
-                              width: 40,
-                            ),
+                            Container(
+                                height: 60,
+                                width: 60,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color:  Color(
+                                      0xFFE6F5FF), // Circle background color
+                                ),
+                                child: Image.network(item["imagePath"])),
                             Expanded(
                               child: Column(
                                 // crossAxisAlignment: CrossAxisAlignment.center,
@@ -124,7 +132,7 @@ class NurseCartPage extends StatelessWidget {
                                       Container(
                                         padding: EdgeInsets.only(left: 15),
                                         width:
-                                            200, // Set your desired width here
+                                            180, // Set your desired width here
                                         child: Text(
                                           '${localizedData["serviceName"]}',
                                           style: const TextStyle(
@@ -243,12 +251,12 @@ class NurseCartPage extends StatelessWidget {
                     ),
                     onPressed: () {
                       if (nurseController.cartItems.isNotEmpty) {
-                        Get.to(NurseCartPage(
-                          address: address,
-                          userModel: userModel,
-                          firebaseUser: firebaseUser,
-                          //
-                        ));
+                        // Get.to(NurseCartPage(
+                        //   address: address,
+                        //   userModel: userModel,
+                        //   firebaseUser: firebaseUser,
+                        //   //
+                        // ));
                       }
                     },
                     child: Row(
@@ -309,7 +317,7 @@ class NurseCartPage extends StatelessWidget {
                         // ));
 
                         if (!nurseController.isCartEmpty()) {
-                          Get.to(() => Vitamin_Time(
+                          Get.to(() => Nurse_Time(
                                 userModel: userModel,
                                 firebaseUser: firebaseUser,
                               ));

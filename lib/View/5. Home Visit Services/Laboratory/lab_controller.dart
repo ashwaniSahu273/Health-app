@@ -18,6 +18,9 @@ class LabController extends GetxController {
   var isLoading = false.obs;
   var servicesList = <LabService>[].obs;
 
+ var selectedDateController = "".obs;
+ var selectedTimeController = "".obs;
+
   @override
   void onInit() {
     super.onInit();

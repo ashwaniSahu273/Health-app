@@ -663,6 +663,8 @@ class _Selected_PackageState extends State<Selected_Package> {
         setState(() {
           selectedTime = time;
         });
+          cartController.selectedDateController.value = selectedDate;
+        cartController.selectedTimeController.value = time;
         cartController.convertToFirebaseTimestamp(selectedDate, time);
       },
       child: Container(

@@ -27,7 +27,7 @@ class VitaminPaymentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String currentDate = DateFormat.yMMMd().format(DateTime.now());
+    // final String currentDate = DateFormat.yMMMd().format(DateTime.now());
     VitaminCartController vitaminCartController =
         Get.put(VitaminCartController());
 
@@ -143,7 +143,7 @@ class VitaminPaymentPage extends StatelessWidget {
                             ),
                             SizedBox(width: 5),
                             Text(
-                              '$currentDate - $selectedTime',
+                              '${vitaminCartController.selectedDateController.value} - ${vitaminCartController.selectedTimeController.value}',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,

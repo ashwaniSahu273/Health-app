@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/Button/mybutton.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/otp_verification.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/otp_verification_screen.dart';
+// import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/otp_verification_screen.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class NursePhoneInput extends StatefulWidget {

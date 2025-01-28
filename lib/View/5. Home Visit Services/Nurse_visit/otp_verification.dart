@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/Button/mybutton.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/c.nurse_payment.dart';
 import 'package:pinput/pinput.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/d.vitamin_payment.dart';
+// import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/d.vitamin_payment.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class NurseOtpVerificationScreen extends StatefulWidget {
@@ -45,7 +46,7 @@ class _NurseOtpVerificationScreenState extends State<NurseOtpVerificationScreen>
       );
 
       // Navigate to the next screen
-      Get.to(() => VitaminPaymentPage(
+      Get.to(() => NursePayment(
             userModel: widget.userModel,
             firebaseUser: widget.firebaseUser,
             selectedTime: widget.selectedTime,

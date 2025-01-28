@@ -29,7 +29,7 @@ class LabPaymentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String currentDate = DateFormat.yMMMd().format(DateTime.now());
+    // final String currentDate = DateFormat.yMMMd().format(DateTime.now());
 LabController cartController =
         Get.put(LabController());
 
@@ -146,7 +146,7 @@ LabController cartController =
                             ),
                             SizedBox(width: 5),
                             Text(
-                              '$currentDate - $selectedTime',
+                              '${cartController.selectedDateController.value} - ${cartController.selectedTimeController.value}',
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
