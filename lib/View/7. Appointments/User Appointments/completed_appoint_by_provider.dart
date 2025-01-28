@@ -19,12 +19,12 @@ import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
 
-class RequestedAppointmentDetails extends StatelessWidget {
+class CompletedAppointByProvider extends StatelessWidget {
   final DocumentSnapshot doc;
   final UserModel userModel;
   final User firebaseUser;
 
-  const RequestedAppointmentDetails(
+  const CompletedAppointByProvider(
       {super.key,
       required this.doc,
       required this.userModel,
@@ -101,7 +101,7 @@ class RequestedAppointmentDetails extends StatelessWidget {
         // Get a single snapshot of the query
         QuerySnapshot dataSnapshot = await FirebaseFirestore.instance
             .collection("Registered Users")
-            .where("email", isEqualTo: doc["accepted_by"])
+            .where("email", isEqualTo: doc["email"])
             .where("email", isNotEqualTo: userModel.email)
             .get();
 
@@ -271,11 +271,7 @@ class RequestedAppointmentDetails extends StatelessWidget {
                                     doc["status"],
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: doc["status"] == "Requested"
-                                          ? Color(0xFFC06440)
-                                          : doc["status"] == "accepted"
-                                              ? Color(0xFFFFC300)
-                                              : Colors.green,
+                                      color: Colors.green,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14,
                                     ),
@@ -724,7 +720,7 @@ class RequestedAppointmentDetails extends StatelessWidget {
                                 width: 8,
                               ),
                               Text(
-                                'Chat With Provider'.tr,
+                                'Chat With User'.tr,
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
                               ),

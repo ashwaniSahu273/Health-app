@@ -11,6 +11,7 @@ import 'package:harees_new_project/Resources/Drawer/drawer.dart';
 import 'package:harees_new_project/Resources/Search_bar/search_bar.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/details_page.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
+import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/completed_appoint_by_provider.dart';
 import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/requested_appointment_details.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
@@ -117,7 +118,7 @@ class _AcceptedRequestsHistoryState extends State<AcceptedRequestsHistory> {
                           padding: const EdgeInsets.symmetric(horizontal: 24),
                           child: GestureDetector(
                             onTap: () {
-                              Get.to(RequestedAppointmentDetails(
+                              Get.to(CompletedAppointByProvider(
                                   doc: appointment,
                                   firebaseUser: widget.firebaseUser,
                                   userModel: widget.userModel));

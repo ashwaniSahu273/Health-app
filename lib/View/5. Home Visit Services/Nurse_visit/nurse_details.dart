@@ -15,7 +15,6 @@ import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 class NurseDetails extends StatelessWidget {
   final UserModel userModel;
   final User firebaseUser;
-  
 
   const NurseDetails({
     Key? key,
@@ -95,7 +94,7 @@ class NurseDetails extends StatelessWidget {
                 )), // Double-arrow icon
             GestureDetector(
               onTap: () {
-                uploadImage();
+                // uploadImage();
               },
               child: Text(
                 'Nurse Visit'.tr,
@@ -122,7 +121,7 @@ class NurseDetails extends StatelessWidget {
               itemCount: cartController.servicesList.length,
               itemBuilder: (context, index) {
                 final service = cartController.servicesList[index];
-                
+
                 String languageCode = Get.locale?.languageCode ?? 'en';
 
                 final localizedData = languageCode == 'ar'
@@ -183,20 +182,13 @@ class NurseDetails extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 const SizedBox(height: 8),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 6),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFE6F5FF),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: const Text(
-                                    "Know more",
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.blueAccent,
-                                    ),
+                                const Text(
+                                  "Know more",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blueAccent,
+                                    decoration: TextDecoration.underline,
                                   ),
                                 ),
                               ],

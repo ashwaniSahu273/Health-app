@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +7,10 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/complete_details.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
+import 'package:harees_new_project/View/8.%20Chats/Models/chat_room_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
+import 'package:harees_new_project/View/8.%20Chats/Pages/Chat_Room.dart';
+import 'package:harees_new_project/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AppointmentDetailsScreen extends StatelessWidget {
@@ -49,6 +54,78 @@ class AppointmentDetailsScreen extends StatelessWidget {
         await launch(googleUrl);
       } else {
         throw "Could not open the map.";
+      }
+    }
+
+    Future<ChatRoomModel?> getChatroomModel(UserModel targetUser) async {
+      ChatRoomModel? chatRoom;
+
+      QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection("Chat Rooms")
+          .where("participants.${userModel.uid}", isEqualTo: true)
+          .where("participants.${targetUser.uid}", isEqualTo: true)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        var docData = snapshot.docs[0].data();
+        if (docData != null) {
+          chatRoom = ChatRoomModel.fromMap(docData as Map<String, dynamic>);
+        }
+      } else {
+        ChatRoomModel newChatroom = ChatRoomModel(
+          chatroomid: uuid.v1(),
+          lastMessage: "",
+          participants: {
+            userModel.uid.toString(): true,
+            targetUser.uid.toString(): true,
+          },
+        );
+
+        await FirebaseFirestore.instance
+            .collection("Chat Rooms")
+            .doc(newChatroom.chatroomid)
+            .set(newChatroom.toMap());
+
+        chatRoom = newChatroom;
+        log("New Chatroom Created!");
+      }
+
+      return chatRoom;
+    }
+
+    void createChatroom() async {
+      try {
+        // Get a single snapshot of the query
+        QuerySnapshot dataSnapshot = await FirebaseFirestore.instance
+            .collection("Registered Users")
+            .where("email", isEqualTo: doc["email"])
+            .where("email", isNotEqualTo: userModel.email)
+            .get();
+
+        if (dataSnapshot.docs.isNotEmpty) {
+          Map<String, dynamic> userMap =
+              dataSnapshot.docs[0].data() as Map<String, dynamic>;
+
+          UserModel searchedUser = UserModel.frommap(userMap);
+
+          ChatRoomModel? chatroomModel = await getChatroomModel(searchedUser);
+
+          if (chatroomModel != null) {
+            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return ChatRoomPage(
+                targetUser: searchedUser,
+                userModel: userModel,
+                firebaseUser: firebaseUser,
+                chatroom: chatroomModel,
+              );
+            }));
+          }
+        } else {
+          print("No user found with the specified email.");
+        }
+      } catch (e) {
+        print("Error creating chatroom: $e");
       }
     }
 
@@ -381,7 +458,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                   return Column(children: widgets);
                                 }
 
-                                return Text(" ");
+                                return const SizedBox.shrink();
                               }),
                             ],
                           ),
@@ -393,45 +470,89 @@ class AppointmentDetailsScreen extends StatelessWidget {
               ),
             ),
           ),
-          Obx(
-            () => Container(
-                color: Colors.white,
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              controller.status.value == "Requested"
-                                  ? Colors.grey
-                                  : Color(0xFF007ABB),
-                          minimumSize: const Size(160, 55),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+          doc["type"] != "Nurse Visit"
+              ? Obx(
+                  () => Container(
+                      color: Colors.white,
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    controller.status.value == "Requested"
+                                        ? Colors.grey
+                                        : Color(0xFF007ABB),
+                                minimumSize: const Size(160, 55),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              onPressed: () {
+                                if (controller.status.value != "Requested") {
+                                  Get.to(() => CompleteAppointmentDetailsScreen(
+                                        userModel: userModel,
+                                        firebaseUser: firebaseUser,
+                                        doc: doc,
+                                        // userModel: userModel,
+                                        // firebaseUser: firebaseUser,
+                                      ));
+                                }
+                              },
+                              child: Text(
+                                'Continue'.tr,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15),
+                              ),
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          if (controller.status.value != "Requested") {
-                            Get.to(() => CompleteAppointmentDetailsScreen(
-                                  userModel: userModel,
-                                  firebaseUser: firebaseUser,
-                                  doc: doc,
-                                  // userModel: userModel,
-                                  // firebaseUser: firebaseUser,
-                                ));
-                          }
-                        },
-                        child: Text(
-                          'Continue'.tr,
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        ),
-                      ),
-                    ),
-                  ],
-                )),
-          )
+                        ],
+                      )),
+                )
+              : controller.status.value != "Requested" ||
+                      doc["status"] == "Accepted"
+                  ? Container(
+                      color: Colors.white,
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xFF007ABB),
+                                minimumSize: const Size(160, 55),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              onPressed: () {
+                                createChatroom();
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.chat_rounded,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    'Chat With User'.tr,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ))
+                  : const SizedBox.shrink()
         ],
       ),
     );

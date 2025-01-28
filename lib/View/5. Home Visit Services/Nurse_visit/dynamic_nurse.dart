@@ -24,6 +24,8 @@ class DynamicNurse extends StatelessWidget {
   Widget build(BuildContext context) {
     NurseController controller = Get.put(NurseController());
     String languageCode = Get.locale?.languageCode ?? 'en';
+    controller.duration.value = "1 Week";
+    controller.durationPrice.value = "4000 SAR";
 
     final localizedData =
         languageCode == 'ar' ? service.localized.ar : service.localized.en;
@@ -34,6 +36,7 @@ class DynamicNurse extends StatelessWidget {
       {"duration": "3 Week", "hours": "12 Hours per day", "price": "5200 SAR"},
       {"duration": "4 Week", "hours": "12 Hours per day", "price": "6500 SAR"},
     ];
+
 
     return Scaffold(
       appBar: AppBar(
@@ -404,6 +407,8 @@ class DynamicNurse extends StatelessWidget {
                                         onTap: () {
                                           controller.selectedIndex.value =
                                               index;
+                                          controller.duration.value = service["duration"]!;
+                                          controller.durationPrice.value = service["price"]!;
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(
@@ -500,8 +505,6 @@ class DynamicNurse extends StatelessWidget {
                           ),
                         ),
                       ),
-
-               
                     ],
                   ),
                 ),
@@ -651,6 +654,7 @@ class DynamicNurse extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildChip(String label) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),

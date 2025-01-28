@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/Resources/Drawer/providerDrawer.dart';
 // import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/services_sreen.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/Resources/Drawer/drawer.dart';
@@ -69,7 +70,7 @@ class _Service_Provider_HomeState extends State<Service_Provider_Home> {
           ),
         ),
       ),
-      endDrawer: MyDrawer(
+      endDrawer: ProviderDrawer(
         ontap: () {
           _auth.signOut().then((value) {
             Get.to(() => const Splash_Screen());

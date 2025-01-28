@@ -16,16 +16,25 @@ class NurseController extends GetxController {
   var isLoading = false.obs;
   var servicesList = <NurseServiceModel>[].obs;
   var selectedIndex = 0.obs;
-    var imageUrl = ''.obs;
+  var imageUrl = ''.obs;
+  var duration = "".obs;
+  var durationPrice = "".obs;
 
- var selectedDateController = "".obs;
- var selectedTimeController = "".obs;
+  var selectedDateController = "".obs;
+  var selectedTimeController = "".obs;
 
   @override
   void onInit() {
     super.onInit();
     fetchServices();
   }
+
+  // void durationOfService(String duration, String price) {
+  //   duration.value = duration;
+  //   price.value = price;
+
+  //   print("price ======${price}");
+  // }
 
   Future<void> signInWithPhoneNumber(
       String verificationId, String smsCode) async {
@@ -236,8 +245,6 @@ class NurseController extends GetxController {
   void clearCart() {
     cartItems.clear();
   }
-
-
 
   void storeServices() async {
     final List<Map<String, dynamic>> servicess = [
