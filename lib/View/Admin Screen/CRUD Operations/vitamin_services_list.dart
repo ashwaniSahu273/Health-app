@@ -45,7 +45,7 @@ Future<List<Service>> _fetchServices() async {
   }
 }
 
-  void _deleteService(int serviceId) async {
+  void _deleteService(String serviceId) async {
     await FirebaseFirestore.instance
         .collection('VitaminServices')
         .doc(serviceId.toString())

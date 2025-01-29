@@ -14,6 +14,7 @@ class DynamicUIPage extends StatelessWidget {
   final String title;
   final String description;
   final String? components;
+  final String? instructions;
   final String price;
   final String? image;
   final String address;
@@ -28,6 +29,7 @@ class DynamicUIPage extends StatelessWidget {
       required this.price,
       this.image,
       required this.components,
+      required this.instructions,
       required this.address,
       required this.userModel,
       required this.firebaseUser});
@@ -124,21 +126,7 @@ class DynamicUIPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
 
-                      // Text(
-                      //   'Instructions',
-                      //   style: TextStyle(
-                      //       fontSize: 14, fontWeight: FontWeight.bold),
-                      // ),
-                      // SizedBox(height: 8),
-                      // Text(
-                      //   '• Please note that Post Sleeve Gastrectomy IV should be taken (3) months post-surgery.',
-                      //   style: TextStyle(fontSize: 13),
-                      // ),
-                      // SizedBox(height: 8),
-                      // Text(
-                      //   '• The procedure takes about 40 to 60 minutes and the injection is done at home or workplace.',
-                      //   style: TextStyle(fontSize: 13),
-                      // ),
+                   
                       const SizedBox(height: 16),
 
                        Text(

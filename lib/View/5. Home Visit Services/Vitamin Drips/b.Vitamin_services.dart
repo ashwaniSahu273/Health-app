@@ -33,7 +33,7 @@ class _VitaminServicesState extends State<VitaminServices> {
 
   // Method to handle the service selection
   void _onServiceSelected(String serviceName, id, String description,
-      String components, String price) {
+      String components,String instructions, String price) {
     setState(() {
       selectedService = serviceName;
     });
@@ -44,6 +44,7 @@ class _VitaminServicesState extends State<VitaminServices> {
       description: description,
       price: price,
       components: components,
+      instructions: instructions,
       address: widget.address,
       userModel: widget.userModel,
       firebaseUser: widget.firebaseUser,
@@ -137,6 +138,7 @@ class _VitaminServicesState extends State<VitaminServices> {
                             imagePath: service.imagePath,
                             serviceName: localizedData.serviceName,
                             description: localizedData.description,
+                            instructions: localizedData.instructions,
                             components: localizedData.components,
                             price: localizedData.price,
                           ),
@@ -146,125 +148,7 @@ class _VitaminServicesState extends State<VitaminServices> {
                     },
                   ),
                 ),
-                // _buildServiceCard(
-                //   serviceName: "memory_enhancement.name".tr,
-                //   description: "memory_enhancement.description".tr,
-                //   components: "memory_enhancement.ingredients".tr,
-                //   price: "memory_enhancement.price".tr,
-                //   imagePath: "assets/images/vitamin.png",
-                // ),
-                // const SizedBox(height: 10),
-                // _buildServiceCard(
-                //   serviceName: "hydration.name".tr,
-                //   description: "hydration.description".tr,
-                //   components: "hydration.ingredients".tr,
-                //   price: "hydration.price".tr,
-                //   imagePath: "assets/images/vitamin.png",
-                // ),
-                // const SizedBox(height: 10),
-                // _buildServiceCard(
-                //   serviceName: "antiaging.name".tr,
-                //   description: "antiaging.description".tr,
-                //   components: "antiaging.ingredients".tr,
-                //   price: "antiaging.price".tr,
-                //   imagePath: "assets/images/vitamin.png",
-                // ),
-                // const SizedBox(height: 10),
-                // _buildServiceCard(
-                //   serviceName: "stress_relief.name".tr,
-                //   description: "stress_relief.description".tr,
-                //   components: "stress_relief.ingredients".tr,
-                //   price: "stress_relief.price".tr,
-                //   imagePath: "assets/images/vitamin.png",
-                // ),
-                // const SizedBox(height: 10),
-                // _buildServiceCard(
-                //   serviceName: "fitness_boost.name".tr,
-                //   description: "fitness_boost.description".tr,
-                //   components: "fitness_boost.ingredients".tr,
-                //   price: "fitness_boost.price".tr,
-                //   imagePath: "assets/images/vitamin.png",
-                // ),
-                // const SizedBox(height: 10),
-                // _buildServiceCard(
-                //   serviceName: "energy_boost.name".tr,
-                //   description: "energy_boost.description".tr,
-                //   components: "energy_boost.ingredients".tr,
-                //   price: "energy_boost.price".tr,
-                //   imagePath: "assets/images/vitamin.png",
-                // ),
-                // const SizedBox(height: 10),
-                // _buildServiceCard(
-                //   serviceName: "post_sleeve.name".tr,
-                //   description: "post_sleeve.description".tr,
-                //   components: "post_sleeve.ingredients".tr,
-                //   price: "post_sleeve.price".tr,
-                //   imagePath: "assets/images/vitamin.png",
-                // ),
-                // const SizedBox(height: 10),
-                // _buildServiceCard(
-                //   serviceName: "hair_health.name".tr,
-                //   description: "hair_health.description".tr,
-                //   components: "hair_health.ingredients".tr,
-                //   price: "hair_health.price".tr,
-                //   imagePath: "assets/images/vitamin.png",
-                // ),
-                // const SizedBox(height: 10),
-                // _buildServiceCard(
-                //   serviceName: "jet_lag.name".tr,
-                //   description: "jet_lag.description".tr,
-                //   components: "jet_lag.ingredients".tr,
-                //   price: "jet_lag.price".tr,
-                //   imagePath: "assets/images/vitamin.png",
-                // ),
-                // const SizedBox(height: 10),
-                // _buildServiceCard(
-                //   serviceName: "migraine_relief.name".tr,
-                //   description: "migraine_relief.description".tr,
-                //   components: "migraine_relief.ingredients".tr,
-                //   price: "migraine_relief.price".tr,
-                //   imagePath: "assets/images/vitamin.png",
-                // ),
-                // const SizedBox(height: 10),
-                // _buildServiceCard(
-                //   serviceName: "depression_relief.name".tr,
-                //   description: "depression_relief.description".tr,
-                //   components: "depression_relief.ingredients".tr,
-                //   price: "depression_relief.price".tr,
-                //   imagePath: "assets/images/vitamin.png",
-                // ),
-                // const SizedBox(height: 10),
-                // _buildServiceCard(
-                //   serviceName: "weight_loss.name".tr,
-                //   description: "weight_loss.description".tr,
-                //   components: "weight_loss.ingredients".tr,
-                //   price: "weight_loss.price".tr,
-                //   imagePath: "assets/images/vitamin.png",
-                // ),
-                // const SizedBox(height: 10),
-                // _buildServiceCard(
-                //   serviceName: "diet_detox.name".tr,
-                //   description: "diet_detox.description".tr,
-                //   components: "diet_detox.ingredients".tr,
-                //   price: "diet_detox.price".tr,
-                //   imagePath: "assets/images/vitamin.png",
-                // ),
-                // const SizedBox(height: 10),
-                // _buildServiceCard(
-                //   serviceName: "mayers_cocktail.name".tr,
-                //   description: "mayers_cocktail.description".tr,
-                //   components: "mayers_cocktail.ingredients".tr,
-                //   price: "mayers_cocktail.price".tr,
-                //   imagePath: "assets/images/vitamin.png",
-                // ),
-                // const SizedBox(height: 10),
-                // _buildServiceCard(
-                //   serviceName: "immunity_boost.name".tr,
-                //   description: "immunity_boost.description".tr,
-                //   components: "immunity_boost.ingredients".tr,
-                //   price: "immunity_boost.price".tr,
-                //   imagePath: "assets/images/vitamin.png",
-                // ),
+           
               ],
             ),
           ),
@@ -396,9 +280,10 @@ class _VitaminServicesState extends State<VitaminServices> {
     required String serviceName,
     required String description,
     required String components,
+    required String instructions,
     required String price,
     String? imagePath,
-    int? id,
+    String? id,
   }) {
     final isSelected = selectedService == serviceName;
 
@@ -418,7 +303,7 @@ class _VitaminServicesState extends State<VitaminServices> {
             children: [
               ListTile(
                 onTap: () => _onServiceSelected(
-                    serviceName, id, description, components, price),
+                    serviceName, id, description, components,instructions, price),
                 leading: Container(
                   width: 60,
                   height: 50,

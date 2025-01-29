@@ -1,11 +1,13 @@
 class Service {
-  int id;
+  String id;
   String imagePath;
   Localized localized;
+  String type;
   int? quantity; // Optional quantity field for use in the cart
 
   Service({
     required this.id,
+    required this.type,
     required this.imagePath,
     required this.localized,
     this.quantity, // Default is null unless explicitly set
@@ -17,6 +19,7 @@ class Service {
       id: json['id'],
       imagePath: json['imagePath'],
       localized: Localized.fromJson(json['localized']),
+      type: json['type'],
       quantity: 1, // Include quantity if it exists
     );
   }
@@ -28,6 +31,7 @@ class Service {
       'imagePath': imagePath,
       'localized': localized.toJson(),
       'quantity': quantity, // Include quantity in JSON representation
+      'type': type
     };
   }
 }
@@ -62,12 +66,14 @@ class ServiceDetails {
   String serviceName;
   String description;
   String components;
+  String instructions;
   String price;
 
   ServiceDetails({
     required this.serviceName,
     required this.description,
     required this.components,
+    required this.instructions,
     required this.price,
   });
 
@@ -77,6 +83,7 @@ class ServiceDetails {
       serviceName: json['serviceName'],
       description: json['description'],
       components: json['components'],
+      instructions: json['instructions'],
       price: json['price'],
     );
   }
@@ -87,6 +94,7 @@ class ServiceDetails {
       'serviceName': serviceName,
       'description': description,
       'components': components,
+      'instructions': instructions,
       'price': price,
     };
   }

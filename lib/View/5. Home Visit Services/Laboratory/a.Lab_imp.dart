@@ -9,6 +9,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+import 'package:harees_new_project/Resources/Button/myroundbutton.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/labtest.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -27,29 +28,64 @@ class _LabImpState extends State<LabImp> {
   Completer<GoogleMapController> _controller = Completer();
   LabController labController = Get.put(LabController());
 
-  static final CameraPosition kGooglePlex = CameraPosition(
+  static const CameraPosition kGooglePlex = CameraPosition(
     target: LatLng(24.8846, 67.1754),
     zoom: 14.4746,
   );
-  List<Marker> _marker = [];
-  List<Marker> _list = [
-    Marker(
-        markerId: MarkerId("1"),
-        position: LatLng(24.8846, 70.1754),
-        infoWindow: InfoWindow(title: "Current Location".tr))
-  ];
+  final List<Marker> _marker = [];
   String stAddress = '';
   String Latitude = " ";
   String Longitude = " ";
+  // final position = "";
   bool address = false;
+  bool isLoading = false;
+  late Position position;
   final fireStore = FirebaseFirestore.instance.collection("User_appointments");
 
-  @override
   void initState() {
-    // Print("print hellllooooooooooooooooooo");
-    labController.storeServices();
+    getCurrentLoc();
     super.initState();
-    _marker.addAll(_list);
+
+    _marker.add(Marker(
+      markerId: const MarkerId("1"),
+      position: const LatLng(24.8846, 67.1754),
+      infoWindow: InfoWindow(title: "Initial Location"),
+    ));
+  }
+
+  void getCurrentLoc() async {
+    position = await getUserCurrentLocation();
+  }
+
+  Future<void> _handleTap(LatLng tappedPoint) async {
+    final GoogleMapController mapController = await _controller.future;
+
+    // Animate to tapped location
+    mapController.animateCamera(CameraUpdate.newLatLng(tappedPoint));
+
+    // Address fetching and marker updates
+    setState(() {
+      stAddress = "Fetching address...";
+      Latitude = tappedPoint.latitude.toString();
+      Longitude = tappedPoint.longitude.toString();
+
+      _marker.clear();
+      _marker.add(Marker(
+        markerId: const MarkerId("selectedLocation"),
+        position: tappedPoint,
+        infoWindow: InfoWindow(title: "Selected Location"),
+      ));
+    });
+
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+        tappedPoint.latitude, tappedPoint.longitude);
+
+    setState(() {
+      stAddress =
+          "${placemarks.reversed.last.country}, ${placemarks.reversed.last.locality}, ${placemarks.reversed.last.street}";
+    });
+
+    // _showAddressBottomSheet();
   }
 
   Future<Position> getUserCurrentLocation() async {
@@ -59,10 +95,83 @@ class _LabImpState extends State<LabImp> {
     return await Geolocator.getCurrentPosition();
   }
 
+  void _showAddressBottomSheet() async {
+    print("My Location".tr);
+    print("${position.latitude} ${position.longitude}");
+
+    // Get address
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+    stAddress =
+        "${placemarks.reversed.last.country} ${placemarks.reversed.last.locality} ${placemarks.reversed.last.street}";
+
+    setState(() {
+      _marker.add(Marker(
+          markerId: const MarkerId("2"),
+          position: LatLng(position.latitude, position.longitude),
+          infoWindow: InfoWindow(title: "My Location".tr)));
+      Latitude = position.latitude.toString();
+      Longitude = position.longitude.toString();
+    });
+
+    // Show bottom sheet
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.all(16),
+        color: Colors.white,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Address:".tr,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              stAddress.isNotEmpty ? stAddress : "Fetching address...",
+              style: const TextStyle(fontSize: 14),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                // Show confirmation dialog
+                Get.defaultDialog(
+                  title: "Confirm".tr,
+                  middleText: "Are you sure you want to confirm".tr,
+                  onCancel: () {
+                    Navigator.pop(context); // Close the dialog
+                  },
+                  onConfirm: () {
+                    labController.stAddress.value = stAddress;
+                    labController.latitude.value = Latitude;
+                    labController.longitude.value = Longitude;
+
+                    Navigator.pop(context);
+                    Get.to(() => LabTest(
+                          userModel: widget.userModel,
+                          firebaseUser: widget.firebaseUser,
+                          address: stAddress,
+                        ));
+                  },
+                  textCancel: "Cancel".tr,
+                  textConfirm: "Confirm".tr,
+                );
+              },
+              child: const Text("Send"),
+            ),
+          ],
+        ),
+      ),
+      backgroundColor: Colors.white,
+      isDismissible: true,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    // final _auth = FirebaseAuth.instance;
-    // final user = _auth.currentUser;
+    final auth = FirebaseAuth.instance;
+    final user = auth.currentUser;
 
     return Scaffold(
       body: SafeArea(
@@ -79,93 +188,10 @@ class _LabImpState extends State<LabImp> {
       ),
       floatingActionButton: Align(
         alignment: Alignment.bottomCenter,
-        child: FloatingActionButton(
-          onPressed: () async {
-            address = true;
-            getUserCurrentLocation().then((value) async {
-              print("My Location".tr);
-              print(
-                  value.latitude.toString() + " " + value.longitude.toString());
-              _marker.add(Marker(
-                  markerId: MarkerId("2"),
-                  position: LatLng(value.latitude, value.longitude),
-                  infoWindow: InfoWindow(title: "My Location".tr)));
-              Latitude = value.latitude.toString();
-              Longitude = value.longitude.toString();
-
-              List<Placemark> placemarks = await placemarkFromCoordinates(
-                  value.latitude, value.longitude);
-              stAddress = placemarks.reversed.last.country.toString() +
-                  " " +
-                  placemarks.reversed.last.locality.toString() +
-                  " " +
-                  placemarks.reversed.last.street.toString();
-              CameraPosition cameraPosition = CameraPosition(
-                  zoom: 14,
-                  target: LatLng(
-                    value.latitude,
-                    value.longitude,
-                  ));
-              final GoogleMapController controller = await _controller.future;
-              controller.animateCamera(
-                  CameraUpdate.newCameraPosition(cameraPosition));
-              setState(() {});
-            });
-            Get.snackbar("To proceed".tr,
-                "Kindly click on your address mentioned below".tr,
-                duration: Duration(seconds: 3),
-                backgroundColor: MyColors.logocolor,
-                borderColor: Colors.black,
-                borderWidth: 1);
-          },
-          child: Icon(Icons.navigation),
+        child: MyRoundButton(
+          text: "Select location",
+          onTap: _showAddressBottomSheet,
         ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(children: [
-          TextButton(
-              onPressed: () {
-                Get.defaultDialog(
-                  title: "Confirm".tr,
-                  middleText: "Are you sure you want to confirm".tr,
-                  onCancel: () {
-                    Navigator.pop(context);
-                  },
-                  onConfirm: () {
-                    // setState(() {
-                    //   fireStore.doc(user!.email).set({
-                    //     "email": user.email,
-                    //     "address": stAddress,
-                    //     "type": "Doctor Visit"
-                    //   });
-
-                    // });
-
-                    labController.stAddress.value = stAddress;
-                    labController.latitude.value = Latitude;
-                    labController.longitude.value = Longitude;
-                    if (labController.stAddress.isNotEmpty) {
-                      Navigator.pop(context);
-                      Get.to(() => LabTest(
-                            userModel: widget.userModel,
-                            firebaseUser: widget.firebaseUser,
-                            address: stAddress,
-                          ));
-                    }else{
-                      Get.snackbar("message".tr, "Please select your address".tr,backgroundColor: const Color.fromARGB(255, 224, 104, 102),);
-                    }
-                  },
-                  textCancel: "Cancel".tr,
-                  textConfirm: "Confirm".tr,
-                );
-              },
-              child: Text(
-                address
-                    ? stAddress
-                    : "Address will appear here when you press the button".tr,
-                style: TextStyle(color: Colors.blue, fontSize: 15),
-              )),
-        ]),
       ),
     );
   }

@@ -389,7 +389,7 @@ class LabController extends GetxController {
 
     for (var service in servicess) {
 
-      print("Are you calling------");
+      
       final docRef = servicesCollection.doc();
       final id = docRef.id;
 

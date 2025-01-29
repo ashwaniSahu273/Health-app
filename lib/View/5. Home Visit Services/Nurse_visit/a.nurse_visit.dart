@@ -30,10 +30,7 @@ class NurseVisit extends StatefulWidget {
 class _NurseVisitState extends State<NurseVisit> {
   final Completer<GoogleMapController> _controller = Completer();
 
-  NurseController nurseController =
-      Get.put(NurseController());
-
-    
+  NurseController nurseController = Get.put(NurseController());
 
   static const CameraPosition kGooglePlex = CameraPosition(
     target: LatLng(24.8846, 67.1754),
@@ -50,12 +47,13 @@ class _NurseVisitState extends State<NurseVisit> {
   String Latitude = " ";
   String Longitude = " ";
   bool address = false;
+  late Position position;
   final fireStore = FirebaseFirestore.instance.collection("User_appointments");
 
   void initState() {
-
     // nurseController.storeServices();
     // nurseController.fetchServices();
+    getCurrentLoc();
     super.initState();
     // Initial marker (optional)
     _marker.add(Marker(
@@ -63,6 +61,10 @@ class _NurseVisitState extends State<NurseVisit> {
       position: const LatLng(24.8846, 67.1754),
       infoWindow: InfoWindow(title: "Initial Location"),
     ));
+  }
+
+  void getCurrentLoc() async {
+    position = await getUserCurrentLocation();
   }
 
   Future<void> _handleTap(LatLng tappedPoint) async {
@@ -104,7 +106,6 @@ class _NurseVisitState extends State<NurseVisit> {
   }
 
   void _showAddressBottomSheet() async {
-    final position = await getUserCurrentLocation();
     print("My Location".tr);
     print("${position.latitude} ${position.longitude}");
 
@@ -152,14 +153,12 @@ class _NurseVisitState extends State<NurseVisit> {
                     Navigator.pop(context); // Close the dialog
                   },
                   onConfirm: () {
-
                     nurseController.stAddress.value = stAddress;
                     nurseController.latitude.value = Latitude;
                     nurseController.longitude.value = Longitude;
 
                     // nurseController.setUserOrderInfo(
                     //     widget.userModel, widget.firebaseUser);
-
 
                     // setState(() {
                     //   // fireStore.doc(widget.firebaseUser.email).set({
@@ -183,11 +182,11 @@ class _NurseVisitState extends State<NurseVisit> {
                     //     address: stAddress,
                     //     userModel: widget.userModel,
                     //     firebaseUser: widget.firebaseUser));
-                     Get.to(NurseDetails(
+                    Get.to(NurseDetails(
                       userModel: widget.userModel,
                       firebaseUser: widget.firebaseUser,
                       // address: stAddress,
-                     ));
+                    ));
                   },
                   textCancel: "Cancel".tr,
                   textConfirm: "Confirm".tr,
@@ -219,7 +218,6 @@ class _NurseVisitState extends State<NurseVisit> {
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
           },
-          
         ),
       ),
       floatingActionButton: Align(

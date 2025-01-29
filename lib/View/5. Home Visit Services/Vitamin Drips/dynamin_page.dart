@@ -9,10 +9,11 @@ import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20D
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class SelectPackage extends StatelessWidget {
-  final int? id;
+  final String? id;
   final String title;
   final String description;
   final String? components;
+  final String? instructions;
   final String price;
   final String? image;
   final String address;
@@ -24,6 +25,7 @@ class SelectPackage extends StatelessWidget {
     this.id,
     required this.title,
     required this.description,
+    required this.instructions,
     required this.price,
     this.image,
     required this.components,
@@ -263,7 +265,7 @@ class SelectPackage extends StatelessWidget {
                   
                       // About Package
                   
-                      const SizedBox(height: 8),
+                      // const SizedBox(height: 8),
                       Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
@@ -307,7 +309,48 @@ class SelectPackage extends StatelessWidget {
                   
                       // Components Included
                   
-                      const SizedBox(height: 8),
+                      // const SizedBox(height: 8),
+                      Container(
+                        width: double.infinity,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          color: Colors.white,
+                          elevation: 0,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Instructions".tr,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Wrap(
+                                  spacing: 10,
+                                  runSpacing: 8,
+                                  children: [
+                                    ...instructions!
+                                        .split(',') // Split string into a list
+                                        .map((service) => _buildChip(service
+                                            .trim())) // Trim whitespace and map to _buildChip
+                                        .toList(),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+
                       Container(
                         width: double.infinity,
                         child: Card(

@@ -28,16 +28,17 @@ class SelectPackagesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     VitaminCartController cartController = Get.put(VitaminCartController());
   // String? selectedService;
-
+ cartController.fetchServices();
   // Method to handle the service selection
-  void _onServiceSelected(String serviceName, id, String description,
-      String components, String price, String imagePath) {
+  void _onServiceSelected(String serviceName, String id, String description,
+      String components,String instructions, String price, String imagePath) {
 
     Get.to(SelectPackage(
       image: imagePath,
       id: id,
       title: serviceName,
       description: description,
+      instructions: instructions,
       price: price,
       components: components,
       address: address,
@@ -144,7 +145,7 @@ class SelectPackagesPage extends StatelessWidget {
                   mainAxisSpacing: 5,
                   childAspectRatio: 1.4,
                 ),
-                itemCount: 10,
+                itemCount: cartController.servicesList.length,
                 
                 itemBuilder: (context, index) {
 
@@ -159,7 +160,7 @@ class SelectPackagesPage extends StatelessWidget {
                   return GestureDetector(
                     onTap: (){
                       _onServiceSelected(
-                    localizedData.serviceName, service.id, localizedData.description, localizedData.components, localizedData.price, imagePath);
+                    localizedData.serviceName, service.id, localizedData.description, localizedData.components,localizedData.instructions, localizedData.price, imagePath);
                     },
                     child: Card(
                       

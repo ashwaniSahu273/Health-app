@@ -34,36 +34,35 @@ class _VitaminState extends State<Vitamin> {
   VitaminCartController vitaminCartController =
       Get.put(VitaminCartController());
 
-    
-
   static const CameraPosition kGooglePlex = CameraPosition(
     target: LatLng(24.8846, 67.1754),
     zoom: 14.4746,
   );
   final List<Marker> _marker = [];
-  // final List<Marker> _list = [
-  //   Marker(
-  //       markerId: const MarkerId("1"),
-  //       position: const LatLng(24.8846, 70.1754),
-  //       infoWindow: InfoWindow(title: "Current Location".tr))
-  // ];
   String stAddress = '';
   String Latitude = " ";
   String Longitude = " ";
+  // final position = "";
   bool address = false;
+  bool isLoading = false;
+  late Position position;
   final fireStore = FirebaseFirestore.instance.collection("User_appointments");
 
   void initState() {
-
     // vitaminCartController.storeServices();
     vitaminCartController.fetchServices();
+    getCurrentLoc();
     super.initState();
-    // Initial marker (optional)
+
     _marker.add(Marker(
       markerId: const MarkerId("1"),
       position: const LatLng(24.8846, 67.1754),
       infoWindow: InfoWindow(title: "Initial Location"),
     ));
+  }
+
+  void getCurrentLoc() async {
+    position = await getUserCurrentLocation();
   }
 
   Future<void> _handleTap(LatLng tappedPoint) async {
@@ -105,7 +104,6 @@ class _VitaminState extends State<Vitamin> {
   }
 
   void _showAddressBottomSheet() async {
-    final position = await getUserCurrentLocation();
     print("My Location".tr);
     print("${position.latitude} ${position.longitude}");
 
@@ -153,42 +151,18 @@ class _VitaminState extends State<Vitamin> {
                     Navigator.pop(context); // Close the dialog
                   },
                   onConfirm: () {
-
                     vitaminCartController.stAddress.value = stAddress;
                     vitaminCartController.latitude.value = Latitude;
                     vitaminCartController.longitude.value = Longitude;
 
-                    // vitaminCartController.setUserOrderInfo(
-                    //     widget.userModel, widget.firebaseUser);
-
-
-                    // setState(() {
-                    //   // fireStore.doc(widget.firebaseUser.email).set({
-                    //   //   "email": widget.firebaseUser.email,
-                    //   //   "name": widget.userModel.fullname,
-                    //   //   "phone": widget.userModel.mobileNumber,
-                    //   //   "gender": widget.userModel.gender,
-                    //   //   "dob": widget.userModel.dob,
-                    //   //   "address": stAddress,
-                    //   //   "latitude": Latitude,
-                    //   //   "longitude": Longitude,
-                    //   //   "packages": [],
-                    //   //   "type": "Vitamin Drips",
-                    //   //   "selected_time": ""
-                    //   // });
-                    // });
-
                     Navigator.pop(context); // Close the dialog
                     Navigator.pop(context); // Close the bottom sheet
-                    // Get.to(() => VitaminServices(
-                    //     address: stAddress,
-                    //     userModel: widget.userModel,
-                    //     firebaseUser: widget.firebaseUser));
-                     Get.to(SelectPackagesPage(
+
+                    Get.to(SelectPackagesPage(
                       userModel: widget.userModel,
                       firebaseUser: widget.firebaseUser,
                       address: stAddress,
-                     ));
+                    ));
                   },
                   textCancel: "Cancel".tr,
                   textConfirm: "Confirm".tr,
@@ -220,7 +194,6 @@ class _VitaminState extends State<Vitamin> {
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
           },
-          
         ),
       ),
       floatingActionButton: Align(
