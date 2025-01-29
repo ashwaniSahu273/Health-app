@@ -51,7 +51,7 @@ class _NurseVisitState extends State<NurseVisit> {
   final fireStore = FirebaseFirestore.instance.collection("User_appointments");
 
   void initState() {
-    // nurseController.storeServices();
+    // nurseController.storeDuration();
     // nurseController.fetchServices();
     getCurrentLoc();
     super.initState();

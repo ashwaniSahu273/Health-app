@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_visit_duration_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/nurse_service_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 // import 'package:harees_new_project/View/8.%20Chats/Models/vitamin_service_model.dart';
@@ -15,9 +16,14 @@ class NurseController extends GetxController {
   var currentTime = "".obs;
   var isLoading = false.obs;
   var servicesList = <NurseServiceModel>[].obs;
+  var durationList = <NurseVisitDuration>[].obs;
   var selectedIndex = 0.obs;
   var imageUrl = ''.obs;
-  var duration = "".obs;
+  var durationData = <String, dynamic>{
+    "duration": "1 Week",
+    "hours": "12 Hours per day",
+    "price": "2500 SAR",
+  }.obs;
   var durationPrice = "".obs;
 
   var selectedDateController = "".obs;
@@ -27,8 +33,8 @@ class NurseController extends GetxController {
   void onInit() {
     super.onInit();
     fetchServices();
+    fetchNurseVisitDuration();
   }
-
 
   // void durationOfService(String duration, String price) {
   //   duration.value = duration;
@@ -86,6 +92,26 @@ class NurseController extends GetxController {
       }).toList();
 
       servicesList.assignAll(services);
+
+      print("======================> $servicesList");
+    } catch (e) {
+      print("Error fetching services: $e");
+    }
+  }
+
+  void fetchNurseVisitDuration() async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('NurseVisitDuration')
+          .get();
+
+      var services = querySnapshot.docs.map((doc) {
+        return NurseVisitDuration.fromJson(
+          doc.data() as Map<String, dynamic>,
+        );
+      }).toList();
+
+      durationList.assignAll(services);
 
       print("======================> $servicesList");
     } catch (e) {
@@ -202,6 +228,13 @@ class NurseController extends GetxController {
     }
 
     cartItems.refresh();
+  }
+
+  void updatePrice(id) {
+    int index = cartItems.indexWhere((cartItem) => cartItem['id'] == id);
+
+    cartItems[index]["localized"]["ar"]['price'] = durationData["price"];
+    cartItems[index]["localized"]["en"]['price'] = durationData["price"];
   }
 
   void decreaseQuantity(id) {
@@ -511,6 +544,26 @@ class NurseController extends GetxController {
         FirebaseFirestore.instance.collection('NurseServices');
 
     for (var service in servicess) {
+      final docRef = servicesCollection.doc();
+      final id = docRef.id;
+
+      final updatedService = {...service, 'id': id};
+
+      await docRef.set(updatedService);
+    }
+  }
+
+  void storeDuration() async {
+    List<Map<String, dynamic>> durations = [
+      {"duration": "1 Week", "hours": "12 Hours per day", "price": "2500 SAR"},
+      {"duration": "2 Week", "hours": "12 Hours per day", "price": "4000 SAR"},
+      {"duration": "3 Week", "hours": "12 Hours per day", "price": "5200 SAR"},
+      {"duration": "4 Week", "hours": "12 Hours per day", "price": "6500 SAR"},
+    ];
+    CollectionReference servicesCollection =
+        FirebaseFirestore.instance.collection('NurseVisitDuration');
+
+    for (var service in durations) {
       final docRef = servicesCollection.doc();
       final id = docRef.id;
 

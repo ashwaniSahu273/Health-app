@@ -5,6 +5,7 @@ import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.d
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/b.nurse_time.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_cart_page.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_controller.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_visit_duration_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/nurse_service_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
@@ -24,8 +25,6 @@ class DynamicNurse extends StatelessWidget {
   Widget build(BuildContext context) {
     NurseController controller = Get.put(NurseController());
     String languageCode = Get.locale?.languageCode ?? 'en';
-    controller.duration.value = "1 Week";
-    controller.durationPrice.value = "4000 SAR";
 
     final localizedData =
         languageCode == 'ar' ? service.localized.ar : service.localized.en;
@@ -71,7 +70,7 @@ class DynamicNurse extends StatelessWidget {
               child: StepProgressBar(currentStep: 2, totalSteps: 4)),
           Expanded(
             child: Container(
-              color: Color(0xFFEEF8FF),
+              color: const Color(0xFFEEF8FF),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 16.0, vertical: 16.0),
@@ -128,8 +127,9 @@ class DynamicNurse extends StatelessWidget {
                                             ),
                                           )
                                         : Container(
-                                          margin: EdgeInsets.only(top: 10),
-                                            padding: EdgeInsets.symmetric(
+                                            margin:
+                                                const EdgeInsets.only(top: 10),
+                                            padding: const EdgeInsets.symmetric(
                                               horizontal: 8,
                                               vertical: 4,
                                             ),
@@ -227,6 +227,11 @@ class DynamicNurse extends StatelessWidget {
                                                   onTap: () {
                                                     controller
                                                         .addToCart(service.id);
+                                                    if (service.type ==
+                                                        "group") {
+                                                      controller.updatePrice(
+                                                          service.id);
+                                                    }
                                                   },
                                                   child: Container(
                                                     padding: const EdgeInsets
@@ -386,6 +391,10 @@ class DynamicNurse extends StatelessWidget {
                                           ...localizedData.termsOfService
                                               .split(
                                                   '.') // Split string into a list
+                                              .map((service) => service
+                                                  .trim()) // Trim whitespace
+                                              .where((service) => service
+                                                  .isNotEmpty) // Remove empty strings
                                               .map((service) =>
                                                   _buildBulletPoint(service
                                                       .trim())) // Trim whitespace and map to _buildChip
@@ -429,19 +438,30 @@ class DynamicNurse extends StatelessWidget {
                                           crossAxisSpacing: 16,
                                           mainAxisSpacing: 16,
                                         ),
-                                        itemCount: services.length,
+                                        itemCount:
+                                            controller.durationList.length,
                                         itemBuilder: (context, index) {
-                                          final service = services[index];
+                                          final durationService =
+                                              controller.durationList[index];
 
                                           return Obx(
                                             () => GestureDetector(
                                               onTap: () {
                                                 controller.selectedIndex.value =
                                                     index;
-                                                controller.duration.value =
-                                                    service["duration"]!;
-                                                controller.durationPrice.value =
-                                                    service["price"]!;
+                                                NurseVisitDuration nurseVisit =
+                                                    NurseVisitDuration(
+                                                  duration:
+                                                      durationService.duration,
+                                                  hours: durationService.hours,
+                                                  price: durationService.price,
+                                                );
+
+                                                controller.durationData.value =
+                                                    nurseVisit.toJson();
+
+                                                controller
+                                                    .updatePrice(service.id);
                                               },
                                               child: Container(
                                                 decoration: BoxDecoration(
@@ -478,7 +498,7 @@ class DynamicNurse extends StatelessWidget {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      service["duration"]!,
+                                                      durationService.duration,
                                                       style: TextStyle(
                                                         fontSize: 14,
                                                         fontWeight:
@@ -488,7 +508,7 @@ class DynamicNurse extends StatelessWidget {
                                                     ),
                                                     SizedBox(height: 4),
                                                     Text(
-                                                      service["hours"]!,
+                                                      durationService.hours,
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         fontWeight:
@@ -524,7 +544,8 @@ class DynamicNurse extends StatelessWidget {
                                                                         8),
                                                           ),
                                                           child: Text(
-                                                            service["price"]!,
+                                                            durationService
+                                                                .price,
                                                             style: TextStyle(
                                                               fontSize: 12,
                                                               fontWeight:
