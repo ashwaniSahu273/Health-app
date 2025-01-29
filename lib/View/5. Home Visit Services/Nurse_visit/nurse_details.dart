@@ -26,8 +26,8 @@ class NurseDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     NurseController cartController = Get.put(NurseController());
 
-    // String imageUrl = '';
-    // bool isUploading = false;
+    String imageUrl = '';
+    bool isUploading = false;
 
     // @override
     // void initState() {
@@ -39,12 +39,12 @@ class NurseDetails extends StatelessWidget {
       // setState(() {
       //   isUploading = true;
       // });
-      print("Starting upload");
+      print("===========>Starting upload");
 
       try {
         // Load image from assets
         ByteData byteData =
-            await rootBundle.load('assets/images/postpartum.png');
+            await rootBundle.load('assets/images/test-tube.png');
         Uint8List imageData = byteData.buffer.asUint8List();
 
         // Reference to Firebase Storage location
@@ -94,7 +94,7 @@ class NurseDetails extends StatelessWidget {
                 )), // Double-arrow icon
             GestureDetector(
               onTap: () {
-                // uploadImage();
+                uploadImage();
               },
               child: Text(
                 'Nurse Visit'.tr,

@@ -43,6 +43,7 @@ class _LabImpState extends State<LabImp> {
   final fireStore = FirebaseFirestore.instance.collection("User_appointments");
 
   void initState() {
+    
     getCurrentLoc();
     super.initState();
 

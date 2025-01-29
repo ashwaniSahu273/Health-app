@@ -285,7 +285,7 @@ class NurseController extends GetxController {
         "id": "",
         "type": "group",
         "imagePath":
-            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738166815031.png?alt=media&token=76287a8e-3dbd-45a5-8907-ade8e1994987",
         "localized": {
           "en": {
             "serviceName": "Palliative Care",
@@ -317,7 +317,7 @@ class NurseController extends GetxController {
         "id": "",
         "type": "individual",
         "imagePath":
-            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738166960821.png?alt=media&token=bb3dfa56-977f-439e-965b-35b8cc3238bb",
         "localized": {
           "en": {
             "serviceName":
@@ -342,7 +342,7 @@ class NurseController extends GetxController {
         "id": "",
         "type": "individual",
         "imagePath":
-            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738166960821.png?alt=media&token=bb3dfa56-977f-439e-965b-35b8cc3238bb",
         "localized": {
           "en": {
             "serviceName": "Injection/Home IV therapy",
@@ -366,7 +366,7 @@ class NurseController extends GetxController {
         "id": "",
         "type": "individual",
         "imagePath":
-            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738167053841.png?alt=media&token=2dd1d7b7-5563-4ce7-bedd-970f02335da1",
         "localized": {
           "en": {
             "serviceName": "Urinary Catheter Insertion & Removal",
@@ -390,7 +390,7 @@ class NurseController extends GetxController {
         "id": "",
         "type": "individual",
         "imagePath":
-            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738167149955.png?alt=media&token=61ef184b-eb15-45f5-9610-a288a8e4b0e1",
         "localized": {
           "en": {
             "serviceName": "Nebulisation",
@@ -414,7 +414,7 @@ class NurseController extends GetxController {
         "id": "",
         "type": "individual",
         "imagePath":
-            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738167256929.png?alt=media&token=8c1a39e5-1424-45af-9228-2e4f798ebd37",
         "localized": {
           "en": {
             "serviceName": "Burn Dressing",
@@ -438,7 +438,7 @@ class NurseController extends GetxController {
         "id": "",
         "type": "individual",
         "imagePath":
-            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738167256929.png?alt=media&token=8c1a39e5-1424-45af-9228-2e4f798ebd37",
         "localized": {
           "en": {
             "serviceName": "Wound Care",
@@ -462,7 +462,7 @@ class NurseController extends GetxController {
         "id": "",
         "type": "individual",
         "imagePath":
-            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738167149955.png?alt=media&token=61ef184b-eb15-45f5-9610-a288a8e4b0e1",
         "localized": {
           "en": {
             "serviceName": "Oxygen Therapy",
@@ -486,7 +486,7 @@ class NurseController extends GetxController {
         "id": "",
         "type": "individual",
         "imagePath":
-            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738167367186.png?alt=media&token=930289dc-203b-4ec8-b226-22355c98ad09",
         "localized": {
           "en": {
             "serviceName": "Nasogastric tube insertion",

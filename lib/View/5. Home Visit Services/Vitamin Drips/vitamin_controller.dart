@@ -266,14 +266,14 @@ class VitaminCartController extends GetxController {
             "price": "920 SR"
           },
           "ar": {
-            "serviceName": "Memory Enhancement IV Therapy",
+            "serviceName": "تعزيز الذاكرة  باقة",
             "description":
-                "It calms the stimulated mind and plays an important role in forming brain cells and enhances memory.",
+                "يهدئ العقل المحفز ويلعب دورًا مهمًا في تكوين خلايا المخ و يعمل على تعزيز الذاكرة",
             "instructions":
-                "The procedure takes about 40 to 60 minutes and the injection is done at home or workplace",
+                "• يستغرق الإجراء حوالي من ٤٠ ل ٦٠ دقيقة ويتم الحقن في المنزل أو مكان العمل",
             "components":
-                "Vitamin B12,Zinc,Selenium,Calcium Gluconate, Magnesium Sulphate, Vitamin C ,Amino Acids, Potassium Chloride, Normal Saline, Water soluble vitamins, Thiamine (Vitamin B1)",
-            "price": "920 SR"
+                "تشمل فيتامين ب ١٢,الزنك,السيلينيوم,جلوكونات الكالسيوم,كبريتات المغنيسيوم,فيتامين سي,احماض أمينية, كلوريد البوتاسيوم, محلول ملحي,مزيج الفيتامينات الذائبة بالماء,الثيامين ( فيتامين ب ١)",
+            "price": "920 ريال"
           }
         }
       },
@@ -286,21 +286,21 @@ class VitaminCartController extends GetxController {
             "serviceName": "Hair Health IV Therapy",
             "description":
                 "For healthy, strong, balanced hair, reduces hair loss and supports nails and skin.",
+            "instructions":
+                "The procedure takes about 40 to 60 minutes and the injection is done at home or workplace.",
             "components":
                 "Vitamin C, Zinc, Selenium, Water-soluble vitamins, Vitamin D3, Vitamin B12, Magnesium Sulphate, Folic acid, Amino acids, Normal saline.",
-            "price": "1120 SAR",
-            "instructions":
-                "The procedure takes about 40 to 60 minutes and the injection is done at home or workplace."
+            "price": "1120 SAR"
           },
           "ar": {
-            "serviceName": "Hair Health IV Therapy",
+            "serviceName": "تعزيز صحة الشعر",
             "description":
-                "For healthy, strong, balanced hair, reduces hair loss and supports nails and skin.",
-            "components":
-                "Vitamin C, Zinc, Selenium, Water-soluble vitamins, Vitamin D3, Vitamin B12, Magnesium Sulphate, Folic acid, Amino acids, Normal saline.",
-            "price": "1120 SAR",
+                "لشعر صحي وقوي ومتوازن ويقلل من تساقط الشعر ويدعم الأظافر والبشرة",
             "instructions":
-                "The procedure takes about 40 to 60 minutes and the injection is done at home or workplace."
+                "• يستغرق الإجراء حوالي من ٤٠ ل ٦٠ دقيقة ويتم الحقن في المنزل أو مكان العمل.",
+            "components":
+                "تشمل فيتامين سي,الزنك,سيلينيوم,مزيج الفيتامينات الذائبة بالماء,فيتامين د3,فيتامين ب١٢,كبريتات المغنيسيوم,حمض الفوليك,احماض أمينية,محلول ملحي",
+            "price": "1120 ريال"
           }
         }
       },
@@ -313,21 +313,21 @@ class VitaminCartController extends GetxController {
             "serviceName": "Diet & Detox IV Therapy",
             "description":
                 "Incorporate antioxidants into your regular wellness routine and remove any lingering free radicals in your body.",
+            "instructions":
+                "The procedure takes about 40 to 60 minutes and the injection is done at home or workplace.",
             "components":
                 "Vitamin Cater soluble vitamins, Potassium Chloride, Calcium Gluconate, Vitamin D3, Selenium, Trace elements mixture, Zinc, Thiamine, Amino Acids 10%, Magnesium Supratemporal saline %0.9 D5W.",
-            "price": "1050 SAR",
-            "instructions":
-                "The procedure takes about 40 to 60 minutes and the injection is done at home or workplace."
+            "price": "1050 SAR"
           },
           "ar": {
-            "serviceName": "Diet & Detox IV Therapy",
+            "serviceName": "الديتوكس",
             "description":
-                "Incorporate antioxidants into your regular wellness routine and remove any lingering free radicals in your body.",
-            "components":
-                "Vitamin Cater soluble vitamins, Potassium Chloride, Calcium Gluconate, Vitamin D3, Selenium, Trace elements mixture, Zinc, Thiamine, Amino Acids 10%, Magnesium Supratemporal saline %0.9 D5W.",
-            "price": "1050 SAR",
+                "اجعل مضادات الأكسدة جزءًا من روتينك الصحي، وتخلص من السموم في جسدك، ابدأ من جديد بنقاء وانتعاش.",
             "instructions":
-                "The procedure takes about 40 to 60 minutes and the injection is done at home or workplace."
+                "• يستغرق الإجراء حوالي من ٤٠ ل ٦٠ دقيقة ويتم الحقن في المنزل أو مكان العمل.",
+            "components":
+                "تشمل فيتامين سي,مزيج الفيتامينات الذائبة بالماء,كلوريد البوتاسيوم,جلوكونات الكالسيوم, فيتامين د٣,سيلينيوم, مزيج العناصر النادرة,الزنك,الثيامين,٪أحماض أمينية ١٠,كبريتات المغنيسيوم,محلول ملحي % 0.9 D5W",
+            "price": "1050 ريال"
           }
         }
       },
@@ -340,21 +340,21 @@ class VitaminCartController extends GetxController {
             "serviceName": "Weight Loss IV Therapy",
             "description":
                 "This multivitamin aids in improving body metabolism and the rate of fat burning within the body.",
+            "instructions":
+                "The procedure takes about 40 to 60 minutes and the injection is done at home or workplace.",
             "components":
                 "L-Carnitine, Glutamine, Zinc, Calcium Gluconate, Vitamin C, Vitamin B12, Vitamin D3, Thiamine (Vitamin B1), Magnesium sulphate, Normal saline, Trace elements mixture, Water soluble vitamins.",
-            "price": "1220 SAR",
-            "instructions":
-                "The procedure takes about 40 to 60 minutes and the injection is done at home or workplace."
+            "price": "1220 SAR"
           },
           "ar": {
-            "serviceName": "Weight Loss IV Therapy",
+            "serviceName": "الفيتامينات المعززة لانقاص الوزن",
             "description":
-                "This multivitamin aids in improving body metabolism and the rate of fat burning within the body.",
-            "components":
-                "L-Carnitine, Glutamine, Zinc, Calcium Gluconate, Vitamin C, Vitamin B12, Vitamin D3, Thiamine (Vitamin B1), Magnesium sulphate, Normal saline, Trace elements mixture, Water soluble vitamins.",
-            "price": "1220 SAR",
+                "تساعد الفيتامينات في زيادة عملية التمثيل الغذائي وبالتالي تسهم في رفع معدل حرق الدهون داخل الجسم.",
             "instructions":
-                "The procedure takes about 40 to 60 minutes and the injection is done at home or workplace."
+                "• يستغرق الإجراء حوالي من ٤٠ ل ٦٠ دقيقة ويتم الحقن في المنزل أو مكان العمل.",
+            "components":
+                "تشمل إل - كارنيتين,الجلوتامين,الزنك,جلوكونات الكالسيوم, فيتامين سي,فيتامين ب ١٢, فيتامين د٣,الثيامين ( فيتامين ب ١), كبريتات المغنيسيوم,محلول ملحي, مزيج العناصر النادرة,مزيج الفيتامينات الذائبة بالماء",
+            "price": "1220 ريال"
           }
         }
       },
@@ -374,13 +374,13 @@ class VitaminCartController extends GetxController {
             "price": "1120 SAR"
           },
           "ar": {
-            "serviceName": "Post Sleeve Gastrectomy IV Therapy",
+            "serviceName": "فيتامينات ما بعد جراحة السمنة",
             "description":
-                "To hydrate the body after gastric sleeve and provide better absorption for the nutrients and supplements.",
+                "يقوم بدعم الجسم بعد عملية التكميم بالعناصر الغذائية اللازمة ويرطب الجسم ويوفر امتصاص أفضل للمكملات.",
             "instructions":
-                "Please note that Post Sleeve Gastrectomy IV should be taken (3) months post surgery. The procedure takes about 40 to 60 minutes and the injection is done at home or workplace.",
+                "• تؤخذ الحقنة الوريدية بعد عملية التكميم ب(٣) اشهر.\n• يستغرق الإجراء حوالي من ٤٠ ل ٦٠ دقيقة ويتم الحقن في المنزل أو مكان العمل.",
             "components":
-                "Calcium Gluconate, Magnesium Sulphate, Vitamin B12, Potassium Chloride, Multivitamins Mixture, Vitamin C, Vitamin B1, Vitamin D3, Selenium, Amino Acid, Normal saline, Trace Elements Mixture, Zinc.",
+                "جلوكونات الكالسيوم, كبريتات المغنيسيوم, فيتامين ب١٢, كلوريد البوتاسيوم, متعدد الفيتامينات, فيتامين سي, فيتامين ب1, فيتامين د٣, السيلينيوم, أحماض أمينية, محلول ملحي, مزيج العناصر النادرة, زنك.",
             "price": "1120 SAR"
           }
         }
