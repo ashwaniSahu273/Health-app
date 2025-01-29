@@ -29,6 +29,7 @@ class NurseController extends GetxController {
     fetchServices();
   }
 
+
   // void durationOfService(String duration, String price) {
   //   duration.value = duration;
   //   price.value = price;
@@ -251,13 +252,14 @@ class NurseController extends GetxController {
     final List<Map<String, dynamic>> servicess = [
       {
         "id": "",
+        "type": "group",
         "imagePath":
             "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2Fback_image.png?alt=media&token=2c989863-03f0-47dc-8e61-e9cc6b56192a",
         "localized": {
           "en": {
             "serviceName": "Elderly Care",
             "description":
-                "Specialized attention for senior citizens, including mobility and health monitoring.",
+                "Specialized attention for seniors and take care of their health, including mobility assistance ,measuring and monitoring vital signs and medication reminders",
             "about":
                 "Our elderly care service provides compassionate support for seniors, including health monitoring, medication management, mobility assistance, and personal care. Designed to ensure comfort and dignity, our skilled caregivers help maintain independence and improve quality of life in the comfort of home.",
             "serviceIncludes":
@@ -281,106 +283,14 @@ class NurseController extends GetxController {
       },
       {
         "id": "",
-        "imagePath":
-            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981186590.png?alt=media&token=dccc55e2-1c77-4623-967c-34413aea1cee",
-        "localized": {
-          "en": {
-            "serviceName": "Babysitter Services",
-            "description":
-                "Professional care for infants and children, ensuring their health and safety.",
-            "about":
-                "Our elderly care service provides compassionate support for seniors, including health monitoring, medication management, mobility assistance, and personal care. Designed to ensure comfort and dignity, our skilled caregivers help maintain independence and improve quality of life in the comfort of home.",
-            "serviceIncludes":
-                "Dietary monitoring, Accompanying the elderly to the hospital, Selecting and changing clothes for the beneficiary, Measuring and monitoring vital signs and medication reminders, Maintaining personal hygiene and ensuring the safety of the beneficiary, Assisting with safe mobility, walking or turning the elderly in bed to minimize the occurrence of bedsores.",
-            "TermsOfService":
-                "The client is obligated to provide a private room for the healthcare companion, fully prepared and equipped for them. The client has the right to replace the healthcare companion in case of any malfunction or negligence on their part. The client is obligated to give the healthcare companion one day off per week, with the day to be agreed upon by both parties. The client is obligated to ensure that the official working hours of the healthcare companion do not exceed 12 hours per day, and the working hours shall be flexible and agreed upon between the two parties.",
-            "price": "2500 SAR"
-          },
-          "ar": {
-            "serviceName": "خدمات جليسة الأطفال",
-            "description":
-                "رعاية مهنية للأطفال والرضع، مع ضمان صحتهم وسلامتهم.",
-            "about":
-                "تقدم خدمتنا لرعاية المسنين دعمًا رقيقًا لكبار السن، يشمل مراقبة الصحة، إدارة الأدوية، المساعدة في الحركة، والعناية الشخصية. تم تصميمها لضمان الراحة والكرامة، ويساعد مقدمو الرعاية المهرة لدينا في الحفاظ على الاستقلالية وتحسين جودة الحياة في راحة المنزل.",
-            "serviceIncludes":
-                "مراقبة النظام الغذائي، مرافقة المسنين إلى المستشفى، اختيار وتغيير الملابس للمستفيد، قياس ورصد العلامات الحيوية وتذكير الأدوية، الحفاظ على النظافة الشخصية وضمان سلامة المستفيد، مساعدة في التنقل الآمن، المشي أو تغيير وضعية المسنين في السرير لتقليل حدوث تقرحات الفراش.",
-            "TermsOfService":
-                "يتعين على العميل توفير غرفة خاصة لمرافق الرعاية الصحية، مجهزة بالكامل لها. يحق للعميل استبدال المرافق في حال حدوث أي خلل أو تقصير من جانبهم. يتعين على العميل إعطاء المرافق يوم راحة واحد في الأسبوع، يتم الاتفاق عليه بين الطرفين. يتعين على العميل ضمان أن ساعات العمل الرسمية لمرافق الرعاية الصحية لا تتجاوز 12 ساعة يوميًا، وأن ساعات العمل ستكون مرنة ومتفق عليها بين الطرفين.",
-            "price": "2500 ريال"
-          }
-        }
-      },
-      {
-        "id": "",
+        "type": "group",
         "imagePath":
             "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
         "localized": {
           "en": {
-            "serviceName": "Post-Operative Care",
+            "serviceName": "Palliative Care",
             "description":
-                "Wound dressing, medication administration, and recovery monitoring after surgery.",
-            "about":
-                "Our elderly care service provides compassionate support for seniors, including health monitoring, medication management, mobility assistance, and personal care. Designed to ensure comfort and dignity, our skilled caregivers help maintain independence and improve quality of life in the comfort of home.",
-            "serviceIncludes":
-                "Dietary monitoring, Accompanying the elderly to the hospital, Selecting and changing clothes for the beneficiary, Measuring and monitoring vital signs and medication reminders, Maintaining personal hygiene and ensuring the safety of the beneficiary, Assisting with safe mobility, walking or turning the elderly in bed to minimize the occurrence of bedsores.",
-            "TermsOfService":
-                "The client is obligated to provide a private room for the healthcare companion, fully prepared and equipped for them. The client has the right to replace the healthcare companion in case of any malfunction or negligence on their part. The client is obligated to give the healthcare companion one day off per week, with the day to be agreed upon by both parties. The client is obligated to ensure that the official working hours of the healthcare companion do not exceed 12 hours per day, and the working hours shall be flexible and agreed upon between the two parties.",
-            "price": "2500 SAR"
-          },
-          "ar": {
-            "serviceName": "رعاية ما بعد العمليات الجراحية",
-            "description":
-                "تضميد الجروح، إعطاء الأدوية، ومراقبة التعافي بعد الجراحة.",
-            "about":
-                "تقدم خدمتنا لرعاية المسنين دعمًا رقيقًا لكبار السن، يشمل مراقبة الصحة، إدارة الأدوية، المساعدة في الحركة، والعناية الشخصية. تم تصميمها لضمان الراحة والكرامة، ويساعد مقدمو الرعاية المهرة لدينا في الحفاظ على الاستقلالية وتحسين جودة الحياة في راحة المنزل.",
-            "serviceIncludes":
-                "مراقبة النظام الغذائي، مرافقة المسنين إلى المستشفى، اختيار وتغيير الملابس للمستفيد، قياس ورصد العلامات الحيوية وتذكير الأدوية، الحفاظ على النظافة الشخصية وضمان سلامة المستفيد، مساعدة في التنقل الآمن، المشي أو تغيير وضعية المسنين في السرير لتقليل حدوث تقرحات الفراش.",
-            "TermsOfService":
-                "يتعين على العميل توفير غرفة خاصة لمرافق الرعاية الصحية، مجهزة بالكامل لها. يحق للعميل استبدال المرافق في حال حدوث أي خلل أو تقصير من جانبهم. يتعين على العميل إعطاء المرافق يوم راحة واحد في الأسبوع، يتم الاتفاق عليه بين الطرفين. يتعين على العميل ضمان أن ساعات العمل الرسمية لمرافق الرعاية الصحية لا تتجاوز 12 ساعة يوميًا، وأن ساعات العمل ستكون مرنة ومتفق عليها بين الطرفين.",
-            "price": "2500 ريال"
-          }
-        }
-      },
-      {
-        "id": "",
-        "imagePath":
-            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981351078.png?alt=media&token=fd7730ea-58d1-4fb3-880f-c24f14856e87",
-        "localized": {
-          "en": {
-            "serviceName": "Postpartum Care",
-            "description":
-                "Support for new mothers, including breastfeeding guidance and post-delivery recovery.",
-            "about":
-                "Our elderly care service provides compassionate support for seniors, including health monitoring, medication management, mobility assistance, and personal care. Designed to ensure comfort and dignity, our skilled caregivers help maintain independence and improve quality of life in the comfort of home.",
-            "serviceIncludes":
-                "Dietary monitoring, Accompanying the elderly to the hospital, Selecting and changing clothes for the beneficiary, Measuring and monitoring vital signs and medication reminders, Maintaining personal hygiene and ensuring the safety of the beneficiary, Assisting with safe mobility, walking or turning the elderly in bed to minimize the occurrence of bedsores.",
-            "TermsOfService":
-                "The client is obligated to provide a private room for the healthcare companion, fully prepared and equipped for them. The client has the right to replace the healthcare companion in case of any malfunction or negligence on their part. The client is obligated to give the healthcare companion one day off per week, with the day to be agreed upon by both parties. The client is obligated to ensure that the official working hours of the healthcare companion do not exceed 12 hours per day, and the working hours shall be flexible and agreed upon between the two parties.",
-            "price": "2500 SAR"
-          },
-          "ar": {
-            "serviceName": "رعاية ما بعد الولادة",
-            "description":
-                "دعم للأمهات الجدد، بما في ذلك الإرشاد حول الرضاعة الطبيعية والتعافي بعد الولادة.",
-            "about":
-                "تقدم خدمتنا لرعاية المسنين دعمًا رقيقًا لكبار السن، يشمل مراقبة الصحة، إدارة الأدوية، المساعدة في الحركة، والعناية الشخصية. تم تصميمها لضمان الراحة والكرامة، ويساعد مقدمو الرعاية المهرة لدينا في الحفاظ على الاستقلالية وتحسين جودة الحياة في راحة المنزل.",
-            "serviceIncludes":
-                "مراقبة النظام الغذائي، مرافقة المسنين إلى المستشفى، اختيار وتغيير الملابس للمستفيد، قياس ورصد العلامات الحيوية وتذكير الأدوية، الحفاظ على النظافة الشخصية وضمان سلامة المستفيد، مساعدة في التنقل الآمن، المشي أو تغيير وضعية المسنين في السرير لتقليل حدوث تقرحات الفراش.",
-            "TermsOfService":
-                "يتعين على العميل توفير غرفة خاصة لمرافق الرعاية الصحية، مجهزة بالكامل لها. يحق للعميل استبدال المرافق في حال حدوث أي خلل أو تقصير من جانبهم. يتعين على العميل إعطاء المرافق يوم راحة واحد في الأسبوع، يتم الاتفاق عليه بين الطرفين. يتعين على العميل ضمان أن ساعات العمل الرسمية لمرافق الرعاية الصحية لا تتجاوز 12 ساعة يوميًا، وأن ساعات العمل ستكون مرنة ومتفق عليها بين الطرفين.",
-            "price": "2500 ريال"
-          }
-        }
-      },
-      {
-        "id": "",
-        "imagePath":
-            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
-        "localized": {
-          "en": {
-            "serviceName": "Chronic Illness Support",
-            "description":
-                "Help with managing conditions like diabetes, hypertension, or asthma.",
+                "Focused on enhancing the quality of life for patients with serious or chronic illnesses,  life-threatening illnesses by alleviating pain and other symptoms.",
             "about":
                 "Our elderly care service provides compassionate support for seniors, including health monitoring, medication management, mobility assistance, and personal care. Designed to ensure comfort and dignity, our skilled caregivers help maintain independence and improve quality of life in the comfort of home.",
             "serviceIncludes":
@@ -405,35 +315,197 @@ class NurseController extends GetxController {
       },
       {
         "id": "",
+        "type": "individual",
         "imagePath":
             "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
         "localized": {
           "en": {
-            "serviceName": "Mobility Assistance",
-            "description":
-                "Support for individuals with limited mobility or recovering from injuries.",
-            "about":
-                "Our elderly care service provides compassionate support for seniors, including health monitoring, medication management, mobility assistance, and personal care. Designed to ensure comfort and dignity, our skilled caregivers help maintain independence and improve quality of life in the comfort of home.",
-            "serviceIncludes":
-                "Dietary monitoring, Accompanying the elderly to the hospital, Selecting and changing clothes for the beneficiary, Measuring and monitoring vital signs and medication reminders, Maintaining personal hygiene and ensuring the safety of the beneficiary, Assisting with safe mobility, walking or turning the elderly in bed to minimize the occurrence of bedsores.",
-            "TermsOfService":
-                "The client is obligated to provide a private room for the healthcare companion, fully prepared and equipped for them. The client has the right to replace the healthcare companion in case of any malfunction or negligence on their part. The client is obligated to give the healthcare companion one day off per week, with the day to be agreed upon by both parties. The client is obligated to ensure that the official working hours of the healthcare companion do not exceed 12 hours per day, and the working hours shall be flexible and agreed upon between the two parties.",
-            "price": "2500 SAR"
+            "serviceName":
+                "Intramuscular Injection or Subcutaneous administration",
+            "description": "",
+            "about": "",
+            "serviceIncludes": "",
+            "TermsOfService": "",
+            "price": "180 SAR"
           },
           "ar": {
-            "serviceName": "مساعدة في التنقل",
-            "description":
-                "دعم للأفراد ذوي الحركة المحدودة أو الذين يتعافون من الإصابات.",
-            "about":
-                "تقدم خدمتنا لرعاية المسنين دعمًا رقيقًا لكبار السن، يشمل مراقبة الصحة، إدارة الأدوية، المساعدة في الحركة، والعناية الشخصية. تم تصميمها لضمان الراحة والكرامة، ويساعد مقدمو الرعاية المهرة لدينا في الحفاظ على الاستقلالية وتحسين جودة الحياة في راحة المنزل.",
-            "serviceIncludes":
-                "مراقبة النظام الغذائي، مرافقة المسنين إلى المستشفى، اختيار وتغيير الملابس للمستفيد، قياس ورصد العلامات الحيوية وتذكير الأدوية، الحفاظ على النظافة الشخصية وضمان سلامة المستفيد، مساعدة في التنقل الآمن، المشي أو تغيير وضعية المسنين في السرير لتقليل حدوث تقرحات الفراش.",
-            "TermsOfService":
-                "يتعين على العميل توفير غرفة خاصة لمرافق الرعاية الصحية، مجهزة بالكامل لها. يحق للعميل استبدال المرافق في حال حدوث أي خلل أو تقصير من جانبهم. يتعين على العميل إعطاء المرافق يوم راحة واحد في الأسبوع، يتم الاتفاق عليه بين الطرفين. يتعين على العميل ضمان أن ساعات العمل الرسمية لمرافق الرعاية الصحية لا تتجاوز 12 ساعة يوميًا، وأن ساعات العمل ستكون مرنة ومتفق عليها بين الطرفين.",
-            "price": "2500 ريال"
+            "serviceName": "حقن عضلي أو تحت الجلد ",
+            "description": "",
+            "about": "",
+            "serviceIncludes": "",
+            "TermsOfService": "",
+            "price": "180 ريال"
           }
         }
-      }
+      },
+      {
+        "id": "",
+        "type": "individual",
+        "imagePath":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
+        "localized": {
+          "en": {
+            "serviceName": "Injection/Home IV therapy",
+            "description": "",
+            "about": "",
+            "serviceIncludes": "",
+            "TermsOfService": "",
+            "price": "230 SAR"
+          },
+          "ar": {
+            "serviceName": "حقن/علاج وريدي  IV ",
+            "description": "",
+            "about": "",
+            "serviceIncludes": "",
+            "TermsOfService": "",
+            "price": "230 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "type": "individual",
+        "imagePath":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
+        "localized": {
+          "en": {
+            "serviceName": "Urinary Catheter Insertion & Removal",
+            "description": "",
+            "about": "",
+            "serviceIncludes": "",
+            "TermsOfService": "",
+            "price": "230 SAR"
+          },
+          "ar": {
+            "serviceName": "تركيب و ازالة القسطرة البولية",
+            "description": "",
+            "about": "",
+            "serviceIncludes": "",
+            "TermsOfService": "",
+            "price": "230 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "type": "individual",
+        "imagePath":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
+        "localized": {
+          "en": {
+            "serviceName": "Nebulisation",
+            "description": "",
+            "about": "",
+            "serviceIncludes": "",
+            "TermsOfService": "",
+            "price": "230 SAR"
+          },
+          "ar": {
+            "serviceName": "جلسة بخار",
+            "description": "",
+            "about": "",
+            "serviceIncludes": "",
+            "TermsOfService": "",
+            "price": "230 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "type": "individual",
+        "imagePath":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
+        "localized": {
+          "en": {
+            "serviceName": "Burn Dressing",
+            "description": "",
+            "about": "",
+            "serviceIncludes": "",
+            "TermsOfService": "",
+            "price": "320 SAR"
+          },
+          "ar": {
+            "serviceName": "تركيب و ازالة القسطرة البولية",
+            "description": "",
+            "about": "",
+            "serviceIncludes": "",
+            "TermsOfService": "",
+            "price": "320 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "type": "individual",
+        "imagePath":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
+        "localized": {
+          "en": {
+            "serviceName": "Wound Care",
+            "description": "",
+            "about": "",
+            "serviceIncludes": "",
+            "TermsOfService": "",
+            "price": "320 SAR"
+          },
+          "ar": {
+            "serviceName": "العناية بالضمادات الجراحية وتغييرها",
+            "description": "",
+            "about": "",
+            "serviceIncludes": "",
+            "TermsOfService": "",
+            "price": "320 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "type": "individual",
+        "imagePath":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
+        "localized": {
+          "en": {
+            "serviceName": "Oxygen Therapy",
+            "description": "",
+            "about": "",
+            "serviceIncludes": "",
+            "TermsOfService": "",
+            "price": "320 SAR"
+          },
+          "ar": {
+            "serviceName": "العلاج بالاوكسجين",
+            "description": "",
+            "about": "",
+            "serviceIncludes": "",
+            "TermsOfService": "",
+            "price": "320 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "type": "individual",
+        "imagePath":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1737981035093.png?alt=media&token=fced5113-1e47-45e1-a409-3eadd750b83b",
+        "localized": {
+          "en": {
+            "serviceName": "Nasogastric tube insertion",
+            "description": "",
+            "about": "",
+            "serviceIncludes": "",
+            "TermsOfService": "",
+            "price": "320 SAR"
+          },
+          "ar": {
+            "serviceName": "أنبوب التغذية الأنفي المعوي",
+            "description": "",
+            "about": "",
+            "serviceIncludes": "",
+            "TermsOfService": "",
+            "price": "320 ريال"
+          }
+        }
+      },
     ];
     CollectionReference servicesCollection =
         FirebaseFirestore.instance.collection('NurseServices');

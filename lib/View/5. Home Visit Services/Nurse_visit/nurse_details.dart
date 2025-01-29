@@ -120,6 +120,19 @@ class NurseDetails extends StatelessWidget {
               padding: const EdgeInsets.all(12),
               itemCount: cartController.servicesList.length,
               itemBuilder: (context, index) {
+
+
+                cartController.servicesList.sort((a, b) {
+                  String typeA = a.type!.toLowerCase();
+                  String typeB = b.type!.toLowerCase();
+                  if (typeA == 'group' && typeB == 'individual') {
+                    return -1;
+                  } else if (typeA == 'individual' && typeB == 'group') {
+                    return 1;
+                  }
+                  return 0;
+                });
+                
                 final service = cartController.servicesList[index];
 
                 String languageCode = Get.locale?.languageCode ?? 'en';
@@ -172,25 +185,47 @@ class NurseDetails extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 4),
-                                Text(
-                                  localizedData.description,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.black54,
-                                  ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                                service.type == "group"
+                                    ? Text(
+                                        localizedData.description,
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black54,
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      )
+                                    : const SizedBox.shrink(),
                                 const SizedBox(height: 8),
-                                const Text(
-                                  "Know more",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.blueAccent,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                ),
+                                service.type == "group"
+                                    ? const Text(
+                                        "Know more",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.blueAccent,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                      )
+                                    : Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 4,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Colors.blue[100],
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Text(
+                                          localizedData.price,
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.blue[700],
+                                          ),
+                                        ),
+                                      ),
                               ],
                             ),
                           ),

@@ -37,7 +37,6 @@ class DynamicNurse extends StatelessWidget {
       {"duration": "4 Week", "hours": "12 Hours per day", "price": "6500 SAR"},
     ];
 
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -117,16 +116,37 @@ class DynamicNurse extends StatelessWidget {
                                         color: Color(0xFF007ABB),
                                       ),
                                     ),
-                                    Text(
-                                      maxLines: 2,
-                                      localizedData.description,
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
+                                    service.type == "group"
+                                        ? Text(
+                                            maxLines: 2,
+                                            localizedData.description,
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
 
-                                        // Highlighted teal price text
-                                      ),
-                                    ),
+                                              // Highlighted teal price text
+                                            ),
+                                          )
+                                        : Container(
+                                          margin: EdgeInsets.only(top: 10),
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                              vertical: 4,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: Colors.blue[100],
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: Text(
+                                              localizedData.price,
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.blue[700],
+                                              ),
+                                            ),
+                                          ),
                                     const SizedBox(height: 10),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
@@ -244,267 +264,292 @@ class DynamicNurse extends StatelessWidget {
                       ),
 
                       const SizedBox(height: 16),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        elevation: 0,
-                        color: Colors.white,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                top: 8.0,
-                                left: 8,
+                      service.type == "group"
+                          ? Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
                               ),
-                              child: Text(
-                                "About This Package".tr,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: "Roboto",
-                                ),
+                              elevation: 0,
+                              color: Colors.white,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 8.0,
+                                      left: 8,
+                                    ),
+                                    child: Text(
+                                      "About This Package".tr,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: "Roboto",
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text(
+                                      localizedData.about,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.black54,
+                                        fontFamily: "Roboto",
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: Text(
-                                localizedData.about,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black54,
-                                  fontFamily: "Roboto",
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                            )
+                          : const SizedBox.shrink(),
 
                       const SizedBox(height: 16),
 
                       // Components Included
 
                       // const SizedBox(height: 8),
-                      Container(
-                        width: double.infinity,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          color: Colors.white,
-                          elevation: 0,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Service Includes".tr,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                      service.type == "group"
+                          ? Container(
+                              width: double.infinity,
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Wrap(
-                                  spacing: 10,
-                                  runSpacing: 8,
+                                color: Colors.white,
+                                elevation: 0,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    ...localizedData.serviceIncludes
-                                        .split(',') // Split string into a list
-                                        .map((service) => _buildBulletPoint(service
-                                            .trim())) // Trim whitespace and map to _buildChip
-                                        .toList(),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Service Includes".tr,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Wrap(
+                                        spacing: 10,
+                                        runSpacing: 8,
+                                        children: [
+                                          ...localizedData.serviceIncludes
+                                              .split(
+                                                  ',') // Split string into a list
+                                              .map((service) =>
+                                                  _buildBulletPoint(service
+                                                      .trim())) // Trim whitespace and map to _buildChip
+                                              .toList(),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
+                            )
+                          : const SizedBox.shrink(),
                       const SizedBox(height: 16),
 
-                      Container(
-                        width: double.infinity,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          color: Colors.white,
-                          elevation: 0,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Terms of Service".tr,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                      service.type == "group"
+                          ? Container(
+                              width: double.infinity,
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Wrap(
-                                  spacing: 10,
-                                  runSpacing: 8,
+                                color: Colors.white,
+                                elevation: 0,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    ...localizedData.termsOfService
-                                        .split('.') // Split string into a list
-                                        .map((service) => _buildBulletPoint(service
-                                            .trim())) // Trim whitespace and map to _buildChip
-                                        .toList(),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Terms of Service".tr,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Wrap(
+                                        spacing: 10,
+                                        runSpacing: 8,
+                                        children: [
+                                          ...localizedData.termsOfService
+                                              .split(
+                                                  '.') // Split string into a list
+                                              .map((service) =>
+                                                  _buildBulletPoint(service
+                                                      .trim())) // Trim whitespace and map to _buildChip
+                                              .toList(),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
+                            )
+                          : const SizedBox.shrink(),
 
-                      Container(
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 4, vertical: 16),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Colors.white),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Select duration of service",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(height: 16),
-                              SizedBox(
-                                height: 250,
-                                child: GridView.builder(
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    childAspectRatio: 3 / 2.5,
-                                    crossAxisSpacing: 16,
-                                    mainAxisSpacing: 16,
-                                  ),
-                                  itemCount: services.length,
-                                  itemBuilder: (context, index) {
-                                    final service = services[index];
+                      service.type == "group"
+                          ? Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 4, vertical: 16),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.white),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Select duration of service",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(height: 16),
+                                    SizedBox(
+                                      height: 250,
+                                      child: GridView.builder(
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          childAspectRatio: 3 / 2.5,
+                                          crossAxisSpacing: 16,
+                                          mainAxisSpacing: 16,
+                                        ),
+                                        itemCount: services.length,
+                                        itemBuilder: (context, index) {
+                                          final service = services[index];
 
-                                    return Obx(
-                                      () => GestureDetector(
-                                        onTap: () {
-                                          controller.selectedIndex.value =
-                                              index;
-                                          controller.duration.value = service["duration"]!;
-                                          controller.durationPrice.value = service["price"]!;
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: controller
-                                                        .selectedIndex.value ==
-                                                    index
-                                                ? Colors.blue[50]
-                                                : Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            border: Border.all(
-                                              color: controller.selectedIndex
-                                                          .value ==
-                                                      index
-                                                  ? Colors.blue
-                                                  : Colors.grey[300]!,
-                                              width: 2,
-                                            ),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.grey[100]!,
-                                                blurRadius: 1,
-                                                offset: Offset(0, 0),
-                                              ),
-                                            ],
-                                          ),
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 16, horizontal: 8),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                service["duration"]!,
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Colors.blue[700],
-                                                ),
-                                              ),
-                                              SizedBox(height: 4),
-                                              Text(
-                                                service["hours"]!,
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Colors.grey[600],
-                                                ),
-                                              ),
-                                              Spacer(),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    "Starting",
-                                                    style: TextStyle(
-                                                      fontSize: 12,
-                                                      color: Colors.grey[500],
-                                                    ),
+                                          return Obx(
+                                            () => GestureDetector(
+                                              onTap: () {
+                                                controller.selectedIndex.value =
+                                                    index;
+                                                controller.duration.value =
+                                                    service["duration"]!;
+                                                controller.durationPrice.value =
+                                                    service["price"]!;
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: controller
+                                                              .selectedIndex
+                                                              .value ==
+                                                          index
+                                                      ? Colors.blue[50]
+                                                      : Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  border: Border.all(
+                                                    color: controller
+                                                                .selectedIndex
+                                                                .value ==
+                                                            index
+                                                        ? Colors.blue
+                                                        : Colors.grey[300]!,
+                                                    width: 2,
                                                   ),
-                                                  SizedBox(width: 4),
-                                                  Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                      horizontal: 8,
-                                                      vertical: 4,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey[100]!,
+                                                      blurRadius: 1,
+                                                      offset: Offset(0, 0),
                                                     ),
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.blue[100],
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                    child: Text(
-                                                      service["price"]!,
+                                                  ],
+                                                ),
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 16,
+                                                    horizontal: 8),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      service["duration"]!,
                                                       style: TextStyle(
-                                                        fontSize: 12,
+                                                        fontSize: 14,
                                                         fontWeight:
-                                                            FontWeight.bold,
+                                                            FontWeight.w700,
                                                         color: Colors.blue[700],
                                                       ),
                                                     ),
-                                                  ),
-                                                ],
+                                                    SizedBox(height: 4),
+                                                    Text(
+                                                      service["hours"]!,
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        color: Colors.grey[600],
+                                                      ),
+                                                    ),
+                                                    Spacer(),
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          "Starting",
+                                                          style: TextStyle(
+                                                            fontSize: 12,
+                                                            color: Colors
+                                                                .grey[500],
+                                                          ),
+                                                        ),
+                                                        SizedBox(width: 4),
+                                                        Container(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                            horizontal: 8,
+                                                            vertical: 4,
+                                                          ),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors
+                                                                .blue[100],
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8),
+                                                          ),
+                                                          child: Text(
+                                                            service["price"]!,
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: Colors
+                                                                  .blue[700],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                            ],
-                                          ),
-                                        ),
+                                            ),
+                                          );
+                                        },
                                       ),
-                                    );
-                                  },
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
+                            )
+                          : const SizedBox.shrink(),
                     ],
                   ),
                 ),
