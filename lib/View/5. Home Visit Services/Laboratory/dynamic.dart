@@ -12,10 +12,12 @@ import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class LabSelectPackage extends StatelessWidget {
-  final int? id;
+  final String? id;
   final String title;
+  final String type;
   final String description;
   final String? components;
+  final String? includesTests;
   final String price;
   final String? image;
   final String address;
@@ -25,11 +27,13 @@ class LabSelectPackage extends StatelessWidget {
   const LabSelectPackage({
     Key? key,
     this.id,
+    required this.type,
     required this.title,
     required this.description,
     required this.price,
     this.image,
     required this.components,
+    required this.includesTests,
     required this.address,
     required this.userModel,
     required this.firebaseUser,
@@ -90,7 +94,6 @@ class LabSelectPackage extends StatelessWidget {
                         elevation: 0,
                         color: Colors.white,
                         child: Container(
-                          
                           padding: const EdgeInsets.all(16.0),
                           child: Row(
                             children: [
@@ -212,7 +215,8 @@ class LabSelectPackage extends StatelessWidget {
                                                 )
                                               : GestureDetector(
                                                   onTap: () {
-                                                    cartController.addToCart(id);
+                                                    cartController
+                                                        .addToCart(id);
                                                   },
                                                   child: Container(
                                                     padding: const EdgeInsets
@@ -239,18 +243,6 @@ class LabSelectPackage extends StatelessWidget {
                                                   ),
                                                 ),
                                         )
-                                        // ElevatedButton(
-                                        //   onPressed: () {},
-                                        //   style: ElevatedButton.styleFrom(
-                                        //     backgroundColor:
-                                        //         const Color(0xFF007ABB),
-                                        //     shape: RoundedRectangleBorder(
-                                        //       borderRadius:
-                                        //           BorderRadius.circular(8),
-                                        //     ),
-                                        //   ),
-                                        //   child: const Text("Select"),
-                                        // ),
                                       ],
                                     ),
                                   ],
@@ -260,95 +252,144 @@ class LabSelectPackage extends StatelessWidget {
                           ),
                         ),
                       ),
-                  
+
                       const SizedBox(height: 16),
-                  
+
                       // About Package
-                  
+
                       const SizedBox(height: 8),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        elevation: 0,
-                        color: Colors.white,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                top: 8.0,
-                                left: 8,
+                      type == "group"
+                          ? Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
                               ),
-                              child: Text(
-                                "About This Package".tr,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: "Roboto",
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: Text(
-                                description,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black54,
-                                  fontFamily: "Roboto",
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                  
-                      const SizedBox(height: 16),
-                  
-                      // Components Included
-                  
-                      const SizedBox(height: 8),
-                      Container(
-                        width: double.infinity,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          color: Colors.white,
-                          elevation: 0,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Instructions".tr,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
+                              elevation: 0,
+                              color: Colors.white,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 8.0,
+                                      left: 8,
+                                    ),
+                                    child: Text(
+                                      "About This Package".tr,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: "Roboto",
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Text(
+                                      description,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black54,
+                                        fontFamily: "Roboto",
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Wrap(
-                                  spacing: 10,
-                                  runSpacing: 8,
+                            )
+                          : const SizedBox.shrink(),
+
+                      const SizedBox(height: 16),
+
+                      // Components Included
+
+                      const SizedBox(height: 8),
+                      type == "group"
+                          ? Container(
+                              width: double.infinity,
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                color: Colors.white,
+                                elevation: 0,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    ...components!
-                                        .split(',') // Split string into a list
-                                        .map((service) => _buildChip(service
-                                            .trim())) // Trim whitespace and map to _buildChip
-                                        .toList(),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Instructions".tr,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Wrap(
+                                        spacing: 10,
+                                        runSpacing: 8,
+                                        children: [
+                                          ...components!
+                                              .split(
+                                                  ',') // Split string into a list
+                                              .map((service) => _buildChip(service
+                                                  .trim())) // Trim whitespace and map to _buildChip
+                                              .toList(),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      )
+                            )
+                          : const SizedBox.shrink(),
+                      const SizedBox(height: 16),
+
+                      type == "group"
+                          ? Container(
+                              width: double.infinity,
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                color: Colors.white,
+                                elevation: 0,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Test Includes".tr,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Wrap(
+                                        spacing: 10,
+                                        runSpacing: 8,
+                                        children: [
+                                          ...includesTests!
+                                              .split(
+                                                  '.') // Split string into a list
+                                              .map((service) => _buildChip(service
+                                                  .trim())) // Trim whitespace and map to _buildChip
+                                              .toList(),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink()
                     ],
                   ),
                 ),
@@ -377,11 +418,11 @@ class LabSelectPackage extends StatelessWidget {
                     onPressed: () {
                       if (cartController.cartItems.isNotEmpty) {
                         Get.to(LabCartPage(
-                                address: address,
-                                userModel: userModel,
-                                firebaseUser: firebaseUser,
-                                //
-                              ));
+                          address: address,
+                          userModel: userModel,
+                          firebaseUser: firebaseUser,
+                          //
+                        ));
                       }
                     },
                     child: Row(
@@ -436,9 +477,9 @@ class LabSelectPackage extends StatelessWidget {
                       onPressed: () {
                         if (!cartController.isCartEmpty()) {
                           Get.to(() => Selected_Package(
-                                      userModel:userModel,
-                                      firebaseUser:firebaseUser,
-                                    ));
+                                userModel: userModel,
+                                firebaseUser: firebaseUser,
+                              ));
                         }
                       },
                       child: Text(

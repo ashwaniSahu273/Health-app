@@ -33,14 +33,24 @@ class LabTest extends StatefulWidget {
 
 class _LabTestState extends State<LabTest> {
   LabController controller = Get.put(LabController());
-  void _onServiceSelected(String serviceName, id, String description,
-      String components, String price) {
+
+  void _onServiceSelected(
+    String serviceName,
+    id,
+    String description,
+    String components,
+    String includesTests,
+    String price,
+    String type,
+  ) {
     Get.to(LabSelectPackage(
       id: id,
       title: serviceName,
       description: description,
       price: price,
+      type:type ,
       components: components,
+      includesTests: includesTests,
       address: widget.address,
       userModel: widget.userModel,
       firebaseUser: widget.firebaseUser,
@@ -51,6 +61,8 @@ class _LabTestState extends State<LabTest> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+
+    controller.fetchServices();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -123,8 +135,7 @@ class _LabTestState extends State<LabTest> {
                         children: [
                           Text(
                             "Your location".tr,
-
-                            style: TextStyle(fontSize: 16,color: Colors.black),
+                            style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
@@ -138,7 +149,9 @@ class _LabTestState extends State<LabTest> {
                             color: Colors.green,
                           ),
                           Expanded(
-                            child: Text(widget.address,style: TextStyle(fontSize: 14,color: Colors.black)),
+                            child: Text(widget.address,
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.black)),
                           ),
                         ],
                       ),
@@ -295,27 +308,28 @@ class _LabTestState extends State<LabTest> {
                   child: Container(
                     width: double.infinity,
                     height: double.infinity,
-                    padding: EdgeInsets.only(bottom: 80),
+                    padding: EdgeInsets.only(bottom: 80,left: 8,right: 8),
                     decoration: BoxDecoration(color: Color(0xFFEEF8FF)),
                     child: Column(
                       children: [
                         Expanded(
                           child: GridView.builder(
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 0,
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 1.3),
-                              itemCount: 6,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisSpacing: 0,
+                                      mainAxisSpacing: 0,
+                                      crossAxisCount: 2,
+                                      childAspectRatio: 1),
+                              itemCount: controller.servicesList.length,
                               itemBuilder: (context, index) {
                                 var item = controller.servicesList[index];
                                 String languageCode =
                                     Get.locale?.languageCode ?? 'en';
-                          
+
                                 final localizedData = languageCode == 'ar'
                                     ? item.localized.ar
                                     : item.localized.en;
-                          
+
                                 return GestureDetector(
                                   onTap: () {
                                     _onServiceSelected(
@@ -323,7 +337,10 @@ class _LabTestState extends State<LabTest> {
                                         item.id,
                                         localizedData.description,
                                         localizedData.instructions,
-                                        localizedData.price);
+                                        localizedData.includesTests,
+                                        localizedData.price,
+                                        item.type
+                                        );
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -333,66 +350,53 @@ class _LabTestState extends State<LabTest> {
                                       width: 70,
                                       decoration: BoxDecoration(
                                           color: Colors.white,
-                                          borderRadius: BorderRadius.circular(15)),
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
                                       child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10, vertical: 10),
+                                            padding: const EdgeInsets.only(
+                                                left: 16, top: 8),
                                             child: Align(
                                                 alignment: Alignment.topLeft,
                                                 child: Text(
                                                   localizedData.serviceName,
                                                   style: TextStyle(
-                                                      fontWeight: FontWeight.w500,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                       fontFamily: "Roboto",
                                                       fontSize: 16,
-                                                     color:  Color(0xFF007ABB)),
+                                                      color: Color(0xFF007ABB)),
                                                 )),
                                           ),
-                                          // Padding(
-                                          //   padding: const EdgeInsets.symmetric(
-                                          //       horizontal: 10, vertical: 2),
-                                          //   child: Align(
-                                          //       alignment: Alignment.topLeft,
-                                          //       child: Text(
-                                          //         "Packages",
-                                          //         style: TextStyle(
-                                          //             fontWeight: FontWeight.bold),
-                                          //       )),
-                                          // ),
-                                          // SizedBox(
-                                          //   height: 10,
-                                          // ),
-                                          // Image.asset("assets/images/1.png"),
-                                          Row(
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.symmetric(
-                                                    horizontal: 5, vertical: 12),
-                                                child: Container(
-                                                  height: 22,
-                                                  width: 120,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(12),
-                                                      color: Colors.lightBlue[
-                                                50]),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "${'Starting'.tr} ${localizedData.price}",
-                                                      style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w700,color: Colors
-                                                  .teal),
-                                                    ),
-                                                  ),
+                                
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: 5,
+                                                    vertical: 12),
+                                            child: Container(
+                                              height: 22,
+                                              width: 120,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12),
+                                                  color:
+                                                      Colors.lightBlue[50]),
+                                              child: Center(
+                                                child: Text(
+                                                  "${'Starting'.tr} ${localizedData.price}",
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color: Colors.teal),
                                                 ),
                                               ),
-                                            ],
+                                            ),
                                           )
                                         ],
                                       ),
@@ -401,8 +405,9 @@ class _LabTestState extends State<LabTest> {
                                 );
                               }),
                         ),
-                     SizedBox(height: 10,)
-                     
+                        SizedBox(
+                          height: 10,
+                        )
                       ],
                     ),
                   ),

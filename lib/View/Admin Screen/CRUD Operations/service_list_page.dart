@@ -44,7 +44,7 @@ Future<List<LabService>> _fetchServices() async {
   }
 }
 
-  void _deleteService(int serviceId) async {
+  void _deleteService(String serviceId) async {
     await FirebaseFirestore.instance
         .collection('LaboratoryServices')
         .doc(serviceId.toString())
@@ -148,7 +148,7 @@ Future<List<LabService>> _fetchServices() async {
                         ),
                         IconButton(
                           icon: Icon(Icons.delete, color: Colors.red),
-                          onPressed: () => _deleteService(service.id),
+                          onPressed: () => _deleteService(service.id.toString()),
                         ),
                       ],
                     ),
