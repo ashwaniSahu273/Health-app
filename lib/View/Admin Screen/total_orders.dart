@@ -12,6 +12,7 @@ import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/Bottom_Navigation_Bar/bottom_nav.dart';
 import 'package:harees_new_project/Resources/Search_bar/search_bar.dart';
 import 'package:harees_new_project/View/9.%20Settings/settings.dart';
+import 'package:harees_new_project/View/Admin%20Screen/total_orders_details.dart';
 
 class TotalOrders extends StatefulWidget {
   final UserModel userModel;
@@ -65,7 +66,7 @@ class _TotalOrdersState extends State<TotalOrders> {
                 )), // Double-arrow icon
             Text(
               'Patient Record'.tr,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   fontFamily: "Roboto"),
@@ -180,7 +181,7 @@ class _AppointmentTileState extends State<AppointmentTile> {
 
         GestureDetector(
           onTap: () {
-            Get.to(RequestedAppointmentDetails(
+            Get.to(TotalOrdersDetails(
               userModel: widget.userModel,
               firebaseUser: widget.firebaseUser,
               doc: widget.doc,

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
+import 'package:harees_new_project/View/Admin%20Screen/CRUD%20Operations/nurse_services_list.dart';
 import 'package:harees_new_project/View/Admin%20Screen/CRUD%20Operations/service_list_page.dart';
 import 'package:harees_new_project/View/Admin%20Screen/CRUD%20Operations/vitamin_services_list.dart';
 
@@ -16,7 +17,11 @@ class ServiceCategoriesPage extends StatelessWidget {
     // required this.targetUser,
   }) : super(key: key);
 
-  final List<String> categories = ['Laboratory', 'Vitamin Drips'];
+  final List<String> categories = [
+    'Laboratory',
+    'Vitamin Drips',
+    'Nurse visit'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -32,21 +37,26 @@ class ServiceCategoriesPage extends StatelessWidget {
             trailing: Icon(Icons.arrow_forward),
             onTap: () {
               if (index == 0) {
-                   Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ServiceListScreen(),
                   ),
                 );
-              } else {
-
+              } else if (index == 1) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => VitaminServicesList(),
                   ),
                 );
-             
+              } else if (index == 2) {
+                   Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NurseServicesList(),
+                  ),
+                );
               }
             },
           );

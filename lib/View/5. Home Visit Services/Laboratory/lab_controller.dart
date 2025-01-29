@@ -67,6 +67,7 @@ class LabController extends GetxController {
         "status": "Requested",
         "type": "Lab Test",
         "selected_time": currentTime.value,
+        'createdAt': FieldValue.serverTimestamp(),
         "accepted_by":null
       });
       Get.snackbar(
