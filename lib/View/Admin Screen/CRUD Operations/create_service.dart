@@ -119,32 +119,32 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
           child: ListView(
             children: [
               // Image Section
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _imageFile != null
-                      ? Image.file(
-                          _imageFile!,
-                          height: 200,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                        )
-                      : _uploadedImageUrl != null
-                          ? Image.network(
-                              _uploadedImageUrl!,
-                              height: 200,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                            )
-                          : Text("There is no image"),
-                  SizedBox(height: 10),
-                  ElevatedButton.icon(
-                    onPressed: () => selectImage(ImageSource.gallery),
-                    icon: Icon(Icons.image),
-                    label: Text('Select Image'),
-                  ),
-                ],
-              ),
+              // Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     _imageFile != null
+              //         ? Image.file(
+              //             _imageFile!,
+              //             height: 200,
+              //             width: double.infinity,
+              //             fit: BoxFit.cover,
+              //           )
+              //         : _uploadedImageUrl != null
+              //             ? Image.network(
+              //                 _uploadedImageUrl!,
+              //                 height: 200,
+              //                 width: double.infinity,
+              //                 fit: BoxFit.cover,
+              //               )
+              //             : Text("There is no image"),
+              //     SizedBox(height: 10),
+              //     ElevatedButton.icon(
+              //       onPressed: () => selectImage(ImageSource.gallery),
+              //       icon: Icon(Icons.image),
+              //       label: Text('Select Image'),
+              //     ),
+              //   ],
+              // ),
               SizedBox(height: 20),
 
               // Arabic Service Name

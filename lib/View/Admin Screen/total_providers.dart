@@ -128,15 +128,15 @@ class _TotalProvidersState extends State<TotalProviders> {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          height: 100,
+                          height: 120,
                           child: Row(
                             children: [
                               // Doctor's picture
-                               Image.asset(
-                                      "assets/images/user.png", // Replace with your asset
-                                      height: 74,
-                                      width: 60,
-                                    ),
+                              Image.asset(
+                                "assets/images/user.png", // Replace with your asset
+                                height: 74,
+                                width: 60,
+                              ),
                               // Container(
                               //   width: 60,
                               //   height: 60,
@@ -177,6 +177,12 @@ class _TotalProvidersState extends State<TotalProviders> {
                                       style: TextStyle(
                                           fontSize: 14.0,
                                           color: Color(0xFF426ACA)),
+                                    ),
+                                    Icon(
+                                      Icons
+                                          .remove_circle, // Correct way to use the delete icon
+                                      color: Colors
+                                          .red, // Optional: Color to indicate it's a delete action
                                     ),
                                   ],
                                 ),

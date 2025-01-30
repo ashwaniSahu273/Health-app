@@ -133,7 +133,7 @@ class _TotalUsersState extends State<TotalUsers> {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          height: 100,
+                          height: 120,
                           child: Row(
                             children: [
                               // Doctor's picture
@@ -178,10 +178,16 @@ class _TotalUsersState extends State<TotalUsers> {
                                     ),
                                     const SizedBox(height: 5),
                                     Text(
-                                      'phone: ${doctor['experience']}',
+                                      'phone: ${doctor['phone']}',
                                       style: TextStyle(
                                           fontSize: 14.0,
                                           color: Color(0xFF426ACA)),
+                                    ),
+                                     Icon(
+                                      Icons
+                                          .remove_circle, // Correct way to use the delete icon
+                                      color: Colors
+                                          .red, // Optional: Color to indicate it's a delete action
                                     ),
                                   ],
                                 ),
