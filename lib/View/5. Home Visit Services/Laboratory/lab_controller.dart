@@ -405,6 +405,344 @@ class LabController extends GetxController {
           }
         }
       },
+        {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "ANTI THYROGLOBULIN abs ( ANTI THYROID )",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "255  SAR"
+          },
+          "ar": {
+            "serviceName": "فحص للأجسام المضادة الموجهة ضد بروتين الغلوبولين",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "255 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "MORPHOLOGY BLOOD Blood film",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "60 SAR"
+          },
+          "ar": {
+            "serviceName": "فحص فلم الدم",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "60 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "Plasma proteins electrophoresis",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "255 SAR"
+          },
+          "ar": {
+            "serviceName": "تحليل الفصل الكهربائي بين بروتينات مصل الدم",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "255   ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "TORCH IgM Profile",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "565  SAR"
+          },
+          "ar": {
+            "serviceName": "•	فحص الأجسام المضادة TORCH IgM",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "565   ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "Epstein Barr Virus(EBV) VCA IgG",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "200 SAR"
+          },
+          "ar": {
+            "serviceName": "فحص تحليل الاجسام المضادة لفيروس ابشتاين بار IgG",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "200 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "C4 Complement",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "80 SAR"
+          },
+          "ar": {
+            "serviceName": "اختبار المتممات C4",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "80 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "BILIRUBIN NEONATAL",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "30  SAR"
+          },
+          "ar": {
+            "serviceName": "فحص البيليروبين (حديثي الولادة )",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "30   ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "BRUCELLA ABS IGG",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "110 SAR"
+          },
+          "ar": {
+            "serviceName": "فحص الأجسام المضادة للبروسيلا IGG",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "110  ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "Hepatitis B envelope (HBe) Ag*",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "100  SAR"
+          },
+          "ar": {
+            "serviceName": "تحليل الاجسام المضادة المغلفة لالتهاب الكبد ب AG",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "100  ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "Insulin Level",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "80 SAR"
+          },
+          "ar": {
+            "serviceName": "فحص مستوى الانسولين",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "80 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "Clostridium Dificile Toxin*",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "565 SAR"
+          },
+          "ar": {
+            "serviceName": "فحص بكتيريا كلوستريديام ديفيسيل",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "565 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "•	Hepatitis B core (HBc) IgM*",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "100 SAR"
+          },
+          "ar": {
+            "serviceName":
+                "تحليل الاجسام المضادة الأساسية أو اللبية لالتهاب الكبد ب IgM",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "100 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "Hepatitis B core (HBc) Total*",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "100 SAR"
+          },
+          "ar": {
+            "serviceName":
+                "تحليل الاجسام المضادة الأساسية أو اللبية لالتهاب الكبد ب",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "100 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "carcinoembryonic antigen CEA",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "135 SAR"
+          },
+          "ar": {
+            "serviceName": "تحليل المستضد السرطاني المضغي",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "135 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "UREA CLEARANCE",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "30 SAR"
+          },
+          "ar": {
+            "serviceName": "فحص تصفية اليوريا",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "30  ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "Acetaminophen ( Paracetamol) Level",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "340 SAR"
+          },
+          "ar": {
+            "serviceName": "فحص مستوى الباراسيتيمول",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "340  ريال"
+          }
+        }
+      },
       {
         "id": "",
         "imagePath": "assets/images/std_test.png",
