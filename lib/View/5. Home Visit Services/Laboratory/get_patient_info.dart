@@ -34,6 +34,8 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController mobileNumberController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
+  TextEditingController iqamaNumberController = TextEditingController();
+
   LabController cartController = Get.put(LabController());
 
   String? selectedGender;
@@ -199,6 +201,27 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                         ),
                       ),
                       SizedBox(height: 20),
+
+                      TextField(
+                    controller: iqamaNumberController,
+                    decoration: InputDecoration(
+                      hintText: "ID/Iqama Number".tr,
+                      hintStyle: TextStyle(color: Colors.grey),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide:
+                            BorderSide(color: Colors.blue.shade100, width: 1.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(color: Colors.blue, width: 1.5),
+                      ),
+                    ),
+                  ),
                       // TextField(
                       //   controller: mobileNumberController,
                       //   keyboardType: TextInputType.phone,
@@ -230,7 +253,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                       //     ),
                       //   ),
                       // ),
-                      // SizedBox(height: 20),
+                      SizedBox(height: 20),
                       TextField(
                         controller: dobController,
                         readOnly: true,
