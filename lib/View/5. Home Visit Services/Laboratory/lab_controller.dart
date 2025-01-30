@@ -40,8 +40,6 @@ class LabController extends GetxController {
         return LabService.fromJson(doc.data() as Map<String, dynamic>);
       }).toList();
 
-
-
       servicesList.assignAll(services);
 
       print("======================> $servicesList");
@@ -229,7 +227,7 @@ class LabController extends GetxController {
       {
         "id": 1,
         "imagePath": "assets/images/vitamin.png",
-        "type": "group",
+        "type": "package",
         "localized": {
           "en": {
             "serviceName": "Full Body Health Checkup",
@@ -256,7 +254,7 @@ class LabController extends GetxController {
       {
         "id": 2,
         "imagePath": "assets/images/fatigue.png",
-        "type": "group",
+        "type": "package",
         "localized": {
           "en": {
             "serviceName": "Fatigue Workup",
@@ -281,7 +279,7 @@ class LabController extends GetxController {
       {
         "id": 3,
         "imagePath": "assets/images/fitness.png",
-        "type": "group",
+        "type": "package",
         "localized": {
           "en": {
             "serviceName": "Fitness Profile",
@@ -308,7 +306,7 @@ class LabController extends GetxController {
       {
         "id": 4,
         "imagePath": "assets/images/women_health.png",
-        "type": "group",
+        "type": "package",
         "localized": {
           "en": {
             "serviceName": "Health Check Packages for Women",
@@ -335,7 +333,7 @@ class LabController extends GetxController {
       {
         "id": 5,
         "imagePath": "assets/images/bariatric_surgery.png",
-        "type": "group",
+        "type": "package",
         "localized": {
           "en": {
             "serviceName": "Bariatric Surgery Follow-up",
@@ -362,7 +360,7 @@ class LabController extends GetxController {
       {
         "id": 7,
         "imagePath": "assets/images/std_test.png",
-        "type": "group",
+        "type": "package",
         "localized": {
           "en": {
             "serviceName": "Sexually Transmitted Disease",
@@ -383,14 +381,245 @@ class LabController extends GetxController {
             "price": "590 ريال"
           }
         }
+      },
+      {
+        "id": 7,
+        "imagePath": "assets/images/std_test.png",
+        "type": "package",
+        "localized": {
+          "en": {
+            "serviceName": "LDH ( Lactate Dehydrogenase )",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "30 SAR"
+          },
+          "ar": {
+            "serviceName": "التحاليل الفردية",
+            "description":
+                "هذا الفحص يساعد في تحديد خطة البحث عن الإصابة بالأمراض الجنسية. في حال لم تكن هناك علامات أو أعراض، فقد لا تكون على علم بأنك مصاب بأي عدوى بكتيرية، فيروسية، أو طفيلية. احصل على التقرير خلال 96 ساعة. نوع العينة: دم، بول.",
+            "instructions": "هذا التحليل لا يتطلب الصيام.",
+            "includesTests":
+                "8 تحليلات مشمولة. اختبار المستضد السطحي لالتهاب الكبد ب. فحص فيروس الهربس 2 IgM. فحص فيروس نقص المناعة (الإيدز). فحص فيروس الهربس 1 IgM. تحليل الزهري (RPR). الكشف عن جرثومة الكلاميديا في الدم. فحص الأجسام المضادة لالتهاب الكبد الوبائي سي. اختبار مزرعة البول.",
+            "price": "590 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "Hepatitis B envelope (HBe) Abs*",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "100 SAR"
+          },
+          "ar": {
+            "serviceName": "تحليل الاجسام المضادة المغلفة لالتهاب الكبد ب ABS",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "100 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "TORCH IgG Profile",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "565 SAR"
+          },
+          "ar": {
+            "serviceName": "فحص الأجسام المضادة TORCH IgG",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "565 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "Anti gliadin IGA",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "160 SAR"
+          },
+          "ar": {
+            "serviceName": "تحليل الأجسام المضادة لغلايدين IGA",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "160 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "Anti gliadin IGG",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "160 SAR"
+          },
+          "ar": {
+            "serviceName": "تحليل الأجسام المضادة لغلايدين IGG",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "160 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "UIBC",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "40 SAR"
+          },
+          "ar": {
+            "serviceName": "تحليل قياس سعة ارتباط الحديد الغير مشبع",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "40 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "UIBC",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "40 SAR"
+          },
+          "ar": {
+            "serviceName": "تحليل قياس سعة ارتباط الحديد الغير مشبع",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "40 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "TOXOPLASMA IgG",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "135 SAR"
+          },
+          "ar": {
+            "serviceName": "تحليل الأجسام المضادة لجرثومة التوكسوبلازما Igg",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "135 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "Islet cell antibodies (ICAs)",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "250 SAR"
+          },
+          "ar": {
+            "serviceName": "الأجسام المضادة لخلايا islet",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "250 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "Glutamate Decarboxylase ABs ( GAD Abs )",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "350 SAR"
+          },
+          "ar": {
+            "serviceName": "تحليل الاجسام المضادة GAD",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "350 ريال"
+          }
+        }
+      },
+      {
+        "id": "",
+        "imagePath": "assets/images/std_test.png",
+        "type": "indiviual",
+        "localized": {
+          "en": {
+            "serviceName": "C peptide Test",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "280 SAR"
+          },
+          "ar": {
+            "serviceName": "C تحليل بيبتايد",
+            "description": "",
+            "instructions": "",
+            "includesTests": "",
+            "price": "280 ريال"
+          }
+        }
       }
     ];
     CollectionReference servicesCollection =
         FirebaseFirestore.instance.collection('LaboratoryServices');
 
     for (var service in servicess) {
-
-      
       final docRef = servicesCollection.doc();
       final id = docRef.id;
 
