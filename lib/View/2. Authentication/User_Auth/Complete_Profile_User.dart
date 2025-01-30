@@ -28,10 +28,12 @@ class CompleteProfile extends StatefulWidget {
   @override
   State<CompleteProfile> createState() => _CompleteProfileState();
 }
+
 class _CompleteProfileState extends State<CompleteProfile> {
   TextEditingController fullNameController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
   TextEditingController dobController = TextEditingController();
+  TextEditingController iqamaNumberController = TextEditingController();
   String? selectedGender;
   File? imageFile;
 
@@ -105,11 +107,16 @@ class _CompleteProfileState extends State<CompleteProfile> {
 
   void checkValues() {
     String fullname = fullNameController.text.trim();
+    String iqamaNumber = iqamaNumberController.text.trim();
     String mobileNumber = mobileNumberController.text.trim();
     String dob = dobController.text.trim();
     String? gender = selectedGender;
 
-    if (fullname.isEmpty || mobileNumber.isEmpty || gender == null || dob.isEmpty) {
+    if (fullname.isEmpty ||
+        mobileNumber.isEmpty ||
+        iqamaNumber.isEmpty ||
+        gender == null ||
+        dob.isEmpty) {
       print("Please fill all the fields");
       UIHelper.showAlertDialog(
           context, "Incomplete Data", "Please fill all the fields");
@@ -135,11 +142,13 @@ class _CompleteProfileState extends State<CompleteProfile> {
     }
 
     String fullname = fullNameController.text.trim();
+    String iqamaNumber = iqamaNumberController.text.trim();
     String mobileNumber = mobileNumberController.text.trim();
     String dob = dobController.text.trim();
     String? gender = selectedGender;
 
     widget.userModel.fullname = fullname;
+    widget.userModel.iqamaNumber = iqamaNumber;
     widget.userModel.profilePic = imageUrl;
     widget.userModel.mobileNumber = mobileNumber;
     widget.userModel.gender = gender;
@@ -175,15 +184,16 @@ class _CompleteProfileState extends State<CompleteProfile> {
         ),
         centerTitle: true,
       ),
+      backgroundColor: Color(0xFFEEF8FF),
       body: Stack(
         children: [
           // Background image
-          Positioned.fill(
-            child: Image.asset(
-              'assets/images/back_image.png',
-              fit: BoxFit.cover,
-            ),
-          ),
+          // Positioned.fill(
+          //   child: Image.asset(
+          //     'assets/images/back_image.png',
+          //     fit: BoxFit.cover,
+          //   ),
+          // ),
           // Main content
           SafeArea(
             child: Container(
@@ -214,54 +224,138 @@ class _CompleteProfileState extends State<CompleteProfile> {
                   TextField(
                     controller: fullNameController,
                     decoration: InputDecoration(
-                      labelText: "Full Name".tr,
+                      hintText: "Full Name".tr,
+                      hintStyle: TextStyle(color: Colors.grey),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide:
+                            BorderSide(color: Colors.blue.shade100, width: 1.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(color: Colors.blue, width: 1.5),
+                      ),
                     ),
                   ),
-                  SizedBox(
-                    height: 20,
+                  SizedBox(height: 20),
+                  TextField(
+                    controller: iqamaNumberController,
+                    decoration: InputDecoration(
+                      hintText: "ID/Iqama Number".tr,
+                      hintStyle: TextStyle(color: Colors.grey),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide:
+                            BorderSide(color: Colors.blue.shade100, width: 1.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(color: Colors.blue, width: 1.5),
+                      ),
+                    ),
                   ),
+                  SizedBox(height: 20),
                   TextField(
                     controller: mobileNumberController,
-                    decoration: InputDecoration(
-                      labelText: "Mobile Number".tr,
-                    ),
                     keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
+                      hintText: "Mobile Number".tr,
+                      hintStyle: TextStyle(color: Colors.grey),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide:
+                            BorderSide(color: Colors.blue.shade100, width: 1.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(color: Colors.blue, width: 1.5),
+                      ),
+                    ),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  SizedBox(height: 20),
                   TextField(
                     controller: dobController,
                     readOnly: true,
                     decoration: InputDecoration(
-                      labelText: "Date of Birth".tr,
+                      hintText: "Date of Birth".tr,
+                      hintStyle: TextStyle(color: Colors.grey),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide:
+                            BorderSide(color: Colors.blue.shade100, width: 1.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(color: Colors.blue, width: 1.5),
+                      ),
                     ),
                     onTap: showDatePickerDialog,
                   ),
+                  SizedBox(height: 20),
+
+                 DropdownButtonFormField<String>(
+                        value: selectedGender,
+                        decoration: InputDecoration(
+                          labelText: "Gender".tr,
+                          labelStyle: TextStyle(color: Colors.grey),
+                          hintStyle: TextStyle(
+                              color: Colors
+                                  .grey), // Matches the placeholder text color
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                          filled: true,
+                          fillColor: Colors
+                              .white, // Background color of the text field
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(8), // Rounded corners
+                            borderSide: BorderSide(
+                              color: Colors
+                                  .blue.shade100, // Light blue border color
+                              width: 1.0,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: Colors.blue, // Highlighted border color
+                              width: 1.5,
+                            ),
+                          ),
+                        ),
+                        items: ['Male', 'Female', 'Other'].map((String gender) {
+                          return DropdownMenuItem<String>(
+                            value: gender,
+                            child: Text(gender),
+                          );
+                        }).toList(),
+                        onChanged: (newValue) {
+                          setState(() {
+                            selectedGender = newValue;
+                          });
+                        },
+                      ),
                   SizedBox(
-                    height: 20,
-                  ),
-                  DropdownButtonFormField<String>(
-                    value: selectedGender,
-                    decoration: InputDecoration(
-                      labelText: "Gender".tr,
-                    ),
-                    items: ['Male', 'Female', 'Other'].map((String gender) {
-                      return DropdownMenuItem<String>(
-                        value: gender,
-                        child: Text(gender.tr),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        selectedGender = newValue;
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: 20,
+                    height: 40,
                   ),
                   RoundButton(
+                      color: Colors.blue[300],
                       text: "Done!".tr,
                       onTap: () {
                         checkValues();

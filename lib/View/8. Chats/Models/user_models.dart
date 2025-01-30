@@ -1,5 +1,6 @@
 class UserModel {
   String? fullname;
+  String? iqamaNumber;
   String? email;
   String? uid;
   String? profilePic;
@@ -12,6 +13,7 @@ class UserModel {
 
   UserModel({
     this.fullname,
+    this.iqamaNumber,
     this.email,
     this.uid,
     this.profilePic,
@@ -27,6 +29,7 @@ class UserModel {
     uid = map['uid'];
     email = map['email'];
     fullname = map['fullname'];
+    iqamaNumber = map['iqamaNumber'];
     profilePic = map['profilePic'];
     experience = map['experience'];
     designation = map['designation'];
@@ -41,6 +44,7 @@ class UserModel {
       'uid': uid,
       'email': email,
       'fullname': fullname,
+      'iqamaNumber': iqamaNumber,
       'profilePic': profilePic,
       'experience': experience,
       'designation': designation,

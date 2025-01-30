@@ -133,30 +133,30 @@ class DynamicDoctor extends StatelessWidget {
                                           ),
                                         ),
 
-                                        GestureDetector(
-                                          // onTap: () {
-                                          //   cartController.addToCart(id);
-                                          // },
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 20, vertical: 6),
-                                            decoration: BoxDecoration(
-                                              color: Color(
-                                                  0xFF007ABB), // Subtle light blue background
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: Text(
-                                              "Select".tr,
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors
-                                                    .white, // Highlighted teal price text
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                        // GestureDetector(
+                                        //   // onTap: () {
+                                        //   //   cartController.addToCart(id);
+                                        //   // },
+                                        //   child: Container(
+                                        //     padding: const EdgeInsets.symmetric(
+                                        //         horizontal: 20, vertical: 6),
+                                        //     decoration: BoxDecoration(
+                                        //       color: Color(
+                                        //           0xFF007ABB), // Subtle light blue background
+                                        //       borderRadius:
+                                        //           BorderRadius.circular(5),
+                                        //     ),
+                                        //     child: Text(
+                                        //       "Select".tr,
+                                        //       style: const TextStyle(
+                                        //         fontSize: 12,
+                                        //         fontWeight: FontWeight.bold,
+                                        //         color: Colors
+                                        //             .white, // Highlighted teal price text
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // ),
 
                                         // ElevatedButton(
                                         //   onPressed: () {},
