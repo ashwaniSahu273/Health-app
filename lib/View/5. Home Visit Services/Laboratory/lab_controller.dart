@@ -201,6 +201,7 @@ class LabController extends GetxController {
     cartItems.removeAt(index);
     if (cartItems.isEmpty) {
       Get.back();
+      Get.back();
     }
     // _saveCartToStorage();
   }

@@ -139,7 +139,7 @@ class NurseController extends GetxController {
         "type": "Nurse Visit",
         "selected_time": currentTime.value,
         "status": "Requested",
-        'createdAt': FieldValue.serverTimestamp(),
+        'createdAt': Timestamp.now(),
         "accepted_by": null
       });
 
@@ -274,6 +274,8 @@ class NurseController extends GetxController {
     cartItems.removeAt(index);
     if (cartItems.isEmpty) {
       Get.back();
+      Get.back();
+      // Get.back();
     }
   }
 

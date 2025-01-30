@@ -224,7 +224,7 @@ class _AppointmentTileState extends State<AppointmentTile> {
               borderRadius: BorderRadius.circular(12),
             ),
             elevation: 0,
-            margin: EdgeInsets.all(16),
+            margin: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
@@ -262,7 +262,7 @@ class _AppointmentTileState extends State<AppointmentTile> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '945 SAR',
+                              widget.doc['type'],
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.blue,
