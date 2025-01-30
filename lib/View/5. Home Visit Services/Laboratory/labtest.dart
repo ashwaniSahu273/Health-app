@@ -260,12 +260,13 @@ class _LabTestState extends State<LabTest> {
                     color: Colors.white,
                   ),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
                         width: 10,
                       ),
                       Text(
-                        "Most helpful packages".tr,
+                        "General Packages".tr,
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
@@ -284,7 +285,7 @@ class _LabTestState extends State<LabTest> {
                           });
                         },
                         child: Text(
-                          "View all Packages".tr,
+                          "Individual Packages".tr,
                           style: TextStyle(
                               color: Colors.blue,
                               fontSize: 16,
@@ -320,22 +321,9 @@ class _LabTestState extends State<LabTest> {
                                       mainAxisSpacing: 0,
                                       crossAxisCount: 2,
                                       childAspectRatio: 1.2),
-                              itemCount: controller.servicesList.length,
+                              itemCount: controller.groupServices.length,
                               itemBuilder: (context, index) {
-                                controller.servicesList.sort((a, b) {
-                                  String typeA = a.type.toLowerCase();
-                                  String typeB = b.type.toLowerCase();
-                                  if (typeA == 'package' &&
-                                      typeB == 'indiviual') {
-                                    return -1;
-                                  } else if (typeA == 'indiviual' &&
-                                      typeB == 'package') {
-                                    return 1;
-                                  }
-                                  return 0;
-                                });
-
-                                var item = controller.servicesList[index];
+                                var item = controller.groupServices[index];
                                 String languageCode =
                                     Get.locale?.languageCode ?? 'en';
 

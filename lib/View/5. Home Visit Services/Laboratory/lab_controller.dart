@@ -26,7 +26,17 @@ class LabController extends GetxController {
     super.onInit();
     // _loadCartFromStorage();
     fetchServices();
+    // storeServices();
   }
+
+
+  List<LabService> get individualServices => servicesList
+      .where((service) => service.type.toLowerCase() == 'individual')
+      .toList();
+
+  List<LabService> get groupServices => servicesList
+      .where((service) => service.type.toLowerCase() == 'package')
+      .toList();
 
   void fetchServices() async {
     try {

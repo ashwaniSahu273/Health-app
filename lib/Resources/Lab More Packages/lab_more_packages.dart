@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/dynamic.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
+import 'package:harees_new_project/View/8.%20Chats/Models/lab_service_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class LabMorePackages extends StatelessWidget {
@@ -60,20 +61,10 @@ class LabMorePackages extends StatelessWidget {
                         crossAxisSpacing: 0,
                         mainAxisSpacing: 0,
                         crossAxisCount: 2,
-                        childAspectRatio: 1.2),
-                    itemCount: controller.servicesList.length,
+                        childAspectRatio: 1),
+                    itemCount: controller.individualServices.length,
                     itemBuilder: (context, index) {
-                      controller.servicesList.sort((a, b) {
-                        String typeA = a.type.toLowerCase();
-                        String typeB = b.type.toLowerCase();
-                        if (typeA == 'package' && typeB == 'indiviual') {
-                          return -1;
-                        } else if (typeA == 'indiviual' && typeB == 'package') {
-                          return 1;
-                        }
-                        return 0;
-                      });
-                      var item = controller.servicesList[index];
+                      var item = controller.individualServices[index];
 
                       String languageCode = Get.locale?.languageCode ?? 'en';
 
