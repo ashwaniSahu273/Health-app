@@ -470,7 +470,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
               ),
             ),
           ),
-          doc["type"] != "Nurse Visit"
+          (doc["type"] != "Doctor Visit" && doc["type"] != "Nurse Visit")
               ? Obx(
                   () => Container(
                       color: Colors.white,

@@ -228,6 +228,7 @@ class VitaminCartController extends GetxController {
     cartItems.removeAt(index);
     if (cartItems.isEmpty) {
       Get.back();
+      Get.back();
     }
   }
 
@@ -235,18 +236,6 @@ class VitaminCartController extends GetxController {
     cartItems.clear();
   }
 
-  // Future<void> _saveCartToStorage() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   prefs.setString('cart', jsonEncode(cartItems));
-  // }
-
-  // Future<void> _loadCartFromStorage() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final String? storedCart = prefs.getString('cart');
-  //   if (storedCart != null) {
-  //     cartItems.value = List<Map<String, dynamic>>.from(jsonDecode(storedCart));
-  //   }
-  // }
 
   void storeServices() async {
     final List<Map<String, dynamic>> servicess = [

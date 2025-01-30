@@ -392,9 +392,9 @@ class DynamicNurse extends StatelessWidget {
                                               .split(
                                                   '.') // Split string into a list
                                               .map((service) => service
-                                                  .trim()) // Trim whitespace
+                                                  .trim()) 
                                               .where((service) => service
-                                                  .isNotEmpty) // Remove empty strings
+                                                  .isNotEmpty) 
                                               .map((service) =>
                                                   _buildBulletPoint(service
                                                       .trim())) // Trim whitespace and map to _buildChip

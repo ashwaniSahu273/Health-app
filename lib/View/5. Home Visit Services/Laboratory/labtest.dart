@@ -48,7 +48,7 @@ class _LabTestState extends State<LabTest> {
       title: serviceName,
       description: description,
       price: price,
-      type:type ,
+      type: type,
       components: components,
       includesTests: includesTests,
       address: widget.address,
@@ -308,7 +308,7 @@ class _LabTestState extends State<LabTest> {
                   child: Container(
                     width: double.infinity,
                     height: double.infinity,
-                    padding: EdgeInsets.only(bottom: 80,left: 8,right: 8),
+                    padding: EdgeInsets.only(bottom: 80, left: 8, right: 8),
                     decoration: BoxDecoration(color: Color(0xFFEEF8FF)),
                     child: Column(
                       children: [
@@ -319,9 +319,22 @@ class _LabTestState extends State<LabTest> {
                                       crossAxisSpacing: 0,
                                       mainAxisSpacing: 0,
                                       crossAxisCount: 2,
-                                      childAspectRatio: 1),
+                                      childAspectRatio: 1.2),
                               itemCount: controller.servicesList.length,
                               itemBuilder: (context, index) {
+                                controller.servicesList.sort((a, b) {
+                                  String typeA = a.type.toLowerCase();
+                                  String typeB = b.type.toLowerCase();
+                                  if (typeA == 'package' &&
+                                      typeB == 'indiviual') {
+                                    return -1;
+                                  } else if (typeA == 'indiviual' &&
+                                      typeB == 'package') {
+                                    return 1;
+                                  }
+                                  return 0;
+                                });
+
                                 var item = controller.servicesList[index];
                                 String languageCode =
                                     Get.locale?.languageCode ?? 'en';
@@ -339,15 +352,12 @@ class _LabTestState extends State<LabTest> {
                                         localizedData.instructions,
                                         localizedData.includesTests,
                                         localizedData.price,
-                                        item.type
-                                        );
+                                        item.type);
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 10.0, horizontal: 10),
                                     child: Container(
-                                      height: 50,
-                                      width: 70,
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
@@ -371,21 +381,16 @@ class _LabTestState extends State<LabTest> {
                                                       color: Color(0xFF007ABB)),
                                                 )),
                                           ),
-                                
                                           Padding(
-                                            padding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 5,
-                                                    vertical: 12),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 5, vertical: 12),
                                             child: Container(
                                               height: 22,
                                               width: 120,
                                               decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          12),
-                                                  color:
-                                                      Colors.lightBlue[50]),
+                                                      BorderRadius.circular(12),
+                                                  color: Colors.lightBlue[50]),
                                               child: Center(
                                                 child: Text(
                                                   "${'Starting'.tr} ${localizedData.price}",

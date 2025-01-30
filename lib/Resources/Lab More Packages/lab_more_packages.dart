@@ -50,146 +50,143 @@ class LabMorePackages extends StatelessWidget {
         body: Column(
           children: [
             Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  // Get.to(() => PaymentDetailsPage(
-                  //   selectedProviderData: {},
-                  //     userModel: userModel,
-                  //     firebaseUser: firebaseUser,
-                  //     providerData: {},
-                  //     packageName: "Health check package",
-                  //     packagePrice: "200",
-                  //     selectedTime: '',
-                  //   ));
-                },
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  decoration: BoxDecoration(color: Color(0xFFEEF8FF)),
-                  child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisSpacing: 2,
-                          mainAxisSpacing: 4,
-                          crossAxisCount: 2,
-                          childAspectRatio: 1),
-                      itemCount: controller.servicesList.length,
-                      itemBuilder: (context, index) {
-                        var item = controller.servicesList[index];
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                padding: EdgeInsets.only(top: 16, left: 8, right: 8),
+                decoration: BoxDecoration(color: Color(0xFFEEF8FF)),
+                child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisSpacing: 0,
+                        mainAxisSpacing: 0,
+                        crossAxisCount: 2,
+                        childAspectRatio: 1.2),
+                    itemCount: controller.servicesList.length,
+                    itemBuilder: (context, index) {
+                      controller.servicesList.sort((a, b) {
+                        String typeA = a.type.toLowerCase();
+                        String typeB = b.type.toLowerCase();
+                        if (typeA == 'package' && typeB == 'indiviual') {
+                          return -1;
+                        } else if (typeA == 'indiviual' && typeB == 'package') {
+                          return 1;
+                        }
+                        return 0;
+                      });
+                      var item = controller.servicesList[index];
 
-                        String languageCode = Get.locale?.languageCode ?? 'en';
+                      String languageCode = Get.locale?.languageCode ?? 'en';
 
-                        final localizedData = languageCode == 'ar'
-                            ? item.localized.ar
-                            : item.localized.en;
-                        return GestureDetector(
-                          onTap: () {
-                            Get.to(LabSelectPackage(
-                              id: item.id,
-                              title: localizedData.serviceName,
-                              description: localizedData.description,
-                              type: item.type,
-                              price: localizedData.price,
-                              components: localizedData.instructions,
-                              includesTests: localizedData.includesTests,
-                              address: controller.stAddress.value,
-                              userModel: userModel,
-                              firebaseUser: firebaseUser,
-                            ));
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                              height: 50,
-                              width: 70,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 5),
-                                    child: Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Text(
-                                          "${localizedData.serviceName}",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              color: Color(0xFF007ABB)),
-                                        )),
-                                  ),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.symmetric(
-                                  //       horizontal: 10, vertical: 2),
-                                  //   child: Align(
-                                  //       alignment: Alignment.topLeft,
-                                  //       child: Text(
-                                  //         "Packages",
-                                  //         style: TextStyle(
-                                  //             fontWeight: FontWeight.bold),
-                                  //       )),
-                                  // ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                               
-                                     item.imagePath.isNotEmpty   ? Image.network(
-                                          item.imagePath,
-                                          height: 50,
-                                          width: 64,
-                                          fit: BoxFit.cover,
-                                          errorBuilder:
-                                              (context, error, stackTrace) {
-                                            // Fallback to a local asset image if the network image fails to load
-                                            return Image.asset(
-                                              "assets/images/1.png",
-                                              height: 50,
-                                              width: 64,
-                                              fit: BoxFit.cover,
-                                            );
-                                          },
-                                        )
-                                      : Image.asset(
-                                          "assets/images/1.png",
-                                          height: 50,
-                                          width: 64,
-                                          fit: BoxFit.cover,
-                                        ),
+                      final localizedData = languageCode == 'ar'
+                          ? item.localized.ar
+                          : item.localized.en;
+                      return GestureDetector(
+                        onTap: () {
+                          Get.to(LabSelectPackage(
+                            id: item.id,
+                            title: localizedData.serviceName,
+                            description: localizedData.description,
+                            type: item.type,
+                            price: localizedData.price,
+                            components: localizedData.instructions,
+                            includesTests: localizedData.includesTests,
+                            address: controller.stAddress.value,
+                            userModel: userModel,
+                            firebaseUser: firebaseUser,
+                          ));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            height: 50,
+                            width: 70,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 5),
+                                  child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        "${localizedData.serviceName}",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0xFF007ABB)),
+                                      )),
+                                ),
+                                // Padding(
+                                //   padding: const EdgeInsets.symmetric(
+                                //       horizontal: 10, vertical: 2),
+                                //   child: Align(
+                                //       alignment: Alignment.topLeft,
+                                //       child: Text(
+                                //         "Packages",
+                                //         style: TextStyle(
+                                //             fontWeight: FontWeight.bold),
+                                //       )),
+                                // ),
+                                // SizedBox(
+                                //   height: 10,
+                                // ),
 
-                                  Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 16, vertical: 12),
-                                        child: Container(
-                                          height: 22,
-                                          width: 120,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              color: Colors.lightBlue[50]),
-                                          child: Center(
-                                            child: Text(
-                                              "Starting ${localizedData.price}",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 12,
-                                                  color: Colors.teal),
-                                            ),
+                                //  item.imagePath.isNotEmpty   ? Image.network(
+                                //       item.imagePath,
+                                //       height: 50,
+                                //       width: 64,
+                                //       fit: BoxFit.cover,
+                                //       errorBuilder:
+                                //           (context, error, stackTrace) {
+                                //         // Fallback to a local asset image if the network image fails to load
+                                //         return Image.asset(
+                                //           "assets/images/1.png",
+                                //           height: 50,
+                                //           width: 64,
+                                //           fit: BoxFit.cover,
+                                //         );
+                                //       },
+                                //     )
+                                //   : Image.asset(
+                                //       "assets/images/1.png",
+                                //       height: 50,
+                                //       width: 64,
+                                //       fit: BoxFit.cover,
+                                //     ),
+
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 12),
+                                      child: Container(
+                                        height: 22,
+                                        width: 120,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            color: Colors.lightBlue[50]),
+                                        child: Center(
+                                          child: Text(
+                                            "Starting ${localizedData.price}",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 12,
+                                                color: Colors.teal),
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  )
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
                           ),
-                        );
-                      }),
-                ),
+                        ),
+                      );
+                    }),
               ),
             )
           ],

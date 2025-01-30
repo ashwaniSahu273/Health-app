@@ -42,6 +42,7 @@ class LabSelectPackage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LabController cartController = Get.put(LabController());
+    print("thisidlflkdfldfdkfdfldfdfdfdfdfdffdf===========>$type");
 
     return Scaffold(
       appBar: AppBar(
@@ -258,7 +259,7 @@ class LabSelectPackage extends StatelessWidget {
                       // About Package
 
                       const SizedBox(height: 8),
-                      type == "group"
+                      type == "package"
                           ? Card(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
@@ -304,7 +305,7 @@ class LabSelectPackage extends StatelessWidget {
                       // Components Included
 
                       const SizedBox(height: 8),
-                      type == "group"
+                      type == "package"
                           ? Container(
                               width: double.infinity,
                               child: Card(
@@ -348,7 +349,7 @@ class LabSelectPackage extends StatelessWidget {
                           : const SizedBox.shrink(),
                       const SizedBox(height: 16),
 
-                      type == "group"
+                      type == "package"
                           ? Container(
                               width: double.infinity,
                               child: Card(
@@ -378,7 +379,11 @@ class LabSelectPackage extends StatelessWidget {
                                         children: [
                                           ...includesTests!
                                               .split(
-                                                  '.') // Split string into a list
+                                                  '.') 
+                                                  .map((service) => service
+                                                  .trim()) 
+                                              .where((service) => service
+                                                  .isNotEmpty) 
                                               .map((service) => _buildChip(service
                                                   .trim())) // Trim whitespace and map to _buildChip
                                               .toList(),

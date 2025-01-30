@@ -385,7 +385,7 @@ class LabController extends GetxController {
       {
         "id": 7,
         "imagePath": "assets/images/std_test.png",
-        "type": "package",
+        "type": "indiviual",
         "localized": {
           "en": {
             "serviceName": "LDH ( Lactate Dehydrogenase )",
