@@ -136,8 +136,8 @@ class _HomePageState extends State<HomePage> {
                           RichText(
                             text: TextSpan(
                               text:
-                                  'Your healthcare just got easier and closer! get trusted home care services from certified providers through our app.'
-                                      .tr,
+                                  'Your healthcare just got easier and closer! get trusted home care services from certified providers through our app.'.tr
+                                    ,
                               style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,

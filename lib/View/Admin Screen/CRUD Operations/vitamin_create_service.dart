@@ -148,7 +148,7 @@ class VitaminCreateService extends StatelessWidget {
                     var newService = {
                       'localized': {
                         'ar': {
-                          'serviceName': _arServiceNameController.text,
+                          'serviceName': _arServiceNameController.text ,
                           'description': _arDescriptionController.text,
                           'components': _arInstructionsController.text,
                           'price': _priceController.text,

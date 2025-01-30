@@ -193,10 +193,11 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {
+                  
                     var newService = {
                       'id': widget.isEditing ? widget.service.id : '',
                       'imagePath': _imagePathController.text,
+                      "type":"individual",
                       'localized': {
                         'ar': {
                           'serviceName': _arServiceNameController.text ??
@@ -243,7 +244,7 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
 
                     Navigator.pop(context, newService);
                   }
-                },
+                ,
                 child:
                     Text(widget.isEditing ? 'Update Service' : 'Add Service'),
               ),
@@ -272,7 +273,7 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
             decoration: InputDecoration(
               border: OutlineInputBorder(),
             ),
-            validator: (value) => value!.isEmpty ? 'Please enter $label' : null,
+            // validator: (value) => value!.isEmpty ? 'Please enter $label' : null,
           ),
         ],
       ),

@@ -159,7 +159,7 @@ class _User_RegisterState extends State<User_Register> {
                       height: 5,
                     ),
                     Text(
-                      "Harees",
+                      "Harees".tr,
                       style: TextStyle(
                           fontSize: 36,
                           fontFamily: "Schyler",

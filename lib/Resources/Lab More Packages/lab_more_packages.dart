@@ -37,7 +37,7 @@ class LabMorePackages extends StatelessWidget {
                 color: Colors.black,
               ),
               Text(
-                "All packages",
+                "All packages".tr,
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
