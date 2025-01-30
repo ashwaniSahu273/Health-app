@@ -239,16 +239,18 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
                     var newService = {
                       'localized': {
                         'ar': {
-                          'serviceName': _arServiceNameController.text,
-                          'description': _arDescriptionController.text,
-                          'Instructions': _arInstructionsController.text,
-                          'price': _priceController.text,
+                          'serviceName': _arServiceNameController.text ?? "no service name",
+                          'description': _arDescriptionController.text ?? "no description",
+                          'Instructions': _arInstructionsController.text ?? "no instructions",
+                          'testIncludes': _arInstructionsController.text ?? "no testIncludes",
+                          'price': _priceController.text ?? "no price",
                         },
                         'en': {
-                          'serviceName': _enServiceNameController.text,
-                          'description': _enDescriptionController.text,
-                          'Instructions': _enInstructionsController.text,
-                          'price': _priceController.text,
+                          'serviceName': _enServiceNameController.text ?? "no service name",
+                          'description': _enDescriptionController.text ?? "no description",
+                          'Instructions': _enInstructionsController.text ?? "no instructions",
+                          'testIncludes': _enInstructionsController.text ?? "no testIncludes",
+                          'price': _priceController.text ?? "no price",
                         },
                       },
                       'imagePath': _uploadedImageUrl,

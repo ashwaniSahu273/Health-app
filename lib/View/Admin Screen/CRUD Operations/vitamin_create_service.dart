@@ -148,16 +148,18 @@ class VitaminCreateService extends StatelessWidget {
                     var newService = {
                       'localized': {
                         'ar': {
-                          'serviceName': _arServiceNameController.text ,
-                          'description': _arDescriptionController.text,
-                          'components': _arInstructionsController.text,
-                          'price': _priceController.text,
+                          'serviceName': _arServiceNameController.text ?? "No service name",
+                          'description': _arDescriptionController.text ?? "No description",
+                          'instructions': _arInstructionsController.text ?? "No instructions",
+                          'components': _arInstructionsController.text ?? "No components",
+                          'price': _priceController.text ?? "No price",
                         },
                         'en': {
-                          'serviceName': _enServiceNameController.text,
-                          'description': _enDescriptionController.text,
-                          'components': _enInstructionsController.text,
-                          'price': _priceController.text,
+                          'serviceName': _enServiceNameController.text ?? "No service name",
+                          'description': _enDescriptionController.text  ?? "No description",
+                          'components': _enInstructionsController.text  ?? "No components",
+                          'instructions': _enInstructionsController.text  ?? "No instructions",
+                          'price': _priceController.text ?? "No price",
                         },
                       },
                       'imagePath': _imagePathController.text,
