@@ -17,18 +17,40 @@ class LabController extends GetxController {
   var currentTime = "".obs;
   var isLoading = false.obs;
   var servicesList = <LabService>[].obs;
+  var isSearching = false.obs;
 
   var selectedDateController = "".obs;
   var selectedTimeController = "".obs;
+
+  var filteredServices = <LabService>[].obs;
+  TextEditingController searchController = TextEditingController();
 
   @override
   void onInit() {
     super.onInit();
     // _loadCartFromStorage();
     fetchServices();
-    // storeServices();
+    Future.delayed(Duration(milliseconds: 500), () {
+      // fetchAllSearchServices();
+    });
   }
 
+  void filterServices(String query) {
+    isSearching.value = true;
+    if (query.isEmpty) {
+      filteredServices.value = groupServices; // Show all if empty
+    } else {
+      filteredServices.value = servicesList.where((item) {
+        String languageCode = Get.locale?.languageCode ?? 'en';
+        final localizedData =
+            languageCode == 'ar' ? item.localized.ar : item.localized.en;
+
+        return localizedData.serviceName
+            .toLowerCase()
+            .contains(query.toLowerCase());
+      }).toList();
+    }
+  }
 
   List<LabService> get individualServices => servicesList
       .where((service) => service.type.toLowerCase() == 'individual')

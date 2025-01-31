@@ -30,7 +30,8 @@ class DoctorPayment extends StatelessWidget {
     // final String currentDate = DateFormat.yMMMd().format(DateTime.now());
     DoctorController cartController = Get.put(DoctorController());
 
-    const double vat = 20.0;
+  // double total = cartController.getTotalAmount();
+  //   double tax = total * 0.15;
 
     // // Extract numeric value from packagePrice by removing non-numeric characters
     // final double parsedPackagePrice =
@@ -558,7 +559,7 @@ class DoctorPayment extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'VAT (+)',
+                                  'Tax (15%)',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.grey,
@@ -566,7 +567,7 @@ class DoctorPayment extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '$vat ${'SAR'.tr}',
+                                  '60 ${'SAR'.tr}',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.black,
@@ -596,7 +597,7 @@ class DoctorPayment extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '420 ${'SAR'.tr}',
+                          '460 ${'SAR'.tr}',
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.blue,

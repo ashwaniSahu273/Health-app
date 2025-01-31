@@ -62,7 +62,10 @@ class _LabTestState extends State<LabTest> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
+
+
     controller.fetchServices();
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -186,73 +189,20 @@ class _LabTestState extends State<LabTest> {
                 SizedBox(
                   height: height * 0.02,
                 ),
-                // Container(
-                //   height: height * 0.2,
-                //   width: 340,
-                //   decoration: BoxDecoration(
-                //     color: Colors.white,
-                //     borderRadius: BorderRadius.only(
-                //         topLeft: Radius.circular(25),
-                //         topRight: Radius.circular(25)),
-                //   ),
-                //   child: Column(
-                //     children: [
-                //       Padding(
-                //         padding: const EdgeInsets.symmetric(
-                //             horizontal: 18, vertical: 10),
-                //         child: Align(
-                //             alignment: Alignment.centerLeft,
-                //             child: Text(
-                //               "Body function or health concern".tr,
-                //               style: TextStyle(
-                //                   fontSize: 16,
-                //                   fontFamily: "Roboto",
-                //                   fontWeight: FontWeight.w700),
-                //             )),
-                //       ),
-                //       Padding(
-                //         padding: const EdgeInsets.all(8.0),
-                //         child: SingleChildScrollView(
-                //           scrollDirection:
-                //               Axis.horizontal, // Enable horizontal scrolling
-                //           child: Row(
-                //             children: [
-                //               LabFunctions(
-                //                 imagePath: "assets/images/1.png",
-                //                 text: "Full body".tr,
-                //               ),
-                //               SizedBox(width: 8), // Add spacing between items
-                //               LabFunctions(
-                //                 imagePath: "assets/images/1.png",
-                //                 text: "Diabetes".tr,
-                //               ),
-                //               SizedBox(width: 8),
-                //               LabFunctions(
-                //                 imagePath: "assets/images/1.png",
-                //                 text: "Cholesterol".tr,
-                //               ),
-                //               SizedBox(width: 8),
-                //               LabFunctions(
-                //                 imagePath: "assets/images/1.png",
-                //                 text: "Full body".tr,
-                //               ),
-                //               SizedBox(width: 8),
-                //               LabFunctions(
-                //                 imagePath: "assets/images/1.png",
-                //                 text: "Full body".tr,
-                //               ),
-                //             ],
-                //           ),
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                // Container(
-                //   height: 25,
-                //   width: double.infinity,
-                //   decoration: BoxDecoration(color: MyColors.greenColorauth),
-                // ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: controller.searchController,
+                    onChanged: controller.filterServices,
+                    decoration: InputDecoration(
+                      hintText: "Search services...",
+                      prefixIcon: Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                  ),
+                ),
                 Container(
                   height: 40,
                   width: double.infinity,
@@ -304,7 +254,7 @@ class _LabTestState extends State<LabTest> {
                           child: Icon(Icons.arrow_forward_sharp))
                     ],
                   ),
-                ), //viewpackages text ends here
+                ),
                 Expanded(
                   child: Container(
                     width: double.infinity,
@@ -320,10 +270,10 @@ class _LabTestState extends State<LabTest> {
                                       crossAxisSpacing: 0,
                                       mainAxisSpacing: 0,
                                       crossAxisCount: 2,
-                                      childAspectRatio: 1.2),
-                              itemCount: controller.groupServices.length,
+                                      childAspectRatio: 0.8),
+                              itemCount: controller.isSearching.value ? controller.filteredServices.length : controller.groupServices.length,
                               itemBuilder: (context, index) {
-                                var item = controller.groupServices[index];
+                                var item = controller.isSearching.value ? controller.filteredServices[index]: controller.groupServices[index];
                                 String languageCode =
                                     Get.locale?.languageCode ?? 'en';
 
@@ -353,7 +303,24 @@ class _LabTestState extends State<LabTest> {
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 16.0, top: 8),
+                                            child: Container(
+                                                height: 50,
+                                                width: 50,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: const Color(
+                                                      0xFFE6F5FF), // Circle background color
+                                                ),
+                                                child: Image.asset(
+                                                    "assets/images/test-tube.png",
+                                                    fit: BoxFit.cover)),
+                                          ),
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 16, top: 8),

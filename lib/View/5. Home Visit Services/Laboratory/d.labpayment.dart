@@ -17,30 +17,26 @@ class LabPaymentPage extends StatelessWidget {
   final User firebaseUser;
   final String selectedTime;
 
-
   const LabPaymentPage({
     super.key,
-
     required this.userModel,
     required this.firebaseUser,
     required this.selectedTime,
-
   });
 
   @override
   Widget build(BuildContext context) {
     // final String currentDate = DateFormat.yMMMd().format(DateTime.now());
-LabController cartController =
-        Get.put(LabController());
+    LabController cartController = Get.put(LabController());
 
- const double vat = 20.0;
+    double total = cartController.getTotalAmount();
+    double tax = total * 0.15;
 
     // // Extract numeric value from packagePrice by removing non-numeric characters
     // final double parsedPackagePrice =
     //     double.parse(packagePrice.replaceAll(RegExp(r'[^\d.]'), ''));
 
-    final double totalAmount = cartController.getTotalAmount() + vat;
-
+    final double totalAmount = cartController.getTotalAmount() + tax;
 
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +44,6 @@ LabController cartController =
         leadingWidth: 200,
         title: Row(
           children: [
-           
             GestureDetector(
               onTap: () => Get.back(),
               child: Icon(
@@ -88,12 +83,11 @@ LabController cartController =
                   //   height: 10.0,
                   // ),
 
-                   Container(
-                    // decoration: BoxDecoration(
-                    //   color: Colors.white,
-                    // ),
-                    child: StepProgressBar(currentStep: 4, totalSteps: 4)
-                    ),
+                  Container(
+                      // decoration: BoxDecoration(
+                      //   color: Colors.white,
+                      // ),
+                      child: StepProgressBar(currentStep: 4, totalSteps: 4)),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: ListTile(
@@ -148,10 +142,9 @@ LabController cartController =
                             Text(
                               '${cartController.selectedDateController.value} - ${cartController.selectedTimeController.value}',
                               style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                                fontFamily: "Roboto"
-                              ),
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontFamily: "Roboto"),
                             ),
                           ],
                         ),
@@ -227,8 +220,9 @@ LabController cartController =
                     color: Color(0xFFCAE8E5),
                     height: 25,
                   ),
-                  Container( // Background color
-                    padding: EdgeInsets.symmetric(horizontal: 20,vertical: 8),
+                  Container(
+                    // Background color
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -244,7 +238,9 @@ LabController cartController =
                                 Text(
                                   "Add promo code here".tr,
                                   style: TextStyle(
-                                      fontSize: 16,fontFamily: "Roboto", color: Colors.black),
+                                      fontSize: 16,
+                                      fontFamily: "Roboto",
+                                      color: Colors.black),
                                 ),
                               ],
                             ),
@@ -258,7 +254,7 @@ LabController cartController =
                             ),
                           ],
                         ),
-                       
+
                         // Wallet Balance Section
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -289,10 +285,10 @@ LabController cartController =
                             ),
                           ],
                         ),
-                 
+
                         // Pay with Bank Points Sections
                         ListTile(
-                          contentPadding:EdgeInsets.zero ,
+                          contentPadding: EdgeInsets.zero,
                           title: Text(
                             "Pay with bank points".tr,
                             style: TextStyle(fontSize: 16, color: Colors.black),
@@ -303,9 +299,9 @@ LabController cartController =
                             // Handle navigation
                           },
                         ),
-                     
+
                         ListTile(
-                          contentPadding:EdgeInsets.zero ,
+                          contentPadding: EdgeInsets.zero,
                           title: Text(
                             "Pay with bank points".tr,
                             style: TextStyle(fontSize: 16, color: Colors.black),
@@ -323,7 +319,7 @@ LabController cartController =
                     width: double.infinity,
                     color: Color(0xFFCAE8E5),
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 18.0,right: 8),
+                      padding: const EdgeInsets.only(left: 18.0, right: 8),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -437,7 +433,8 @@ LabController cartController =
                     width: double.infinity,
                     // color: Colors.blue[100],
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 8),
                       child: Text(
                         'Price Breakup'.tr,
                         style: TextStyle(
@@ -479,19 +476,16 @@ LabController cartController =
                             ListView.builder(
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
-                                itemCount:
-                                    cartController.cartItems.length,
+                                itemCount: cartController.cartItems.length,
                                 itemBuilder: (context, index) {
-                                  final item =
-                                      cartController.cartItems[index];
+                                  final item = cartController.cartItems[index];
 
-                                      
-                            String languageCode =
-                                Get.locale?.languageCode ?? 'en';
+                                  String languageCode =
+                                      Get.locale?.languageCode ?? 'en';
 
-                            final localizedData = languageCode == 'ar'
-                                ? item["localized"]["ar"]
-                                : item["localized"]["en"];
+                                  final localizedData = languageCode == 'ar'
+                                      ? item["localized"]["ar"]
+                                      : item["localized"]["en"];
 
                                   return Row(
                                     mainAxisAlignment:
@@ -511,7 +505,7 @@ LabController cartController =
                                         ),
                                       ),
                                       SizedBox(width: 8),
-                                             Text(
+                                      Text(
                                         item['quantity'] != null
                                             ? item['quantity'].toString()
                                             : "1",
@@ -539,11 +533,11 @@ LabController cartController =
                                     ],
                                   );
                                 }),
-                                Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'VAT (+)',
+                                  'TAX (15%)',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.grey,
@@ -551,7 +545,7 @@ LabController cartController =
                                   ),
                                 ),
                                 Text(
-                                  '$vat ${'SAR'.tr}',
+                                  '$tax ${'SAR'.tr}',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.black,
@@ -560,7 +554,6 @@ LabController cartController =
                                 ),
                               ],
                             ),
-                       
                             SizedBox(height: 10),
                           ],
                         ),
@@ -597,7 +590,8 @@ LabController cartController =
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: GestureDetector(
                       onTap: () {
-                        cartController.setUserOrderInfo(userModel, firebaseUser);
+                        cartController.setUserOrderInfo(
+                            userModel, firebaseUser);
 
                         Get.offAll(() => HomePage(
                               userModel: userModel,

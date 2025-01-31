@@ -544,7 +544,7 @@ class Language extends Translations {
           "Mobile": "متحرك",
           "Or Sign In With? ": " أو تسجيل الدخول مع؟",
           "Login To Your Account": "تسجيل الدخول إلى حسابك",
-          "Nurse visit": "زيارة تمريض",
+          "Nurse visit": "زيارة تمريض ",
           "Doctor visit": "زيارة طبيب",
           "Virtual Consultation": "استشارة طبيب عن بعد",
           "Laboratory": " الفحوصات",

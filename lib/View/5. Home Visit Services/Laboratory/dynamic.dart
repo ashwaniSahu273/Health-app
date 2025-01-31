@@ -99,9 +99,9 @@ class LabSelectPackage extends StatelessWidget {
                           child: Row(
                             children: [
                               Image.asset(
-                                "assets/images/vitamin1.png", // Replace with your asset
-                                height: 64,
-                                width: 40,
+                                "assets/images/blood-sample.png", // Replace with your asset
+                                height: 50,
+                                width: 50,
                               ),
                               const SizedBox(width: 12),
                               Expanded(

@@ -33,13 +33,14 @@ class NursePayment extends StatelessWidget {
         Get.put(NurseController());
 
     // Calculate the VAT and total amount
-    const double vat = 20.0;
+   double total = nurseController.getTotalAmount();
+    double tax = total * 0.15;
 
     // // Extract numeric value from packagePrice by removing non-numeric characters
     // final double parsedPackagePrice =
     //     double.parse(packagePrice.replaceAll(RegExp(r'[^\d.]'), ''));
 
-    final double totalAmount = nurseController.getTotalAmount() + vat;
+    final double totalAmount = nurseController.getTotalAmount() + tax;
 
     return Scaffold(
       appBar: AppBar(
@@ -568,7 +569,7 @@ class NursePayment extends StatelessWidget {
                                   Flexible(
                                     flex: 3,
                                     child: Text(
-                                      'VAT (+)',
+                                      'Tax (15%)',
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.grey,
@@ -580,7 +581,7 @@ class NursePayment extends StatelessWidget {
                                   Flexible(
                                     flex: 1,
                                     child: Text(
-                                      '$vat ${'SAR'.tr}',
+                                      '$tax ${'SAR'.tr}',
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.black,

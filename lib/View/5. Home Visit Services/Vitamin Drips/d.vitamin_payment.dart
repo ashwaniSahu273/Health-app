@@ -32,13 +32,14 @@ class VitaminPaymentPage extends StatelessWidget {
         Get.put(VitaminCartController());
 
     // Calculate the VAT and total amount
-    const double vat = 20.0;
+   double total = vitaminCartController.getTotalAmount();
+    double tax = total * 0.15;
 
     // // Extract numeric value from packagePrice by removing non-numeric characters
     // final double parsedPackagePrice =
     //     double.parse(packagePrice.replaceAll(RegExp(r'[^\d.]'), ''));
 
-    final double totalAmount = vitaminCartController.getTotalAmount() + vat;
+    final double totalAmount = total + tax;
 
     return Scaffold(
       appBar: AppBar(
@@ -563,7 +564,7 @@ class VitaminPaymentPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'VAT (+)',
+                                  'Tax (15%)',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.grey,
@@ -571,7 +572,7 @@ class VitaminPaymentPage extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '$vat ${'SAR'.tr}',
+                                  '$tax ${'SAR'.tr}',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.black,

@@ -43,7 +43,18 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
   LabController cartController = Get.put(LabController());
 
   String? selectedGender;
-    File? imageFile;
+  File? imageFile;
+
+  @override
+  void initState() {
+    super.initState();
+    print("============================>${widget.userModel.fullname}");
+    fullNameController.text = widget.userModel.fullname ?? "";
+    mobileNumberController.text = widget.userModel.mobileNumber ?? "";
+    dobController.text = widget.userModel.dob ?? "";
+    iqamaNumberController.text = widget.userModel.iqamaNumber ?? "";
+    selectedGender = widget.userModel.gender ?? "";
+  }
 
   void selectImage(ImageSource source) async {
     XFile? pickedFile = await ImagePicker().pickImage(source: source);
@@ -97,7 +108,6 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
           );
         });
   }
-
 
   void showDatePickerDialog() async {
     DateTime? pickedDate = await showDatePicker(
@@ -155,11 +165,11 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
     widget.userModel.gender = gender;
     widget.userModel.dob = dob;
 
-     Get.to(PhoneInputScreen(
-            userModel: widget.userModel,
-            firebaseUser: widget.firebaseUser,
-            selectedTime: widget.selectedTime,
-          ));
+    Get.to(PhoneInputScreen(
+      userModel: widget.userModel,
+      firebaseUser: widget.firebaseUser,
+      selectedTime: widget.selectedTime,
+    ));
 
     // await FirebaseFirestore.instance
     //     .collection("Registered Users")
@@ -171,7 +181,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
     //   Navigator.pushReplacement(
     //     context,
     //     MaterialPageRoute(builder: (context) {
-    //       return 
+    //       return
     //     }),
     //   );
     // });
@@ -222,7 +232,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       CupertinoButton(
                         onPressed: () {
                           showPhotoOptions();
@@ -239,7 +249,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                               : null,
                         ),
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       TextField(
                         controller: fullNameController,
                         decoration: InputDecoration(
@@ -273,25 +283,26 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                       SizedBox(height: 20),
 
                       TextField(
-                    controller: iqamaNumberController,
-                    decoration: InputDecoration(
-                      hintText: "ID/Iqama Number".tr,
-                      hintStyle: TextStyle(color: Colors.grey),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide:
-                            BorderSide(color: Colors.blue.shade100, width: 1.0),
+                        controller: iqamaNumberController,
+                        decoration: InputDecoration(
+                          hintText: "ID/Iqama Number".tr,
+                          hintStyle: TextStyle(color: Colors.grey),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 16, horizontal: 16),
+                          filled: true,
+                          fillColor: Colors.white,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                                color: Colors.blue.shade100, width: 1.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide:
+                                BorderSide(color: Colors.blue, width: 1.5),
+                          ),
+                        ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.blue, width: 1.5),
-                      ),
-                    ),
-                  ),
                       // TextField(
                       //   controller: mobileNumberController,
                       //   keyboardType: TextInputType.phone,

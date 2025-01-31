@@ -61,7 +61,7 @@ class LabMorePackages extends StatelessWidget {
                         crossAxisSpacing: 0,
                         mainAxisSpacing: 0,
                         crossAxisCount: 2,
-                        childAspectRatio: 1),
+                        childAspectRatio: 0.8),
                     itemCount: controller.individualServices.length,
                     itemBuilder: (context, index) {
                       var item = controller.individualServices[index];
@@ -96,7 +96,23 @@ class LabMorePackages extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(20)),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+
+                                   Padding(
+                                            padding: const EdgeInsets.only(left: 16.0,top: 8),
+                                            child: Container(
+                                                height: 50,
+                                                width: 50,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: const Color(
+                                                      0xFFE6F5FF), // Circle background color
+                                                ),
+                                                child: Image.asset(
+                                                    "assets/images/blood-sample.png",
+                                                    fit: BoxFit.cover)),
+                                          ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 16, vertical: 5),
