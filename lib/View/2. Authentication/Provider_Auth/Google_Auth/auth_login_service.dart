@@ -4,17 +4,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:harees_new_project/View/2.%20Authentication/Provider_Auth/provider_complete_profile.dart';
 import 'package:harees_new_project/View/2.%20Authentication/User_Auth/Complete_Profile_User.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/provider_home.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 import 'package:harees_new_project/View/Admin%20Screen/admin_home.dart';
 
-class AuthServiceUserLogin {
+class AuthServiceUserLoginProvider {
   final UserModel userModel;
   final User? firebaseUser;
 
-  AuthServiceUserLogin({required this.userModel, required this.firebaseUser});
+  AuthServiceUserLoginProvider(
+      {required this.userModel, required this.firebaseUser});
 
   Future<void> signInWithGoogle(BuildContext context) async {
     try {
@@ -56,8 +58,12 @@ class AuthServiceUserLogin {
       UserModel? existingUserModel =
           await _getUserFromFirestore(firebaseUser.uid);
       if (existingUserModel == null) {
-        // If new user, create and redirect to complete profile
-        await _createNewUser(firebaseUser, googleUser.email);
+        Get.snackbar(
+          "Message",
+          "This Google account is not Registered as Provider",
+          backgroundColor: Colors.red[400],
+          colorText: Colors.white,
+        );
         return;
       }
 
@@ -78,7 +84,7 @@ class AuthServiceUserLogin {
   Future<UserModel?> _getUserFromFirestore(String uid) async {
     try {
       var userData = await FirebaseFirestore.instance
-          .collection("Registered Users")
+          .collection("Registered Providers")
           .doc(uid)
           .get();
       if (userData.exists) {
@@ -91,38 +97,50 @@ class AuthServiceUserLogin {
     }
   }
 
-  // Helper method to create a new user in Firestore
-  Future<void> _createNewUser(User firebaseUser, String email) async {
-    try {
-      String uid = firebaseUser.uid;
-      UserModel newUser = UserModel(
-        uid: uid,
-        email: email,
-        fullname: "",
-        profilePic: "",
-        role: "user",
-      );
-      await FirebaseFirestore.instance
-          .collection("Registered Users")
-          .doc(uid)
-          .set(newUser.tomap());
-      print("New User Created!");
+  // // Helper method to create a new user in Firestore
+  // Future<void> _createNewUser(User firebaseUser, String email) async {
+  //   try {
+  //     String uid = firebaseUser.uid;
+  //     UserModel newUser = UserModel(
+  //       uid: uid,
+  //       email: email,
+  //       fullname: "",
+  //       profilePic: "",
+  //       role: "provider", // Default role (could change based on your flow)
+  //     );
+  //     await FirebaseFirestore.instance
+  //         .collection("Registered Users")
+  //         .doc(uid)
+  //         .set(newUser.tomap());
 
-      Get.to(
-        CompleteProfile(userModel: newUser, firebaseUser: firebaseUser),
-      );
+  //     await FirebaseFirestore.instance
+  //         .collection("Registered Providers")
+  //         .doc(uid)
+  //         .set(newUser.tomap())
+  //         .then((value) {
+  //       print("New User Created in 'Registered Providers' collection!");
+  //     });
 
-      
-    } catch (e) {
-      print("Error creating new user: $e");
-      Get.snackbar(
-        "User Creation Error",
-        "Failed to create user. Please try again.",
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
-  }
+  //     Navigator.pushReplacement(
+  //       Get.context!,
+  //       MaterialPageRoute(
+  //         builder: (context) => CompleteProfileProvider(
+  //             userModel: newUser, firebaseUser: firebaseUser),
+  //       ),
+  //     );
+  //   } catch (e) {
+  //     print("Error creating new user: $e");
+  //     Get.snackbar(
+  //       "User Creation Error",
+  //       "Failed to create user. Please try again.",
+  //       backgroundColor: Colors.red,
+  //       colorText: Colors.white,
+  //     );
+  //   }
+  // }
+
+
+
 
   // Helper method to navigate to the appropriate home page
   void _navigateToHomePage(UserModel userModel, User firebaseUser) {

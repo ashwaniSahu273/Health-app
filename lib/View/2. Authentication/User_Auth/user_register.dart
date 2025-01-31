@@ -251,20 +251,20 @@ class _User_RegisterState extends State<User_Register> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // GestureDetector(
-                        //   onTap: () {
-                        //     AuthServiceUserLogin(
-                        //             userModel: UserModel(),
-                        //             firebaseUser:
-                        //                 FirebaseAuth.instance.currentUser)
-                        //         .signInWithGoogle();
-                        //   },
-                        //   child: CircleAvatar(
-                        //       radius: 20,
-                        //       backgroundImage:
-                        //           Image.asset("assets/images/google.png")
-                        //               .image),
-                        // ),
+                        GestureDetector(
+                          onTap: () {
+                            AuthServiceUserLogin(
+                                    userModel: UserModel(),
+                                    firebaseUser:
+                                        FirebaseAuth.instance.currentUser)
+                                .signInWithGoogle(context);
+                          },
+                          child: CircleAvatar(
+                              radius: 20,
+                              backgroundImage:
+                                  Image.asset("assets/images/google.png")
+                                      .image),
+                        ),
 
                         // GestureDetector(
                         //   onTap: () {},

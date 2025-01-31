@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/View/2.%20Authentication/Provider_Auth/Google_Auth/auth_service.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/ui_helper.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/Resources/Button/mybutton.dart';
@@ -244,20 +245,20 @@ class _Provider_RegisterState extends State<Provider_Register> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          // GestureDetector(
-                          //   onTap: () {
-                          //     // AuthServiceProviderRegister(
-                          //     //         userModel: UserModel(),
-                          //     //         firebaseUser:
-                          //     //             FirebaseAuth.instance.currentUser)
-                          //     //     .signInWithGoogle();
-                          //   },
-                          //   child: CircleAvatar(
-                          //       radius: 20,
-                          //       backgroundImage:
-                          //           Image.asset("assets/images/google.png")
-                          //               .image),
-                          // ),
+                          GestureDetector(
+                            onTap: () {
+                              AuthServiceUserLoginProvider(
+                                      userModel: UserModel(),
+                                      firebaseUser:
+                                          FirebaseAuth.instance.currentUser)
+                                  .signInWithGoogle(context);
+                            },
+                            child: CircleAvatar(
+                                radius: 20,
+                                backgroundImage:
+                                    Image.asset("assets/images/google.png")
+                                        .image),
+                          ),
 
                           // GestureDetector(
                           //   onTap: () {},

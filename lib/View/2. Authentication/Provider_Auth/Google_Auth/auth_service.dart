@@ -4,17 +4,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:harees_new_project/View/2.%20Authentication/Provider_Auth/provider_complete_profile.dart';
 import 'package:harees_new_project/View/2.%20Authentication/User_Auth/Complete_Profile_User.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/provider_home.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 import 'package:harees_new_project/View/Admin%20Screen/admin_home.dart';
 
-class AuthServiceUserLogin {
+class AuthServiceUserLoginProvider {
   final UserModel userModel;
   final User? firebaseUser;
 
-  AuthServiceUserLogin({required this.userModel, required this.firebaseUser});
+  AuthServiceUserLoginProvider(
+      {required this.userModel, required this.firebaseUser});
 
   Future<void> signInWithGoogle(BuildContext context) async {
     try {
@@ -100,19 +102,29 @@ class AuthServiceUserLogin {
         email: email,
         fullname: "",
         profilePic: "",
-        role: "user",
+        role: "provider", // Default role (could change based on your flow)
       );
       await FirebaseFirestore.instance
           .collection("Registered Users")
           .doc(uid)
           .set(newUser.tomap());
-      print("New User Created!");
 
-      Get.to(
-        CompleteProfile(userModel: newUser, firebaseUser: firebaseUser),
+      await FirebaseFirestore.instance
+          .collection("Registered Providers")
+          .doc(uid)
+          .set(newUser.tomap())
+          .then((value) {
+        print("New User Created in 'Registered Providers' collection!");
+      });
+
+
+      Navigator.pushReplacement(
+        Get.context!,
+        MaterialPageRoute(
+          builder: (context) =>
+              CompleteProfileProvider(userModel: newUser, firebaseUser: firebaseUser),
+        ),
       );
-
-      
     } catch (e) {
       print("Error creating new user: $e");
       Get.snackbar(

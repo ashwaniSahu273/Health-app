@@ -342,7 +342,7 @@ class Language extends Translations {
           "All packages": "All packages",
           "Individual Packages": "Individual Packages",
           "General Packages": "General Packages",
-          "ID/Iqama Number": "Meetings",
+          "ID/Iqama Number": "ID/Iqama Number",
         },
         "ar_AE": {
           "Harees": "Harees",
@@ -359,7 +359,7 @@ class Language extends Translations {
           "Our Services": "خدماتنا",
           "Your peace of mind starts here!": "احة البال تبدأ هنا!",
           "Your healthcare just got easier and closer! get trusted home care services from certified providers through our app.":
-              "رعايتك الصحية أصبحت أسهل وأقرب! عبر تطبيقنا، نوفر لك خدمات منزلية متميزة من نخبة مقدمي الرعاية الصحية المعتمدين، لتعيش بصحة وراحة.  ",
+              "رعايتك الصحية أصبحت أسهل وأقرب! عبر تطبيقنا، نوفر لك خدمات منزلية متميزة من نخبة مقدمي الرعاية الصحية المعتمدين، لتعيش بصحة وراحة.",
           "Instructions": "إرشادات",
           "Enter": "أدخل",
           "We Sent OTP code to verify your number":

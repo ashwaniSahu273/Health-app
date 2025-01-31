@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/View/2.%20Authentication/Provider_Auth/Google_Auth/auth_service.dart';
 import 'package:harees_new_project/View/2.%20Authentication/User_Auth/Google_Auth/auth_service.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/ui_helper.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -244,11 +245,11 @@ class _Provider_loginState extends State<Provider_login> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              AuthServiceUserLogin(
+                              AuthServiceUserLoginProvider(
                                       userModel: UserModel(),
                                       firebaseUser:
                                           FirebaseAuth.instance.currentUser)
-                                  .signInWithGoogle();
+                                  .signInWithGoogle(context);
                             },
                             child: CircleAvatar(
                                 radius: 20,

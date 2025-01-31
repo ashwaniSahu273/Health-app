@@ -244,7 +244,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     userModel: UserModel(),
                                     firebaseUser:
                                         FirebaseAuth.instance.currentUser)
-                                .signInWithGoogle();
+                                .signInWithGoogle(context);
                           },
                           child: CircleAvatar(
                               radius: 20,
