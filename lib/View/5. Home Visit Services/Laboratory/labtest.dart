@@ -511,7 +511,7 @@ class _LabTestState extends State<LabTest> {
           false, // Prevent dismissing the dialog by tapping outside
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Search Services'),
+          title: Text('Search Services'.tr),
           content: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Column(
@@ -523,7 +523,7 @@ class _LabTestState extends State<LabTest> {
                   onChanged: controller
                       .filterServices, // Update filtered services when text changes
                   decoration: InputDecoration(
-                    labelText: 'Search Services',
+                    labelText: 'Search Services'.tr,
                     prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(),
                   ),

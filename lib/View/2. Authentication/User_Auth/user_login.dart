@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/2.%20Authentication/Provider_Auth/provider_login.dart';
+import 'package:harees_new_project/View/2.%20Authentication/User_Auth/Google_Auth/auth_controller.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/provider_home.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/ui_helper.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -26,6 +27,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  AuthController controller = Get.put(AuthController());
 
   void checkValues() {
     String email = emailController.text.trim();
@@ -238,20 +240,23 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            AuthServiceUserLogin(
-                                    userModel: UserModel(),
-                                    firebaseUser:
-                                        FirebaseAuth.instance.currentUser)
-                                .signInWithGoogle(context);
-                          },
-                          child: CircleAvatar(
-                              radius: 20,
-                              backgroundImage:
-                                  Image.asset("assets/images/google.png")
-                                      .image),
-                        ),
+                        controller.isLoading.value
+                            ? CircularProgressIndicator()
+                            : GestureDetector(
+                                onTap: () {
+                                  controller.isLoading.value = true;
+                                  AuthServiceUserLogin(
+                                          userModel: UserModel(),
+                                          firebaseUser:
+                                              FirebaseAuth.instance.currentUser)
+                                      .signInWithGoogle(context);
+                                },
+                                child: CircleAvatar(
+                                    radius: 20,
+                                    backgroundImage:
+                                        Image.asset("assets/images/google.png")
+                                            .image),
+                              ),
 
                         // GestureDetector(
                         //   onTap: () {},

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:harees_new_project/View/1.%20Splash%20Screen/splash_screen.dart';
 import 'package:harees_new_project/View/2.%20Authentication/User_Auth/user_login.dart';
+import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/About_Us/aboutus.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/Family/family.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/User_services/Contact_us/user_contact_us.dart';
@@ -87,6 +88,19 @@ class _MyDrawerState extends State<MyDrawer> {
           _buildListTile(
             context,
             0,
+            Icons.home,
+            "Home".tr,
+            () {
+              Get.offAll(() => HomePage(
+                    userModel: widget.userModel,
+                    firebaseUser: widget.firebaseUser,
+                  ));
+            },
+          ),
+          Divider(thickness: 2, color: Colors.grey[300]),
+          _buildListTile(
+            context,
+            1,
             Icons.info,
             "About Harees".tr,
             () {
@@ -99,7 +113,7 @@ class _MyDrawerState extends State<MyDrawer> {
           Divider(thickness: 2, color: Colors.grey[300]),
           _buildListTile(
             context,
-            1,
+            2,
             Icons.terminal_sharp,
             "Family".tr,
             () {
@@ -112,7 +126,7 @@ class _MyDrawerState extends State<MyDrawer> {
           Divider(thickness: 2, color: Colors.grey[300]),
           _buildListTile(
             context,
-            2,
+            3,
             Icons.policy_outlined,
             "FAQ".tr,
             () {
@@ -125,7 +139,7 @@ class _MyDrawerState extends State<MyDrawer> {
           Divider(thickness: 2, color: Colors.grey[300]),
           _buildListTile(
             context,
-            3,
+            4,
             Icons.contacts,
             "Contact us".tr,
             () {
@@ -138,7 +152,7 @@ class _MyDrawerState extends State<MyDrawer> {
           Divider(thickness: 2, color: Colors.grey[300]),
           _buildListTile(
             context,
-            4,
+            5,
             Icons.logout,
             "Logout".tr,
             () async {
@@ -173,7 +187,7 @@ class _MyDrawerState extends State<MyDrawer> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18.0),
                       child: Text(
-                        "Language",
+                        "Language".tr,
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.grey[850],

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:harees_new_project/View/2.%20Authentication/User_Auth/Complete_Profile_User.dart';
+import 'package:harees_new_project/View/2.%20Authentication/User_Auth/Google_Auth/auth_controller.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/provider_home.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
@@ -14,9 +15,12 @@ class AuthServiceUserLogin {
   final UserModel userModel;
   final User? firebaseUser;
 
+  AuthController controller = Get.put(AuthController());
+
   AuthServiceUserLogin({required this.userModel, required this.firebaseUser});
 
   Future<void> signInWithGoogle(BuildContext context) async {
+    controller.isLoading.value = true;
     try {
       // 1. Start Google Sign-In process
       GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -27,6 +31,8 @@ class AuthServiceUserLogin {
           backgroundColor: Colors.red[300],
           colorText: Colors.white,
         );
+        controller.isLoading.value = false;
+
         return;
       }
 
@@ -49,6 +55,8 @@ class AuthServiceUserLogin {
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
+        controller.isLoading.value = false;
+
         return;
       }
 
@@ -63,6 +71,7 @@ class AuthServiceUserLogin {
 
       // 5. User exists, proceed based on role
       _navigateToHomePage(existingUserModel, firebaseUser);
+      controller.isLoading.value = false;
     } catch (error) {
       print("Error signing in with Google: $error");
       Get.snackbar(
@@ -71,6 +80,7 @@ class AuthServiceUserLogin {
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
+      controller.isLoading.value = false;
     }
   }
 
@@ -87,6 +97,8 @@ class AuthServiceUserLogin {
       return null;
     } catch (e) {
       print("Error fetching user: $e");
+      controller.isLoading.value = false;
+
       return null;
     }
   }
@@ -111,8 +123,7 @@ class AuthServiceUserLogin {
       Get.to(
         CompleteProfile(userModel: newUser, firebaseUser: firebaseUser),
       );
-
-      
+      controller.isLoading.value = false;
     } catch (e) {
       print("Error creating new user: $e");
       Get.snackbar(
@@ -121,6 +132,7 @@ class AuthServiceUserLogin {
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
+      controller.isLoading.value = false;
     }
   }
 

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/dynamic.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
-import 'package:harees_new_project/View/8.%20Chats/Models/lab_service_model.dart';
+// import 'package:harees_new_project/View/8.%20Chats/Models/lab_service_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class LabMorePackages extends StatelessWidget {

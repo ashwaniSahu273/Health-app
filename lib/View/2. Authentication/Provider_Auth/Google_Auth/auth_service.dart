@@ -11,11 +11,11 @@ import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 import 'package:harees_new_project/View/Admin%20Screen/admin_home.dart';
 
-class AuthServiceUserLoginProvider {
+class AuthServiceUserRegisterProvider {
   final UserModel userModel;
   final User? firebaseUser;
 
-  AuthServiceUserLoginProvider(
+  AuthServiceUserRegisterProvider(
       {required this.userModel, required this.firebaseUser});
 
   Future<void> signInWithGoogle(BuildContext context) async {
