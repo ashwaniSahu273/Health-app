@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:harees_new_project/View/Admin%20Screen/CRUD%20Operations/service_create_controller.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 import 'package:image_picker/image_picker.dart';
@@ -54,6 +56,11 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
 
   @override
   Widget build(BuildContext context) {
+    ServiceCreateController controller = Get.put(ServiceCreateController());
+    controller.selectedServiceNurseType.value = "group";
+    File? imageFile;
+    String? uploadedImageUrl;
+
     if (widget.isEditing && widget.service != null) {
       _arServiceNameController.text =
           widget.service!.localized.ar.serviceName ?? '';
@@ -74,25 +81,23 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
       _enTermsOfServiceController.text =
           widget.service!.localized.en.termsOfService ?? '';
       _priceController.text = widget.service!.localized.en.price ?? '';
-      _imagePathController.text = widget.service!.imagePath ?? '';
+      uploadedImageUrl = widget.service!.imagePath ?? '';
+      controller.selectedServiceNurseType.value = widget.service!.type;
     }
 
-    File? _imageFile;
-    String? _uploadedImageUrl;
-
     Future<void> uploadImage() async {
-      if (_imageFile == null) return;
+      if (imageFile == null) return;
 
       try {
         final storageRef = FirebaseStorage.instance.ref().child(
             'service_images/${DateTime.now().millisecondsSinceEpoch}.jpg');
-        final uploadTask = storageRef.putFile(_imageFile!);
+        final uploadTask = storageRef.putFile(imageFile!);
 
         final snapshot = await uploadTask;
         final downloadUrl = await snapshot.ref.getDownloadURL();
 
         setState(() {
-          _uploadedImageUrl = downloadUrl;
+          uploadedImageUrl = downloadUrl;
         });
 
         ScaffoldMessenger.of(context).showSnackBar(
@@ -114,7 +119,7 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
 
       if (croppedFile != null) {
         setState(() {
-          _imageFile = File(croppedFile.path);
+          imageFile = File(croppedFile.path);
         });
         await uploadImage();
       }
@@ -139,24 +144,24 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
           child: ListView(
             children: [
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _imageFile != null
+                  imageFile != null
                       ? Image.file(
-                          _imageFile!,
-                          height: 200,
-                          width: double.infinity,
+                          imageFile!,
+                          height: 100,
+                          width: 100,
                           fit: BoxFit.cover,
                         )
-                      : _uploadedImageUrl != null
+                      : uploadedImageUrl != null
                           ? Image.network(
-                              _uploadedImageUrl!,
-                              height: 200,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
+                              uploadedImageUrl!,
+                              height: 100,
+                              width: 100,
+                              // fit: BoxFit.cover,
                             )
                           : Text("There is no image"),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   ElevatedButton.icon(
                     onPressed: () => selectImage(ImageSource.gallery),
                     icon: Icon(Icons.image),
@@ -164,87 +169,136 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 20,
+              ),
+
+              Obx(
+                () => DropdownButtonFormField<String>(
+                  value: controller.selectedServiceNurseType.value,
+                  decoration: InputDecoration(
+                      labelText: "Package Type",
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 0, horizontal: 16),
+                      // filled: true,
+                      // fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                          color: Colors.black,
+                          width: 1.0,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                          color: Colors.black,
+                          width: 1.0,
+                        ),
+                      )),
+                  items: ['group', 'individual'].map((String type) {
+                    return DropdownMenuItem<String>(
+                      value: type,
+                      child: Text(type),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) {
+                    controller.selectedServiceNurseType.value = newValue!;
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               _buildTextField(
                   _arServiceNameController, 'Service Name (Arabic)'),
               _buildTextField(
                   _enServiceNameController, 'Service Name (English)'),
-              _buildTextField(_arDescriptionController, 'Description (Arabic)',
-                  maxLines: 4),
-              _buildTextField(_enDescriptionController, 'Description (English)',
-                  maxLines: 4),
-              _buildTextField(_arAboutController, 'About (Arabic)',
-                  maxLines: 5),
-              _buildTextField(_enAboutController, 'About (English)',
-                  maxLines: 5),
-              _buildTextField(
-                  _arServiceIncludesController, 'Service Includes (Arabic)',
-                  maxLines: 6),
-              _buildTextField(
-                  _enServiceIncludesController, 'Service Includes (English)',
-                  maxLines: 6),
-              _buildTextField(
-                  _arTermsOfServiceController, 'Terms of Service (Arabic)',
-                  maxLines: 6),
-              _buildTextField(
-                  _enTermsOfServiceController, 'Terms of Service (English)',
-                  maxLines: 6),
+
+              Obx(
+                () => controller.selectedServiceNurseType.value != "individual"
+                    ? Column(
+                        children: [
+                          _buildTextField(
+                              _arDescriptionController, 'Description (Arabic)',
+                              maxLines: 4),
+                          _buildTextField(
+                              _enDescriptionController, 'Description (English)',
+                              maxLines: 4),
+                          _buildTextField(_arAboutController, 'About (Arabic)',
+                              maxLines: 5),
+                          _buildTextField(_enAboutController, 'About (English)',
+                              maxLines: 5),
+                          _buildTextField(_arServiceIncludesController,
+                              'Service Includes (Arabic)',
+                              maxLines: 6),
+                          _buildTextField(_enServiceIncludesController,
+                              'Service Includes (English)',
+                              maxLines: 6),
+                          _buildTextField(_arTermsOfServiceController,
+                              'Terms of Service (Arabic)',
+                              maxLines: 6),
+                          _buildTextField(_enTermsOfServiceController,
+                              'Terms of Service (English)',
+                              maxLines: 6),
+                        ],
+                      )
+                    : SizedBox.shrink(),
+              ),
+
               _buildTextField(_priceController, 'Price'),
               // _buildTextField(_imagePathController, 'Image Path'),
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  
-                    var newService = {
-                      'id': widget.isEditing ? widget.service.id : '',
-                      'imagePath': _imagePathController.text,
-                      "type":"individual",
-                      'localized': {
-                        'ar': {
-                          'serviceName': _arServiceNameController.text ??
-                              "No service name",
-                          'description':
-                              _arDescriptionController.text ?? "No description",
-                          'about': _arAboutController.text ?? "No about",
-                          'serviceIncludes':
-                              _arServiceIncludesController.text ??
-                                  "No service includes",
-                          'TermsOfService': _arTermsOfServiceController.text ??
-                              "No service terms of service",
-                          'price': _priceController.text ?? "No price",
-                        },
-                        'en': {
-                          'serviceName': _enServiceNameController.text ??
-                              "No service name",
-                          'description':
-                              _enDescriptionController.text ?? "No description",
-                          'about': _enAboutController.text ?? "No about",
-                          'serviceIncludes':
-                              _enServiceIncludesController.text ??
-                                  "No service includes",
-                          'TermsOfService': _enTermsOfServiceController.text ??
-                              "No terms of service",
-                          'price': _priceController.text ?? "No price",
-                        },
+                  var newService = {
+                    'id': widget.isEditing ? widget.service.id : '',
+                    'imagePath': _imagePathController.text,
+                    "type": "individual",
+                    'localized': {
+                      'ar': {
+                        'serviceName':
+                            _arServiceNameController.text ?? "No service name",
+                        'description':
+                            _arDescriptionController.text ?? "No description",
+                        'about': _arAboutController.text ?? "No about",
+                        'serviceIncludes': _arServiceIncludesController.text ??
+                            "No service includes",
+                        'TermsOfService': _arTermsOfServiceController.text ??
+                            "No service terms of service",
+                        'price': _priceController.text ?? "No price",
                       },
-                    };
+                      'en': {
+                        'serviceName':
+                            _enServiceNameController.text ?? "No service name",
+                        'description':
+                            _enDescriptionController.text ?? "No description",
+                        'about': _enAboutController.text ?? "No about",
+                        'serviceIncludes': _enServiceIncludesController.text ??
+                            "No service includes",
+                        'TermsOfService': _enTermsOfServiceController.text ??
+                            "No terms of service",
+                        'price': _priceController.text ?? "No price",
+                      },
+                    },
+                  };
 
-                    if (widget.isEditing) {
-                      FirebaseFirestore.instance
-                          .collection('NurseServices')
-                          .doc(widget.service.id.toString())
-                          .update(newService);
-                    } else {
-                      final docRef = FirebaseFirestore.instance
-                          .collection('NurseServices')
-                          .doc();
-                      final id = docRef.id;
-                      newService['id'] = id;
-                      docRef.set(newService);
-                    }
-
-                    Navigator.pop(context, newService);
+                  if (widget.isEditing) {
+                    FirebaseFirestore.instance
+                        .collection('NurseServices')
+                        .doc(widget.service.id.toString())
+                        .update(newService);
+                  } else {
+                    final docRef = FirebaseFirestore.instance
+                        .collection('NurseServices')
+                        .doc();
+                    final id = docRef.id;
+                    newService['id'] = id;
+                    docRef.set(newService);
                   }
-                ,
+
+                  Navigator.pop(context, newService);
+                },
                 child:
                     Text(widget.isEditing ? 'Update Service' : 'Add Service'),
               ),

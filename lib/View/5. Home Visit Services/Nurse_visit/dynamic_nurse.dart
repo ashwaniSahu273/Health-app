@@ -29,13 +29,6 @@ class DynamicNurse extends StatelessWidget {
     final localizedData =
         languageCode == 'ar' ? service.localized.ar : service.localized.en;
 
-    final services = [
-      {"duration": "1 Week", "hours": "12 Hours per day", "price": "2500 SAR"},
-      {"duration": "2 Week", "hours": "12 Hours per day", "price": "4000 SAR"},
-      {"duration": "3 Week", "hours": "12 Hours per day", "price": "5200 SAR"},
-      {"duration": "4 Week", "hours": "12 Hours per day", "price": "6500 SAR"},
-    ];
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -91,14 +84,25 @@ class DynamicNurse extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                  height: 60,
-                                  width: 60,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(
-                                        0xFFE6F5FF), // Circle background color
+                                height: 60,
+                                width: 60,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: const Color(
+                                      0xFFE6F5FF), // Circle background color
+                                ),
+                                child: ClipOval(
+                                  child: Image.network(
+                                    service.imagePath,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Image.asset(
+                                          "assets/images/doctorVisit.png",
+                                          fit: BoxFit.cover);
+                                    },
                                   ),
-                                  child: Image.network(service.imagePath)),
+                                ),
+                              ),
                               const SizedBox(width: 12),
                               Expanded(
                                 child: Column(
@@ -391,10 +395,9 @@ class DynamicNurse extends StatelessWidget {
                                           ...localizedData.termsOfService
                                               .split(
                                                   '.') // Split string into a list
-                                              .map((service) => service
-                                                  .trim()) 
-                                              .where((service) => service
-                                                  .isNotEmpty) 
+                                              .map((service) => service.trim())
+                                              .where((service) =>
+                                                  service.isNotEmpty)
                                               .map((service) =>
                                                   _buildBulletPoint(service
                                                       .trim())) // Trim whitespace and map to _buildChip

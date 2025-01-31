@@ -6,12 +6,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/2.%20Authentication/Provider_Auth/Google_Auth/auth_service.dart';
-import 'package:harees_new_project/View/2.%20Authentication/User_Auth/Google_Auth/auth_service.dart';
+// import 'package:harees_new_project/View/2.%20Authentication/User_Auth/Google_Auth/auth_service.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/ui_helper.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/Resources/Button/mybutton.dart';
 import 'package:harees_new_project/Resources/TextField/MyTextField.dart';
-import 'package:harees_new_project/View/2.%20Authentication/Provider_Auth/provider_register.dart';
+// import 'package:harees_new_project/View/2.%20Authentication/Provider_Auth/provider_register.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/provider_home.dart';
 
 class Provider_login extends StatefulWidget {
@@ -44,7 +44,7 @@ class _Provider_loginState extends State<Provider_login> {
           .signInWithEmailAndPassword(email: email, password: password);
 
       await _fetchAndNavigateUserData(credential);
-    } on FirebaseAuthException catch (ex) {
+    } on FirebaseAuthException {
       Navigator.pop(context);
       _showSnackBar(
           "Login Error",  "Please Enter valid Email or Password", Colors.red);

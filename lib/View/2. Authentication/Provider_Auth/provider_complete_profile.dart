@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/provider_home.dart';
-import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/services_sreen.dart';
+// import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/services_sreen.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/ui_helper.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';

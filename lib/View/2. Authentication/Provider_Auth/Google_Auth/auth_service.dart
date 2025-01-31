@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:harees_new_project/View/2.%20Authentication/Provider_Auth/provider_complete_profile.dart';
-import 'package:harees_new_project/View/2.%20Authentication/User_Auth/Complete_Profile_User.dart';
+// import 'package:harees_new_project/View/2.%20Authentication/User_Auth/Complete_Profile_User.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/provider_home.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';

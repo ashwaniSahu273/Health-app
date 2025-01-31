@@ -8,7 +8,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+// import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/Button/myroundbutton.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/labtest.dart';
@@ -171,8 +171,8 @@ class _LabImpState extends State<LabImp> {
 
   @override
   Widget build(BuildContext context) {
-    final auth = FirebaseAuth.instance;
-    final user = auth.currentUser;
+    // final auth = FirebaseAuth.instance;
+    // final user = auth.currentUser;
 
     return Scaffold(
       body: SafeArea(

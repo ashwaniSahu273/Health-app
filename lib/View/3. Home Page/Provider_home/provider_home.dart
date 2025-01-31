@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/Drawer/providerDrawer.dart';
 // import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/services_sreen.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
-import 'package:harees_new_project/Resources/Drawer/drawer.dart';
+// import 'package:harees_new_project/Resources/Drawer/drawer.dart';
 import 'package:harees_new_project/Resources/Services_grid/services_grid.dart';
 import 'package:harees_new_project/View/1.%20Splash%20Screen/splash_screen.dart';
 

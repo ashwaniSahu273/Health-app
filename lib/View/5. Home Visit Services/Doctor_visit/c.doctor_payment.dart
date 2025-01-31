@@ -36,7 +36,7 @@ class DoctorPayment extends StatelessWidget {
     // final double parsedPackagePrice =
     //     double.parse(packagePrice.replaceAll(RegExp(r'[^\d.]'), ''));
 
-    final double totalAmount = cartController.getTotalAmount() + vat;
+    // final double totalAmount = cartController.getTotalAmount() + vat;
 
     return Scaffold(
       appBar: AppBar(

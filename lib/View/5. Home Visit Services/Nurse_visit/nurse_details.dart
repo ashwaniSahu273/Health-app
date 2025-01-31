@@ -26,8 +26,8 @@ class NurseDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     NurseController cartController = Get.put(NurseController());
 
-    String imageUrl = '';
-    bool isUploading = false;
+    // String imageUrl = '';
+    // bool isUploading = false;
 
     // @override
     // void initState() {
@@ -120,8 +120,6 @@ class NurseDetails extends StatelessWidget {
               padding: const EdgeInsets.all(12),
               itemCount: cartController.servicesList.length,
               itemBuilder: (context, index) {
-
-
                 cartController.servicesList.sort((a, b) {
                   String typeA = a.type!.toLowerCase();
                   String typeB = b.type!.toLowerCase();
@@ -132,7 +130,7 @@ class NurseDetails extends StatelessWidget {
                   }
                   return 0;
                 });
-                
+
                 final service = cartController.servicesList[index];
 
                 String languageCode = Get.locale?.languageCode ?? 'en';
@@ -162,14 +160,25 @@ class NurseDetails extends StatelessWidget {
                         children: [
                           // Profile Image
                           Container(
-                              height: 60,
-                              width: 60,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: const Color(
-                                    0xFFE6F5FF), // Circle background color
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: const Color(
+                                  0xFFE6F5FF), // Circle background color
+                            ),
+                            child: ClipOval(
+                              child: Image.network(
+                                service.imagePath,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(
+                                      "assets/images/doctorVisit.png",
+                                      fit: BoxFit.cover);
+                                },
                               ),
-                              child: Image.network(service.imagePath)),
+                            ),
+                          ),
                           const SizedBox(width: 12),
                           // Text Details
                           Expanded(
