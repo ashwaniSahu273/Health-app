@@ -47,6 +47,17 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
   String? selectedGender;
   File? imageFile;
 
+  @override
+  void initState() {
+    super.initState();
+    // print("============================>${widget.userModel.fullname}");
+    fullNameController.text = widget.userModel.fullname ?? "";
+    mobileNumberController.text = widget.userModel.mobileNumber ?? "";
+    dobController.text = widget.userModel.dob ?? "";
+    iqamaNumberController.text = widget.userModel.iqamaNumber ?? "";
+    selectedGender = widget.userModel.gender ?? "";
+  }
+
   void selectImage(ImageSource source) async {
     XFile? pickedFile = await ImagePicker().pickImage(source: source);
 

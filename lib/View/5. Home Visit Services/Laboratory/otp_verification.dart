@@ -26,8 +26,12 @@ class OtpVerificationScreen extends StatefulWidget {
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   String otpCode = "";
+  var isLoading = false;
 
   void verifyOtp(String otp) async {
+    setState(() {
+      isLoading = true;
+    });
     FirebaseAuth auth = FirebaseAuth.instance;
 
     try {
@@ -45,6 +49,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         colorText: Colors.black,
       );
 
+      setState(() {
+        isLoading = false;
+      });
       // Navigate to the next screen
       Get.to(() => LabPaymentPage(
             userModel: widget.userModel,
@@ -53,8 +60,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
           ));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-verification-code') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Invalid OTP')),
+        Get.snackbar(
+          "Invalid OTP",
+          "Invalid Verification Code",
+          backgroundColor: Colors.red,
+          colorText: Colors.black,
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -67,6 +77,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             content: Text('An unexpected error occurred. Please try again.')),
       );
     }
+
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -122,26 +136,28 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               ),
               const SizedBox(height: 20),
               Center(
-                child: RoundButton(
-                    width: 250,
-                    borderColor: Colors.white,
-                    textColor: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFFB2E1DA),
-                    text: "Enter".tr,
-                    onTap: () {
-                      if (otpCode.isNotEmpty && otpCode.length == 6) {
-                        verifyOtp(otpCode);
-                      } else {
-                         Get.snackbar(
-                          "Message",
-                          "Please enter a valid 6-digit OTP",
-                          backgroundColor: Colors.red,
-                          colorText: Colors.white,
-                        );
-                      }
-                    }),
+                child: isLoading
+                    ? CircularProgressIndicator()
+                    : RoundButton(
+                        width: 250,
+                        borderColor: Colors.white,
+                        textColor: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFFB2E1DA),
+                        text: "Enter".tr,
+                        onTap: () {
+                          if (otpCode.isNotEmpty && otpCode.length == 6) {
+                            verifyOtp(otpCode);
+                          } else {
+                            Get.snackbar(
+                              "Message",
+                              "Please enter a valid 6-digit OTP",
+                              backgroundColor: Colors.red,
+                              colorText: Colors.white,
+                            );
+                          }
+                        }),
               ),
             ],
           ),

@@ -250,6 +250,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                         ),
                       ),
                       const SizedBox(height: 30),
+                      
                       TextField(
                         controller: fullNameController,
                         decoration: InputDecoration(

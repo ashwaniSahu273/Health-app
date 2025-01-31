@@ -21,13 +21,19 @@ class NurseOtpVerificationScreen extends StatefulWidget {
   });
 
   @override
-  _NurseOtpVerificationScreenState createState() => _NurseOtpVerificationScreenState();
+  _NurseOtpVerificationScreenState createState() =>
+      _NurseOtpVerificationScreenState();
 }
 
-class _NurseOtpVerificationScreenState extends State<NurseOtpVerificationScreen> {
+class _NurseOtpVerificationScreenState
+    extends State<NurseOtpVerificationScreen> {
   String otpCode = "";
+  var isLoading = false;
 
   void verifyOtp(String otp) async {
+    setState(() {
+      isLoading = true;
+    });
     FirebaseAuth auth = FirebaseAuth.instance;
 
     try {
@@ -44,7 +50,9 @@ class _NurseOtpVerificationScreenState extends State<NurseOtpVerificationScreen>
         backgroundColor: Colors.green,
         colorText: Colors.black,
       );
-
+      setState(() {
+        isLoading = false;
+      });
       // Navigate to the next screen
       Get.to(() => NursePayment(
             userModel: widget.userModel,
@@ -53,17 +61,25 @@ class _NurseOtpVerificationScreenState extends State<NurseOtpVerificationScreen>
           ));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-verification-code') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Invalid OTP')),
+        Get.snackbar(
+          "Invalid OTP",
+          "Invalid Verification Code",
+          backgroundColor: Colors.red,
+          colorText: Colors.black,
         );
+
+        setState(() {
+          isLoading = false;
+        });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Verification failed. Please try again.')),
+          const SnackBar(
+              content: Text('Verification failed. Please try again.')),
         );
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
             content: Text('An unexpected error occurred. Please try again.')),
       );
     }
@@ -122,7 +138,9 @@ class _NurseOtpVerificationScreenState extends State<NurseOtpVerificationScreen>
               ),
               const SizedBox(height: 20),
               Center(
-                child: RoundButton(
+                child:  isLoading
+                    ? CircularProgressIndicator()
+                    : RoundButton(
                     width: 250,
                     borderColor: Colors.white,
                     textColor: Colors.black,

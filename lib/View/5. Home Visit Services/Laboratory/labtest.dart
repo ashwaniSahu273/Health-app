@@ -62,8 +62,6 @@ class _LabTestState extends State<LabTest> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-
-
     controller.fetchServices();
 
     return SafeArea(
@@ -79,22 +77,29 @@ class _LabTestState extends State<LabTest> {
               weight: 200,
             ),
           ),
-          // actions: [
-          //   Row(
-          //     children: [
-          //       Text(
-          //         "Search".tr,
-          //         style: TextStyle(
-          //           fontSize: 16,
-          //         ),
-          //       ),
-          //       IconButton(
-          //         icon: const Icon(Icons.person_search_outlined),
-          //         onPressed: () {},
-          //       ),
-          //     ],
-          //   ),
-          // ],
+          actions: [
+            GestureDetector(
+              onTap: () {
+                openSearchDialog(context);
+              },
+              child: Row(
+                children: [
+                  Text(
+                    "Search".tr,
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.search),
+                    onPressed: () {
+                       openSearchDialog(context);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
           // title: Text(
           //   "Laboratory",
           //   style: TextStyle(color: Colors.black),
@@ -189,20 +194,21 @@ class _LabTestState extends State<LabTest> {
                 SizedBox(
                   height: height * 0.02,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    controller: controller.searchController,
-                    onChanged: controller.filterServices,
-                    decoration: InputDecoration(
-                      hintText: "Search services...",
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding:
+                //       const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                //   child: TextField(
+                //     controller: controller.searchController,
+                //     onChanged: controller.filterServices,
+                //     decoration: InputDecoration(
+                //       hintText: "Search services...",
+                //       prefixIcon: Icon(Icons.search),
+                //       border: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(8.0),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 Container(
                   height: 40,
                   width: double.infinity,
@@ -270,10 +276,11 @@ class _LabTestState extends State<LabTest> {
                                       crossAxisSpacing: 0,
                                       mainAxisSpacing: 0,
                                       crossAxisCount: 2,
-                                      childAspectRatio: 0.8),
-                              itemCount: controller.isSearching.value ? controller.filteredServices.length : controller.groupServices.length,
+                                      childAspectRatio: 0.9),
+                              itemCount:
+                                   controller.groupServices.length,
                               itemBuilder: (context, index) {
-                                var item = controller.isSearching.value ? controller.filteredServices[index]: controller.groupServices[index];
+                                var item =  controller.groupServices[index];
                                 String languageCode =
                                     Get.locale?.languageCode ?? 'en';
 
@@ -328,6 +335,9 @@ class _LabTestState extends State<LabTest> {
                                                 alignment: Alignment.topLeft,
                                                 child: Text(
                                                   localizedData.serviceName,
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.w500,
@@ -491,6 +501,87 @@ class _LabTestState extends State<LabTest> {
           ],
         ),
       ),
+    );
+  }
+
+  void openSearchDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible:
+          false, // Prevent dismissing the dialog by tapping outside
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Search Services'),
+          content: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Search input field
+                TextField(
+                  controller: controller.searchController,
+                  onChanged: controller
+                      .filterServices, // Update filtered services when text changes
+                  decoration: InputDecoration(
+                    labelText: 'Search Services',
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: 16),
+                // Display filtered services
+                Obx(() {
+                  return SizedBox(
+                    height:
+                        250, // Limit the height of the list to fit inside the dialog
+                    child: ListView.builder(
+                      itemCount: controller.filteredServices.length,
+                      itemBuilder: (context, index) {
+                        final service = controller.filteredServices[index];
+
+                        String languageCode = Get.locale?.languageCode ?? 'en';
+
+                        final localizedData = languageCode == 'ar'
+                            ? service.localized.ar
+                            : service.localized.en;
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                            _onServiceSelected(
+                                localizedData.serviceName,
+                                service.id,
+                                localizedData.description,
+                                localizedData.instructions,
+                                localizedData.includesTests,
+                                localizedData.price,
+                                service.type);
+                          },
+                          child: ListTile(
+                              title: Text(localizedData.serviceName),
+                              // onTap: () {
+                              //   Get.back(); // Close the dialog after selecting a service
+                              //   // Handle item tap (e.g., navigate to service details)
+                              // },
+                              trailing: Text(localizedData.price)),
+                        );
+                      },
+                    ),
+                  );
+                }),
+              ],
+            ),
+          ),
+          actions: [
+            // Close button for the dialog
+            TextButton(
+              onPressed: () {
+                Get.back(); // Close the dialog
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

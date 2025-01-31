@@ -35,8 +35,8 @@ class _VitaminState extends State<Vitamin> {
       Get.put(VitaminCartController());
 
   static const CameraPosition kGooglePlex = CameraPosition(
-    target: LatLng(24.8846, 67.1754),
-    zoom: 14.4746,
+    target: LatLng(24.7136, 46.6753),
+    zoom: 15.4746,
   );
   final List<Marker> _marker = [];
   String stAddress = '';
@@ -56,7 +56,7 @@ class _VitaminState extends State<Vitamin> {
 
     _marker.add(Marker(
       markerId: const MarkerId("1"),
-      position: const LatLng(24.8846, 67.1754),
+      position: const LatLng(24.7136, 46.6753),
       infoWindow: InfoWindow(title: "Initial Location"),
     ));
   }

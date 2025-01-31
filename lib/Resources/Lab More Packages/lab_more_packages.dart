@@ -61,7 +61,7 @@ class LabMorePackages extends StatelessWidget {
                         crossAxisSpacing: 0,
                         mainAxisSpacing: 0,
                         crossAxisCount: 2,
-                        childAspectRatio: 0.8),
+                        childAspectRatio: 0.9),
                     itemCount: controller.individualServices.length,
                     itemBuilder: (context, index) {
                       var item = controller.individualServices[index];
@@ -98,21 +98,21 @@ class LabMorePackages extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-
-                                   Padding(
-                                            padding: const EdgeInsets.only(left: 16.0,top: 8),
-                                            child: Container(
-                                                height: 50,
-                                                width: 50,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: const Color(
-                                                      0xFFE6F5FF), // Circle background color
-                                                ),
-                                                child: Image.asset(
-                                                    "assets/images/blood-sample.png",
-                                                    fit: BoxFit.cover)),
-                                          ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 16.0, top: 8),
+                                  child: Container(
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: const Color(
+                                            0xFFE6F5FF), // Circle background color
+                                      ),
+                                      child: Image.asset(
+                                          "assets/images/blood-sample.png",
+                                          fit: BoxFit.cover)),
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 16, vertical: 5),
@@ -120,6 +120,8 @@ class LabMorePackages extends StatelessWidget {
                                       alignment: Alignment.topLeft,
                                       child: Text(
                                         "${localizedData.serviceName}",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                             fontWeight: FontWeight.w600,
                                             color: Color(0xFF007ABB)),

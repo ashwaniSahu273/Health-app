@@ -567,7 +567,7 @@ class NursePayment extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Flexible(
-                                    flex: 3,
+                                    // flex: 3,
                                     child: Text(
                                       'Tax (15%)',
                                       style: TextStyle(
@@ -579,7 +579,7 @@ class NursePayment extends StatelessWidget {
                                   ),
                                   
                                   Flexible(
-                                    flex: 1,
+                                    // flex: 1,
                                     child: Text(
                                       '$tax ${'SAR'.tr}',
                                       style: TextStyle(

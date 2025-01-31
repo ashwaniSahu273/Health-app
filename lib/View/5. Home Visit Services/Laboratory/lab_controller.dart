@@ -30,15 +30,15 @@ class LabController extends GetxController {
     super.onInit();
     // _loadCartFromStorage();
     fetchServices();
-    Future.delayed(Duration(milliseconds: 500), () {
-      // fetchAllSearchServices();
-    });
+    // Future.delayed(Duration(milliseconds: 500), () {
+    //   // fetchAllSearchServices();
+    // });
   }
 
   void filterServices(String query) {
     isSearching.value = true;
     if (query.isEmpty) {
-      filteredServices.value = groupServices; // Show all if empty
+      filteredServices.value = servicesList; // Show all if empty
     } else {
       filteredServices.value = servicesList.where((item) {
         String languageCode = Get.locale?.languageCode ?? 'en';

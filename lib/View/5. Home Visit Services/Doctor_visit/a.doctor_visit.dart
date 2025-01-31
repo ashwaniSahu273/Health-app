@@ -99,6 +99,10 @@ class _DoctorVisitState extends State<DoctorVisit> {
   }
 
   void _showAddressBottomSheet() async {
+
+    setState(() {
+      isLoading = true;
+    });
     print("My Location".tr);
     print("${position.latitude} ${position.longitude}");
 
@@ -115,6 +119,7 @@ class _DoctorVisitState extends State<DoctorVisit> {
           infoWindow: InfoWindow(title: "My Location".tr)));
       Latitude = position.latitude.toString();
       Longitude = position.longitude.toString();
+      isLoading = false;
     });
 
     // Show bottom sheet
@@ -189,7 +194,7 @@ class _DoctorVisitState extends State<DoctorVisit> {
       ),
       floatingActionButton: Align(
         alignment: Alignment.bottomCenter,
-        child: MyRoundButton(
+        child: isLoading ? CircularProgressIndicator(): MyRoundButton(
           text: "Select location",
           onTap: _showAddressBottomSheet,
         ),
