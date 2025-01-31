@@ -31,7 +31,7 @@ class _DoctorVisitState extends State<DoctorVisit> {
   DoctorController doctorController = Get.put(DoctorController());
 
   static const CameraPosition kGooglePlex = CameraPosition(
-    target: LatLng(24.8846, 67.1754),
+     target: LatLng(24.7136, 46.6753),
     zoom: 14.4746,
   );
   final List<Marker> _marker = [];
@@ -51,7 +51,7 @@ class _DoctorVisitState extends State<DoctorVisit> {
 
     _marker.add(Marker(
       markerId: const MarkerId("1"),
-      position: const LatLng(24.8846, 67.1754),
+      position: const LatLng(24.7136, 46.6753),
       infoWindow: InfoWindow(title: "Initial Location"),
     ));
   }
