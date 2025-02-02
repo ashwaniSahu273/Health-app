@@ -47,7 +47,7 @@ class _AcceptedRequestsHistoryState extends State<AcceptedRequestsHistory> {
     final acceptedAppointmentsList = acceptedAppointments
         .doc(user!.email)
         .collection("accepted_appointments_list")
-        .where('status', isEqualTo: "Completed")
+        .orderBy('createdAt', descending: true)
         .snapshots();
 
     return Scaffold(
@@ -108,12 +108,20 @@ class _AcceptedRequestsHistoryState extends State<AcceptedRequestsHistory> {
                   if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
                     return Center(child: Text('No Completed Appointments'.tr));
                   }
+
+                  var filteredAppointments = snapshot.data!.docs.where((doc) {
+                    return doc['status'] == "Completed";
+                  }).toList();
+
+                  if (filteredAppointments.isEmpty) {
+                    return Center(child: Text('No Completed Appointments'.tr));
+                  }
+
                   return ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
+                      itemCount: filteredAppointments.length,
                       itemBuilder: (context, index) {
-                        final appointment = snapshot.data!.docs[index];
-                        print("appointment: $appointment");
-                        // if (appointment["status"] == "Completed") {
+                        final appointment = filteredAppointments[index];
+                       
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 24),
                           child: GestureDetector(

@@ -410,7 +410,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                       String price = en["price"] ??
                                           "No service name available";
 
-                                      int quantity = package["quantity"] ?? 0;
+                                      int quantity = package["quantity"] ?? 1;
 
                                       widgets.add(Padding(
                                         padding: const EdgeInsets.symmetric(

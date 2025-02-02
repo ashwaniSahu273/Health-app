@@ -356,7 +356,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                   ),
                   RoundButton(
                       color: Colors.blue[300],
-                      text: "Done!".tr,
+                      text: "Done".tr,
                       onTap: () {
                         checkValues();
                       }),

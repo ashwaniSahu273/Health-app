@@ -46,6 +46,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
         createdon: DateTime.now(),
         text: msg,
         seen: false,
+        fullname: widget.userModel.fullname,
       );
 
       FirebaseFirestore.instance
@@ -241,11 +242,11 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: Row(
                               children: [
-                                Icon(
-                                  Icons
-                                      .image_outlined, // Icon inside the text field
-                                  color: Colors.grey,
-                                ),
+                                // Icon(
+                                //   Icons
+                                //       .image_outlined, // Icon inside the text field
+                                //   color: Colors.grey,
+                                // ),
                                 const SizedBox(
                                     width:
                                         10), // Spacing between icon and text field

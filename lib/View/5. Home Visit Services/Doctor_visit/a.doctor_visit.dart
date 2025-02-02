@@ -31,33 +31,43 @@ class _DoctorVisitState extends State<DoctorVisit> {
   DoctorController doctorController = Get.put(DoctorController());
 
   static const CameraPosition kGooglePlex = CameraPosition(
-     target: LatLng(24.7136, 46.6753),
-    zoom: 14.4746,
+    target: LatLng(24.7136, 46.6753),
+    zoom: 15.4746,
   );
   final List<Marker> _marker = [];
   String stAddress = '';
   String Latitude = " ";
   String Longitude = " ";
-  // final position = "";
   bool address = false;
   bool isLoading = false;
   late Position position;
   final fireStore = FirebaseFirestore.instance.collection("User_appointments");
 
   void initState() {
-    
+    // vitaminCartController.fetchServices();
     getCurrentLoc();
     super.initState();
-
-    _marker.add(Marker(
-      markerId: const MarkerId("1"),
-      position: const LatLng(24.7136, 46.6753),
-      infoWindow: InfoWindow(title: "Initial Location"),
-    ));
   }
 
   void getCurrentLoc() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    // Get the current position of the user
     position = await getUserCurrentLocation();
+    setState(() {
+      isLoading = false;
+    });
+
+    // After fetching position, update marker with current location
+    _updateMarker(position.latitude, position.longitude);
+
+    // Move camera to the current position
+    final GoogleMapController mapController = await _controller.future;
+    mapController.animateCamera(CameraUpdate.newLatLng(
+      LatLng(position.latitude, position.longitude),
+    ));
   }
 
   Future<void> _handleTap(LatLng tappedPoint) async {
@@ -80,15 +90,19 @@ class _DoctorVisitState extends State<DoctorVisit> {
       ));
     });
 
-    List<Placemark> placemarks = await placemarkFromCoordinates(
-        tappedPoint.latitude, tappedPoint.longitude);
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+          tappedPoint.latitude, tappedPoint.longitude);
 
-    setState(() {
-      stAddress =
-          "${placemarks.reversed.last.country}, ${placemarks.reversed.last.locality}, ${placemarks.reversed.last.street}";
-    });
-
-    // _showAddressBottomSheet();
+      setState(() {
+        stAddress =
+            "${placemarks.reversed.last.country}, ${placemarks.reversed.last.locality}, ${placemarks.reversed.last.street}";
+      });
+    } catch (e) {
+      setState(() {
+        stAddress = "Failed to fetch address. Try again.";
+      });
+    }
   }
 
   Future<Position> getUserCurrentLocation() async {
@@ -99,12 +113,11 @@ class _DoctorVisitState extends State<DoctorVisit> {
   }
 
   void _showAddressBottomSheet() async {
+    if (isLoading) return; // Prevent multiple clicks during the process
 
     setState(() {
       isLoading = true;
     });
-    print("My Location".tr);
-    print("${position.latitude} ${position.longitude}");
 
     // Get address
     List<Placemark> placemarks =
@@ -119,6 +132,9 @@ class _DoctorVisitState extends State<DoctorVisit> {
           infoWindow: InfoWindow(title: "My Location".tr)));
       Latitude = position.latitude.toString();
       Longitude = position.longitude.toString();
+    });
+
+    setState(() {
       isLoading = false;
     });
 
@@ -143,6 +159,8 @@ class _DoctorVisitState extends State<DoctorVisit> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
+                if (isLoading) return; // Prevent clicking while loading
+
                 // Show confirmation dialog
                 Get.defaultDialog(
                   title: "Confirm".tr,
@@ -155,12 +173,14 @@ class _DoctorVisitState extends State<DoctorVisit> {
                     doctorController.latitude.value = Latitude;
                     doctorController.longitude.value = Longitude;
 
-                    Navigator.pop(context);
-                    Get.to(() => DoctorDetails(
-                          userModel: widget.userModel,
-                          firebaseUser: widget.firebaseUser,
-                          // address: stAddress,
-                        ));
+                    Navigator.pop(context); // Close the dialog
+                    Navigator.pop(context); // Close the bottom sheet
+
+                    Get.to(DoctorDetails(
+                      userModel: widget.userModel,
+                      firebaseUser: widget.firebaseUser,
+                      // address: stAddress,
+                    ));
                   },
                   textCancel: "Cancel".tr,
                   textConfirm: "Confirm".tr,
@@ -176,8 +196,21 @@ class _DoctorVisitState extends State<DoctorVisit> {
     );
   }
 
+  void _updateMarker(double lat, double lng) {
+    setState(() {
+      _marker.clear();
+      _marker.add(Marker(
+        markerId: const MarkerId("currentLocation"),
+        position: LatLng(lat, lng),
+        infoWindow: InfoWindow(title: "Current Location"),
+      ));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final auth = FirebaseAuth.instance;
+    final user = auth.currentUser;
 
     return Scaffold(
       body: SafeArea(
@@ -190,12 +223,13 @@ class _DoctorVisitState extends State<DoctorVisit> {
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
           },
+          // onTap: _handleTap,
         ),
       ),
       floatingActionButton: Align(
         alignment: Alignment.bottomCenter,
-        child: isLoading ? CircularProgressIndicator(): MyRoundButton(
-          text: "Select location",
+        child: MyRoundButton(
+          text: isLoading ? "Loading..." : "Select location", // Button text change during loading
           onTap: _showAddressBottomSheet,
         ),
       ),

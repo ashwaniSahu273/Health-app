@@ -106,6 +106,8 @@ class _ProviderDrawerState extends State<ProviderDrawer> {
             Icons.info,
             "About Harees".tr,
             () {
+              Navigator.pop(context);
+
               Get.to(() => AboutUsPage(
                     userModel: widget.userModel,
                     firebaseUser: widget.firebaseUser,
@@ -119,6 +121,8 @@ class _ProviderDrawerState extends State<ProviderDrawer> {
             Icons.terminal_sharp,
             "Family".tr,
             () {
+              Navigator.pop(context);
+
               Get.to(() => Family(
                     userModel: widget.userModel,
                     firebaseUser: widget.firebaseUser,
@@ -132,6 +136,8 @@ class _ProviderDrawerState extends State<ProviderDrawer> {
             Icons.policy_outlined,
             "FAQ".tr,
             () {
+              Navigator.pop(context);
+
               Get.to(() => FAQ(
                     userModel: widget.userModel,
                     firebaseUser: widget.firebaseUser,
@@ -145,6 +151,7 @@ class _ProviderDrawerState extends State<ProviderDrawer> {
             Icons.contacts,
             "Contact us".tr,
             () {
+              Navigator.pop(context);
               Get.to(() => UserContact(
                     userModel: widget.userModel,
                     firebaseUser: widget.firebaseUser,

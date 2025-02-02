@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/Drawer/drawer.dart';
+import 'package:harees_new_project/View/2.%20Authentication/Provider_Auth/provider_register.dart';
 import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/requested_appointment_details.dart';
 import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/user_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -229,7 +230,46 @@ class _TotalProvidersState extends State<TotalProviders> {
                   },
                 ),
               ),
-            )
+            ),
+            Container(
+                color: Colors.white,
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFF007ABB),
+                          minimumSize: const Size(160, 55),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        onPressed: () {
+                           Get.to(() => const Provider_Register());
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.create,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              'Create New Provider'.tr,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ))
           ],
         ),
       ),

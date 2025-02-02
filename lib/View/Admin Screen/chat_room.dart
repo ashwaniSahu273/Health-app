@@ -134,21 +134,17 @@ class _AdminChatState extends State<AdminChat> {
           SafeArea(
             child: Container(
               padding: EdgeInsets.all(16),
-               decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter, // Adjust based on direction
-                        end:
-                            Alignment.bottomCenter, // Adjust based on direction
-                        colors: [
-                          Color(0xFFB2D4E7), // Light blue
-                          Color.fromARGB(255, 92, 132, 223), // Dark blue
-                        ],
-                        stops: [
-                          0.3542,
-                          0.9932
-                        ], // Corresponding to 35.42% and 99.32%
-                      ),
-                    ),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter, // Adjust based on direction
+                  end: Alignment.bottomCenter, // Adjust based on direction
+                  colors: [
+                    Color(0xFFB2D4E7), // Light blue
+                    Color.fromARGB(255, 92, 132, 223), // Dark blue
+                  ],
+                  stops: [0.3542, 0.9932], // Corresponding to 35.42% and 99.32%
+                ),
+              ),
               child: Column(
                 children: [
                   // This is where the chats will go
@@ -166,7 +162,7 @@ class _AdminChatState extends State<AdminChat> {
                           if (snapshot.hasData) {
                             QuerySnapshot dataSnapshot =
                                 snapshot.data as QuerySnapshot;
-                    
+
                             return ListView.builder(
                               reverse: true,
                               itemCount: dataSnapshot.docs.length,
@@ -175,29 +171,63 @@ class _AdminChatState extends State<AdminChat> {
                                     MessageModel.frommap(
                                         dataSnapshot.docs[index].data()
                                             as Map<String, dynamic>);
-                    
-                                return Row(
-                                  mainAxisAlignment: (currentMessage.sender ==
-                                          widget.userModel.uid)
-                                      ? MainAxisAlignment.end
-                                      : MainAxisAlignment.start,
+
+                                // Check if the next message is from the same sender
+                                bool showName = true;
+                                if (index < dataSnapshot.docs.length - 1) {
+                                  MessageModel nextMessage =
+                                      MessageModel.frommap(
+                                          dataSnapshot.docs[index + 1].data()
+                                              as Map<String, dynamic>);
+                                  if (currentMessage.fullname ==
+                                      nextMessage.fullname) {
+                                    showName = false;
+                                  }
+                                }
+
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 2),
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 10),
-                                      decoration: BoxDecoration(
-                                        color: (currentMessage.sender ==
-                                                widget.userModel.uid)
-                                            ? Color(0xFFC3FFF1)
-                                            : Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
+                                    if (showName) // Show name only if different from the next sender
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8.0, right: 8.0, bottom: 4),
+                                        child: Text(
+                                          "${currentMessage.fullname}",
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
                                       ),
-                                      child: Text(
-                                        currentMessage.text.toString(),
-                                        style: const TextStyle(
-                                            color: Colors.black),
+
+                                    // Message Bubble
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                      child: Container(
+                                        margin: const EdgeInsets.only(
+                                            left: 8, right: 50, bottom: 12),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 12, horizontal: 14),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(12),
+                                          border: Border.all(
+                                              color: Colors.grey[300]!),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              color: Colors.black12,
+                                              blurRadius: 4,
+                                              offset: Offset(0, 2),
+                                            ),
+                                          ],
+                                        ),
+                                        child: Text(
+                                          currentMessage.text.toString(),
+                                          style: const TextStyle(
+                                              fontSize: 16, color: Colors.black),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -222,7 +252,10 @@ class _AdminChatState extends State<AdminChat> {
                       },
                     ),
                   ),
-                  SizedBox(height: 15,),
+
+                  SizedBox(
+                    height: 15,
+                  ),
                   // Container(
                   //   // color: Colors.blue.shade100, // Background color
                   //   padding:

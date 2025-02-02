@@ -30,32 +30,42 @@ class _LabImpState extends State<LabImp> {
 
   static const CameraPosition kGooglePlex = CameraPosition(
     target: LatLng(24.7136, 46.6753),
-    zoom: 14.4746,
+    zoom: 15.4746,
   );
   final List<Marker> _marker = [];
   String stAddress = '';
   String Latitude = " ";
   String Longitude = " ";
-  // final position = "";
   bool address = false;
   bool isLoading = false;
   late Position position;
   final fireStore = FirebaseFirestore.instance.collection("User_appointments");
 
   void initState() {
-    // labController.storeServices();
+    // vitaminCartController.fetchServices();
     getCurrentLoc();
     super.initState();
-
-    _marker.add(Marker(
-      markerId: const MarkerId("1"),
-      position: const LatLng(24.7136, 46.6753),
-      infoWindow: InfoWindow(title: "Initial Location"),
-    ));
   }
 
   void getCurrentLoc() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    // Get the current position of the user
     position = await getUserCurrentLocation();
+    setState(() {
+      isLoading = false;
+    });
+
+    // After fetching position, update marker with current location
+    _updateMarker(position.latitude, position.longitude);
+
+    // Move camera to the current position
+    final GoogleMapController mapController = await _controller.future;
+    mapController.animateCamera(CameraUpdate.newLatLng(
+      LatLng(position.latitude, position.longitude),
+    ));
   }
 
   Future<void> _handleTap(LatLng tappedPoint) async {
@@ -78,15 +88,19 @@ class _LabImpState extends State<LabImp> {
       ));
     });
 
-    List<Placemark> placemarks = await placemarkFromCoordinates(
-        tappedPoint.latitude, tappedPoint.longitude);
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+          tappedPoint.latitude, tappedPoint.longitude);
 
-    setState(() {
-      stAddress =
-          "${placemarks.reversed.last.country}, ${placemarks.reversed.last.locality}, ${placemarks.reversed.last.street}";
-    });
-
-    // _showAddressBottomSheet();
+      setState(() {
+        stAddress =
+            "${placemarks.reversed.last.country}, ${placemarks.reversed.last.locality}, ${placemarks.reversed.last.street}";
+      });
+    } catch (e) {
+      setState(() {
+        stAddress = "Failed to fetch address. Try again.";
+      });
+    }
   }
 
   Future<Position> getUserCurrentLocation() async {
@@ -97,8 +111,11 @@ class _LabImpState extends State<LabImp> {
   }
 
   void _showAddressBottomSheet() async {
-    print("My Location".tr);
-    print("${position.latitude} ${position.longitude}");
+    if (isLoading) return; // Prevent multiple clicks during the process
+
+    setState(() {
+      isLoading = true;
+    });
 
     // Get address
     List<Placemark> placemarks =
@@ -113,6 +130,10 @@ class _LabImpState extends State<LabImp> {
           infoWindow: InfoWindow(title: "My Location".tr)));
       Latitude = position.latitude.toString();
       Longitude = position.longitude.toString();
+    });
+
+    setState(() {
+      isLoading = false;
     });
 
     // Show bottom sheet
@@ -136,6 +157,8 @@ class _LabImpState extends State<LabImp> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
+                if (isLoading) return; // Prevent clicking while loading
+
                 // Show confirmation dialog
                 Get.defaultDialog(
                   title: "Confirm".tr,
@@ -148,12 +171,14 @@ class _LabImpState extends State<LabImp> {
                     labController.latitude.value = Latitude;
                     labController.longitude.value = Longitude;
 
-                    Navigator.pop(context);
-                    Get.to(() => LabTest(
-                          userModel: widget.userModel,
-                          firebaseUser: widget.firebaseUser,
-                          address: stAddress,
-                        ));
+                    Navigator.pop(context); // Close the dialog
+                    Navigator.pop(context); // Close the bottom sheet
+
+                    Get.to(LabTest(
+                      userModel: widget.userModel,
+                      firebaseUser: widget.firebaseUser,
+                      address: stAddress,
+                    ));
                   },
                   textCancel: "Cancel".tr,
                   textConfirm: "Confirm".tr,
@@ -169,10 +194,21 @@ class _LabImpState extends State<LabImp> {
     );
   }
 
+  void _updateMarker(double lat, double lng) {
+    setState(() {
+      _marker.clear();
+      _marker.add(Marker(
+        markerId: const MarkerId("currentLocation"),
+        position: LatLng(lat, lng),
+        infoWindow: InfoWindow(title: "Current Location"),
+      ));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    // final auth = FirebaseAuth.instance;
-    // final user = auth.currentUser;
+    final auth = FirebaseAuth.instance;
+    final user = auth.currentUser;
 
     return Scaffold(
       body: SafeArea(
@@ -185,12 +221,13 @@ class _LabImpState extends State<LabImp> {
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
           },
+          // onTap: _handleTap,
         ),
       ),
       floatingActionButton: Align(
         alignment: Alignment.bottomCenter,
         child: MyRoundButton(
-          text: "Select location",
+          text: isLoading ? "Loading..." : "Select location", // Button text change during loading
           onTap: _showAddressBottomSheet,
         ),
       ),

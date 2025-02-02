@@ -96,7 +96,7 @@ class DoctorController extends GetxController {
         "status": "Requested",
         "type": "Doctor Visit",
         "selected_time": currentTime.value,
-        'createdAt': FieldValue.serverTimestamp(),
+        'createdAt':DateTime.now(),
         "accepted_by": null
       });
       Get.snackbar(

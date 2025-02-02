@@ -65,11 +65,21 @@ class UserRequests extends StatelessWidget {
               const SizedBox(height: 15),
 
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0,vertical: 8),
-                child: Text("Appointment Requests",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: Color(0xFF424242)),),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
+                child: Text(
+                  "Appointment Requests",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF424242)),
+                ),
               ),
               StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance.collection("User_appointments").where('status', isEqualTo: "Requested").snapshots(),
+                stream: FirebaseFirestore.instance
+                    .collection("User_appointments")
+                    .orderBy('createdAt', descending: true)
+                    .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasError) {
@@ -81,15 +91,21 @@ class UserRequests extends StatelessWidget {
                   if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
                     return Center(child: Text('No User Appointments'.tr));
                   }
+
+                  var filteredAppointments = snapshot.data!.docs.where((doc) {
+                    return doc['status'] ==
+                        "Requested"; // Filter based on status
+                  }).toList();
+
+                  if (filteredAppointments.isEmpty) {
+                    return Center(child: Text('No User Appointments'.tr));
+                  }
+
                   return Expanded(
                     child: ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (context, index) {
-                        DocumentSnapshot doc = snapshot.data!.docs[index];
-
-                        // if (doc["status"] != "Accepted" &&
-                        //     doc["status"] != "Completed") {
-                        //   print("Requested ==>${doc["status"]}");
+                        itemCount: filteredAppointments.length,
+                        itemBuilder: (context, index) {
+                          DocumentSnapshot doc = filteredAppointments[index];
 
                           return GestureDetector(
                             onTap: () {
@@ -193,9 +209,9 @@ class UserRequests extends StatelessWidget {
                             ),
                           );
                         }
-                      //   return null;
-                      // },
-                    ),
+                        //   return null;
+                        // },
+                        ),
                   );
                 },
               )

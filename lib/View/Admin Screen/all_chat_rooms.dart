@@ -111,89 +111,84 @@ class _AllChatRoomsState extends State<AllChatRooms> {
 
                           Map<String, dynamic> participants =
                               chatRoomModel.participants ?? {};
-
-                          // Exclude the current user's ID
                           List<String> participantKeys =
                               participants.keys.toList();
-                
 
-                          return Column(
-                            children: participantKeys.map((participantId) {
-                              return FutureBuilder(
-                                future: FirebaseHelper.getUserModelById(
-                                    participantId),
-                                builder: (context, userData) {
-                                  if (userData.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
+                          // Display only the first participant
+                          if (participantKeys.isEmpty) {
+                            return const SizedBox.shrink();
+                          }
+
+                          String participantId = participantKeys
+                              .first; // Get the first participant
+
+                          return FutureBuilder(
+                            future:
+                                FirebaseHelper.getUserModelById(participantId),
+                            builder: (context, userData) {
+                              if (userData.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+
+                              if (userData.data == null) {
+                                return const SizedBox.shrink();
+                              }
+
+                              UserModel targetUser = userData.data as UserModel;
+
+                              return Card(
+                                elevation: 0,
+                                color: Colors.white,
+                                child: ListTile(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return AdminChat(
+                                            chatroom: chatRoomModel,
+                                            firebaseUser: widget.firebaseUser,
+                                            userModel: widget.userModel,
+                                            targetUser: targetUser,
+                                          );
+                                        },
+                                      ),
                                     );
-                                  }
-
-                                  if (userData.data == null) {
-                                    return const SizedBox.shrink();
-                                  }
-
-                                  UserModel targetUser =
-                                      userData.data as UserModel;
-
-                                  // print("Target user:============>$targetUser");
-
-                                  return Card(
-                                    elevation: 0,
-                                    color: Colors.white,
-                                    child: ListTile(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) {
-                                              return AdminChat(
-                                                chatroom: chatRoomModel,
-                                                firebaseUser:
-                                                    widget.firebaseUser,
-                                                userModel: widget.userModel,
-                                                targetUser: targetUser,
-                                              );
-                                            },
-                                          ),
-                                        );
-                                      },
-                                      leading: CircleAvatar(
-                                        backgroundColor: Colors.grey[300],
-                                        child: ClipOval(
-                                          child: Image.network(
-                                            targetUser.profilePic.toString(),
+                                  },
+                                  leading: CircleAvatar(
+                                    backgroundColor: Colors.grey[300],
+                                    child: ClipOval(
+                                      child: Image.network(
+                                        targetUser.profilePic.toString(),
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Image.asset(
+                                            'assets/images/user2.png',
                                             fit: BoxFit.cover,
-                                            errorBuilder:
-                                                (context, error, stackTrace) {
-                                              return Image.asset(
-                                                'assets/images/user2.png',
-                                                fit: BoxFit.cover,
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      title: Text(
-                                        targetUser.fullname.toString(),
-                                        style: const TextStyle(
-                                            color: Color(0xFF004AAD)),
-                                      ),
-                                      subtitle: Text(
-                                        chatRoomModel.lastMessage?.isNotEmpty ??
-                                                false
-                                            ? chatRoomModel.lastMessage
-                                                .toString()
-                                            : "Say hi to your new friend!",
-                                        style: const TextStyle(
-                                            color: Color(0xFF424242)),
+                                          );
+                                        },
                                       ),
                                     ),
-                                  );
-                                },
+                                  ),
+                                  title: Text(
+                                    targetUser.fullname.toString(),
+                                    style: const TextStyle(
+                                        color: Color(0xFF004AAD)),
+                                  ),
+                                  subtitle: Text(
+                                    chatRoomModel.lastMessage?.isNotEmpty ??
+                                            false
+                                        ? chatRoomModel.lastMessage.toString()
+                                        : "Say hi to your new friend!",
+                                    style: const TextStyle(
+                                        color: Color(0xFF424242)),
+                                  ),
+                                ),
                               );
-                            }).toList(),
+                            },
                           );
                         },
                       );

@@ -100,7 +100,7 @@ class VitaminCartController extends GetxController {
         "type": "Vitamin Drips",
         "selected_time": currentTime.value,
         "status": "Requested",
-        'createdAt': FieldValue.serverTimestamp(),
+        'createdAt':DateTime.now(),
         "accepted_by": null
       });
 

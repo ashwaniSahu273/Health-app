@@ -4,12 +4,14 @@ class NurseServiceModel {
   Localized localized;
   String? type;
     int? quantity;
+  String? createdAt;
 
   NurseServiceModel({
     this.type,
     required this.id,
     required this.imagePath,
     required this.localized,
+     this.createdAt,
      this.quantity,
   });
 
@@ -20,7 +22,8 @@ class NurseServiceModel {
       imagePath: json['imagePath'],
       localized: Localized.fromJson(json['localized']),
       type: json['type'],
-      quantity: 1
+      quantity: 1,
+      createdAt: json['createdAt'],
     );
   }
 
@@ -31,7 +34,8 @@ class NurseServiceModel {
       'imagePath': imagePath,
       'localized': localized.toJson(),
       'quantity': quantity,
-      'type':type
+      'type':type,
+      'createdAt': createdAt
     };
   }
 }

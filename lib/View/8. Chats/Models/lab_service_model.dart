@@ -4,12 +4,14 @@ class LabService {
   Localized localized;
   String type;
   int? quantity; // Optional quantity field for use in the cart
+  String? createdAt;
 
   LabService({
     required this.type,
     required this.id,
     required this.imagePath,
     required this.localized,
+    this.createdAt,
     this.quantity, // Default is null unless explicitly set
   });
 
@@ -21,6 +23,7 @@ class LabService {
       localized: Localized.fromJson(json['localized']),
       type: json['type'],
       quantity: 1, // Include quantity if it exists
+      createdAt: json['createdAt'],
     );
   }
 
@@ -31,7 +34,8 @@ class LabService {
       'imagePath': imagePath,
       'localized': localized.toJson(),
       'quantity': quantity, // Include quantity in JSON representation
-      'type': type
+      'type': type,
+      'createdAt': createdAt
     };
   }
 }

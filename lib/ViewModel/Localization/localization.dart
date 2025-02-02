@@ -7,7 +7,6 @@ class Language extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         "en_US": {
-          "Nurse visit": "Nurse visit",
           "Doctor visit": "Doctor visit",
           "Virtual Consultation": "Virtual Consultation",
           "Vitamin IV drips and fluids": "Vitamin IV drips and fluids",
@@ -333,7 +332,7 @@ class Language extends Translations {
           "Your peace of mind starts here!": "Your peace of mind starts here!",
           "Our Services": "Our Services",
           "Doctor Consultation": "Doctor Consultation",
-          "Tests & IV Vitamins": "Tests & IV Vitamins",
+        
           "Meetings": "Meetings",
           "Tests": "Tests",
           "Harees": "Harees",
@@ -346,8 +345,10 @@ class Language extends Translations {
           "General Packages": "General Packages",
           "ID/Iqama Number": "ID/Iqama Number",
           "Search Services": "Search Services",
+          "IV & vitamins": "IV & vitamins",
         },
         "ar_AE": {
+          "IV & vitamins": " المحاليل الوريدية",
           "Enter your phone number": "أدخل رقم هاتفك",
           "Test Includes": "يتضمن الاختبار",
           "Search Services": "خدمات البحث",
@@ -357,13 +358,13 @@ class Language extends Translations {
           "All packages": "جميع الباقات",
           "Individual Packages": "الحزم الفردية",
           "General Packages": "الحزم العامة",
-          "Tests": "المحاليل الوريدية",
+          "Tests": "التحاليل",
           "ID/Iqama Number": "رقم الهوية/الإقامة",
           "Meetings": "الاجتماعات",
-          "Tests & IV Vitamins": "التحاليل و المحاليل الوريدية",
+
           "Doctor Consultation": "استشارة طبيب عن بعد",
           "Our Services": "خدماتنا",
-          "Your peace of mind starts here!": "احة البال تبدأ هنا!",
+          "Your peace of mind starts here!": "احة البال تبدأ راحة!",
           "Your healthcare just got easier and closer! get trusted home care services from certified providers through our app.":
               "رعايتك الصحية أصبحت أسهل وأقرب! عبر تطبيقنا، نوفر لك خدمات منزلية متميزة من نخبة مقدمي الرعاية الصحية المعتمدين، لتعيش بصحة وراحة.",
           "Instructions": "إرشادات",
@@ -679,7 +680,6 @@ class Language extends Translations {
           "Let's Login": "دعونا تسجيل الدخول",
           "Experience": "الخبرة",
           "Log in": "تسجيل الدخول",
-          "Nurse Visit": "زيارة الناشئ",
           "Doctor Visit": "زيارة الطبيب",
           "Vitamin Drips": "نقط وسوائل فيتامين",
           "We accept Bupa, Tawuniya, MEDGULF, Malath and AlRajhi Takaful insurance for telemedicine.":

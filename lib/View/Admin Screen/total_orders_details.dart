@@ -579,7 +579,7 @@ class TotalOrdersDetails extends StatelessWidget {
                                       controller.description.value =
                                           description;
 
-                                      int quantity = package["quantity"] ?? 0;
+                                      int quantity = package["quantity"] ?? 1;
 
                                       widgets.add(Padding(
                                         padding: const EdgeInsets.symmetric(

@@ -186,7 +186,7 @@ class _TestVitaminPageState extends State<TestVitaminPage> {
                                             ),
                                             SizedBox(height: 8),
                                             Text(
-                                              'Tests & IV Vitamins'.tr,
+                                              'IV & vitamins'.tr,
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: Colors.black,

@@ -44,7 +44,7 @@ class _AcceptedRequestsState extends State<AcceptedRequests> {
     final acceptedAppointmentsList = acceptedAppointments
         .doc(user!.email)
         .collection("accepted_appointments_list")
-        .where('status', isEqualTo: "Accepted")
+        .orderBy('createdAt', descending: true)
         .snapshots();
 
     return Scaffold(
@@ -104,14 +104,20 @@ class _AcceptedRequestsState extends State<AcceptedRequests> {
                       ConnectionState.waiting) {
                     return Center(child: Text("Loading".tr));
                   }
-                  if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
+
+                  var filteredAppointments = snapshot.data!.docs.where((doc) {
+                    return doc['status'] ==
+                        "Accepted"; // Filter based on status
+                  }).toList();
+
+                  if (filteredAppointments.isEmpty) {
                     return Center(child: Text('No Accepted Appointments'.tr));
                   }
 
                   return ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
+                    itemCount: filteredAppointments.length,
                     itemBuilder: (context, index) {
-                      final appointment = snapshot.data!.docs[index];
+                      final appointment = filteredAppointments[index];
 
                       // if(appointment["status"] == "Accepted"){
 

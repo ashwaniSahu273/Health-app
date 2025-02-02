@@ -139,7 +139,7 @@ class NurseController extends GetxController {
         "type": "Nurse Visit",
         "selected_time": currentTime.value,
         "status": "Requested",
-        'createdAt': Timestamp.now(),
+        'createdAt':DateTime.now(),
         "accepted_by": null
       });
 

@@ -34,37 +34,42 @@ class _NurseVisitState extends State<NurseVisit> {
 
   static const CameraPosition kGooglePlex = CameraPosition(
     target: LatLng(24.7136, 46.6753),
-    zoom: 14.4746,
+    zoom: 15.4746,
   );
   final List<Marker> _marker = [];
-  // final List<Marker> _list = [
-  //   Marker(
-  //       markerId: const MarkerId("1"),
-  //       position: const LatLng(24.8846, 70.1754),
-  //       infoWindow: InfoWindow(title: "Current Location".tr))
-  // ];
   String stAddress = '';
   String Latitude = " ";
   String Longitude = " ";
   bool address = false;
+  bool isLoading = false;
   late Position position;
   final fireStore = FirebaseFirestore.instance.collection("User_appointments");
 
   void initState() {
-    // nurseController.storeDuration();
-    // nurseController.fetchServices();
+    // vitaminCartController.fetchServices();
     getCurrentLoc();
     super.initState();
-    // Initial marker (optional)
-    _marker.add(Marker(
-      markerId: const MarkerId("1"),
-      position: const LatLng(24.7136, 46.6753),
-      infoWindow: InfoWindow(title: "Initial Location"),
-    ));
   }
 
   void getCurrentLoc() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    // Get the current position of the user
     position = await getUserCurrentLocation();
+    setState(() {
+      isLoading = false;
+    });
+
+    // After fetching position, update marker with current location
+    _updateMarker(position.latitude, position.longitude);
+
+    // Move camera to the current position
+    final GoogleMapController mapController = await _controller.future;
+    mapController.animateCamera(CameraUpdate.newLatLng(
+      LatLng(position.latitude, position.longitude),
+    ));
   }
 
   Future<void> _handleTap(LatLng tappedPoint) async {
@@ -87,15 +92,19 @@ class _NurseVisitState extends State<NurseVisit> {
       ));
     });
 
-    List<Placemark> placemarks = await placemarkFromCoordinates(
-        tappedPoint.latitude, tappedPoint.longitude);
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+          tappedPoint.latitude, tappedPoint.longitude);
 
-    setState(() {
-      stAddress =
-          "${placemarks.reversed.last.country}, ${placemarks.reversed.last.locality}, ${placemarks.reversed.last.street}";
-    });
-
-    // _showAddressBottomSheet();
+      setState(() {
+        stAddress =
+            "${placemarks.reversed.last.country}, ${placemarks.reversed.last.locality}, ${placemarks.reversed.last.street}";
+      });
+    } catch (e) {
+      setState(() {
+        stAddress = "Failed to fetch address. Try again.";
+      });
+    }
   }
 
   Future<Position> getUserCurrentLocation() async {
@@ -106,8 +115,11 @@ class _NurseVisitState extends State<NurseVisit> {
   }
 
   void _showAddressBottomSheet() async {
-    print("My Location".tr);
-    print("${position.latitude} ${position.longitude}");
+    if (isLoading) return; // Prevent multiple clicks during the process
+
+    setState(() {
+      isLoading = true;
+    });
 
     // Get address
     List<Placemark> placemarks =
@@ -122,6 +134,10 @@ class _NurseVisitState extends State<NurseVisit> {
           infoWindow: InfoWindow(title: "My Location".tr)));
       Latitude = position.latitude.toString();
       Longitude = position.longitude.toString();
+    });
+
+    setState(() {
+      isLoading = false;
     });
 
     // Show bottom sheet
@@ -145,6 +161,8 @@ class _NurseVisitState extends State<NurseVisit> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
+                if (isLoading) return; // Prevent clicking while loading
+
                 // Show confirmation dialog
                 Get.defaultDialog(
                   title: "Confirm".tr,
@@ -157,31 +175,9 @@ class _NurseVisitState extends State<NurseVisit> {
                     nurseController.latitude.value = Latitude;
                     nurseController.longitude.value = Longitude;
 
-                    // nurseController.setUserOrderInfo(
-                    //     widget.userModel, widget.firebaseUser);
-
-                    // setState(() {
-                    //   // fireStore.doc(widget.firebaseUser.email).set({
-                    //   //   "email": widget.firebaseUser.email,
-                    //   //   "name": widget.userModel.fullname,
-                    //   //   "phone": widget.userModel.mobileNumber,
-                    //   //   "gender": widget.userModel.gender,
-                    //   //   "dob": widget.userModel.dob,
-                    //   //   "address": stAddress,
-                    //   //   "latitude": Latitude,
-                    //   //   "longitude": Longitude,
-                    //   //   "packages": [],
-                    //   //   "type": "Vitamin Drips",
-                    //   //   "selected_time": ""
-                    //   // });
-                    // });
-
                     Navigator.pop(context); // Close the dialog
                     Navigator.pop(context); // Close the bottom sheet
-                    // Get.to(() => VitaminServices(
-                    //     address: stAddress,
-                    //     userModel: widget.userModel,
-                    //     firebaseUser: widget.firebaseUser));
+
                     Get.to(NurseDetails(
                       userModel: widget.userModel,
                       firebaseUser: widget.firebaseUser,
@@ -202,6 +198,17 @@ class _NurseVisitState extends State<NurseVisit> {
     );
   }
 
+  void _updateMarker(double lat, double lng) {
+    setState(() {
+      _marker.clear();
+      _marker.add(Marker(
+        markerId: const MarkerId("currentLocation"),
+        position: LatLng(lat, lng),
+        infoWindow: InfoWindow(title: "Current Location"),
+      ));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final auth = FirebaseAuth.instance;
@@ -218,12 +225,13 @@ class _NurseVisitState extends State<NurseVisit> {
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
           },
+          // onTap: _handleTap,
         ),
       ),
       floatingActionButton: Align(
         alignment: Alignment.bottomCenter,
         child: MyRoundButton(
-          text: "Select location",
+          text: isLoading ? "Loading..." : "Select location", // Button text change during loading
           onTap: _showAddressBottomSheet,
         ),
       ),

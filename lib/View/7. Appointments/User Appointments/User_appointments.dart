@@ -111,7 +111,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('User_appointments')
-                      .where('email', isEqualTo: widget.firebaseUser.email)
+                      .orderBy('createdAt', descending: true)
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -125,18 +125,27 @@ class _MyAppointmentsState extends State<MyAppointments> {
                       return Center(child: Text('No User Appointments'.tr));
                     }
 
+                    var filteredAppointments = snapshot.data!.docs.where((doc) {
+                      return doc['email'] == widget.firebaseUser.email;
+                    }).toList();
+
+                    if (filteredAppointments.isEmpty) {
+                      return Center(child: Text('No User Appointments'.tr));
+                    }
+
                     return ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
+                      itemCount: filteredAppointments.length,
                       itemBuilder: (context, index) {
                         return AppointmentTile(
                           userModel: widget.userModel,
                           firebaseUser: widget.firebaseUser,
-                          doc: snapshot.data!.docs[index],
-                          name: snapshot.data!.docs[index]['status'].toString(),
+                          doc: filteredAppointments[index],
+                          name:
+                              filteredAppointments[index]['status'].toString(),
                           address:
-                              snapshot.data!.docs[index]['address'].toString(),
+                              filteredAppointments[index]['address'].toString(),
                           reportName:
-                              snapshot.data!.docs[index]["name"].toString(),
+                              filteredAppointments[index]["name"].toString(),
                           color: colors[index % colors.length],
                         );
                       },
@@ -224,7 +233,7 @@ class _AppointmentTileState extends State<AppointmentTile> {
               borderRadius: BorderRadius.circular(12),
             ),
             elevation: 0,
-            margin: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(

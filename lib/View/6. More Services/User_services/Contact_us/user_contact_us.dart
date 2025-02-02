@@ -29,11 +29,11 @@ class UserContact extends StatelessWidget {
         targetUser: userModel
       ),
 
-      drawer: MyDrawer(
-        userModel: userModel,
-        firebaseUser: firebaseUser,
-        targetUser: userModel
-      ),
+      // drawer: MyDrawer(
+      //   userModel: userModel,
+      //   firebaseUser: firebaseUser,
+      //   targetUser: userModel
+      // ),
       
       body: Stack(
         children: [

@@ -32,7 +32,7 @@ class TotalOrders extends StatefulWidget {
 
 class _TotalOrdersState extends State<TotalOrders> {
   final userAppointments =
-      FirebaseFirestore.instance.collection("User_appointments").snapshots();
+      FirebaseFirestore.instance.collection("User_appointments").orderBy("createdAt", descending: true).snapshots();
 
   final acceptedAppointments =
       FirebaseFirestore.instance.collection("Accepted_appointments");

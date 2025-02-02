@@ -111,15 +111,15 @@ class AdminServices extends StatelessWidget {
             userModel: userModel,
             firebaseUser: firebaseUser,
           ),
-          ServiceIconButton(
-            serviceIcon: "assets/images/upload.png",
-            serviceName: "Create Provider".tr,
-            onPressed: () {
-              Get.to(() => const Provider_Register());
-            },
-            userModel: userModel,
-            firebaseUser: firebaseUser,
-          ),
+          // ServiceIconButton(
+          //   serviceIcon: "assets/images/upload.png",
+          //   serviceName: "Create Provider".tr,
+          //   onPressed: () {
+          //     Get.to(() => const Provider_Register());
+          //   },
+          //   userModel: userModel,
+          //   firebaseUser: firebaseUser,
+          // ),
           // ServiceIconButton(
           //   serviceIcon: "assets/images/service_contact.png",
           //   serviceName: "Contact Us".tr,

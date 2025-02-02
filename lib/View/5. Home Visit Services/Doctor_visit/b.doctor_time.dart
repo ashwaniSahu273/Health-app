@@ -514,7 +514,7 @@ class _Doctor_TimeState extends State<Doctor_Time> {
                       ),
                     ),
                     subtitle: Text(
-                      'Laboratory Riyadh, Saudi Arabia'.tr,
+                      'Riyadh, Saudi Arabia'.tr,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -612,13 +612,13 @@ class _Doctor_TimeState extends State<Doctor_Time> {
                   //   ),
                   // ),
                   const SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(
-                      'Excluding visit fee'.tr,
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  //   child: Text(
+                  //     'Excluding visit fee'.tr,
+                  //     style: TextStyle(color: Colors.grey),
+                  //   ),
+                  // ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Row(
