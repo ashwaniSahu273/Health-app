@@ -2,18 +2,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/Lab%20More%20Packages/lab_more_packages.dart';
-// import 'package:harees_new_project/Resources/Lab%20Functions/lab_functions.dart';
-// import 'package:harees_new_project/Resources/LabDynamicUi/lab_dynamic_ui.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
-// import 'package:harees_new_project/View/4.%20Virtual%20Consultation/d.%20Payment/payment.dart';
-// import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/b.laboratory.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/c.selected_package.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/cart_page.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/dynamic.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
-// import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/dynamin_page.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class LabTest extends StatefulWidget {
@@ -37,6 +31,7 @@ class _LabTestState extends State<LabTest> {
   void _onServiceSelected(
     String serviceName,
     id,
+    String imagePath,
     String description,
     String components,
     String includesTests,
@@ -49,6 +44,7 @@ class _LabTestState extends State<LabTest> {
       description: description,
       price: price,
       type: type,
+      image: imagePath,
       components: components,
       includesTests: includesTests,
       address: widget.address,
@@ -93,7 +89,7 @@ class _LabTestState extends State<LabTest> {
                   IconButton(
                     icon: const Icon(Icons.search),
                     onPressed: () {
-                       openSearchDialog(context);
+                      openSearchDialog(context);
                     },
                   ),
                 ],
@@ -277,10 +273,9 @@ class _LabTestState extends State<LabTest> {
                                       mainAxisSpacing: 0,
                                       crossAxisCount: 2,
                                       childAspectRatio: 0.9),
-                              itemCount:
-                                   controller.groupServices.length,
+                              itemCount: controller.groupServices.length,
                               itemBuilder: (context, index) {
-                                var item =  controller.groupServices[index];
+                                var item = controller.groupServices[index];
                                 String languageCode =
                                     Get.locale?.languageCode ?? 'en';
 
@@ -293,6 +288,7 @@ class _LabTestState extends State<LabTest> {
                                     _onServiceSelected(
                                         localizedData.serviceName,
                                         item.id,
+                                        item.imagePath,
                                         localizedData.description,
                                         localizedData.instructions,
                                         localizedData.includesTests,
@@ -315,22 +311,33 @@ class _LabTestState extends State<LabTest> {
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.only(
-                                                left: 16.0, top: 8),
+                                                left: 16.0, top: 8,right: 16),
                                             child: Container(
-                                                height: 50,
-                                                width: 50,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: const Color(
-                                                      0xFFE6F5FF), // Circle background color
+                                              height: 50,
+                                              width: 50,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: const Color(
+                                                    0xFFE6F5FF), // Circle background color
+                                              ),
+                                              child: ClipOval(
+                                                child: Image.network(
+                                                  item.imagePath,
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (context, error,
+                                                      stackTrace) {
+                                                    return Image.asset(
+                                                      "assets/images/test-tube.png",
+                                                      fit: BoxFit.cover,
+                                                    );
+                                                  },
                                                 ),
-                                                child: Image.asset(
-                                                    "assets/images/test-tube.png",
-                                                    fit: BoxFit.cover)),
+                                              ),
+                                            ),
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(
-                                                left: 16, top: 8),
+                                                left: 16, top: 8, right: 16, ),
                                             child: Align(
                                                 alignment: Alignment.topLeft,
                                                 child: Text(
@@ -550,6 +557,7 @@ class _LabTestState extends State<LabTest> {
                             _onServiceSelected(
                                 localizedData.serviceName,
                                 service.id,
+                                service.imagePath,
                                 localizedData.description,
                                 localizedData.instructions,
                                 localizedData.includesTests,

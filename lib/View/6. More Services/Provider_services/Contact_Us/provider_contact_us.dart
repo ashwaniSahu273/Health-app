@@ -31,11 +31,7 @@ class ProviderContact extends StatelessWidget {
         firebaseUser: firebaseUser,
         targetUser: userModel,
       ),
-      drawer: MyDrawer(
-        userModel: userModel,
-        firebaseUser: firebaseUser,
-        targetUser: userModel,
-      ),
+    
       body: Stack(
         children: [
           // Background Image

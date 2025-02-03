@@ -19,7 +19,7 @@ class LabSelectPackage extends StatelessWidget {
   final String? components;
   final String? includesTests;
   final String price;
-  final String? image;
+  final String image;
   final String address;
   final UserModel userModel;
   final User firebaseUser;
@@ -31,7 +31,7 @@ class LabSelectPackage extends StatelessWidget {
     required this.title,
     required this.description,
     required this.price,
-    this.image,
+    required this.image,
     required this.components,
     required this.includesTests,
     required this.address,
@@ -98,10 +98,31 @@ class LabSelectPackage extends StatelessWidget {
                           padding: const EdgeInsets.all(16.0),
                           child: Row(
                             children: [
-                              Image.asset(
-                                "assets/images/blood-sample.png", // Replace with your asset
-                                height: 50,
-                                width: 50,
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 16.0, top: 8),
+                                child: Container(
+                                  height: 50,
+                                  width: 50,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: const Color(
+                                        0xFFE6F5FF), // Circle background color
+                                  ),
+                                  child: ClipOval(
+                                    child: Image.network(
+                                      image,
+                                      fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return Image.asset(
+                                          "assets/images/blood-sample.png",
+                                          fit: BoxFit.cover,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
                               ),
                               const SizedBox(width: 12),
                               Expanded(
@@ -378,12 +399,10 @@ class LabSelectPackage extends StatelessWidget {
                                         runSpacing: 8,
                                         children: [
                                           ...includesTests!
-                                              .split(
-                                                  '.') 
-                                                  .map((service) => service
-                                                  .trim()) 
-                                              .where((service) => service
-                                                  .isNotEmpty) 
+                                              .split('.')
+                                              .map((service) => service.trim())
+                                              .where((service) =>
+                                                  service.isNotEmpty)
                                               .map((service) => _buildChip(service
                                                   .trim())) // Trim whitespace and map to _buildChip
                                               .toList(),

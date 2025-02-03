@@ -68,7 +68,7 @@ class UserRequests extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
                 child: Text(
-                  "Appointment Requests",
+                  "Appointment Requests".tr,
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,

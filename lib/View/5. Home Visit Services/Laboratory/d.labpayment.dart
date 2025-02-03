@@ -537,7 +537,7 @@ class LabPaymentPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'TAX (15%)',
+                                  'TAX (15%)'.tr,
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.grey,

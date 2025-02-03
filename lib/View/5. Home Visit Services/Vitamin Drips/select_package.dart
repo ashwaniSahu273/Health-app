@@ -109,7 +109,7 @@ class SelectPackagesPage extends StatelessWidget {
               height: 32, // Set your desired height
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: "Search Vitamin IV",
+                  hintText: "Search Vitamin IV".tr,
                   hintStyle: const TextStyle(
                     color: Colors.grey, // Set the hint text color
                     fontSize: 14,

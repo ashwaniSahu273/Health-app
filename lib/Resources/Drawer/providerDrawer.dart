@@ -196,7 +196,7 @@ class _ProviderDrawerState extends State<ProviderDrawer> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18.0),
                       child: Text(
-                        "Language",
+                        "Language".tr,
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.grey[850],

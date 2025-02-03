@@ -26,25 +26,13 @@ class NurseDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     NurseController cartController = Get.put(NurseController());
 
-    // String imageUrl = '';
-    // bool isUploading = false;
-
-    // @override
-    // void initState() {
-    //   super.initState();
-    //   uploadImage();
-    // }
-
     Future<void> uploadImage() async {
-      // setState(() {
-      //   isUploading = true;
-      // });
       print("===========>Starting upload");
 
       try {
         // Load image from assets
         ByteData byteData =
-            await rootBundle.load('assets/images/test-tube.png');
+            await rootBundle.load('assets/images/std.png');
         Uint8List imageData = byteData.buffer.asUint8List();
 
         // Reference to Firebase Storage location
@@ -62,19 +50,9 @@ class NurseDetails extends StatelessWidget {
         // Get the download URL of the uploaded image
         String url = await snapshot.ref.getDownloadURL();
 
-        // setState(() {
-
-        //   imageUrl = url; // Store the URL
-        //   isUploading = false; // Set uploading status to false
-        // });
-
-        // Optionally, print the URL
         print('Image uploaded! URL:==========> $url<===============');
       } catch (e) {
         print('Error uploading image: $e');
-        // setState(() {
-        //   isUploading = false;
-        // });
       }
     }
 
@@ -94,7 +72,7 @@ class NurseDetails extends StatelessWidget {
                 )), // Double-arrow icon
             GestureDetector(
               onTap: () {
-                uploadImage();
+                // uploadImage();
               },
               child: Text(
                 'Nurse Visit'.tr,
@@ -207,8 +185,8 @@ class NurseDetails extends StatelessWidget {
                                     : const SizedBox.shrink(),
                                 const SizedBox(height: 8),
                                 service.type == "group"
-                                    ? const Text(
-                                        "Know more",
+                                    ?  Text(
+                                        "Know more".tr,
                                         style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,

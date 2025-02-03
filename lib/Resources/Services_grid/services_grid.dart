@@ -111,7 +111,7 @@ class MoreServicesGrid extends StatelessWidget {
           ),
           ServiceIconButton(
             serviceIcon: "assets/images/accept.png",
-            serviceName: "Accepted appointments".tr,
+            serviceName: "Accepted Appointments".tr,
             onPressed: () {
               Get.to(() => AcceptedRequests(
                     userModel: userModel,
@@ -173,7 +173,7 @@ class MoreServicesGrid extends StatelessWidget {
           ),
           ServiceIconButton(
             serviceIcon: "assets/images/about.png",
-            serviceName: "About us".tr,
+            serviceName: "About Us".tr,
             onPressed: () {
               Get.to(() => AboutUsPage(
                     userModel: userModel,

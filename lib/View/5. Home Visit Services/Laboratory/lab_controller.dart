@@ -100,7 +100,7 @@ class LabController extends GetxController {
         "status": "Requested",
         "type": "Lab Test",
         "selected_time": currentTime.value,
-        'createdAt':DateTime.now(),
+        'createdAt': DateTime.now(),
         "accepted_by": null
       });
       Get.snackbar(
@@ -258,7 +258,8 @@ class LabController extends GetxController {
     final List<Map<String, dynamic>> servicess = [
       {
         "id": 1,
-        "imagePath": "assets/images/vitamin.png",
+        "imagePath":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738562975880.png?alt=media&token=54db6a7a-f672-40fc-a612-c572f892b1f0",
         "type": "package",
         "localized": {
           "en": {
@@ -285,7 +286,8 @@ class LabController extends GetxController {
       },
       {
         "id": 2,
-        "imagePath": "assets/images/fatigue.png",
+        "imagePath":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738563197050.png?alt=media&token=410c1b21-f1ec-416d-8d2d-fd32c5fca438",
         "type": "package",
         "localized": {
           "en": {
@@ -310,7 +312,8 @@ class LabController extends GetxController {
       },
       {
         "id": 3,
-        "imagePath": "assets/images/fitness.png",
+        "imagePath":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738563258449.png?alt=media&token=bb7aa0f2-4923-41a1-ab6a-400fec8e6983",
         "type": "package",
         "localized": {
           "en": {
@@ -337,7 +340,7 @@ class LabController extends GetxController {
       },
       {
         "id": 4,
-        "imagePath": "assets/images/women_health.png",
+        "imagePath": "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738563317999.png?alt=media&token=6ca4b432-764a-4b95-bb0e-bb425a539534",
         "type": "package",
         "localized": {
           "en": {
@@ -364,7 +367,7 @@ class LabController extends GetxController {
       },
       {
         "id": 5,
-        "imagePath": "assets/images/bariatric_surgery.png",
+        "imagePath": "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738563428162.png?alt=media&token=53a32948-6328-4b29-86e9-496bd4eba652",
         "type": "package",
         "localized": {
           "en": {
@@ -391,7 +394,7 @@ class LabController extends GetxController {
       },
       {
         "id": 7,
-        "imagePath": "assets/images/std_test.png",
+        "imagePath": "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738563485952.png?alt=media&token=24bc08b3-8350-44db-bf30-16a0302a0cf7",
         "type": "package",
         "localized": {
           "en": {

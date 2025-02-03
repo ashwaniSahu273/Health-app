@@ -25,8 +25,12 @@ class OtpVerificationScreen extends StatefulWidget {
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   String otpCode = "";
+  var isLoading = false;
 
   void verifyOtp(String otp) async {
+    setState(() {
+      isLoading = true;
+    });
     FirebaseAuth auth = FirebaseAuth.instance;
 
     try {
@@ -43,6 +47,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         backgroundColor: Colors.green,
         colorText: Colors.black,
       );
+      setState(() {
+        isLoading = false;
+      });
 
       // Navigate to the next screen
       Get.to(() => VitaminPaymentPage(
@@ -121,26 +128,28 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               ),
               const SizedBox(height: 20),
               Center(
-                child: RoundButton(
-                    width: 250,
-                    borderColor: Colors.white,
-                    textColor: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFFB2E1DA),
-                    text: "Enter".tr,
-                    onTap: () {
-                      if (otpCode.isNotEmpty && otpCode.length == 6) {
-                        verifyOtp(otpCode);
-                      } else {
-                        Get.snackbar(
-                          "Message",
-                          "Please enter a valid 6-digit OTP",
-                          backgroundColor: Colors.red,
-                          colorText: Colors.white,
-                        );
-                      }
-                    }),
+                child: isLoading
+                    ? CircularProgressIndicator()
+                    : RoundButton(
+                        width: 250,
+                        borderColor: Colors.white,
+                        textColor: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFFB2E1DA),
+                        text: "Enter".tr,
+                        onTap: () {
+                          if (otpCode.isNotEmpty && otpCode.length == 6) {
+                            verifyOtp(otpCode);
+                          } else {
+                            Get.snackbar(
+                              "Message",
+                              "Please enter a valid 6-digit OTP",
+                              backgroundColor: Colors.red,
+                              colorText: Colors.white,
+                            );
+                          }
+                        }),
               ),
             ],
           ),

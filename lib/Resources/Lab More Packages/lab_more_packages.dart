@@ -79,6 +79,7 @@ class LabMorePackages extends StatelessWidget {
                             description: localizedData.description,
                             type: item.type,
                             price: localizedData.price,
+                            image: item.imagePath,
                             components: localizedData.instructions,
                             includesTests: localizedData.includesTests,
                             address: controller.stAddress.value,
@@ -100,7 +101,7 @@ class LabMorePackages extends StatelessWidget {
                               children: [
                                 Padding(
                                   padding:
-                                      const EdgeInsets.only(left: 16.0, top: 8),
+                                      const EdgeInsets.only(left: 16.0, top: 8,right: 16),
                                   child: Container(
                                       height: 50,
                                       width: 50,

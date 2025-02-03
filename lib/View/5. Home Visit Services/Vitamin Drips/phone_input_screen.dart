@@ -110,7 +110,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                     child: TextField(
                       controller: phoneController,
                       decoration: InputDecoration(
-                        hintText: 'Enter your phone number',
+                        hintText: 'Enter your phone number'.tr,
                         hintStyle: TextStyle(fontFamily: "schyler"),
                         filled: true,
                         fillColor: Color(0xFFD4D2D0),

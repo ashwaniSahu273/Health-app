@@ -440,9 +440,10 @@ class RequestedAppointmentDetails extends StatelessWidget {
                                       padding: const EdgeInsets.only(
                                         top: 8.0,
                                         left: 16,
+                                        right: 16
                                       ),
                                       child: Text(
-                                        "About This Package".tr,
+                                        "About This Package",
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,

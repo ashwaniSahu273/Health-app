@@ -569,7 +569,7 @@ class NursePayment extends StatelessWidget {
                                   Flexible(
                                     // flex: 3,
                                     child: Text(
-                                      'Tax (15%)',
+                                      'TAX (15%)'.tr,
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.grey,

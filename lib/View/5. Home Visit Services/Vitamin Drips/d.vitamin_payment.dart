@@ -564,7 +564,7 @@ class VitaminPaymentPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Tax (15%)',
+                                  'Tax (15%)'.tr,
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.grey,

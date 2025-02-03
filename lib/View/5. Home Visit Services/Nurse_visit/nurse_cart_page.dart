@@ -68,7 +68,7 @@ class NurseCartPage extends StatelessWidget {
           // Package Tests Section
           Obx(
             () => Padding(
-              padding: const EdgeInsets.only(left: 16.0, bottom: 4, top: 16),
+              padding: const EdgeInsets.only(left: 16.0, bottom: 4, top: 16,right: 16),
               child: Text(
                 '${'Your Package tests'.tr} (${nurseController.cartItems.length})',
                 style: TextStyle(

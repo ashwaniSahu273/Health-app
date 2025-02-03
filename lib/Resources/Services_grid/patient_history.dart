@@ -87,7 +87,7 @@ class _AcceptedRequestsHistoryState extends State<AcceptedRequestsHistory> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
               child: Text(
-                "Completed Appointments",
+                "Completed Appointments".tr,
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,

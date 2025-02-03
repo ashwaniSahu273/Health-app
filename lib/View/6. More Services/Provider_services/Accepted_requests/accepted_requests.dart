@@ -86,7 +86,7 @@ class _AcceptedRequestsState extends State<AcceptedRequests> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
               child: Text(
-                "Upcomming Appointments",
+                "Upcomming Appointments".tr,
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,

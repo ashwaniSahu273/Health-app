@@ -186,7 +186,7 @@ class _DoctorVisitState extends State<DoctorVisit> {
                   textConfirm: "Confirm".tr,
                 );
               },
-              child: const Text("Send"),
+              child:  Text("Send".tr),
             ),
           ],
         ),
@@ -229,7 +229,7 @@ class _DoctorVisitState extends State<DoctorVisit> {
       floatingActionButton: Align(
         alignment: Alignment.bottomCenter,
         child: MyRoundButton(
-          text: isLoading ? "Loading..." : "Select location", // Button text change during loading
+          text: isLoading ? "Loading..." : "Select Location".tr, // Button text change during loading
           onTap: _showAddressBottomSheet,
         ),
       ),
