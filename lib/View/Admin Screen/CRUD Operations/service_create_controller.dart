@@ -1,12 +1,23 @@
-  
- import 'package:get/get.dart';
+import 'dart:io';
+import 'package:get/get.dart';
 
-class ServiceCreateController extends  GetxController{
+class ServiceCreateController extends GetxController {
+  var nurseImageFile = Rx<File?>(null);
+  var nurseUploadedImageUrl = Rx<String?>(null);
+  var vitaminUploadedImageUrl = Rx<String?>(null);
+  var isLoadingNurseService = false.obs;
+  var selectedServiceNurseType = "package".obs;
+  var selectedServiceVitaminType = "package".obs;
 
- var selectedServiceNurseType = "group".obs;
+  void setSelectedService(String serviceType) {
+    selectedServiceNurseType.value = serviceType;
+  }
 
-  set selectedService(selectedService) {}
+  void setImageFile(File file) {
+    nurseImageFile.value = file;
+  }
 
-
-
- } 
+  void setUploadedImageUrl(String url) {
+    nurseUploadedImageUrl.value = url;
+  }
+}

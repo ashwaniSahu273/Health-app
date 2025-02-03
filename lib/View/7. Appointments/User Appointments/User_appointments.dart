@@ -95,11 +95,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
             ],
           ),
         ),
-        // drawer: MyDrawer(
-        //   userModel: widget.userModel,
-        //   firebaseUser: widget.firebaseUser,
-        //   targetUser: widget.userModel,
-        // ),
+     
         backgroundColor: Colors.blue[50],
         body: SafeArea(
           child: Column(
@@ -200,21 +196,7 @@ class _AppointmentTileState extends State<AppointmentTile> {
       // mainAxisAlignment: MainAxisAlignment.center,
       // crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // ListTile(
-        //   title: Text(
-        //     widget.name,
-        //     style: const TextStyle(
-        //       fontWeight: FontWeight.bold,
-        //       color: Colors.black,
-        //       fontSize: 14,
-        //     ),
-        //   ),
-        //   subtitle: Text(widget.address),
-        //   leading: Image.asset(
-        //     "assets/images/appoint.png",
-        //     height: 50,
-        //   ),
-        // ),
+      
 
         GestureDetector(
           onTap: () {

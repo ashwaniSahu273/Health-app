@@ -234,7 +234,7 @@ class _AppointmentTileState extends State<AppointmentTile> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '945 SAR',
+                              widget.doc["type"],
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.blue,

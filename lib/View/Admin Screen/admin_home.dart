@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/Resources/Drawer/adminDrawer.dart';
 // import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/services_sreen.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/Resources/Drawer/drawer.dart';
@@ -70,7 +71,7 @@ class _Admin_HomeState extends State<Admin_Home> {
           ),
         ),
       ),
-      endDrawer: MyDrawer(
+      endDrawer: AdminDrawer(
         ontap: () {
           _auth.signOut().then((value) {
             Get.to(() => const Splash_Screen());

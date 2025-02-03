@@ -119,7 +119,7 @@ class DynamicNurse extends StatelessWidget {
                                         color: Color(0xFF007ABB),
                                       ),
                                     ),
-                                    service.type == "group"
+                                    service.type == "package"
                                         ? Text(
                                             maxLines: 2,
                                             localizedData.description,
@@ -232,7 +232,7 @@ class DynamicNurse extends StatelessWidget {
                                                     controller
                                                         .addToCart(service.id);
                                                     if (service.type ==
-                                                        "group") {
+                                                        "package") {
                                                       controller.updatePrice(
                                                           service.id);
                                                     }
@@ -273,7 +273,7 @@ class DynamicNurse extends StatelessWidget {
                       ),
 
                       const SizedBox(height: 16),
-                      service.type == "group"
+                      service.type == "package"
                           ? Card(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
@@ -319,7 +319,7 @@ class DynamicNurse extends StatelessWidget {
                       // Components Included
 
                       // const SizedBox(height: 8),
-                      service.type == "group"
+                      service.type == "package"
                           ? Container(
                               width: double.infinity,
                               child: Card(
@@ -364,7 +364,7 @@ class DynamicNurse extends StatelessWidget {
                           : const SizedBox.shrink(),
                       const SizedBox(height: 16),
 
-                      service.type == "group"
+                      service.type == "package"
                           ? Container(
                               width: double.infinity,
                               child: Card(
@@ -411,7 +411,7 @@ class DynamicNurse extends StatelessWidget {
                             )
                           : const SizedBox.shrink(),
 
-                      service.type == "group"
+                      service.type == "package"
                           ? Container(
                               margin: EdgeInsets.symmetric(
                                   horizontal: 4, vertical: 16),

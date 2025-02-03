@@ -21,6 +21,8 @@ class NurseCreateService extends StatefulWidget {
 
 class _NurseCreateServiceState extends State<NurseCreateService> {
   final _formKey = GlobalKey<FormState>();
+  File? imageFile;
+  // String? controller.nurseUploadedImageUrl.value;
 
   final TextEditingController _arServiceNameController =
       TextEditingController();
@@ -52,14 +54,12 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
 
   final TextEditingController _priceController = TextEditingController();
 
-  final TextEditingController _imagePathController = TextEditingController();
+  // final TextEditingController _imagePathController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     ServiceCreateController controller = Get.put(ServiceCreateController());
-    controller.selectedServiceNurseType.value = "group";
-    File? imageFile;
-    String? uploadedImageUrl;
+    controller.selectedServiceNurseType.value = "package";
 
     if (widget.isEditing && widget.service != null) {
       _arServiceNameController.text =
@@ -81,11 +81,13 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
       _enTermsOfServiceController.text =
           widget.service!.localized.en.termsOfService ?? '';
       _priceController.text = widget.service!.localized.en.price ?? '';
-      uploadedImageUrl = widget.service!.imagePath ?? '';
+      controller.nurseUploadedImageUrl.value = widget.service!.imagePath ?? '';
       controller.selectedServiceNurseType.value = widget.service!.type;
     }
 
     Future<void> uploadImage() async {
+      controller.isLoadingNurseService.value = true;
+
       if (imageFile == null) return;
 
       try {
@@ -96,10 +98,10 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
         final snapshot = await uploadTask;
         final downloadUrl = await snapshot.ref.getDownloadURL();
 
-        setState(() {
-          uploadedImageUrl = downloadUrl;
-        });
+        controller.nurseUploadedImageUrl.value = downloadUrl;
 
+        controller.isLoadingNurseService.value = false;
+        print("uploading==========>$controller.nurseUploadedImageUrl.value");
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Image uploaded successfully!')),
         );
@@ -146,21 +148,40 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  imageFile != null
-                      ? Image.file(
-                          imageFile!,
-                          height: 100,
-                          width: 100,
-                          fit: BoxFit.cover,
-                        )
-                      : uploadedImageUrl != null
-                          ? Image.network(
-                              uploadedImageUrl!,
-                              height: 100,
-                              width: 100,
-                              // fit: BoxFit.cover,
-                            )
-                          : Text("There is no image"),
+                  Obx(
+                    () => controller.isLoadingNurseService.value
+                        ? const CircularProgressIndicator()
+                        : controller.nurseUploadedImageUrl.value != null &&
+                                controller
+                                    .nurseUploadedImageUrl.value!.isNotEmpty
+                            ? Container(
+                                height: 70,
+                                width: 70,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: const Color(
+                                      0xFFE6F5FF), // Circle background color
+                                ),
+                                child: Image.network(
+                                  controller.nurseUploadedImageUrl.value!,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Text(
+                                      "No Image",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 14, color: Colors.black),
+                                    );
+                                  },
+                                ),
+                              )
+                            : Text(
+                                "There Is No Image",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.black),
+                              ),
+                  ),
                   const SizedBox(height: 10),
                   ElevatedButton.icon(
                     onPressed: () => selectImage(ImageSource.gallery),
@@ -196,7 +217,7 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
                           width: 1.0,
                         ),
                       )),
-                  items: ['group', 'individual'].map((String type) {
+                  items: ['package', 'individual'].map((String type) {
                     return DropdownMenuItem<String>(
                       value: type,
                       child: Text(type),
@@ -251,10 +272,12 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
+                  print(
+                      "uploading==========>${controller.nurseUploadedImageUrl.value}");
                   var newService = {
                     'id': widget.isEditing ? widget.service.id : '',
-                    'imagePath': _imagePathController.text,
-                    "type": "individual",
+                    'imagePath': controller.nurseUploadedImageUrl.value ?? " ",
+                    "type": controller.selectedServiceNurseType.value,
                     'localized': {
                       'ar': {
                         'serviceName':

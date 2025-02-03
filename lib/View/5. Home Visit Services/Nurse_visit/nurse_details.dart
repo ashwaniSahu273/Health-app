@@ -101,9 +101,9 @@ class NurseDetails extends StatelessWidget {
                 cartController.servicesList.sort((a, b) {
                   String typeA = a.type!.toLowerCase();
                   String typeB = b.type!.toLowerCase();
-                  if (typeA == 'group' && typeB == 'individual') {
+                  if (typeA == 'package' && typeB == 'individual') {
                     return -1;
-                  } else if (typeA == 'individual' && typeB == 'group') {
+                  } else if (typeA == 'individual' && typeB == 'package') {
                     return 1;
                   }
                   return 0;
@@ -172,7 +172,7 @@ class NurseDetails extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 4),
-                                service.type == "group"
+                                service.type == "package"
                                     ? Text(
                                         localizedData.description,
                                         style: TextStyle(
@@ -184,7 +184,7 @@ class NurseDetails extends StatelessWidget {
                                       )
                                     : const SizedBox.shrink(),
                                 const SizedBox(height: 8),
-                                service.type == "group"
+                                service.type == "package"
                                     ?  Text(
                                         "Know more".tr,
                                         style: TextStyle(
