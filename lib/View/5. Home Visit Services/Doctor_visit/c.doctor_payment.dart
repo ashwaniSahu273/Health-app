@@ -11,6 +11,7 @@ import 'package:harees_new_project/View/4.%20Virtual%20Consultation/b.%20E-Clini
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Doctor_visit/doctor_controller.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
+import 'package:harees_new_project/View/Payment/payment_service.dart';
 import 'package:intl/intl.dart';
 
 class DoctorPayment extends StatelessWidget {
@@ -30,14 +31,7 @@ class DoctorPayment extends StatelessWidget {
     // final String currentDate = DateFormat.yMMMd().format(DateTime.now());
     DoctorController cartController = Get.put(DoctorController());
 
-  // double total = cartController.getTotalAmount();
-  //   double tax = total * 0.15;
 
-    // // Extract numeric value from packagePrice by removing non-numeric characters
-    // final double parsedPackagePrice =
-    //     double.parse(packagePrice.replaceAll(RegExp(r'[^\d.]'), ''));
-
-    // final double totalAmount = cartController.getTotalAmount() + vat;
 
     return Scaffold(
       appBar: AppBar(
@@ -612,13 +606,15 @@ class DoctorPayment extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: GestureDetector(
                       onTap: () {
-                        cartController.setUserOrderInfo(
-                            userModel, firebaseUser);
+                        // cartController.setUserOrderInfo(
+                        //     userModel, firebaseUser);
 
-                        Get.offAll(() => HomePage(
-                              userModel: userModel,
-                              firebaseUser: firebaseUser,
-                            ));
+                       PaymentService.createPayment(amount: 460, name: firebaseUser.displayName!, email: firebaseUser.email!);
+
+                        // Get.offAll(() => HomePage(
+                        //       userModel: userModel,
+                        //       firebaseUser: firebaseUser,
+                        //     ));
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(left: 2, right: 2),
