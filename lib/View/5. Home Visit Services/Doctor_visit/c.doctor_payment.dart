@@ -1,7 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_import
 
+import 'dart:convert';
+
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
@@ -13,6 +18,7 @@ import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/Payment/payment_service.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DoctorPayment extends StatelessWidget {
   final UserModel userModel;
@@ -28,10 +34,61 @@ class DoctorPayment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final String currentDate = DateFormat.yMMMd().format(DateTime.now());
     DoctorController cartController = Get.put(DoctorController());
 
+    Future<void> createPayment({
+      required double amount,
+      required String name,
+      required String email,
+    }) async {
+      print("Function Calling.........................");
 
+      final HttpsCallable callable =
+          FirebaseFunctions.instance.httpsCallable('createTapPayment');
+      EasyLoading.show(status: 'Processing...');
+      try {
+        final response = await callable.call({
+          'amount': amount,
+          'name': name,
+          'email': email,
+          'currency': 'KWD', // Default currency as per your Firebase function
+        });
+
+        if (response.data["success"]) {
+          String paymentUrl = response.data["paymentUrl"];
+          String chargeID = response.data["chargeID"];
+          String paymentStatus = response.data["paymentStatus"];
+
+          if (kDebugMode) {
+            print("Response Data: ${jsonEncode(response.data)}");
+            print("Charge ID: $chargeID");
+            print("Payment Status: $paymentStatus");
+            print("Payment URL: =💵💵💵💵============>$paymentUrl");
+          }
+
+          cartController.paymentStatus.value = paymentStatus;
+          cartController.chargeId.value = chargeID;
+          cartController.paymentUrl.value = paymentUrl;
+
+          print(
+              "controller: 🔴🔴🔴🔴🔴=============>${cartController.paymentStatus.value} ${cartController.chargeId.value}");
+
+          cartController.setUserOrderInfo(userModel, firebaseUser);
+
+          
+    
+        } else {
+          Get.snackbar("Error", "Payment initiation failed");
+        }
+      } catch (e) {
+        Get.snackbar("Error", "${e.toString()}");
+        return;
+      } finally {
+        EasyLoading.dismiss();
+      }
+    }
+
+  
 
     return Scaffold(
       appBar: AppBar(
@@ -606,15 +663,11 @@ class DoctorPayment extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: GestureDetector(
                       onTap: () {
-                        // cartController.setUserOrderInfo(
-                        //     userModel, firebaseUser);
-
-                       PaymentService.createPayment(amount: 460, name: firebaseUser.displayName!, email: firebaseUser.email!);
-
-                        // Get.offAll(() => HomePage(
-                        //       userModel: userModel,
-                        //       firebaseUser: firebaseUser,
-                        //     ));
+                        createPayment(
+                          amount: 460,
+                          name: userModel.fullname!,
+                          email: userModel.email!,
+                        );
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(left: 2, right: 2),

@@ -1,11 +1,17 @@
+import 'dart:convert';
+
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+// import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+// import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Doctor_visit/doctor_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class PaymentService {
-  static Future<String?> createPayment({
+  // DoctorController controller = Get.put(DoctorController());
+
+  static Future<void> createPayment({
     required double amount,
     required String name,
     required String email,
@@ -25,11 +31,11 @@ class PaymentService {
 
       if (response.data["success"]) {
         String paymentUrl = response.data["paymentUrl"];
-
-        print("responseL: =💵💵💵💵============>${response.data}");
+        if (kDebugMode) {
+          print("Response Data: ${jsonEncode(response.data)}");
+        }
         print("Payment URL: =💵💵💵💵============>$paymentUrl");
 
-        // Call the openPaymentUrl function
         await openPaymentUrl(paymentUrl);
       } else {
         Get.snackbar("Error", "Payment initiation failed");

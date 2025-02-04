@@ -2,12 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/lab_service_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 // import 'package:harees_new_project/View/8.%20Chats/Models/lab_service_model.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+
+import 'package:url_launcher/url_launcher.dart';
 
 class DoctorController extends GetxController {
   var cartItems = <Map<String, dynamic>>[].obs;
@@ -17,6 +20,10 @@ class DoctorController extends GetxController {
   var currentTime = "".obs;
   var isLoading = false.obs;
   var servicesList = <LabService>[].obs;
+
+  var paymentStatus = "".obs;
+  var paymentUrl = "".obs;
+  var chargeId = "".obs;
 
   var selectedDateController = "".obs;
   var selectedTimeController = "".obs;
@@ -68,7 +75,6 @@ class DoctorController extends GetxController {
           {
             "id": 1,
             "imagePath": "assets/images/vitamin.png",
-          
             "localized": {
               "en": {
                 "serviceName": "Doctor Visit",
@@ -87,18 +93,27 @@ class DoctorController extends GetxController {
                 "includesTests":
                     "History taking, Vital signs measurements, Physical examination, Diagnosis and treatment plan, Referral if needed, Documentation and medical reports, Patient Education, Prescription if needed, Sick leave when medically justified",
                 "price": "400 SR"
-              }
-              ,"quantity": 1
-           
+              },
+              "quantity": 1
             }
           },
         ],
         "status": "Requested",
         "type": "Doctor Visit",
+        "paymentStatus": paymentStatus.value,
+        "paymentUrl": paymentUrl.value,
+        "chargeId": chargeId.value,
         "selected_time": currentTime.value,
-        'createdAt':DateTime.now(),
+        'createdAt': DateTime.now(),
         "accepted_by": null
       });
+
+      await openPaymentUrl(paymentUrl.value);
+
+      Get.to(HomePage(
+        userModel: userModel,
+        firebaseUser: firebaseUser,
+      ));
       Get.snackbar(
         "Success",
         "Successfully completed",
@@ -109,6 +124,13 @@ class DoctorController extends GetxController {
       Get.snackbar('Error', 'Failed to confirm. Please try again.');
     } finally {
       isLoading.value = false; // Hide loading state
+    }
+  }
+
+  Future<void> openPaymentUrl(String url) async {
+    Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      Get.snackbar("Error", "Could not open payment link");
     }
   }
 
