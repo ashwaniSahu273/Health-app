@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/nurse_service_model.dart';
-// import 'package:harees_new_project/View/8.%20Chats/Models/lab_service_model.dart';
-import 'package:harees_new_project/View/8.%20Chats/Models/vitamin_service_model.dart';
 import 'package:harees_new_project/View/Admin%20Screen/CRUD%20Operations/nurse_create_service.dart';
-// import 'package:harees_new_project/View/8.%20Chats/Models/vitamin_service_model.dart';
-// import 'package:harees_new_project/View/Admin%20Screen/CRUD%20Operations/create_service.dart';
-import 'package:harees_new_project/View/Admin%20Screen/CRUD%20Operations/vitamin_create_service.dart';
 
 class NurseServicesList extends StatefulWidget {
   @override

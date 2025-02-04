@@ -1,15 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harees_new_project/View/2.%20Authentication/Provider_Auth/provider_register.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
-// import 'package:harees_new_project/View/8.%20Chats/Pages/Home.dart';
-// import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/About_Us/aboutus.dart';
-// import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/Accepted_requests/accepted_requests.dart';
-// import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/Contact_Us/provider_contact_us.dart';
-// import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/Family/family.dart';
-// import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/Result_upload/result_upload.dart';
-// import 'package:harees_new_project/View/6.%20More%20Services/User_services/FAQ/faq_page.dart';
 import 'package:harees_new_project/View/Admin%20Screen/CRUD%20Operations/services_screen.dart';
 import 'package:harees_new_project/View/Admin%20Screen/all_chat_rooms.dart';
 import 'package:harees_new_project/View/Admin%20Screen/all_users.dart';

@@ -11,8 +11,8 @@ import 'package:harees_new_project/Resources/Button/myroundbutton.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/select_package.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
-import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
-import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/b.Vitamin_services.dart';
+// import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+// import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/b.Vitamin_services.dart';
 
 class Vitamin extends StatefulWidget {
   final UserModel userModel;
@@ -212,8 +212,8 @@ class _VitaminState extends State<Vitamin> {
 
   @override
   Widget build(BuildContext context) {
-    final auth = FirebaseAuth.instance;
-    final user = auth.currentUser;
+    // final auth = FirebaseAuth.instance;
+    // final user = auth.currentUser;
 
     return Scaffold(
       body: SafeArea(
