@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:harees_new_project/View/Admin%20Screen/CRUD%20Operations/service_create_controller.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -17,27 +19,37 @@ class AddOrEditServiceForm extends StatefulWidget {
 
 class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
   final _formKey = GlobalKey<FormState>();
+  File? imageFile;
+  // String? controller.labUploadedImageUrl.value;
 
   final TextEditingController _arServiceNameController =
       TextEditingController();
+
   final TextEditingController _enServiceNameController =
       TextEditingController();
+
   final TextEditingController _arDescriptionController =
       TextEditingController();
+
   final TextEditingController _enDescriptionController =
       TextEditingController();
-  final TextEditingController _arInstructionsController =
+
+  final TextEditingController _arAboutController = TextEditingController();
+
+  final TextEditingController _enAboutController = TextEditingController();
+
+  final TextEditingController _arServiceIncludesController =
       TextEditingController();
-  final TextEditingController _enInstructionsController =
+
+  final TextEditingController _enServiceIncludesController =
       TextEditingController();
+
   final TextEditingController _priceController = TextEditingController();
 
-  File? _imageFile;
-  String? _uploadedImageUrl;
-
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
+    ServiceCreateController controller = Get.put(ServiceCreateController());
+    controller.selectedServiceLabType.value = "package";
 
     if (widget.isEditing && widget.service != null) {
       _arServiceNameController.text =
@@ -45,238 +57,254 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
       _enServiceNameController.text =
           widget.service!.localized.en.serviceName ?? '';
       _arDescriptionController.text =
-          widget.service!.localized.ar.description ?? '';
-      _enDescriptionController.text =
-          widget.service!.localized.en.description ?? '';
-      _arInstructionsController.text =
           widget.service!.localized.ar.instructions ?? '';
-      _enInstructionsController.text =
+      _enDescriptionController.text =
           widget.service!.localized.en.instructions ?? '';
+      _arAboutController.text = widget.service!.localized.ar.description ?? '';
+      _enAboutController.text = widget.service!.localized.en.description ?? '';
+      _arServiceIncludesController.text =
+          widget.service!.localized.ar.includesTests ?? '';
+      _enServiceIncludesController.text =
+          widget.service!.localized.en.includesTests ?? '';
+
       _priceController.text = widget.service!.localized.en.price ?? '';
-      _uploadedImageUrl = widget.service!.imagePath ?? "";
+      controller.labUploadedImageUrl.value = widget.service!.imagePath ?? '';
+      controller.selectedServiceLabType.value = widget.service!.type;
     }
-  }
 
-  Future<void> selectImage(ImageSource source) async {
-    final XFile? pickedFile = await ImagePicker().pickImage(source: source);
+    Future<void> uploadImage() async {
+      controller.isLoadingNurseService.value = true;
 
-    if (pickedFile != null) {
-      cropImage(File(pickedFile.path));
+      if (imageFile == null) return;
+
+      try {
+        final storageRef = FirebaseStorage.instance.ref().child(
+            'service_images/${DateTime.now().millisecondsSinceEpoch}.jpg');
+        final uploadTask = storageRef.putFile(imageFile!);
+
+        final snapshot = await uploadTask;
+        final downloadUrl = await snapshot.ref.getDownloadURL();
+
+        controller.labUploadedImageUrl.value = downloadUrl;
+
+        controller.isLoadingNurseService.value = false;
+        print("uploading==========>$controller.labUploadedImageUrl.value");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Image uploaded successfully!')),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Image upload failed: $e')),
+        );
+      }
     }
-  }
 
-  Future<void> cropImage(File file) async {
-    final CroppedFile? croppedFile = await ImageCropper().cropImage(
-      sourcePath: file.path,
-      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-      compressQuality: 50,
-    );
-
-    if (croppedFile != null) {
-      setState(() {
-        _imageFile = File(croppedFile.path);
-      });
-      await uploadImage();
-    }
-  }
-
-  Future<void> uploadImage() async {
-    if (_imageFile == null) return;
-
-    try {
-      final storageRef = FirebaseStorage.instance
-          .ref()
-          .child('service_images/${DateTime.now().millisecondsSinceEpoch}.jpg');
-      final uploadTask = storageRef.putFile(_imageFile!);
-
-      final snapshot = await uploadTask;
-      final downloadUrl = await snapshot.ref.getDownloadURL();
-
-      setState(() {
-        _uploadedImageUrl = downloadUrl;
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Image uploaded successfully!')),
+    Future<void> cropImage(File file) async {
+      final CroppedFile? croppedFile = await ImageCropper().cropImage(
+        sourcePath: file.path,
+        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+        compressQuality: 50,
       );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Image upload failed: $e')),
-      );
-    }
-  }
 
-  @override
-  Widget build(BuildContext context) {
+      if (croppedFile != null) {
+        setState(() {
+          imageFile = File(croppedFile.path);
+        });
+        await uploadImage();
+      }
+    }
+
+    Future<void> selectImage(ImageSource source) async {
+      final XFile? pickedFile = await ImagePicker().pickImage(source: source);
+
+      if (pickedFile != null) {
+        cropImage(File(pickedFile.path));
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.isEditing ? 'Edit Service' : 'Add Service'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(24.0),
         child: Form(
           key: _formKey,
           child: ListView(
             children: [
-              // Image Section
-              // Column(
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: [
-              //     _imageFile != null
-              //         ? Image.file(
-              //             _imageFile!,
-              //             height: 200,
-              //             width: double.infinity,
-              //             fit: BoxFit.cover,
-              //           )
-              //         : _uploadedImageUrl != null
-              //             ? Image.network(
-              //                 _uploadedImageUrl!,
-              //                 height: 200,
-              //                 width: double.infinity,
-              //                 fit: BoxFit.cover,
-              //               )
-              //             : Text("There is no image"),
-              //     SizedBox(height: 10),
-              //     ElevatedButton.icon(
-              //       onPressed: () => selectImage(ImageSource.gallery),
-              //       icon: Icon(Icons.image),
-              //       label: Text('Select Image'),
-              //     ),
-              //   ],
-              // ),
-              SizedBox(height: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Obx(
+                    () => controller.isLoadingNurseService.value
+                        ? const CircularProgressIndicator()
+                        : controller.labUploadedImageUrl.value != null &&
+                                controller.labUploadedImageUrl.value!.isNotEmpty
+                            ? Container(
+                                height: 70,
+                                width: 70,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: const Color(
+                                      0xFFE6F5FF), // Circle background color
+                                ),
+                                child: Image.network(
+                                  controller.labUploadedImageUrl.value!,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Text(
+                                      "No Image",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 14, color: Colors.black),
+                                    );
+                                  },
+                                ),
+                              )
+                            : Text(
+                                "There Is No Image",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.black),
+                              ),
+                  ),
+                  const SizedBox(height: 10),
+                  ElevatedButton.icon(
+                    onPressed: () => selectImage(ImageSource.gallery),
+                    icon: Icon(Icons.image),
+                    label: Text('Select Image'),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
 
-              // Arabic Service Name
-              TextFormField(
-                controller: _arServiceNameController,
-                decoration: InputDecoration(
-                  labelText: 'Service Name (Arabic)',
-                  border: OutlineInputBorder(),
+              Obx(
+                () => DropdownButtonFormField<String>(
+                  value: controller.selectedServiceLabType.value,
+                  decoration: InputDecoration(
+                      labelText: "Package Type",
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 0, horizontal: 16),
+                      // filled: true,
+                      // fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                          color: Colors.black,
+                          width: 1.0,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                          color: Colors.black,
+                          width: 1.0,
+                        ),
+                      )),
+                  items: ['package', 'individual'].map((String type) {
+                    return DropdownMenuItem<String>(
+                      value: type,
+                      child: Text(type),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) {
+                    controller.selectedServiceLabType.value = newValue!;
+                  },
                 ),
-                validator: (value) => value!.isEmpty
-                    ? 'Please enter a service name in Arabic'
-                    : null,
               ),
-              SizedBox(height: 10),
-              // English Service Name
-              TextFormField(
-                controller: _enServiceNameController,
-                decoration: InputDecoration(
-                  labelText: 'Service Name (English)',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) => value!.isEmpty
-                    ? 'Please enter a service name in English'
-                    : null,
+              const SizedBox(
+                height: 20,
               ),
-              SizedBox(height: 10),
-              // Arabic Description
-              TextFormField(
-                controller: _arDescriptionController,
-                decoration: InputDecoration(
-                  labelText: 'Description (Arabic)',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) => value!.isEmpty
-                    ? 'Please enter a description in Arabic'
-                    : null,
-              ),
-              SizedBox(height: 10),
-              // English Description
-              TextFormField(
-                controller: _enDescriptionController,
-                decoration: InputDecoration(
-                  labelText: 'Description (English)',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) => value!.isEmpty
-                    ? 'Please enter a description in English'
-                    : null,
-              ),
-              SizedBox(height: 10),
-              // Arabic Instructions
-              TextFormField(
-                controller: _arInstructionsController,
-                decoration: InputDecoration(
-                  labelText: 'Instructions (Arabic)',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) => value!.isEmpty
-                    ? 'Please enter instructions in Arabic'
-                    : null,
-              ),
-              SizedBox(height: 10),
-              // English Instructions
-              TextFormField(
-                controller: _enInstructionsController,
-                decoration: InputDecoration(
-                  labelText: 'Instructions (English)',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) => value!.isEmpty
-                    ? 'Please enter instructions in English'
-                    : null,
-              ),
-              SizedBox(height: 10),
-              // Price
-              TextFormField(
-                controller: _priceController,
-                decoration: InputDecoration(
-                  labelText: 'Price',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter the price' : null,
-              ),
-              SizedBox(height: 20),
+              _buildTextField(
+                  _arServiceNameController, 'Service Name (Arabic)'),
+              _buildTextField(
+                  _enServiceNameController, 'Service Name (English)'),
 
-              // Save Button
+              Obx(
+                () => controller.selectedServiceLabType.value != "individual"
+                    ? Column(
+                        children: [
+                          _buildTextField(
+                              _arDescriptionController, 'Instructions (Arabic)',
+                              maxLines: 4),
+                          _buildTextField(_enDescriptionController,
+                              'Instructions (English)',
+                              maxLines: 4),
+                          _buildTextField(_arAboutController, 'About (Arabic)',
+                              maxLines: 5),
+                          _buildTextField(_enAboutController, 'About (English)',
+                              maxLines: 5),
+                          _buildTextField(_arServiceIncludesController,
+                              'Includes Tests (Arabic)',
+                              maxLines: 6),
+                          _buildTextField(_enServiceIncludesController,
+                              'Includes Tests (English)',
+                              maxLines: 6),
+                          // _buildTextField(_arTermsOfServiceController,
+                          //     'Terms of Service (Arabic)',
+                          //     maxLines: 6),
+                          // _buildTextField(_enTermsOfServiceController,
+                          //     'Terms of Service (English)',
+                          //     maxLines: 6),
+                        ],
+                      )
+                    : SizedBox.shrink(),
+              ),
+
+              _buildTextField(_priceController, 'Price'),
+              // _buildTextField(_imagePathController, 'Image Path'),
+              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState!.validate() &&
-                      _uploadedImageUrl != null) {
-                    var newService = {
-                      'localized': {
-                        'ar': {
-                          'serviceName': _arServiceNameController.text ?? "no service name",
-                          'description': _arDescriptionController.text ?? "no description",
-                          'Instructions': _arInstructionsController.text ?? "no instructions",
-                          'testIncludes': _arInstructionsController.text ?? "no testIncludes",
-                          'price': _priceController.text ?? "no price",
-                        },
-                        'en': {
-                          'serviceName': _enServiceNameController.text ?? "no service name",
-                          'description': _enDescriptionController.text ?? "no description",
-                          'Instructions': _enInstructionsController.text ?? "no instructions",
-                          'testIncludes': _enInstructionsController.text ?? "no testIncludes",
-                          'price': _priceController.text ?? "no price",
-                        },
+                  print(
+                      "uploading==========>${controller.labUploadedImageUrl.value}");
+                  var newService = {
+                    'id': widget.isEditing ? widget.service.id : '',
+                    'imagePath': controller.labUploadedImageUrl.value ?? " ",
+                    "type": controller.selectedServiceLabType.value,
+                    'localized': {
+                      'ar': {
+                        'serviceName':
+                            _arServiceNameController.text ?? "No service name",
+                        'description':
+                            _arAboutController.text ?? "No description",
+                        'includesTests': _arServiceIncludesController.text ??
+                            "No service includes",
+                        'instructions': _arDescriptionController.text ??
+                            "No service includes",
+                        'price': _priceController.text ?? "No price",
                       },
-                      'imagePath': _uploadedImageUrl,
-                    };
+                      'en': {
+                        'serviceName':
+                            _enServiceNameController.text ?? "No service name",
+                        'description':
+                            _enAboutController.text ?? "No description",
+                        'includesTests': _enServiceIncludesController.text ??
+                            "No service includes",
+                        'instructions': _enDescriptionController.text ??
+                            "No service includes",
+                        'price': _priceController.text ?? "No price",
+                      },
+                    },
+                  };
 
-                    if (widget.isEditing) {
-                      FirebaseFirestore.instance
-                          .collection('LaboratoryServices')
-                          .doc(widget.service.id.toString())
-                          .update(newService);
-                    } else {
-                      final docRef = FirebaseFirestore.instance
-                          .collection('LaboratoryServices')
-                          .doc();
-                      final id = docRef.id;
-
-                      newService = {...newService, 'id': id};
-                      docRef.set(newService);
-                    }
-
-                    Navigator.pop(context, newService);
+                  if (widget.isEditing) {
+                    FirebaseFirestore.instance
+                        .collection('LaboratoryServices')
+                        .doc(widget.service.id.toString())
+                        .update(newService);
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Please upload an image!')),
-                    );
+                    final docRef = FirebaseFirestore.instance
+                        .collection('LaboratoryServices')
+                        .doc();
+                    final id = docRef.id;
+                    newService['id'] = id;
+                    docRef.set(newService);
                   }
+
+                  Navigator.pop(context, newService);
                 },
                 child:
                     Text(widget.isEditing ? 'Update Service' : 'Add Service'),
@@ -284,6 +312,31 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildTextField(TextEditingController controller, String label,
+      {int maxLines = 1}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 5),
+          TextFormField(
+            controller: controller,
+            maxLines: maxLines,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+            ),
+            // validator: (value) => value!.isEmpty ? 'Please enter $label' : null,
+          ),
+        ],
       ),
     );
   }
