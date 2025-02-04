@@ -202,13 +202,6 @@ class NurseController extends GetxController {
     }
   }
 
-  Future<void> openPaymentUrl(String url) async {
-    Uri uri = Uri.parse(url);
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      Get.snackbar("Error", "Could not open payment link");
-    }
-  }
-
 void convertToFirebaseTimestamp(String date, String time) {
   try {
     String cleanedDate = date.replaceAll(RegExp(r'\s+'), ' ').trim();
