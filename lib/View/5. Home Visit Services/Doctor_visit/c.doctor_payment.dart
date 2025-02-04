@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_import
 
 import 'dart:convert';
-
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -51,7 +50,7 @@ class DoctorPayment extends StatelessWidget {
           'amount': amount,
           'name': name,
           'email': email,
-          'currency': 'KWD', // Default currency as per your Firebase function
+          'currency': 'SAR', // Default currency as per your Firebase function
         });
 
         if (response.data["success"]) {
@@ -70,13 +69,7 @@ class DoctorPayment extends StatelessWidget {
           cartController.chargeId.value = chargeID;
           cartController.paymentUrl.value = paymentUrl;
 
-          print(
-              "controller: 🔴🔴🔴🔴🔴=============>${cartController.paymentStatus.value} ${cartController.chargeId.value}");
-
           cartController.setUserOrderInfo(userModel, firebaseUser);
-
-          
-    
         } else {
           Get.snackbar("Error", "Payment initiation failed");
         }
@@ -88,7 +81,7 @@ class DoctorPayment extends StatelessWidget {
       }
     }
 
-  
+
 
     return Scaffold(
       appBar: AppBar(

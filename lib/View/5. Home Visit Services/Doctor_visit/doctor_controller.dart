@@ -3,8 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
+import 'package:harees_new_project/View/8.%20Chats/Models/doctor_service_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/lab_service_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
+import 'package:harees_new_project/View/Payment/payment_success.dart';
 // import 'package:harees_new_project/View/8.%20Chats/Models/lab_service_model.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +21,7 @@ class DoctorController extends GetxController {
   var longitude = "".obs;
   var currentTime = "".obs;
   var isLoading = false.obs;
-  var servicesList = <LabService>[].obs;
+  var servicesList = <DoctorServiceModel>[].obs;
 
   var paymentStatus = "".obs;
   var paymentUrl = "".obs;
@@ -44,7 +46,7 @@ class DoctorController extends GetxController {
       print("Documents fetched: ${querySnapshot.docs.length}");
 
       var services = querySnapshot.docs.map((doc) {
-        return LabService.fromJson(doc.data() as Map<String, dynamic>);
+        return DoctorServiceModel.fromJson(doc.data() as Map<String, dynamic>);
       }).toList();
 
       servicesList.assignAll(services);
@@ -59,10 +61,12 @@ class DoctorController extends GetxController {
     try {
       isLoading.value = true;
 
-      await FirebaseFirestore.instance
-          .collection("User_appointments")
-          .doc()
-          .set({
+      final docRef =
+          FirebaseFirestore.instance.collection("User_appointments").doc();
+
+      final docId = docRef.id;
+
+      await docRef.set({
         "email": firebaseUser.email,
         "name": userModel.fullname,
         "phone": userModel.mobileNumber,
@@ -110,10 +114,13 @@ class DoctorController extends GetxController {
 
       await openPaymentUrl(paymentUrl.value);
 
-      Get.to(HomePage(
+      Get.to(PaymentSuccessScreen(
         userModel: userModel,
         firebaseUser: firebaseUser,
+        docId:docId,
+        chargeId:chargeId.value ,
       ));
+
       Get.snackbar(
         "Success",
         "Successfully completed",

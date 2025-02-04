@@ -102,7 +102,7 @@ class _MyAppState extends State<MyApp> {
           if (uri.scheme == "harees_new_project" &&
               uri.host == "www.harees_new_project.com" &&
               uri.pathPrefix == "payment") {
-            Get.to(PaymentSuccessScreen());
+            // Get.to(PaymentSuccessScreen());
           }
         }
       });

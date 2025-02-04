@@ -1,7 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_import
 
+import 'dart:convert';
+
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
 import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
@@ -32,7 +37,54 @@ class NursePayment extends StatelessWidget {
     NurseController nurseController =
         Get.put(NurseController());
 
-    // Calculate the VAT and total amount
+       Future<void> createPayment({
+      required double amount,
+      required String name,
+      required String email,
+    }) async {
+      print("Function Calling.........................");
+
+      final HttpsCallable callable =
+          FirebaseFunctions.instance.httpsCallable('createTapPayment');
+      EasyLoading.show(status: 'Processing...');
+      try {
+        final response = await callable.call({
+          'amount': amount,
+          'name': name,
+          'email': email,
+          'currency': 'SAR', // Default currency as per your Firebase function
+        });
+
+        if (response.data["success"]) {
+          String paymentUrl = response.data["paymentUrl"];
+          String chargeID = response.data["chargeID"];
+          String paymentStatus = response.data["paymentStatus"];
+
+          if (kDebugMode) {
+            print("Response Data: ${jsonEncode(response.data)}");
+            print("Charge ID: $chargeID");
+            print("Payment Status: $paymentStatus");
+            print("Payment URL: =💵💵💵💵============>$paymentUrl");
+          }
+
+          nurseController.paymentStatus.value = paymentStatus;
+          nurseController.chargeId.value = chargeID;
+          nurseController.paymentUrl.value = paymentUrl;
+
+          nurseController.setUserOrderInfo(userModel, firebaseUser);
+        } else {
+          Get.snackbar("Error", "Payment initiation failed");
+        }
+      } catch (e) {
+        Get.snackbar("Error", "${e.toString()}");
+        return;
+      } finally {
+        EasyLoading.dismiss();
+      }
+    }
+
+
+
    double total = nurseController.getTotalAmount();
     double tax = total * 0.15;
 
@@ -628,12 +680,19 @@ class NursePayment extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: GestureDetector(
                       onTap: () {
-                        nurseController.setUserOrderInfo(
-                            userModel, firebaseUser);
-                        Get.offAll(() => HomePage(
-                              userModel: userModel,
-                              firebaseUser: firebaseUser,
-                            ));
+
+                         createPayment(
+                          amount: totalAmount,
+                          name: userModel.fullname!,
+                          email: userModel.email!,
+                        );
+                        
+                        // nurseController.setUserOrderInfo(
+                        //     userModel, firebaseUser);
+                        // Get.offAll(() => HomePage(
+                        //       userModel: userModel,
+                        //       firebaseUser: firebaseUser,
+                        //     ));
                       },
                       child: nurseController.isLoading.value
                           ? CircularProgressIndicator()

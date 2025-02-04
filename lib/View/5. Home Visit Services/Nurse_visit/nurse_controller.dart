@@ -5,8 +5,10 @@ import 'package:get/get.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_visit_duration_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/nurse_service_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
+import 'package:harees_new_project/View/Payment/payment_success.dart';
 // import 'package:harees_new_project/View/8.%20Chats/Models/vitamin_service_model.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NurseController extends GetxController {
   var cartItems = <Map<String, dynamic>>[].obs;
@@ -28,6 +30,10 @@ class NurseController extends GetxController {
 
   var selectedDateController = "".obs;
   var selectedTimeController = "".obs;
+
+  var paymentStatus = "".obs;
+  var paymentUrl = "".obs;
+  var chargeId = "".obs;
 
   @override
   void onInit() {
@@ -123,10 +129,12 @@ class NurseController extends GetxController {
     try {
       isLoading.value = true;
 
-      await FirebaseFirestore.instance
-          .collection("User_appointments")
-          .doc()
-          .set({
+      final docRef =
+          FirebaseFirestore.instance.collection("User_appointments").doc();
+
+      final docId = docRef.id;
+
+      await docRef.set({
         "email": firebaseUser.email,
         "name": userModel.fullname,
         "phone": userModel.mobileNumber,
@@ -137,15 +145,27 @@ class NurseController extends GetxController {
         "longitude": longitude.value,
         "packages": cartItems,
         "type": "Nurse Visit",
+        "paymentStatus": paymentStatus.value,
+        "paymentUrl": paymentUrl.value,
+        "chargeId": chargeId.value,
         "selected_time": currentTime.value,
         "status": "Requested",
-        'createdAt':DateTime.now(),
+        'createdAt': DateTime.now(),
         "accepted_by": null
       });
 
+      await openPaymentUrl(paymentUrl.value);
+
+      Get.to(PaymentSuccessScreen(
+        userModel: userModel,
+        firebaseUser: firebaseUser,
+        docId: docId,
+        chargeId: chargeId.value,
+      ));
+
       Get.snackbar(
-        "Sucess",
-        "Sucessfully completed",
+        "Success",
+        "Successfully completed",
         backgroundColor: Colors.lightGreen,
         colorText: Colors.white,
       );
@@ -153,6 +173,13 @@ class NurseController extends GetxController {
       Get.snackbar('Error', 'Failed to confirm. Please try again.');
     } finally {
       isLoading.value = false; // Hide loading state
+    }
+  }
+
+  Future<void> openPaymentUrl(String url) async {
+    Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      Get.snackbar("Error", "Could not open payment link");
     }
   }
 
