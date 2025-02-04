@@ -151,10 +151,15 @@ class AuthServiceUserLogin {
         userEmail: '',
       ));
     } else if (userModel.role == "user") {
-      Get.offAll(HomePage(
-        userModel: userModel,
-        firebaseUser: firebaseUser,
-      ));
+      userModel.fullname == ""
+          ? Get.offAll(CompleteProfile(
+              userModel: userModel,
+              firebaseUser: firebaseUser,
+            ))
+          : Get.offAll(HomePage(
+              userModel: userModel,
+              firebaseUser: firebaseUser,
+            ));
     }
   }
 }
