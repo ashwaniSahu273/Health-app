@@ -724,12 +724,12 @@ class _Doctor_TimeState extends State<Doctor_Time> {
                               selectedDate, selectedTime!);
 
                           // Navigate to Payment Details with the package name and price
-                          Get.to(() => DoctorPayment(
-                                // address: doctorController.stAddress.value,
-                                userModel: widget.userModel,
-                                firebaseUser: widget.firebaseUser,
-                                selectedTime: selectedTime!,
-                              ));
+                          Get.to(DoctorPayment(
+                            // address: doctorController.stAddress.value,
+                            userModel: widget.userModel,
+                            firebaseUser: widget.firebaseUser,
+                            selectedTime: selectedTime!,
+                          ));
 
                           // Get.to(GetPatientInfo(
                           //   userModel: widget.userModel,
@@ -803,6 +803,8 @@ class _Doctor_TimeState extends State<Doctor_Time> {
         setState(() {
           selectedTime = time;
         });
+
+        print("thiss is time: $time this is date : $selectedDate");
         doctorController.selectedDateController.value = selectedDate;
         doctorController.selectedTimeController.value = time;
         doctorController.convertToFirebaseTimestamp(selectedDate, time);

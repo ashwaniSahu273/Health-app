@@ -140,12 +140,14 @@ class DoctorPayment extends StatelessWidget {
                               size: 18,
                             ),
                             SizedBox(width: 5),
-                            Text(
-                              '${cartController.selectedDateController.value} - ${cartController.selectedTimeController.value}',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontFamily: "Roboto"),
+                            Obx(
+                             ()=>Text(
+                                '${cartController.selectedDateController.value} - ${cartController.selectedTimeController.value}',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontFamily: "Roboto"),
+                              ),
                             ),
                           ],
                         ),
@@ -538,7 +540,7 @@ class DoctorPayment extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Doctor Visit',
+                                  'Doctor Visit'.tr,
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.grey,
@@ -559,7 +561,7 @@ class DoctorPayment extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Tax (15%)'.tr,
+                                  'TAX (15%)'.tr,
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.grey,

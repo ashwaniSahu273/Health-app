@@ -7,7 +7,7 @@ class Language extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         "en_US": {
-          "Doctor visit": "Doctor visit",
+          
           "Virtual Consultation": "Virtual Consultation",
           "Vitamin IV drips and fluids": "Vitamin IV drips and fluids",
           "Laboratory": "Laboratory",
@@ -139,7 +139,7 @@ class Language extends Translations {
           "Experience": "Experience",
           "Log in": "Log in",
           "Nurse Visit": "Nurse Visit",
-          "Doctor Visit": "Doctor visit",
+          "Doctor Visit": "Doctor Visit",
           "Vitamin Drips": "Vitamin Drips",
           "We accept Bupa, Tawuniya, MEDGULD, Malath and Alrajhi Takaful insurance for telemedicine":
               "We accept Bupa, Tawuniya, MEDGULD, Malath and Alrajhi Takaful insurance for telemedicine",
@@ -347,7 +347,7 @@ class Language extends Translations {
           "Search Services": "Search Services",
           "IV & vitamins": "IV & vitamins",
           "Qty: ": "Qty: ",
-          "TAX (15%)": "TAX (15%)",
+          
           "Send": "Send",
           "Search Vitamin IV": "Search Vitamin IV",
           "Appointment Details": "Appointment Details",
@@ -360,8 +360,11 @@ class Language extends Translations {
           "Service Includes": "Service Includes",
           "Terms of Service": "Terms of Service",
           "Know more": "Know more",
+          "TAX (15%)":"TAX (15%)",
+          "Select duration of service":"Select duration of service",
         },
         "ar_AE": {
+          "Select duration of service":"اختر مدة الخدمة",
           "Know more": "المزيد",
           "Terms of Service": "شروط الخدمة",
           "Service Includes": "تتضمن الخدمة",
@@ -580,7 +583,7 @@ class Language extends Translations {
           "Or Sign In With? ": " أو تسجيل الدخول مع؟",
           "Login To Your Account": "تسجيل الدخول إلى حسابك",
           "Nurse Visit": "زيارة تمريض ",
-          "Doctor visit": "زيارة طبيب",
+          "Doctor Visit": "زيارة طبيب",
           "Virtual Consultation": "استشارة طبيب عن بعد",
           "Laboratory": " الفحوصات",
           "Vitamin IV drips and fluids": "المحاليل والسوائل",

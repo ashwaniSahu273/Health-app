@@ -118,6 +118,25 @@ class NurseController extends GetxController {
       print("Error fetching services: $e");
     }
   }
+  void fetchNurseVisitArDuration() async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('NurseVisitArDuration')
+          .get();
+
+      var services = querySnapshot.docs.map((doc) {
+        return NurseVisitDuration.fromJson(
+          doc.data() as Map<String, dynamic>,
+        );
+      }).toList();
+
+      durationList.assignAll(services);
+
+      print("======================> $servicesList");
+    } catch (e) {
+      print("Error fetching services: $e");
+    }
+  }
 
   Future<void> setUserOrderInfo(UserModel userModel, User firebaseUser) async {
     try {
@@ -139,13 +158,13 @@ class NurseController extends GetxController {
         "type": "Nurse Visit",
         "selected_time": currentTime.value,
         "status": "Requested",
-        'createdAt':DateTime.now(),
+        'createdAt': DateTime.now(),
         "accepted_by": null
       });
 
       Get.snackbar(
-        "Sucess",
-        "Sucessfully completed",
+        "Success",
+        "Successfully completed",
         backgroundColor: Colors.lightGreen,
         colorText: Colors.white,
       );
@@ -156,28 +175,32 @@ class NurseController extends GetxController {
     }
   }
 
-  void convertToFirebaseTimestamp(String date, String time) {
-    try {
-      String cleanedDate = date.replaceAll(RegExp(r'\s+'), ' ').trim();
+void convertToFirebaseTimestamp(String date, String time) {
+  try {
+    String cleanedDate = date.replaceAll(RegExp(r'\s+'), ' ').trim();
+    String cleanedTime = time.replaceAll(RegExp(r'\s+'), ' ').trim();
+    cleanedTime = cleanedTime.toUpperCase();
 
-      String cleanedTime = time.replaceAll(RegExp(r'\s+'), ' ').trim();
-      cleanedTime = cleanedTime.toUpperCase();
+    // Handle Arabic time format and replace with AM/PM
+    cleanedTime = cleanedTime.replaceAll(RegExp(r'صباحا', caseSensitive: false), 'AM')
+                             .replaceAll(RegExp(r'مساء', caseSensitive: false), 'PM');
 
-      String dateTimeString = "$cleanedDate $cleanedTime";
+    String dateTimeString = "$cleanedDate $cleanedTime";
 
-      print("Parsing DateTime String: '$dateTimeString'");
+    print("Parsing DateTime String: '$dateTimeString'");
 
-      DateTime dateTime =
-          DateFormat("MMMM d, yyyy h:mm a", "en_US").parse(dateTimeString);
+    DateTime dateTime =
+        DateFormat("MMMM d, yyyy h:mm a", "en_US").parse(dateTimeString);
 
-      String isoTimestamp = dateTime.toUtc().toIso8601String();
-      currentTime.value = isoTimestamp;
+    String isoTimestamp = dateTime.toUtc().toIso8601String();
+    currentTime.value = isoTimestamp;
 
-      print("Parsed ISO Timestamp: $currentTime");
-    } catch (e) {
-      print("Error parsing date and time: $e");
-    }
+    print("Parsed ISO Timestamp: $currentTime");
+  } catch (e) {
+    print("Error parsing date and time: $e");
   }
+}
+
 
   bool isCartEmpty() {
     return cartItems.isEmpty;
@@ -555,7 +578,7 @@ class NurseController extends GetxController {
     }
   }
 
-  void storeDuration() async {
+  void storeEnDuration() async {
     List<Map<String, dynamic>> durations = [
       {"duration": "1 Week", "hours": "12 Hours per day", "price": "2500 SAR"},
       {"duration": "2 Week", "hours": "12 Hours per day", "price": "4000 SAR"},
@@ -564,6 +587,38 @@ class NurseController extends GetxController {
     ];
     CollectionReference servicesCollection =
         FirebaseFirestore.instance.collection('NurseVisitDuration');
+
+    for (var service in durations) {
+      final docRef = servicesCollection.doc();
+      final id = docRef.id;
+
+      final updatedService = {...service, 'id': id};
+
+      await docRef.set(updatedService);
+    }
+  }
+
+  void storeArDuration() async {
+    List<Map<String, dynamic>> durations = [
+      {
+        "duration": "1 أسبوع",
+        "hours": "12 ساعة في اليوم",
+        "price": "2500 ريال"
+      },
+      {
+        "duration": "2 أسبوع",
+        "hours": "12 ساعة في اليوم",
+        "price": "4000 ريال"
+      },
+      {
+        "duration": "3 أسبوع",
+        "hours": "12 ساعة في اليوم",
+        "price": "5200 ريال"
+      },
+      {"duration": "4 أسبوع", "hours": "12 ساعة في اليوم", "price": "6500 ريال"}
+    ];
+    CollectionReference servicesCollection =
+        FirebaseFirestore.instance.collection('NurseVisitArDuration');
 
     for (var service in durations) {
       final docRef = servicesCollection.doc();

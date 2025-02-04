@@ -433,13 +433,13 @@ class TotalOrdersDetails extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
+                                  const Padding(
+                                    padding: EdgeInsets.only(
                                       top: 8.0,
                                       left: 16,
                                     ),
                                     child: Text(
-                                      "About This Package".tr,
+                                      "About This Package",
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,

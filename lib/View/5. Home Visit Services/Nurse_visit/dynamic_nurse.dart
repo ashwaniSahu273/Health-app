@@ -29,6 +29,12 @@ class DynamicNurse extends StatelessWidget {
     final localizedData =
         languageCode == 'ar' ? service.localized.ar : service.localized.en;
 
+    if (languageCode == 'ar') {
+      controller.fetchNurseVisitArDuration();
+    } else {
+      controller.fetchNurseVisitDuration();
+    }
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -523,7 +529,7 @@ class DynamicNurse extends StatelessWidget {
                                                     Row(
                                                       children: [
                                                         Text(
-                                                          "Starting",
+                                                          "Starting".tr,
                                                           style: TextStyle(
                                                             fontSize: 12,
                                                             color: Colors

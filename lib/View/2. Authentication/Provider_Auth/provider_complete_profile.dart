@@ -213,7 +213,7 @@ class _CompleteProfileProviderState extends State<CompleteProfileProvider> {
                 height: 20,
               ),
               RoundButton(
-                  text: "Done!".tr,
+                  text: "Done".tr,
                   onTap: () {
                     checkValues();
                   }),

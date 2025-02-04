@@ -105,8 +105,8 @@ class VitaminCartController extends GetxController {
       });
 
       Get.snackbar(
-        "Sucess",
-        "Sucessfully completed",
+        "Success",
+        "Successfully completed",
         backgroundColor: Colors.lightGreen,
         colorText: Colors.white,
       );
@@ -117,28 +117,32 @@ class VitaminCartController extends GetxController {
     }
   }
 
-  void convertToFirebaseTimestamp(String date, String time) {
-    try {
-      String cleanedDate = date.replaceAll(RegExp(r'\s+'), ' ').trim();
+void convertToFirebaseTimestamp(String date, String time) {
+  try {
+    String cleanedDate = date.replaceAll(RegExp(r'\s+'), ' ').trim();
+    String cleanedTime = time.replaceAll(RegExp(r'\s+'), ' ').trim();
+    cleanedTime = cleanedTime.toUpperCase();
 
-      String cleanedTime = time.replaceAll(RegExp(r'\s+'), ' ').trim();
-      cleanedTime = cleanedTime.toUpperCase();
+    // Handle Arabic time format and replace with AM/PM
+    cleanedTime = cleanedTime.replaceAll(RegExp(r'صباحا', caseSensitive: false), 'AM')
+                             .replaceAll(RegExp(r'مساء', caseSensitive: false), 'PM');
 
-      String dateTimeString = "$cleanedDate $cleanedTime";
+    String dateTimeString = "$cleanedDate $cleanedTime";
 
-      print("Parsing DateTime String: '$dateTimeString'");
+    print("Parsing DateTime String: '$dateTimeString'");
 
-      DateTime dateTime =
-          DateFormat("MMMM d, yyyy h:mm a", "en_US").parse(dateTimeString);
+    DateTime dateTime =
+        DateFormat("MMMM d, yyyy h:mm a", "en_US").parse(dateTimeString);
 
-      String isoTimestamp = dateTime.toUtc().toIso8601String();
-      currentTime.value = isoTimestamp;
+    String isoTimestamp = dateTime.toUtc().toIso8601String();
+    currentTime.value = isoTimestamp;
 
-      print("Parsed ISO Timestamp: $currentTime");
-    } catch (e) {
-      print("Error parsing date and time: $e");
-    }
+    print("Parsed ISO Timestamp: $currentTime");
+  } catch (e) {
+    print("Error parsing date and time: $e");
   }
+}
+
 
   bool isCartEmpty() {
     return cartItems.isEmpty;

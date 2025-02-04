@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart' as FilePicker;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/View/2.%20Authentication/User_Auth/Complete_Profile_User.dart';
 import 'package:harees_new_project/View/2.%20Authentication/User_Auth/user_login.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/provider_home.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
@@ -56,13 +57,18 @@ Widget decideHomeScreen(UserModel? userModel, User? credential) {
       return Service_Provider_Home(
         userModel: userModel,
         firebaseUser: credential,
-        userEmail: '',
+        userEmail: userModel.email ?? '', // Use userModel.email if available
       );
     case "user":
-      return HomePage(
-        userModel: userModel,
-        firebaseUser: credential,
-      );
+      return userModel.fullname == "" 
+          ? CompleteProfile(
+              userModel: userModel,
+              firebaseUser: credential,
+            )
+          : HomePage(
+              userModel: userModel,
+              firebaseUser: credential,
+            );
     default:
       return LoginScreen();
   }

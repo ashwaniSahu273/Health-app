@@ -47,6 +47,9 @@ class _NurseVisitState extends State<NurseVisit> {
 
   void initState() {
     // vitaminCartController.fetchServices();
+    // nurseController.storeArDuration();
+    // nurseController.storeEnDuration();
+
     getCurrentLoc();
     super.initState();
   }
