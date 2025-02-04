@@ -725,11 +725,11 @@ class _Doctor_TimeState extends State<Doctor_Time> {
 
                           // Navigate to Payment Details with the package name and price
                           Get.to(DoctorPayment(
-                            // address: doctorController.stAddress.value,
-                            userModel: widget.userModel,
-                            firebaseUser: widget.firebaseUser,
-                            selectedTime: selectedTime!,
-                          ));
+                                // address: doctorController.stAddress.value,
+                                userModel: widget.userModel,
+                                firebaseUser: widget.firebaseUser,
+                                selectedTime: selectedTime!,
+                              ));
 
                           // Get.to(GetPatientInfo(
                           //   userModel: widget.userModel,

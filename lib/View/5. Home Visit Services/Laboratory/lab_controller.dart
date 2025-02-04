@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/lab_service_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
+import 'package:harees_new_project/View/Payment/payment_success.dart';
 // import 'package:harees_new_project/View/8.%20Chats/Models/lab_service_model.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+
+import 'package:url_launcher/url_launcher.dart';
 
 class LabController extends GetxController {
   var cartItems = <Map<String, dynamic>>[].obs;
@@ -21,6 +24,10 @@ class LabController extends GetxController {
 
   var selectedDateController = "".obs;
   var selectedTimeController = "".obs;
+
+  var paymentStatus = "".obs;
+  var paymentUrl = "".obs;
+  var chargeId = "".obs;
 
   var filteredServices = <LabService>[].obs;
   TextEditingController searchController = TextEditingController();
@@ -84,10 +91,12 @@ class LabController extends GetxController {
     try {
       isLoading.value = true;
 
-      await FirebaseFirestore.instance
-          .collection("User_appointments")
-          .doc()
-          .set({
+      final docRef =
+          FirebaseFirestore.instance.collection("User_appointments").doc();
+
+      final docId = docRef.id;
+
+      await docRef.set({
         "email": firebaseUser.email,
         "name": userModel.fullname,
         "phone": userModel.mobileNumber,
@@ -99,10 +108,22 @@ class LabController extends GetxController {
         "packages": cartItems,
         "status": "Requested",
         "type": "Lab Test",
+        "paymentStatus": paymentStatus.value,
+        "paymentUrl": paymentUrl.value,
+        "chargeId": chargeId.value,
         "selected_time": currentTime.value,
         'createdAt': DateTime.now(),
         "accepted_by": null
       });
+
+      await openPaymentUrl(paymentUrl.value);
+
+      Get.to(PaymentSuccessScreen(
+        userModel: userModel,
+        firebaseUser: firebaseUser,
+        docId: docId,
+        chargeId: chargeId.value,
+      ));
       Get.snackbar(
         "Success",
         "Successfully completed",
@@ -113,6 +134,20 @@ class LabController extends GetxController {
       Get.snackbar('Error', 'Failed to confirm. Please try again.');
     } finally {
       isLoading.value = false; // Hide loading state
+    }
+  }
+
+  Future<void> openPaymentUrl(String url) async {
+    Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      Get.snackbar("Error", "Could not open payment link");
+    }
+  }
+
+  Future<void> openPaymentUrl(String url) async {
+    Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      Get.snackbar("Error", "Could not open payment link");
     }
   }
 
@@ -344,7 +379,8 @@ void convertToFirebaseTimestamp(String date, String time) {
       },
       {
         "id": 4,
-        "imagePath": "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738563317999.png?alt=media&token=6ca4b432-764a-4b95-bb0e-bb425a539534",
+        "imagePath":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738563317999.png?alt=media&token=6ca4b432-764a-4b95-bb0e-bb425a539534",
         "type": "package",
         "localized": {
           "en": {
@@ -371,7 +407,8 @@ void convertToFirebaseTimestamp(String date, String time) {
       },
       {
         "id": 5,
-        "imagePath": "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738563428162.png?alt=media&token=53a32948-6328-4b29-86e9-496bd4eba652",
+        "imagePath":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738563428162.png?alt=media&token=53a32948-6328-4b29-86e9-496bd4eba652",
         "type": "package",
         "localized": {
           "en": {
@@ -398,7 +435,8 @@ void convertToFirebaseTimestamp(String date, String time) {
       },
       {
         "id": 7,
-        "imagePath": "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738563485952.png?alt=media&token=24bc08b3-8350-44db-bf30-16a0302a0cf7",
+        "imagePath":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738563485952.png?alt=media&token=24bc08b3-8350-44db-bf30-16a0302a0cf7",
         "type": "package",
         "localized": {
           "en": {

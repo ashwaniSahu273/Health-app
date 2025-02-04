@@ -21,12 +21,14 @@ import 'package:open_file/open_file.dart';
 
 class RequestedAppointmentDetails extends StatelessWidget {
   final DocumentSnapshot doc;
+  // final String status;
   final UserModel userModel;
   final User firebaseUser;
 
   const RequestedAppointmentDetails(
       {super.key,
       required this.doc,
+      // required this.status,
       required this.userModel,
       required this.firebaseUser});
 
@@ -240,6 +242,29 @@ class RequestedAppointmentDetails extends StatelessWidget {
                                       fontSize: 14,
                                     ),
                                   ),
+                                  const SizedBox(height: 4),
+                                  RichText(
+                                    text: TextSpan(
+                                      text: "Payment Status: ", // Static text
+                                      style: const TextStyle(
+                                        color: Colors
+                                            .black, // Change color if needed
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                          text: doc[
+                                              "paymentStatus"], // Dynamic text
+                                          style: const TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -424,24 +449,20 @@ class RequestedAppointmentDetails extends StatelessWidget {
                       const SizedBox(height: 8),
                       doc["status"] != "Completed"
                           ? Container(
-                            width: double.infinity,
-                            child: Card(
+                              width: double.infinity,
+                              child: Card(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                                 elevation: 0,
                                 color: Colors.white,
-                                
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                        top: 8.0,
-                                        left: 16,
-                                        right: 16
-                                      ),
+                                          top: 8.0, left: 16, right: 16),
                                       child: Text(
                                         "About This Package",
                                         style: TextStyle(
@@ -473,7 +494,7 @@ class RequestedAppointmentDetails extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                          )
+                            )
                           : Card(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),

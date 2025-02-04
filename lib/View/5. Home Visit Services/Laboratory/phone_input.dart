@@ -144,31 +144,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                               phoneController.text.trim());
                         }),
               ),
-              // // Next button
-              // SizedBox(
-              //   width: double.infinity,
-              //   child: ElevatedButton(
-              //     onPressed: () {
-              //       sendOtp(selectedCountryCode + phoneController.text.trim());
-              //     },
-              //     style: ElevatedButton.styleFrom(
-              //       // primary: Colors.lightBlueAccent.shade100,
-              //       // onPrimary: Colors.black,
-
-              //       padding: const EdgeInsets.symmetric(vertical: 12),
-              //       shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(8.0),
-              //       ),
-              //     ),
-              //     child:const Text(
-              //       'Next',
-              //       style: TextStyle(
-              //         fontSize: 16,
-              //         fontWeight: FontWeight.bold,
-              //       ),
-              //     ),
-              //   ),
-              // ),
+          
             ],
           ),
         ),

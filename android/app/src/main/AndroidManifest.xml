@@ -17,11 +17,11 @@
         android:label="harees_new_project"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-        
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAgo-g7Ft5S-5F6EM1TrKGMqIK5OS7N5aY"/>
-        
+            android:value="AIzaSyAgo-g7Ft5S-5F6EM1TrKGMqIK5OS7N5aY" />
+
         <!-- Add these meta-data elements for Google Play services and Firebase -->
         <meta-data
             android:name="com.google.android.gms.version"
@@ -37,7 +37,7 @@
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        
+
         <!-- MainActivity declaration -->
         <activity
             android:name=".MainActivity"
@@ -48,12 +48,21 @@
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
             <meta-data
-              android:name="io.flutter.embedding.android.NormalTheme"
-              android:resource="@style/NormalTheme" />
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme" />
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+              <data android:scheme="hareeshealth" android:host="payment-success" />
+            </intent-filter>
+
+
         </activity>
 
         <!-- Don't delete the meta-data below.

@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/vitamin_service_model.dart';
+import 'package:harees_new_project/View/Payment/payment_success.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class VitaminCartController extends GetxController {
   var cartItems = <Map<String, dynamic>>[].obs;
@@ -17,6 +19,10 @@ class VitaminCartController extends GetxController {
 
   var selectedDateController = "".obs;
   var selectedTimeController = "".obs;
+
+  var paymentStatus = "".obs;
+  var paymentUrl = "".obs;
+  var chargeId = "".obs;
 
   @override
   void onInit() {
@@ -84,10 +90,12 @@ class VitaminCartController extends GetxController {
     try {
       isLoading.value = true;
 
-      await FirebaseFirestore.instance
-          .collection("User_appointments")
-          .doc()
-          .set({
+      final docRef =
+          FirebaseFirestore.instance.collection("User_appointments").doc();
+
+      final docId = docRef.id;
+
+      await docRef.set({
         "email": firebaseUser.email,
         "name": userModel.fullname,
         "phone": userModel.mobileNumber,
@@ -100,9 +108,18 @@ class VitaminCartController extends GetxController {
         "type": "Vitamin Drips",
         "selected_time": currentTime.value,
         "status": "Requested",
-        'createdAt':DateTime.now(),
+        'createdAt': DateTime.now(),
         "accepted_by": null
       });
+
+       await openPaymentUrl(paymentUrl.value);
+
+      Get.to(PaymentSuccessScreen(
+        userModel: userModel,
+        firebaseUser: firebaseUser,
+        docId: docId,
+        chargeId: chargeId.value,
+      ));
 
       Get.snackbar(
         "Success",
@@ -117,11 +134,12 @@ class VitaminCartController extends GetxController {
     }
   }
 
-void convertToFirebaseTimestamp(String date, String time) {
-  try {
-    String cleanedDate = date.replaceAll(RegExp(r'\s+'), ' ').trim();
-    String cleanedTime = time.replaceAll(RegExp(r'\s+'), ' ').trim();
-    cleanedTime = cleanedTime.toUpperCase();
+  void convertToFirebaseTimestamp(String date, String time) {
+    try {
+      String cleanedDate = date.replaceAll(RegExp(r'\s+'), ' ').trim();
+
+      String cleanedTime = time.replaceAll(RegExp(r'\s+'), ' ').trim();
+      cleanedTime = cleanedTime.toUpperCase();
 
     // Handle Arabic time format and replace with AM/PM
     cleanedTime = cleanedTime.replaceAll(RegExp(r'صباحا', caseSensitive: false), 'AM')
@@ -239,7 +257,6 @@ void convertToFirebaseTimestamp(String date, String time) {
   void clearCart() {
     cartItems.clear();
   }
-
 
   void storeServices() async {
     final List<Map<String, dynamic>> servicess = [
