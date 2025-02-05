@@ -80,7 +80,10 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
           widget.service!.localized.ar.termsOfService ?? '';
       _enTermsOfServiceController.text =
           widget.service!.localized.en.termsOfService ?? '';
-      _priceController.text = widget.service!.localized.en.price ?? '';
+      _priceController.text = widget.service!.localized.en.price
+              ?.replaceAll(RegExp(r'[^0-9]'), '') ??
+          '';
+
       controller.nurseUploadedImageUrl.value = widget.service!.imagePath ?? '';
       controller.selectedServiceNurseType.value = widget.service!.type;
     }
@@ -101,7 +104,7 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
         controller.nurseUploadedImageUrl.value = downloadUrl;
 
         controller.isLoadingNurseService.value = false;
-      
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Image uploaded successfully!')),
         );
@@ -267,7 +270,7 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
                     : const SizedBox.shrink(),
               ),
 
-              _buildTextField(_priceController, 'Price'),
+              _buildTextField(_priceController, 'Price',keyboardType: TextInputType.number),
               // _buildTextField(_imagePathController, 'Image Path'),
               const SizedBox(height: 20),
               ElevatedButton(
@@ -280,24 +283,20 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
                     "type": controller.selectedServiceNurseType.value,
                     'localized': {
                       'ar': {
-                        'serviceName':
-                            _arServiceNameController.text,
-                        'description':
-                            _arDescriptionController.text,
+                        'serviceName': _arServiceNameController.text,
+                        'description': _arDescriptionController.text,
                         'about': _arAboutController.text,
                         'serviceIncludes': _arServiceIncludesController.text,
                         'TermsOfService': _arTermsOfServiceController.text,
-                        'price': _priceController.text,
+                         'price': "${_priceController.text} ريال",
                       },
                       'en': {
-                        'serviceName':
-                            _enServiceNameController.text,
-                        'description':
-                            _enDescriptionController.text,
+                        'serviceName': _enServiceNameController.text,
+                        'description': _enDescriptionController.text,
                         'about': _enAboutController.text,
                         'serviceIncludes': _enServiceIncludesController.text,
                         'TermsOfService': _enTermsOfServiceController.text,
-                        'price': _priceController.text,
+                        'price': "${_priceController.text} SAR",
                       },
                     },
                   };
@@ -328,8 +327,12 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label,
-      {int maxLines = 1}) {
+  Widget _buildTextField(
+    TextEditingController controller,
+    String label, {
+    int maxLines = 1,
+    TextInputType keyboardType = TextInputType.text, // Default to text input
+  }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Column(
@@ -343,10 +346,10 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
           TextFormField(
             controller: controller,
             maxLines: maxLines,
+            keyboardType: keyboardType,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
             ),
-            // validator: (value) => value!.isEmpty ? 'Please enter $label' : null,
           ),
         ],
       ),

@@ -69,7 +69,9 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
       _enServiceIncludesController.text =
           widget.service!.localized.en.components ?? '';
 
-      _priceController.text = widget.service!.localized.en.price ?? '';
+      _priceController.text = widget.service!.localized.en.price
+              ?.replaceAll(RegExp(r'[^0-9]'), '') ??
+          '';
       controller.vitaminUploadedImageUrl.value =
           widget.service!.imagePath ?? '';
       controller.selectedServiceVitaminType.value = widget.service!.type;
@@ -91,7 +93,7 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
         controller.vitaminUploadedImageUrl.value = downloadUrl;
 
         controller.isLoadingNurseService.value = false;
-     
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Image uploaded successfully!')),
         );
@@ -183,7 +185,6 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
               const SizedBox(
                 height: 20,
               ),
-
               Obx(
                 () => DropdownButtonFormField<String>(
                   value: controller.selectedServiceVitaminType.value,
@@ -225,7 +226,6 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
                   _arServiceNameController, 'Service Name (Arabic)'),
               _buildTextField(
                   _enServiceNameController, 'Service Name (English)'),
-
               Obx(
                 () => controller.selectedServiceVitaminType.value !=
                         "individual"
@@ -257,9 +257,8 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
                       )
                     : const SizedBox.shrink(),
               ),
-
-              _buildTextField(_priceController, 'Price'),
-              // _buildTextField(_imagePathController, 'Image Path'),
+              _buildTextField(_priceController, 'Price',
+                  keyboardType: TextInputType.number),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
@@ -272,22 +271,18 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
                     "type": controller.selectedServiceVitaminType.value,
                     'localized': {
                       'ar': {
-                        'serviceName':
-                            _arServiceNameController.text,
-                        'description':
-                            _arAboutController.text,
+                        'serviceName': _arServiceNameController.text,
+                        'description': _arAboutController.text,
                         'components': _arServiceIncludesController.text,
                         'instructions': _arDescriptionController.text,
-                        'price': _priceController.text,
+                        'price': "${_priceController.text} ريال",
                       },
                       'en': {
-                        'serviceName':
-                            _enServiceNameController.text,
-                        'description':
-                            _enAboutController.text,
+                        'serviceName': _enServiceNameController.text,
+                        'description': _enAboutController.text,
                         'components': _enServiceIncludesController.text,
                         'instructions': _enDescriptionController.text,
-                        'price': _priceController.text,
+                        'price': "${_priceController.text} SAR",
                       },
                     },
                   };
@@ -318,8 +313,12 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label,
-      {int maxLines = 1}) {
+  Widget _buildTextField(
+    TextEditingController controller,
+    String label, {
+    int maxLines = 1,
+    TextInputType keyboardType = TextInputType.text, // Default to text input
+  }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Column(
@@ -333,10 +332,10 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
           TextFormField(
             controller: controller,
             maxLines: maxLines,
+            keyboardType: keyboardType,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
             ),
-            // validator: (value) => value!.isEmpty ? 'Please enter $label' : null,
           ),
         ],
       ),

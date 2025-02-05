@@ -25,6 +25,9 @@ class Provider_login extends StatefulWidget {
 class _Provider_loginState extends State<Provider_login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  var selectedLanguage = "English";
+
+
   void checkValues() {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
@@ -107,9 +110,10 @@ class _Provider_loginState extends State<Provider_login> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Color(0xFFEEF8FF),
+          backgroundColor: const Color(0xFFEEF8FF),
           automaticallyImplyLeading: false,
           leading: IconButton(
               onPressed: () => Get.back(),
@@ -117,8 +121,49 @@ class _Provider_loginState extends State<Provider_login> {
                 Icons.keyboard_double_arrow_left,
                 size: 35,
                 weight: 200,
-              ))),
-      backgroundColor: Color(0xFFEEF8FF),
+              )),
+              actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0,left: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                DropdownButton<String>(
+                  value: selectedLanguage,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedLanguage = newValue!;
+            
+                      if (selectedLanguage == 'Arabic') {
+                        Get.updateLocale(const Locale('ar', 'AE'));
+                      } else if (selectedLanguage == 'English') {
+                        Get.updateLocale(const Locale('en', 'US'));
+                      }
+                    });
+                  },
+                  dropdownColor: Colors.black,
+                  items: <String>[
+                    'English',
+                    'Arabic',
+                  ]
+                      .map<DropdownMenuItem<String>>(
+                        (String value) => DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value.tr,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, color: Colors.green),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ],
+            ),
+          ),
+        ], 
+              ),
+      backgroundColor: const Color(0xFFEEF8FF),
       body: Stack(
         children: [
           // Background image
@@ -151,7 +196,7 @@ class _Provider_loginState extends State<Provider_login> {
                       const SizedBox(
                         height: 5,
                       ),
-                      Text(
+                      const Text(
                         "Harees",
                         style: TextStyle(
                             fontSize: 36,
@@ -161,7 +206,7 @@ class _Provider_loginState extends State<Provider_login> {
                       ),
                       Text(
                         "Care about you and your family".tr,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                             fontFamily: "Schyler"),
@@ -206,7 +251,7 @@ class _Provider_loginState extends State<Provider_login> {
                           borderColor: Colors.white,
                           textColor: Colors.white,
                           fontSize: 16,
-                          color: Color(0xFF007ABB),
+                          color: const Color(0xFF007ABB),
                           text: "Sign in".tr,
                           onTap: () {
                             checkValues();

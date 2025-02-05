@@ -97,6 +97,9 @@ class _TotalOrdersState extends State<TotalOrders> {
                       ConnectionState.waiting) {
                     return Text("Loading".tr);
                   }
+                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                      return const Center(child: Text('No Orders'));
+                    }
 
                   return ListView.builder(
                     itemCount: snapshot.data!.docs.length,

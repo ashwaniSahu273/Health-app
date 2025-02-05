@@ -47,6 +47,34 @@ class _TotalUsersState extends State<TotalUsers> {
     const Color(0xFFfcd1c7),
   ];
 
+  void _deleteDoctor(BuildContext context, String docId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Confirm Deletion"),
+          content: const Text("Are you sure you want to delete this User?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+                await FirebaseFirestore.instance
+                    .collection('Registered Users')
+                    .doc(docId)
+                    .delete();
+              },
+              child: const Text("Delete", style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +93,7 @@ class _TotalUsersState extends State<TotalUsers> {
                 )), // Double-arrow icon
             Text(
               'All Users'.tr,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   fontFamily: "Roboto"),
@@ -73,17 +101,10 @@ class _TotalUsersState extends State<TotalUsers> {
           ],
         ),
       ),
-      // drawer: MyDrawer(
-      //   userModel: widget.userModel,
-      //   firebaseUser: widget.firebaseUser,
-      //   targetUser: widget.userModel,
-      // ),
       backgroundColor: Colors.blue[50],
       body: SafeArea(
         child: Column(
           children: [
-            // const SizedBox(height: 20),
-            // const MySearchBar(),
             const SizedBox(height: 15),
             Expanded(
               child: SingleChildScrollView(
@@ -104,129 +125,75 @@ class _TotalUsersState extends State<TotalUsers> {
                       return const Center(child: Text('No doctors available'));
                     }
 
-                    final doctorsData = snapshot.data!.docs;
+                    final userData = snapshot.data!.docs;
 
                     return ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: doctorsData.length,
+                      itemCount: userData.length,
                       itemBuilder: (context, index) {
-                        final doc = doctorsData[index];
+                        final doc = userData[index];
                         final data = doc.data() as Map<String, dynamic>;
-                        final phone = data.containsKey('mobileNumber')
-                            ? data['mobileNumber'] ?? 'N/A'
-                            : 'N/A';
+                        final phone = data['mobileNumber'] ?? 'N/A';
 
-                        final doctor = {
-                          'image': doc['profilePic'] ??
-                              'assets/images/vitamin.png', // Placeholder image if none provided
-                          'name': doc['fullname'] ?? 'N/A',
-                          'email': doc['email'] ?? 'N/A',
-                          'phone': phone,
-                        };
-
-                        return Container(
-                          padding: const EdgeInsets.all(10.0),
+                        return Card(
+                          color: Colors.white,
                           margin: const EdgeInsets.symmetric(
                               vertical: 8.0, horizontal: 16.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
+                          shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          height: 120,
-                          child: Row(
-                            children: [
-                              // Doctor's picture
-                              Image.asset(
-                                "assets/images/user.png", // Replace with your asset
-                                height: 74,
-                                width: 60,
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.all(10.0),
+                            leading: Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: const Color(
+                                    0xFFE6F5FF), // Circle background color
                               ),
-                              // Container(
-                              //   width: 60,
-                              //   height: 60,
-                              //   decoration: BoxDecoration(
-                              //     shape: BoxShape.circle,
-                              //     image: DecorationImage(
-                              //       image: NetworkImage(doctor['image']),
-                              //       fit: BoxFit.cover,
-                              //     ),
-                              //   ),
-                              // ),
-                              const SizedBox(width: 10),
-                              // Doctor's information
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      doctor['name'],
-                                      style: const TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w700,
-                                          color: Color(0xFF426ACA)),
-                                      overflow: TextOverflow.clip,
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Text(
-                                      doctor['email'],
-                                      style: TextStyle(
-                                        fontSize: 14.0,
-                                        color: Colors.grey[700],
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Text(
-                                      'phone: ${doctor['phone']}',
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          color: Color(0xFF426ACA)),
-                                    ),
-                                     Icon(
-                                      Icons
-                                          .remove_circle, // Correct way to use the delete icon
-                                      color: Colors
-                                          .red, // Optional: Color to indicate it's a delete action
-                                    ),
-                                  ],
+                              child: ClipOval(
+                                child: Image.network(
+                                  doc["profilePic"],
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(
+                                      "assets/images/user.png",
+                                      fit: BoxFit.cover,
+                                    );
+                                  },
                                 ),
                               ),
-                              // Select button
-                              // GestureDetector(
-                              //   onTap: () {
-                              //     // Get.to(() => Provider_Details(
-                              //     //       providerData: doctor,
-                              //     //       userModel: userModel,
-                              //     //       firebaseUser: firebaseUser,
-                              //     //     ));
-                              //   },
-                              //   child: Container(
-                              //     height: 30, // Set height
-                              //     width: 80, // Set width
-                              //     // padding: const EdgeInsets.symmetric(
-                              //     //   horizontal: 20, // Horizontal padding
-                              //     //   vertical: 15, // Vertical padding
-                              //     // ),
-                              //     decoration: BoxDecoration(
-                              //       color: Colors.teal, // Background color
-                              //       borderRadius: BorderRadius.circular(
-                              //           15), // Rounded corners
-                              //     ),
-                              //     alignment: Alignment
-                              //         .center, // Center the text inside
-                              //     child: const Text(
-                              //       'Select',
-                              //       style: TextStyle(
-                              //         color: Colors.white, // Text color
-                              //         fontSize: 14, // Font size
-                              //         fontWeight: FontWeight
-                              //             .bold, // Optional: Font weight
-                              //       ),
-                              //     ),
-                              //   ),
-                              // )
-                            ],
+                            ),
+                            title: Text(
+                              data['fullname'] ?? 'N/A',
+                              style: const TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF426ACA),
+                              ),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  data['email'] ?? 'N/A',
+                                  style: TextStyle(
+                                      fontSize: 14.0, color: Colors.grey[700]),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  'Phone: $phone',
+                                  style: const TextStyle(
+                                      fontSize: 14.0, color: Color(0xFF426ACA)),
+                                ),
+                              ],
+                            ),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                              onPressed: () => _deleteDoctor(context, doc.id),
+                            ),
                           ),
                         );
                       },
@@ -238,10 +205,6 @@ class _TotalUsersState extends State<TotalUsers> {
           ],
         ),
       ),
-      // bottomNavigationBar: MyBottomNavBar(
-      //   userModel: widget.userModel,
-      //   firebaseUser: widget.firebaseUser,
-      // ),
     );
   }
 }

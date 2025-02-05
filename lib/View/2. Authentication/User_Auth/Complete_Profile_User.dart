@@ -129,7 +129,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
   void uploadData() async {
     UIHelper.showLoadingDialog(context, "Uploading data..");
 
-    String? imageUrl;
+    String? imageUrl = "";
     if (imageFile != null) {
       UploadTask uploadTask = FirebaseStorage.instance
           .ref("Profile Pictures")
@@ -245,7 +245,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                   TextField(
                     controller: iqamaNumberController,
                     decoration: InputDecoration(
-                      hintText: "ID/Iqama Number".tr,
+                      hintText: "ID Number".tr,
                       hintStyle: TextStyle(color: Colors.grey),
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 16, horizontal: 16),

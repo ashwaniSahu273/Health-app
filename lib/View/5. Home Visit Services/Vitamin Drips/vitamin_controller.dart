@@ -280,7 +280,7 @@ class VitaminCartController extends GetxController {
                 "The procedure takes about 40 to 60 minutes and the injection is done at home or workplace",
             "components":
                 "Vitamin B12,Zinc,Selenium,Calcium Gluconate, Magnesium Sulphate, Vitamin C ,Amino Acids, Potassium Chloride, Normal Saline, Water soluble vitamins, Thiamine (Vitamin B1)",
-            "price": "920 SR"
+            "price": "920 SAR"
           },
           "ar": {
             "serviceName": "تعزيز الذاكرة  باقة",

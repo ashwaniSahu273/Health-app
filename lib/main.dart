@@ -14,9 +14,6 @@ import 'package:uuid/uuid.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-// import 'package:harees_new_project/View/Payment/payment_success.dart';
-// import 'package:flutter/foundation.dart';
-// import 'package:app_links/app_links.dart';
 
 var uuid = const Uuid();
 
@@ -74,7 +71,7 @@ Widget decideHomeScreen(UserModel? userModel, User? credential) {
               firebaseUser: credential,
             );
     default:
-      return LoginScreen();
+      return const LoginScreen();
   }
 }
 

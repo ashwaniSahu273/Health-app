@@ -251,7 +251,7 @@ class _NurseGetPatientInfoState extends State<NurseGetPatientInfo> {
                       TextField(
                         controller: idNumberController,
                         decoration: InputDecoration(
-                          hintText: "ID/Iqama Number".tr,
+                          hintText: "ID Number".tr,
                           hintStyle: const TextStyle(color: Colors.grey),
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 16, horizontal: 16),

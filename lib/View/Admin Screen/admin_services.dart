@@ -40,16 +40,19 @@ class ServiceIconButton extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-             Image.asset(
-            serviceIcon,
-            height: 50, // Adjust the size as needed
-            width: 50,
-          ),
+            Image.asset(
+              serviceIcon,
+              height: 50, // Adjust the size as needed
+              width: 50,
+            ),
             const SizedBox(height: 5),
             Text(
               serviceName,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 12,fontFamily: "Roboto", fontWeight: FontWeight.w700),
+              style: const TextStyle(
+                  fontSize: 12,
+                  fontFamily: "Roboto",
+                  fontWeight: FontWeight.w700),
             ),
           ],
         ),
@@ -92,8 +95,6 @@ class AdminServices extends StatelessWidget {
             serviceIcon: "assets/images/accept.png",
             serviceName: "Providers".tr,
             onPressed: () {
-
-            
               Get.to(() => TotalProviders(
                     userModel: userModel,
                     firebaseUser: firebaseUser,
@@ -103,44 +104,24 @@ class AdminServices extends StatelessWidget {
             userModel: userModel,
             firebaseUser: firebaseUser,
           ),
-          // ServiceIconButton(
-          //   serviceIcon: "assets/images/upload.png",
-          //   serviceName: "Create Provider".tr,
-          //   onPressed: () {
-          //     Get.to(() => const Provider_Register());
-          //   },
-          //   userModel: userModel,
-          //   firebaseUser: firebaseUser,
-          // ),
-          // ServiceIconButton(
-          //   serviceIcon: "assets/images/service_contact.png",
-          //   serviceName: "Contact Us".tr,
-          //   onPressed: () {
-          //     Get.to(() => ProviderContact(
-          //           userModel: userModel,
-          //           firebaseUser: firebaseUser,
-          //         ));
-          //   },
-          //   userModel: userModel,
-          //   firebaseUser: firebaseUser,
-          // ),
-          // ServiceIconButton(
-          //   serviceIcon:"assets/images/family.png",
-          //   serviceName: "Family".tr,
-          //   onPressed: () {
-          //     Get.to(() => Family(
-          //           userModel: userModel,
-          //           firebaseUser: firebaseUser,
-          //         ));
-          //   },
-          //   userModel: userModel,
-          //   firebaseUser: firebaseUser,
-          // ),
           ServiceIconButton(
             serviceIcon: "assets/images/chat.png",
             serviceName: "Chat Rooms".tr,
             onPressed: () {
               Get.to(() => AllChatRooms(
+                    userModel: userModel,
+                    firebaseUser: firebaseUser,
+                    targetUser: userModel,
+                  ));
+            },
+            userModel: userModel,
+            firebaseUser: firebaseUser,
+          ),
+          ServiceIconButton(
+            serviceIcon: "assets/images/user.png",
+            serviceName: "Users".tr,
+            onPressed: () {
+              Get.to(() => TotalUsers(
                     userModel: userModel,
                     firebaseUser: firebaseUser,
                     targetUser: userModel,
@@ -156,19 +137,6 @@ class AdminServices extends StatelessWidget {
               Get.to(() => ServiceCategoriesPage(
                     userModel: userModel,
                     firebaseUser: firebaseUser,
-                  ));
-            },
-            userModel: userModel,
-            firebaseUser: firebaseUser,
-          ),
-          ServiceIconButton(
-            serviceIcon: "assets/images/user.png",
-            serviceName: "Users".tr,
-            onPressed: () {
-              Get.to(() => TotalUsers(
-                    userModel: userModel,
-                    firebaseUser: firebaseUser,
-                    targetUser: userModel,
                   ));
             },
             userModel: userModel,
