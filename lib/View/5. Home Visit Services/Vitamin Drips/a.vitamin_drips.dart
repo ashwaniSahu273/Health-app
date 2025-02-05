@@ -48,6 +48,7 @@ class _VitaminState extends State<Vitamin> {
 
   void initState() {
     vitaminCartController.fetchServices();
+    // vitaminCartController.storeServices();
     getCurrentLoc();
     super.initState();
   }

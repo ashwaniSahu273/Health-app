@@ -21,38 +21,39 @@ class SelectPackagesPage extends StatelessWidget {
     required this.firebaseUser,
   }) : super(key: key);
 
-
-
-
   @override
   Widget build(BuildContext context) {
     VitaminCartController cartController = Get.put(VitaminCartController());
-  // String? selectedService;
- cartController.fetchServices();
-  // Method to handle the service selection
-  void _onServiceSelected(String serviceName, String id, String description,
-      String components,String instructions, String price, String imagePath) {
+    // String? selectedService;
+    cartController.fetchServices();
+    // Method to handle the service selection
+    void _onServiceSelected(
+        String serviceName,
+        String id,
+        String description,
+        String components,
+        String instructions,
+        String price,
+        String imagePath) {
+      Get.to(SelectPackage(
+        image: imagePath,
+        id: id,
+        title: serviceName,
+        description: description,
+        instructions: instructions,
+        price: price,
+        components: components,
+        address: address,
+        userModel: userModel,
+        firebaseUser: firebaseUser,
+      ));
+    }
 
-    Get.to(SelectPackage(
-      image: imagePath,
-      id: id,
-      title: serviceName,
-      description: description,
-      instructions: instructions,
-      price: price,
-      components: components,
-      address: address,
-      userModel: userModel,
-      firebaseUser: firebaseUser,
-    ));
-  }
-
-
-  final List<String> imagePaths = [
-    "assets/images/vitamin1.png",
-    "assets/images/vitamin2.png",
-    "assets/images/vitaminthree.png",
-  ];
+    final List<String> imagePaths = [
+      "assets/images/vitamin1.png",
+      "assets/images/vitamin2.png",
+      "assets/images/vitaminthree.png",
+    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -70,7 +71,10 @@ class SelectPackagesPage extends StatelessWidget {
                 )), // Double-arrow icon
             Text(
               'Select Packages'.tr,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700,fontFamily: "Roboto"),
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Roboto"),
             ),
           ],
         ),
@@ -84,7 +88,7 @@ class SelectPackagesPage extends StatelessWidget {
               ),
               child: StepProgressBar(currentStep: 2, totalSteps: 4)),
           // Address Section
-         Padding(
+          Padding(
             padding: const EdgeInsets.only(left: 16.0, top: 16.0, bottom: 0),
             child: Row(
               children: [
@@ -92,9 +96,11 @@ class SelectPackagesPage extends StatelessWidget {
                 SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                      address,
-
-                    style: TextStyle(fontSize: 14,fontFamily: "Roboto", color: Colors.black),
+                    address,
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: "Roboto",
+                        color: Colors.black),
                   ),
                 ),
               ],
@@ -111,10 +117,11 @@ class SelectPackagesPage extends StatelessWidget {
                 decoration: InputDecoration(
                   hintText: "Search Vitamin IV".tr,
                   hintStyle: const TextStyle(
-                    color: Colors.grey, // Set the hint text color
-                    fontSize: 14,
-                    fontFamily: "Roboto" // Optional: Set font size for hint text
-                  ),
+                      color: Colors.grey, // Set the hint text color
+                      fontSize: 14,
+                      fontFamily:
+                          "Roboto" // Optional: Set font size for hint text
+                      ),
                   prefixIcon: Icon(Icons.search, color: Colors.grey),
                   filled: true,
                   fillColor: Colors.white,
@@ -136,8 +143,11 @@ class SelectPackagesPage extends StatelessWidget {
           Expanded(
             child: Container(
               color: Color(0xFFEEF8FF),
-              padding:
-                  const EdgeInsets.only(left: 16.0,right: 16, top: 20.0,),
+              padding: const EdgeInsets.only(
+                left: 16.0,
+                right: 16,
+                top: 20.0,
+              ),
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -146,31 +156,33 @@ class SelectPackagesPage extends StatelessWidget {
                   childAspectRatio: 1.4,
                 ),
                 itemCount: cartController.servicesList.length,
-                
                 itemBuilder: (context, index) {
-
                   final service = cartController.servicesList[index];
 
-                      String languageCode = Get.locale?.languageCode ?? 'en';
+                  String languageCode = Get.locale?.languageCode ?? 'en';
 
-                      final localizedData = languageCode == 'ar'
-                          ? service.localized.ar
-                          : service.localized.en;
+                  final localizedData = languageCode == 'ar'
+                      ? service.localized.ar
+                      : service.localized.en;
                   String imagePath = imagePaths[index % imagePaths.length];
                   return GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       _onServiceSelected(
-                    localizedData.serviceName, service.id, localizedData.description, localizedData.components,localizedData.instructions, localizedData.price, imagePath);
+                          localizedData.serviceName,
+                          service.id,
+                          localizedData.description,
+                          localizedData.components,
+                          localizedData.instructions,
+                          localizedData.price,
+                          imagePath);
                     },
                     child: Card(
-                      
                       shape: RoundedRectangleBorder(
                         borderRadius:
                             BorderRadius.circular(5), // Rounded corners
                       ),
                       elevation: 2, // Subtle shadow
                       child: Container(
-                        
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(6),
@@ -182,39 +194,46 @@ class SelectPackagesPage extends StatelessWidget {
                           children: [
                             // Image Section
 
-
-                            Image.asset(
-                              imagePath, // Replace with your asset path
-                              height: 64, // Adjust size to match the design
+                            Container(
+                              height: 64,
                               width: 40,
+                              child: Image.network(
+                                service.imagePath,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(
+                                      "assets/images/blood-sample.png",
+                                      fit: BoxFit.cover);
+                                },
+                              ),
                             ),
                             const SizedBox(
                                 width: 12), // Space between image and text
-                            // Text Section
-                    
+
                             Expanded(
                               child: Container(
                                 // color: Colors.green,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       localizedData.serviceName,
                                       textAlign: TextAlign.end,
                                       // textDirection: TextDirection.rtl,
-                                      softWrap:true,
+                                      softWrap: true,
                                       maxLines: 3,
                                       style: const TextStyle(
                                         height: 1.2,
                                         fontSize: 14,
                                         fontFamily: "Roboto",
                                         fontWeight: FontWeight.w600,
-                                        color: Color(0xFF007ABB), // Blue text for title
+                                        color: Color(
+                                            0xFF007ABB), // Blue text for title
                                       ),
                                     ),
                                     Container(
-                                      
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 8, vertical: 6),
                                       decoration: BoxDecoration(
@@ -236,7 +255,7 @@ class SelectPackagesPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                    
+
                             // Price Tag
                           ],
                         ),
@@ -327,11 +346,11 @@ class SelectPackagesPage extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                      // Get.to(SelectPackage(
-                      //     address: address,
-                      //     userModel: userModel,
-                      //     firebaseUser: firebaseUser,
-                      // ));
+                        // Get.to(SelectPackage(
+                        //     address: address,
+                        //     userModel: userModel,
+                        //     firebaseUser: firebaseUser,
+                        // ));
 
                         if (!cartController.isCartEmpty()) {
                           Get.to(() => Vitamin_Time(

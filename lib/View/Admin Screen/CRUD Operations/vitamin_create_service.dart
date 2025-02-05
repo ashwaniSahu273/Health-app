@@ -147,7 +147,7 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
                                 controller
                                     .vitaminUploadedImageUrl.value!.isNotEmpty
                             ? Container(
-                                height: 70,
+                                height: 120,
                                 width: 70,
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
@@ -156,7 +156,7 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
                                 ),
                                 child: Image.network(
                                   controller.vitaminUploadedImageUrl.value!,
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.contain,
                                   errorBuilder: (context, error, stackTrace) {
                                     return const Text(
                                       "No Image",

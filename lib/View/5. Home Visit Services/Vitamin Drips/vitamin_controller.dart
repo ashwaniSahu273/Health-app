@@ -112,7 +112,7 @@ class VitaminCartController extends GetxController {
         "accepted_by": null
       });
 
-       await openPaymentUrl(paymentUrl.value);
+      await openPaymentUrl(paymentUrl.value);
 
       Get.to(PaymentSuccessScreen(
         userModel: userModel,
@@ -134,7 +134,7 @@ class VitaminCartController extends GetxController {
     }
   }
 
-    Future<void> openPaymentUrl(String url) async {
+  Future<void> openPaymentUrl(String url) async {
     Uri uri = Uri.parse(url);
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
       Get.snackbar("Error", "Could not open payment link");
@@ -148,26 +148,26 @@ class VitaminCartController extends GetxController {
       String cleanedTime = time.replaceAll(RegExp(r'\s+'), ' ').trim();
       cleanedTime = cleanedTime.toUpperCase();
 
-    // Handle Arabic time format and replace with AM/PM
-    cleanedTime = cleanedTime.replaceAll(RegExp(r'صباحا', caseSensitive: false), 'AM')
-                             .replaceAll(RegExp(r'مساء', caseSensitive: false), 'PM');
+      // Handle Arabic time format and replace with AM/PM
+      cleanedTime = cleanedTime
+          .replaceAll(RegExp(r'صباحا', caseSensitive: false), 'AM')
+          .replaceAll(RegExp(r'مساء', caseSensitive: false), 'PM');
 
-    String dateTimeString = "$cleanedDate $cleanedTime";
+      String dateTimeString = "$cleanedDate $cleanedTime";
 
-    // print("Parsing DateTime String: '$dateTimeString'");
+      // print("Parsing DateTime String: '$dateTimeString'");
 
-    DateTime dateTime =
-        DateFormat("MMMM d, yyyy h:mm a", "en_US").parse(dateTimeString);
+      DateTime dateTime =
+          DateFormat("MMMM d, yyyy h:mm a", "en_US").parse(dateTimeString);
 
-    String isoTimestamp = dateTime.toUtc().toIso8601String();
-    currentTime.value = isoTimestamp;
+      String isoTimestamp = dateTime.toUtc().toIso8601String();
+      currentTime.value = isoTimestamp;
 
-    // print("Parsed ISO Timestamp: $currentTime");
-  } catch (e) {
-    print("Error parsing date and time: $e");
+      // print("Parsed ISO Timestamp: $currentTime");
+    } catch (e) {
+      print("Error parsing date and time: $e");
+    }
   }
-}
-
 
   bool isCartEmpty() {
     return cartItems.isEmpty;
@@ -269,8 +269,9 @@ class VitaminCartController extends GetxController {
     final List<Map<String, dynamic>> services = [
       {
         "id": 1,
-        "imagePath": "assets/images/vitamin.png",
-        "type": "group",
+        "imagePath":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738770148991.png?alt=media&token=efb0bc9e-78b2-49d6-a2eb-ecec27e2cb8c",
+        "type": "package",
         "localized": {
           "en": {
             "serviceName": "Memory Enhancement IV Therapy",
@@ -296,8 +297,9 @@ class VitaminCartController extends GetxController {
       },
       {
         "id": 4,
-        "imagePath": "assets/images/vitamin.png",
-        "type": "group",
+        "imagePath":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738770148991.png?alt=media&token=efb0bc9e-78b2-49d6-a2eb-ecec27e2cb8c",
+        "type": "package",
         "localized": {
           "en": {
             "serviceName": "Hair Health IV Therapy",
@@ -323,8 +325,9 @@ class VitaminCartController extends GetxController {
       },
       {
         "id": 5,
-        "imagePath": "assets/images/vitamin.png",
-        "type": "group",
+        "imagePath":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738770260546.png?alt=media&token=836b3ac2-f6bc-46f8-884b-264b828e236d",
+        "type": "package",
         "localized": {
           "en": {
             "serviceName": "Diet & Detox IV Therapy",
@@ -350,8 +353,9 @@ class VitaminCartController extends GetxController {
       },
       {
         "id": 6,
-        "imagePath": "assets/images/vitamin.png",
-        "type": "group",
+        "imagePath":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738770260546.png?alt=media&token=836b3ac2-f6bc-46f8-884b-264b828e236d",
+        "type": "package",
         "localized": {
           "en": {
             "serviceName": "Weight Loss IV Therapy",
@@ -377,8 +381,9 @@ class VitaminCartController extends GetxController {
       },
       {
         "id": 7,
-        "imagePath": "assets/images/vitamin.png",
-        "type": "group",
+        "imagePath":
+            "https://firebasestorage.googleapis.com/v0/b/health-85d49.appspot.com/o/images%2F1738770374897.png?alt=media&token=ba9a8ccb-9062-4951-ba79-3591fc618a90",
+        "type": "package",
         "localized": {
           "en": {
             "serviceName": "Post Sleeve Gastrectomy IV Therapy",
@@ -415,5 +420,4 @@ class VitaminCartController extends GetxController {
       await docRef.set(updatedService);
     }
   }
-
 }

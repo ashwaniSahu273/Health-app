@@ -100,19 +100,29 @@ class LabMorePackages extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 16.0, top: 8,right: 16),
+                                  padding: const EdgeInsets.only(
+                                      left: 16.0, top: 8, right: 16),
                                   child: Container(
-                                      height: 50,
-                                      width: 50,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: const Color(
-                                            0xFFE6F5FF), // Circle background color
+                                    height: 60,
+                                    width: 60,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color(
+                                          0xFFE6F5FF), // Circle background color
+                                    ),
+                                    child: ClipOval(
+                                      child: Image.network(
+                                        item.imagePath,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Image.asset(
+                                              "assets/images/blood-sample.png",
+                                              fit: BoxFit.cover);
+                                        },
                                       ),
-                                      child: Image.asset(
-                                          "assets/images/blood-sample.png",
-                                          fit: BoxFit.cover)),
+                                    ),
+                                  ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -128,44 +138,6 @@ class LabMorePackages extends StatelessWidget {
                                             color: Color(0xFF007ABB)),
                                       )),
                                 ),
-                                // Padding(
-                                //   padding: const EdgeInsets.symmetric(
-                                //       horizontal: 10, vertical: 2),
-                                //   child: Align(
-                                //       alignment: Alignment.topLeft,
-                                //       child: Text(
-                                //         "Packages",
-                                //         style: TextStyle(
-                                //             fontWeight: FontWeight.bold),
-                                //       )),
-                                // ),
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
-
-                                //  item.imagePath.isNotEmpty   ? Image.network(
-                                //       item.imagePath,
-                                //       height: 50,
-                                //       width: 64,
-                                //       fit: BoxFit.cover,
-                                //       errorBuilder:
-                                //           (context, error, stackTrace) {
-                                //         // Fallback to a local asset image if the network image fails to load
-                                //         return Image.asset(
-                                //           "assets/images/1.png",
-                                //           height: 50,
-                                //           width: 64,
-                                //           fit: BoxFit.cover,
-                                //         );
-                                //       },
-                                //     )
-                                //   : Image.asset(
-                                //       "assets/images/1.png",
-                                //       height: 50,
-                                //       width: 64,
-                                //       fit: BoxFit.cover,
-                                //     ),
-
                                 Row(
                                   children: [
                                     Padding(

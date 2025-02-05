@@ -311,15 +311,8 @@ class _VitaminServicesState extends State<VitaminServices> {
                     color: const Color.fromARGB(255, 169, 214, 246),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: imagePath != null
-                      ? Image.network(
-                          imagePath,
-                          height: 200,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                        )
-                      : Image.asset(
-                          "assets/images/vitamin.png",
+                  child:  Image.asset(
+                          "assets/images/vitamin1.png",
                           height: 200,
                           width: double.infinity,
                           fit: BoxFit.cover,

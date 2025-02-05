@@ -1,7 +1,7 @@
-// import 'dart:typed_data';
+import 'dart:typed_data';
 
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -26,35 +26,35 @@ class NurseDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     NurseController cartController = Get.put(NurseController());
 
-    // Future<void> uploadImage() async {
-    //   print("===========>Starting upload");
+    Future<void> uploadImage() async {
+      print("===========>Starting upload");
 
-    //   try {
-    //     // Load image from assets
-    //     ByteData byteData =
-    //         await rootBundle.load('assets/images/std.png');
-    //     Uint8List imageData = byteData.buffer.asUint8List();
+      try {
+        // Load image from assets
+        ByteData byteData =
+            await rootBundle.load('assets/images/vitamin2.png');
+        Uint8List imageData = byteData.buffer.asUint8List();
 
-    //     // Reference to Firebase Storage location
-    //     FirebaseStorage storage = FirebaseStorage.instance;
-    //     Reference ref = storage
-    //         .ref()
-    //         .child('images/${DateTime.now().millisecondsSinceEpoch}.png');
+        // Reference to Firebase Storage location
+        FirebaseStorage storage = FirebaseStorage.instance;
+        Reference ref = storage
+            .ref()
+            .child('images/${DateTime.now().millisecondsSinceEpoch}.png');
 
-    //     // Upload the image
-    //     UploadTask uploadTask = ref.putData(imageData);
+        // Upload the image
+        UploadTask uploadTask = ref.putData(imageData);
 
-    //     // Wait for upload to complete
-    //     TaskSnapshot snapshot = await uploadTask.whenComplete(() => null);
+        // Wait for upload to complete
+        TaskSnapshot snapshot = await uploadTask.whenComplete(() => null);
 
-    //     // Get the download URL of the uploaded image
-    //     String url = await snapshot.ref.getDownloadURL();
+        // Get the download URL of the uploaded image
+        String url = await snapshot.ref.getDownloadURL();
 
-    //     print('Image uploaded! URL:==========> $url<===============');
-    //   } catch (e) {
-    //     print('Error uploading image: $e');
-    //   }
-    // }
+        print('Image uploaded! URL:==========> $url<===============');
+      } catch (e) {
+        print('Error uploading image: $e');
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
