@@ -51,7 +51,7 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
   @override
   Widget build(BuildContext context) {
     ServiceCreateController controller = Get.put(ServiceCreateController());
-    controller.selectedServiceVitaminType.value = "package";
+    // controller.selectedServiceVitaminType.value = "package";
 
     if (widget.isEditing && widget.service != null) {
       _arServiceNameController.text =

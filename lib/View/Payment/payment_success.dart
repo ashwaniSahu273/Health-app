@@ -13,6 +13,7 @@ class PaymentController extends GetxController with WidgetsBindingObserver {
   PaymentController({required this.chargeId, required this.docId});
 
   var paymentStatus = "INITIATED".obs;
+  var isButtonEnabled = false.obs;
   late Worker _statusWorker;
 
   @override
@@ -53,12 +54,14 @@ class PaymentController extends GetxController with WidgetsBindingObserver {
       }
     } catch (e) {
       print('Error fetching payment status: $e');
+      paymentStatus.value = "FAILED"; // Update status to failed on error
     }
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed && paymentStatus.value == "INITIATED") {
+    if (state == AppLifecycleState.resumed &&
+        paymentStatus.value == "INITIATED") {
       getTapPaymentStatus();
     }
   }
@@ -90,6 +93,10 @@ class PaymentSuccessScreen extends StatelessWidget {
     final PaymentController controller =
         Get.put(PaymentController(chargeId: chargeId, docId: docId));
 
+    Future.delayed(const Duration(seconds: 10), () {
+      controller.isButtonEnabled.value = true;
+    });
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -108,7 +115,8 @@ class PaymentSuccessScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 20, color: Colors.orange),
                   ),
                 ] else if (controller.paymentStatus.value == "CAPTURED") ...[
-                  const Icon(Icons.check_circle, color: Colors.green, size: 100),
+                  const Icon(Icons.check_circle,
+                      color: Colors.green, size: 100),
                   const SizedBox(height: 20),
                   const Text(
                     "Payment Successful!",
@@ -124,16 +132,60 @@ class PaymentSuccessScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 16, color: Colors.black54),
                   ),
+                ] else if (controller.paymentStatus.value == "ABANDONED") ...[
+                  const Icon(Icons.error, color: Colors.red, size: 100),
+                  const SizedBox(height: 20),
+                  const Text(
+                    "Payment Failed!",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "Your transaction could not be completed. Please try again.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 16, color: Colors.black54),
+                  ),
+                ] else ...[
+                  const Icon(Icons.warning, color: Colors.orange, size: 100),
+                  const SizedBox(height: 20),
+                  const Text(
+                    "Payment Status Unknown",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.orange,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "Please check your payment status later.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 16, color: Colors.black54),
+                  ),
                 ],
                 const SizedBox(height: 30),
                 ElevatedButton.icon(
-                  onPressed: () {
-                     Get.offAll(HomePage(userModel: userModel, firebaseUser: firebaseUser));
-                  },
+                  onPressed: controller.isButtonEnabled.value
+                      ? () {
+                          Get.offAll(HomePage(
+                              userModel: userModel,
+                              firebaseUser: firebaseUser));
+                        }
+                      : null, // Disable button if payment is not completed
                   icon: const Icon(Icons.home),
-                  label: const Text("Back to Home",  style: TextStyle(fontSize: 16, color: Colors.white)),
+                  label: const Text(
+                    "Back to Home",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: controller.paymentStatus.value ==
+                            "CAPTURED"
+                        ? Colors.green
+                        : Colors.grey, // Change button color based on status
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 12),
                     shape: RoundedRectangleBorder(

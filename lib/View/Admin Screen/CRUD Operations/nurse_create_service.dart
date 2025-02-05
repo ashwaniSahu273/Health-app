@@ -59,7 +59,7 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
   @override
   Widget build(BuildContext context) {
     ServiceCreateController controller = Get.put(ServiceCreateController());
-    controller.selectedServiceNurseType.value = "package";
+    // controller.selectedServiceNurseType.value = "package";
 
     if (widget.isEditing && widget.service != null) {
       _arServiceNameController.text =

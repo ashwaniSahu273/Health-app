@@ -49,7 +49,7 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
   @override
   Widget build(BuildContext context) {
     ServiceCreateController controller = Get.put(ServiceCreateController());
-    controller.selectedServiceLabType.value = "package";
+    // controller.selectedServiceLabType.value = "package";
 
     if (widget.isEditing && widget.service != null) {
       _arServiceNameController.text =
