@@ -28,7 +28,7 @@ class CreateSessionButton extends StatelessWidget {
       HttpsCallable callable = FirebaseFunctions.instance.httpsCallable(
         'createTelemedicineSession',
       );
-      print("==============================> Callable Function Initialized");
+      // print("==============================> Callable Function Initialized");
 
       // Test data
       final data = {
@@ -37,19 +37,11 @@ class CreateSessionButton extends StatelessWidget {
         'endDateTime': DateTime(2025, 1, 25, 14, 30, 0).toIso8601String(),
       };
 
-      final response = await callable.call(data);
 
-      print("==============================> Response: ${response.data}");
-
-//    final data = {
-//   'description': 'Consultation for general health',
-//   'startDateTime': DateTime(2025, 1, 20, 14, 0, 0).toIso8601String(), // 20th Jan 2025, 2:00 PM
-//   'endDateTime': DateTime(2025, 1, 20, 14, 30, 0).toIso8601String(),  // 20th Jan 2025, 2:30 PM
-// };
 
       final HttpsCallableResult result = await callable.call(data);
 
-      print("==============================>result call link $result");
+      // print("==============================>result call link $result");
 
       final responseData = result.data as Map<String, dynamic>? ?? {};
       if (responseData['success'] == true && responseData['meetLink'] != null) {
@@ -58,10 +50,10 @@ class CreateSessionButton extends StatelessWidget {
         throw Exception('Failed to create telemedicine session.');
       }
     } on FirebaseFunctionsException catch (e) {
-      print('Firebase Functions Exception: ${e.code} - ${e.message}');
+      // print('Firebase Functions Exception: ${e.code} - ${e.message}');
       throw Exception('Firebase Functions Error: ${e.message}');
     } catch (e) {
-      print('Unknown error: $e');
+      // print('Unknown error: $e');
       throw Exception('Unknown Error: $e');
     }
   }
@@ -79,7 +71,7 @@ class CreateSessionButton extends StatelessWidget {
         startDateTime: startDateTime,
         endDateTime: endDateTime,
       );
-      print("==============================>after meeet link $meetLink");
+      // print("==============================>after meeet link $meetLink");
 
       // Dismiss the loading indicator
       Navigator.of(context).pop();
@@ -88,7 +80,7 @@ class CreateSessionButton extends StatelessWidget {
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
-          title: Row(
+          title:const Row(
             children: [
               Icon(Icons.check_circle, color: Colors.green),
               SizedBox(width: 8),

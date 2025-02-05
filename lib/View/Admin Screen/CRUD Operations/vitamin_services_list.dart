@@ -20,30 +20,26 @@ class _VitaminServicesListState extends State<VitaminServicesList> {
   void initState() {
     super.initState();
     setState(() {
-      
-    _serviceListFuture = _fetchServices();
+      _serviceListFuture = _fetchServices();
     });
-    print(_serviceListFuture);
+
   }
 
-Future<List<Service>> _fetchServices() async {
-  try {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('VitaminServices').get();
+  Future<List<Service>> _fetchServices() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('VitaminServices').get();
 
-    return querySnapshot.docs.map((doc) {
-      final data = doc.data() as Map<String, dynamic>;
-          print('Document ID: ${doc.id}');
-      print('Document Data: $data');
-      return Service.fromJson(data);
-    }).toList();
+      return querySnapshot.docs.map((doc) {
+        final data = doc.data() as Map<String, dynamic>;
 
-
-  } catch (e) {
-    print('Error fetching services: $e');
-    return [];
+        return Service.fromJson(data);
+      }).toList();
+    } catch (e) {
+      print('Error fetching services: $e');
+      return [];
+    }
   }
-}
 
   void _deleteService(String serviceId) async {
     await FirebaseFirestore.instance
@@ -57,7 +53,7 @@ Future<List<Service>> _fetchServices() async {
     });
   }
 
-  void _editService( service) {
+  void _editService(service) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -95,10 +91,10 @@ Future<List<Service>> _fetchServices() async {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Service List'),
+        title: const Text('Service List'),
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed: _addService,
           ),
         ],
@@ -107,12 +103,12 @@ Future<List<Service>> _fetchServices() async {
         future: _serviceListFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-             print('Error: ${snapshot.error}');
-            return Center(child: Text('Error fetching services.'));
+     
+            return const Center(child: Text('Error fetching services.'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No services available.'));
+            return const Center(child: Text('No services available.'));
           }
 
           final services = snapshot.data!;
@@ -129,29 +125,26 @@ Future<List<Service>> _fetchServices() async {
                   : service.localized.en;
 
               // Extract fields from localized data
-              final serviceName =
-                  localizedData.serviceName;
-              // final description =
-              //     localizedData.description ?? 'No description available';
-              // final instructions =
-              //     localizedData.components ?? 'No instructions provided';
+              final serviceName = localizedData.serviceName;
+         
 
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 6),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6),
                 child: Card(
                   child: ListTile(
-                    leading:  Icon(Icons.image),
+                    leading: const Icon(Icons.image),
                     title: Text(serviceName),
                     subtitle: Text(localizedData.price),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
-                          icon: Icon(Icons.edit, color: Colors.blue),
+                          icon: const Icon(Icons.edit, color: Colors.blue),
                           onPressed: () => _editService(service),
                         ),
                         IconButton(
-                          icon: Icon(Icons.delete, color: Colors.red),
+                          icon: const Icon(Icons.delete, color: Colors.red),
                           onPressed: () => _deleteService(service.id),
                         ),
                       ],

@@ -2,16 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/doctor_service_model.dart';
-import 'package:harees_new_project/View/8.%20Chats/Models/lab_service_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/Payment/payment_success.dart';
-// import 'package:harees_new_project/View/8.%20Chats/Models/lab_service_model.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-
 import 'package:url_launcher/url_launcher.dart';
 
 class DoctorController extends GetxController {
@@ -33,7 +27,6 @@ class DoctorController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // _loadCartFromStorage();
     fetchServices();
   }
 
@@ -43,15 +36,11 @@ class DoctorController extends GetxController {
           .collection('LaboratoryServices')
           .get();
 
-      print("Documents fetched: ${querySnapshot.docs.length}");
-
       var services = querySnapshot.docs.map((doc) {
         return DoctorServiceModel.fromJson(doc.data() as Map<String, dynamic>);
       }).toList();
 
       servicesList.assignAll(services);
-
-      print("======================> $servicesList");
     } catch (e) {
       print("Error fetching services: $e");
     }
@@ -117,8 +106,8 @@ class DoctorController extends GetxController {
       Get.to(PaymentSuccessScreen(
         userModel: userModel,
         firebaseUser: firebaseUser,
-        docId:docId,
-        chargeId:chargeId.value ,
+        docId: docId,
+        chargeId: chargeId.value,
       ));
 
       Get.snackbar(
@@ -148,26 +137,24 @@ class DoctorController extends GetxController {
       String cleanedTime = time.replaceAll(RegExp(r'\s+'), ' ').trim();
       cleanedTime = cleanedTime.toUpperCase();
 
-    // Handle Arabic time format and replace with AM/PM
-    cleanedTime = cleanedTime.replaceAll(RegExp(r'صباحا', caseSensitive: false), 'AM')
-                             .replaceAll(RegExp(r'مساء', caseSensitive: false), 'PM');
+      // Handle Arabic time format and replace with AM/PM
+      cleanedTime = cleanedTime
+          .replaceAll(RegExp(r'صباحا', caseSensitive: false), 'AM')
+          .replaceAll(RegExp(r'مساء', caseSensitive: false), 'PM');
 
-    String dateTimeString = "$cleanedDate $cleanedTime";
+      String dateTimeString = "$cleanedDate $cleanedTime";
 
-    print("Parsing DateTime String: '$dateTimeString'");
+      DateTime dateTime =
+          DateFormat("MMMM d, yyyy h:mm a", "en_US").parse(dateTimeString);
 
-    DateTime dateTime =
-        DateFormat("MMMM d, yyyy h:mm a", "en_US").parse(dateTimeString);
+      String isoTimestamp = dateTime.toUtc().toIso8601String();
+      currentTime.value = isoTimestamp;
 
-    String isoTimestamp = dateTime.toUtc().toIso8601String();
-    currentTime.value = isoTimestamp;
-
-    print("Parsed ISO Timestamp: $currentTime");
-  } catch (e) {
-    print("Error parsing date and time: $e");
+      // print("Parsed ISO Timestamp: $currentTime");
+    } catch (e) {
+      print("Error parsing date and time: $e");
+    }
   }
-}
-
 
   List<Map<String, dynamic>> getCartItems() {
     return cartItems.toList();
@@ -271,21 +258,9 @@ class DoctorController extends GetxController {
     // _saveCartToStorage();
   }
 
-  Future<void> _saveCartToStorage() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('cart', jsonEncode(cartItems));
-  }
-
-  Future<void> _loadCartFromStorage() async {
-    final prefs = await SharedPreferences.getInstance();
-    final String? storedCart = prefs.getString('cart');
-    if (storedCart != null) {
-      cartItems.value = List<Map<String, dynamic>>.from(jsonDecode(storedCart));
-    }
-  }
 
   void storeServices() async {
-    final List<Map<String, dynamic>> servicess = [
+    final List<Map<String, dynamic>> services = [
       {
         "id": 1,
         "imagePath": "assets/images/vitamin.png",
@@ -448,7 +423,7 @@ class DoctorController extends GetxController {
     CollectionReference servicesCollection =
         FirebaseFirestore.instance.collection('LaboratoryServices');
 
-    for (var service in servicess) {
+    for (var service in services) {
       final docRef = servicesCollection.doc();
       final id = docRef.id;
 
@@ -457,55 +432,4 @@ class DoctorController extends GetxController {
       await docRef.set(updatedService);
     }
   }
-
-  final List<Map<String, dynamic>> testItems = [
-    {
-      "id": 1,
-      "name": "protein_test_urine".tr,
-      "price": "60 SAR",
-      "icon": Icons.science_outlined,
-    },
-    {
-      "id": 2,
-      "name": "protein_test_blood".tr,
-      "price": "60 SAR",
-      "icon": Icons.science_outlined,
-    },
-    {
-      "id": 3,
-      "name": "ldl_cholesterol_test".tr,
-      "price": "60 SAR",
-      "icon": Icons.science_outlined,
-    },
-    {
-      "id": 4,
-      "name": "vitamin_b6_test".tr,
-      "price": "60 SAR",
-      "icon": Icons.science_outlined,
-    },
-    {
-      "id": 5,
-      "name": "typhoid_fever_test".tr,
-      "price": "60 SAR",
-      "icon": Icons.science_outlined,
-    },
-    {
-      "id": 6,
-      "name": "renal_filtration_rate_test".tr,
-      "price": "60 SAR",
-      "icon": Icons.science_outlined,
-    },
-    {
-      "id": 7,
-      "name": "occult_blood_test".tr,
-      "price": "60 SAR",
-      "icon": Icons.science_outlined,
-    },
-    {
-      "id": 8,
-      "name": "prostate_antigen_test".tr,
-      "price": "60 SAR",
-      "icon": Icons.science_outlined,
-    },
-  ];
 }

@@ -5,11 +5,7 @@ import 'package:get/get.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/lab_service_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/Payment/payment_success.dart';
-// import 'package:harees_new_project/View/8.%20Chats/Models/lab_service_model.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-
 import 'package:url_launcher/url_launcher.dart';
 
 class LabController extends GetxController {
@@ -35,11 +31,7 @@ class LabController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // _loadCartFromStorage();
     fetchServices();
-    // Future.delayed(Duration(milliseconds: 500), () {
-    //   // fetchAllSearchServices();
-    // });
   }
 
   void filterServices(String query) {
@@ -73,15 +65,11 @@ class LabController extends GetxController {
           .collection('LaboratoryServices')
           .get();
 
-      print("Documents fetched: ${querySnapshot.docs.length}");
-
       var services = querySnapshot.docs.map((doc) {
         return LabService.fromJson(doc.data() as Map<String, dynamic>);
       }).toList();
 
       servicesList.assignAll(services);
-
-      print("======================> $servicesList");
     } catch (e) {
       print("Error fetching services: $e");
     }
@@ -144,34 +132,31 @@ class LabController extends GetxController {
     }
   }
 
+  void convertToFirebaseTimestamp(String date, String time) {
+    try {
+      String cleanedDate = date.replaceAll(RegExp(r'\s+'), ' ').trim();
+      String cleanedTime = time.replaceAll(RegExp(r'\s+'), ' ').trim();
+      cleanedTime = cleanedTime.toUpperCase();
 
+      cleanedTime = cleanedTime
+          .replaceAll(RegExp(r'صباحا', caseSensitive: false), 'AM')
+          .replaceAll(RegExp(r'مساء', caseSensitive: false), 'PM');
 
-void convertToFirebaseTimestamp(String date, String time) {
-  try {
-    String cleanedDate = date.replaceAll(RegExp(r'\s+'), ' ').trim();
-    String cleanedTime = time.replaceAll(RegExp(r'\s+'), ' ').trim();
-    cleanedTime = cleanedTime.toUpperCase();
+      String dateTimeString = "$cleanedDate $cleanedTime";
 
-    // Handle Arabic time format and replace with AM/PM
-    cleanedTime = cleanedTime.replaceAll(RegExp(r'صباحا', caseSensitive: false), 'AM')
-                             .replaceAll(RegExp(r'مساء', caseSensitive: false), 'PM');
+      // print("Parsing DateTime String: '$dateTimeString'");
 
-    String dateTimeString = "$cleanedDate $cleanedTime";
+      DateTime dateTime =
+          DateFormat("MMMM d, yyyy h:mm a", "en_US").parse(dateTimeString);
 
-    print("Parsing DateTime String: '$dateTimeString'");
+      String isoTimestamp = dateTime.toUtc().toIso8601String();
+      currentTime.value = isoTimestamp;
 
-    DateTime dateTime =
-        DateFormat("MMMM d, yyyy h:mm a", "en_US").parse(dateTimeString);
-
-    String isoTimestamp = dateTime.toUtc().toIso8601String();
-    currentTime.value = isoTimestamp;
-
-    print("Parsed ISO Timestamp: $currentTime");
-  } catch (e) {
-    print("Error parsing date and time: $e");
+      // print("Parsed ISO Timestamp: $currentTime");
+    } catch (e) {
+      print("Error parsing date and time: $e");
+    }
   }
-}
-
 
   List<Map<String, dynamic>> getCartItems() {
     return cartItems.toList();
@@ -218,7 +203,6 @@ void convertToFirebaseTimestamp(String date, String time) {
     } else {
       cartItems[index]['quantity'] += 1;
     }
-    // _saveCartToStorage();
   }
 
   void decreaseQuantity(id) {
@@ -230,8 +214,6 @@ void convertToFirebaseTimestamp(String date, String time) {
       cartItems.removeAt(index);
     }
     cartItems.refresh();
-
-    // _saveCartToStorage();
   }
 
   void decreaseQuantityByCart(int index) {
@@ -242,23 +224,17 @@ void convertToFirebaseTimestamp(String date, String time) {
       Get.back();
     }
     cartItems.refresh();
-    // _saveCartToStorage();
   }
 
   void increaseQuantity(id) {
     int index = cartItems.indexWhere((cartItem) => cartItem['id'] == id);
-
     cartItems[index]['quantity'] += 1;
     cartItems.refresh();
-
-    // _saveCartToStorage();
   }
 
   void increaseQuantityByCart(int index) {
     cartItems[index]['quantity'] += 1;
     cartItems.refresh();
-
-    // _saveCartToStorage();
   }
 
   void removeFromCart(int index) {
@@ -267,29 +243,14 @@ void convertToFirebaseTimestamp(String date, String time) {
       Get.back();
       Get.back();
     }
-    // _saveCartToStorage();
   }
 
   void clearCart() {
     cartItems.clear();
-    // _saveCartToStorage();
-  }
-
-  Future<void> _saveCartToStorage() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('cart', jsonEncode(cartItems));
-  }
-
-  Future<void> _loadCartFromStorage() async {
-    final prefs = await SharedPreferences.getInstance();
-    final String? storedCart = prefs.getString('cart');
-    if (storedCart != null) {
-      cartItems.value = List<Map<String, dynamic>>.from(jsonDecode(storedCart));
-    }
   }
 
   void storeServices() async {
-    final List<Map<String, dynamic>> servicess = [
+    final List<Map<String, dynamic>> services = [
       {
         "id": 1,
         "imagePath":
@@ -2295,7 +2256,7 @@ void convertToFirebaseTimestamp(String date, String time) {
     CollectionReference servicesCollection =
         FirebaseFirestore.instance.collection('LaboratoryServices');
 
-    for (var service in servicess) {
+    for (var service in services) {
       final docRef = servicesCollection.doc();
       final id = docRef.id;
 
@@ -2304,55 +2265,4 @@ void convertToFirebaseTimestamp(String date, String time) {
       await docRef.set(updatedService);
     }
   }
-
-  final List<Map<String, dynamic>> testItems = [
-    {
-      "id": 1,
-      "name": "protein_test_urine".tr,
-      "price": "60 SAR",
-      "icon": Icons.science_outlined,
-    },
-    {
-      "id": 2,
-      "name": "protein_test_blood".tr,
-      "price": "60 SAR",
-      "icon": Icons.science_outlined,
-    },
-    {
-      "id": 3,
-      "name": "ldl_cholesterol_test".tr,
-      "price": "60 SAR",
-      "icon": Icons.science_outlined,
-    },
-    {
-      "id": 4,
-      "name": "vitamin_b6_test".tr,
-      "price": "60 SAR",
-      "icon": Icons.science_outlined,
-    },
-    {
-      "id": 5,
-      "name": "typhoid_fever_test".tr,
-      "price": "60 SAR",
-      "icon": Icons.science_outlined,
-    },
-    {
-      "id": 6,
-      "name": "renal_filtration_rate_test".tr,
-      "price": "60 SAR",
-      "icon": Icons.science_outlined,
-    },
-    {
-      "id": 7,
-      "name": "occult_blood_test".tr,
-      "price": "60 SAR",
-      "icon": Icons.science_outlined,
-    },
-    {
-      "id": 8,
-      "name": "prostate_antigen_test".tr,
-      "price": "60 SAR",
-      "icon": Icons.science_outlined,
-    },
-  ];
 }

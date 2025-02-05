@@ -1,14 +1,12 @@
 import 'dart:developer';
 import 'dart:io';
 
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/cart_page.dart';
-// import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/lab_controller.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Laboratory/phone_input.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/ui_helper.dart';
@@ -38,7 +36,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController mobileNumberController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
-  TextEditingController iqamaNumberController = TextEditingController();
+  TextEditingController idNumberController = TextEditingController();
 
   LabController cartController = Get.put(LabController());
 
@@ -48,11 +46,10 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
   @override
   void initState() {
     super.initState();
-    print("============================>${widget.userModel.fullname}");
     fullNameController.text = widget.userModel.fullname ?? "";
     mobileNumberController.text = widget.userModel.mobileNumber ?? "";
     dobController.text = widget.userModel.dob ?? "";
-    iqamaNumberController.text = widget.userModel.iqamaNumber ?? "";
+    idNumberController.text = widget.userModel.iqamaNumber ?? "";
     selectedGender = widget.userModel.gender ?? "";
   }
 
@@ -131,7 +128,6 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
     String? gender = selectedGender;
 
     if (fullname.isEmpty || gender == null || dob.isEmpty) {
-      print("Please fill all the fields");
       UIHelper.showAlertDialog(
           context, "Incomplete Data", "Please fill all the fields");
     } else {
@@ -141,20 +137,6 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
   }
 
   void uploadData() async {
-    // UIHelper.showLoadingDialog(context, "Uploading data..");
-
-    // String? imageUrl;
-    // if (imageFile != null) {
-    //   UploadTask uploadTask = FirebaseStorage.instance
-    //       .ref("Profile Pictures")
-    //       .child(widget.userModel.uid.toString())
-    //       .putFile(imageFile!);
-
-    //   TaskSnapshot snapshot = await uploadTask;
-
-    //   imageUrl = await snapshot.ref.getDownloadURL();
-    // }
-
     String fullname = fullNameController.text.trim();
     // String mobileNumber = mobileNumberController.text.trim();
     String dob = dobController.text.trim();
@@ -170,21 +152,6 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
       firebaseUser: widget.firebaseUser,
       selectedTime: widget.selectedTime,
     ));
-
-    // await FirebaseFirestore.instance
-    //     .collection("Registered Users")
-    //     .doc(widget.userModel.uid)
-    //     .set(widget.userModel.tomap())
-    //     .then((value) {
-    //   log("Data uploaded!");
-    //   Navigator.popUntil(context, (route) => route.isFirst);
-    //   Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(builder: (context) {
-    //       return
-    //     }),
-    //   );
-    // });
   }
 
   @override
@@ -220,11 +187,11 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
-              child: StepProgressBar(currentStep: 2, totalSteps: 4)),
+              child: const StepProgressBar(currentStep: 2, totalSteps: 4)),
 
           Expanded(
             child: Container(
-              color: Color(0xFFEEF8FF),
+              color: const Color(0xFFEEF8FF),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 16.0, vertical: 16.0),
@@ -250,15 +217,15 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                         ),
                       ),
                       const SizedBox(height: 30),
-                      
+
                       TextField(
                         controller: fullNameController,
                         decoration: InputDecoration(
                           hintText: "Full Name".tr,
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               color: Colors
                                   .grey), // Matches the placeholder text color
-                          contentPadding: EdgeInsets.symmetric(
+                          contentPadding: const EdgeInsets.symmetric(
                               vertical: 16, horizontal: 16),
                           filled: true,
                           fillColor: Colors
@@ -274,21 +241,21 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.blue, // Highlighted border color
                               width: 1.5,
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
 
                       TextField(
-                        controller: iqamaNumberController,
+                        controller: idNumberController,
                         decoration: InputDecoration(
                           hintText: "ID/Iqama Number".tr,
-                          hintStyle: TextStyle(color: Colors.grey),
-                          contentPadding: EdgeInsets.symmetric(
+                          hintStyle: const TextStyle(color: Colors.grey),
+                          contentPadding: const EdgeInsets.symmetric(
                               vertical: 16, horizontal: 16),
                           filled: true,
                           fillColor: Colors.white,
@@ -299,8 +266,8 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide:
-                                BorderSide(color: Colors.blue, width: 1.5),
+                            borderSide: const BorderSide(
+                                color: Colors.blue, width: 1.5),
                           ),
                         ),
                       ),
@@ -335,20 +302,20 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                       //     ),
                       //   ),
                       // ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextField(
                         controller: dobController,
                         readOnly: true,
                         decoration: InputDecoration(
-                          suffixIcon: Icon(
+                          suffixIcon: const Icon(
                             Icons.calendar_month,
                             color: Colors.grey,
                           ),
                           hintText: "Date of birth".tr,
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               color: Colors
                                   .grey), // Matches the placeholder text color
-                          contentPadding: EdgeInsets.symmetric(
+                          contentPadding: const EdgeInsets.symmetric(
                               vertical: 16, horizontal: 16),
                           filled: true,
                           fillColor: Colors
@@ -364,7 +331,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.blue, // Highlighted border color
                               width: 1.5,
                             ),
@@ -372,17 +339,15 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                         ),
                         onTap: showDatePickerDialog,
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       DropdownButtonFormField<String>(
                         value: selectedGender,
                         decoration: InputDecoration(
                           labelText: "Gender".tr,
-                          labelStyle: TextStyle(color: Colors.grey),
-                          hintStyle: TextStyle(
-                              color: Colors
-                                  .grey), // Matches the placeholder text color
-                          contentPadding:
-                              EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                          labelStyle: const TextStyle(color: Colors.grey),
+                          hintStyle: const TextStyle(color: Colors.grey),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 0, horizontal: 16),
                           filled: true,
                           fillColor: Colors
                               .white, // Background color of the text field
@@ -397,7 +362,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.blue, // Highlighted border color
                               width: 1.5,
                             ),
@@ -436,7 +401,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                         borderRadius:
                             BorderRadius.circular(8), // Rounded corners
                       ),
-                      minimumSize: Size(160, 55),
+                      minimumSize: const Size(160, 55),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 8), // Padding
                     ),
@@ -458,7 +423,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                           width: 30,
                           height: 30,
                           decoration: BoxDecoration(
-                            color: Color(0xFF009788), // Background color
+                            color: const Color(0xFF009788), // Background color
                             borderRadius:
                                 BorderRadius.circular(8), // Make it circular
                           ),
@@ -466,7 +431,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                             () => Center(
                               child: Text(
                                 '${cartController.cartItems.length}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white, // Text color
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -479,7 +444,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                             width: 8), // Space between the icon and text
                         Text(
                           'Selected item'.tr,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF009788),
@@ -492,8 +457,8 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                     () => ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: cartController.isCartEmpty()
-                            ? Color(0xFFD9D9D9)
-                            : Color(0xFF007ABB),
+                            ? const Color(0xFFD9D9D9)
+                            : const Color(0xFF007ABB),
                         minimumSize: const Size(160, 55),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -508,7 +473,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                         'Save'.tr,
                         style: TextStyle(
                             color: cartController.isCartEmpty()
-                                ? Color(0xFF9C9C9C)
+                                ? const Color(0xFF9C9C9C)
                                 : Colors.white,
                             fontSize: 15),
                       ),

@@ -32,7 +32,6 @@ class VitaminPaymentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final String currentDate = DateFormat.yMMMd().format(DateTime.now());
     VitaminCartController vitaminCartController =
         Get.put(VitaminCartController());
 
@@ -82,14 +81,8 @@ class VitaminPaymentPage extends StatelessWidget {
       }
     }
 
-    // Calculate the VAT and total amount
     double total = vitaminCartController.getTotalAmount();
     double tax = total * 0.15;
-
-    // // Extract numeric value from packagePrice by removing non-numeric characters
-    // final double parsedPackagePrice =
-    //     double.parse(packagePrice.replaceAll(RegExp(r'[^\d.]'), ''));
-
     final double totalAmount = total + tax;
 
     return Scaffold(
@@ -126,25 +119,8 @@ class VitaminPaymentPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                      // decoration: BoxDecoration(
-                      //   color: Colors.white,
-                      // ),
-                      child: StepProgressBar(currentStep: 4, totalSteps: 4)),
-                  // Text(
-                  //   "Payment Details",
-                  //   style: TextStyle(
-                  //     fontSize: 20,
-                  //     fontWeight: FontWeight.bold,
-                  //     color: Colors.black,
-                  //   ),
-                  // ),
-                  // SizedBox(height: 10),
-                  // Divider(
-                  //   color: MyColors.logocolor,
-                  //   thickness: 2.0,
-                  //   height: 10.0,
-                  // ),
+                  StepProgressBar(currentStep: 4, totalSteps: 4),
+          
                   Padding(
                     padding: const EdgeInsets.only(left: 4.0),
                     child: ListTile(
@@ -166,12 +142,7 @@ class VitaminPaymentPage extends StatelessWidget {
                       leading: Image.asset("assets/logo/harees_logo.png"),
                     ),
                   ),
-                  // SizedBox(height: 10),
-                  // Divider(
-                  //   color: MyColors.logocolor,
-                  //   thickness: 2.0,
-                  //   height: 10.0,
-                  // ),
+                
                   SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 18.0),
@@ -207,43 +178,7 @@ class VitaminPaymentPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 10),
-                  // Container(
-                  //   decoration: BoxDecoration(
-                  //     color: Colors.blue[100],
-                  //     borderRadius: BorderRadius.circular(10),
-                  //   ),
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.all(8.0),
-                  //     child: ListTile(
-                  //       subtitle: Column(
-                  //         crossAxisAlignment: CrossAxisAlignment.start,
-                  //         children: [
-                  //           Text(
-                  //             'Email: ${selectedProviderData['email']}',
-                  //             style: TextStyle(
-                  //               color: Colors.black,
-                  //               fontSize: 16,
-                  //               fontWeight: FontWeight.bold,
-                  //             ),
-                  //           ),
-                  //           SizedBox(height: 5),
-                  //           Text(
-                  //             'Address: ${selectedProviderData['address']}',
-                  //             style: TextStyle(
-                  //               color: Colors.black,
-                  //               fontSize: 16,
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //       leading: Image.asset(
-                  //         "assets/images/vitamin.png",
-                  //         height: 60,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  // SizedBox(height: 10),
+              
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 18.0),
                     child: Text(

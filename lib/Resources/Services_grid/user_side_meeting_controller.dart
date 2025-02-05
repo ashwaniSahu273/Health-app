@@ -25,12 +25,12 @@ class UserSideMeetingRequestController extends GetxController {
           DateFormat("MMMM d, yyyy", "en_US").format(dateTime);
       String formattedTime = DateFormat("h:mm a", "en_US").format(dateTime);
 
-      print("Readable Date: $formattedDate");
-      print("Readable Time: $formattedTime");
+      // print("Readable Date: $formattedDate");
+      // print("Readable Time: $formattedTime");
 
       date.value = "$formattedDate,  $formattedTime";
 
-      print("============================> ${date.value}================>");
+      // print("============================> ${date.value}================>");
     } catch (e) {
       print("Error converting ISO timestamp: $e");
     }
@@ -46,11 +46,11 @@ class UserSideMeetingRequestController extends GetxController {
           DateFormat("MMMM d, yyyy", "en_US").format(dateTime);
       String formattedTime = DateFormat("h:mm a", "en_US").format(dateTime);
 
-      print("Readable Date: $formattedDate");
-      print("Readable Time: $formattedTime");
+      // print("Readable Date: $formattedDate");
+      // print("Readable Time: $formattedTime");
 
       time.value = "$formattedDate,  $formattedTime";
-      print("============================> ${date.value}================>");
+      // print("============================> ${date.value}================>");
     } catch (e) {
       print("Error converting ISO timestamp: $e");
     }
@@ -81,7 +81,7 @@ class UserSideMeetingRequestController extends GetxController {
         status.value = 'Accepted';
       });
 
-      print('Appointment accepted successfully.');
+      // print('Appointment accepted successfully.');
     } catch (e) {
       print('Error accepting appointment: $e');
     }

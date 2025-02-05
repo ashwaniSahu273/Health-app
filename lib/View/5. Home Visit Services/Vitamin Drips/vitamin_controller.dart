@@ -32,7 +32,7 @@ class VitaminCartController extends GetxController {
 
   Future<void> signInWithPhoneNumber(
       String verificationId, String smsCode) async {
-    FirebaseAuth _auth = FirebaseAuth.instance;
+    FirebaseAuth auth = FirebaseAuth.instance;
 
     // Create a PhoneAuthCredential with the code
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
@@ -41,17 +41,17 @@ class VitaminCartController extends GetxController {
     );
 
     // Sign in the user with the credential
-    await _auth.signInWithCredential(credential);
+    await auth.signInWithCredential(credential);
   }
 
   Future<void> verifyPhoneNumber(String phoneNumber) async {
-    FirebaseAuth _auth = FirebaseAuth.instance;
+    FirebaseAuth auth = FirebaseAuth.instance;
 
-    await _auth.verifyPhoneNumber(
+    await auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) async {
         // Automatically sign in the user when verification is completed
-        await _auth.signInWithCredential(credential);
+        await auth.signInWithCredential(credential);
       },
       verificationFailed: (FirebaseAuthException e) {
         if (e.code == 'invalid-phone-number') {
@@ -80,7 +80,7 @@ class VitaminCartController extends GetxController {
 
       servicesList.assignAll(services);
 
-      print("======================> $servicesList");
+      // print("======================> $servicesList");
     } catch (e) {
       print("Error fetching services: $e");
     }
@@ -154,7 +154,7 @@ class VitaminCartController extends GetxController {
 
     String dateTimeString = "$cleanedDate $cleanedTime";
 
-    print("Parsing DateTime String: '$dateTimeString'");
+    // print("Parsing DateTime String: '$dateTimeString'");
 
     DateTime dateTime =
         DateFormat("MMMM d, yyyy h:mm a", "en_US").parse(dateTimeString);
@@ -162,7 +162,7 @@ class VitaminCartController extends GetxController {
     String isoTimestamp = dateTime.toUtc().toIso8601String();
     currentTime.value = isoTimestamp;
 
-    print("Parsed ISO Timestamp: $currentTime");
+    // print("Parsed ISO Timestamp: $currentTime");
   } catch (e) {
     print("Error parsing date and time: $e");
   }
@@ -266,7 +266,7 @@ class VitaminCartController extends GetxController {
   }
 
   void storeServices() async {
-    final List<Map<String, dynamic>> servicess = [
+    final List<Map<String, dynamic>> services = [
       {
         "id": 1,
         "imagePath": "assets/images/vitamin.png",
@@ -406,7 +406,7 @@ class VitaminCartController extends GetxController {
     CollectionReference servicesCollection =
         FirebaseFirestore.instance.collection('VitaminServices');
 
-    for (var service in servicess) {
+    for (var service in services) {
       final docRef = servicesCollection.doc();
       final id = docRef.id;
 
@@ -416,126 +416,4 @@ class VitaminCartController extends GetxController {
     }
   }
 
-//   final List<Map<String, dynamic>> services = [
-//     {
-//       "id": 1,
-//       "serviceName": "memory_enhancement.name".tr,
-//       "description": "memory_enhancement.description".tr,
-//       "components": "memory_enhancement.ingredients".tr,
-//       "price": "memory_enhancement.price".tr,
-//       "imagePath": "assets/images/vitamin.png",
-//     },
-//     {
-//       "id": 2,
-//       "serviceName": "hydration.name".tr,
-//       "description": "hydration.description".tr,
-//       "components": "hydration.ingredients".tr,
-//       "price": "hydration.price".tr,
-//       "imagePath": "assets/images/vitamin.png",
-//     },
-//     {
-//       "id": 3,
-//       "serviceName": "antiaging.name".tr,
-//       "description": "antiaging.description".tr,
-//       "components": "antiaging.ingredients".tr,
-//       "price": "antiaging.price".tr,
-//       "imagePath": "assets/images/vitamin.png",
-//     },
-//     {
-//       "id": 4,
-//       "serviceName": "stress_relief.name".tr,
-//       "description": "stress_relief.description".tr,
-//       "components": "stress_relief.ingredients".tr,
-//       "price": "stress_relief.price".tr,
-//       "imagePath": "assets/images/vitamin.png",
-//     },
-//     {
-//       "id": 5,
-//       "serviceName": "fitness_boost.name".tr,
-//       "description": "fitness_boost.description".tr,
-//       "components": "fitness_boost.ingredients".tr,
-//       "price": "fitness_boost.price".tr,
-//       "imagePath": "assets/images/vitamin.png",
-//     },
-//     {
-//       "id": 6,
-//       "serviceName": "energy_boost.name".tr,
-//       "description": "energy_boost.description".tr,
-//       "components": "energy_boost.ingredients".tr,
-//       "price": "energy_boost.price".tr,
-//       "imagePath": "assets/images/vitamin.png",
-//     },
-//     {
-//       "id": 7,
-//       "serviceName": "post_sleeve.name".tr,
-//       "description": "post_sleeve.description".tr,
-//       "components": "post_sleeve.ingredients".tr,
-//       "price": "post_sleeve.price".tr,
-//       "imagePath": "assets/images/vitamin.png",
-//     },
-//     {
-//       "id": 8,
-//       "serviceName": "hair_health.name".tr,
-//       "description": "hair_health.description".tr,
-//       "components": "hair_health.ingredients".tr,
-//       "price": "hair_health.price".tr,
-//       "imagePath": "assets/images/vitamin.png",
-//     },
-//     {
-//       "id": 9,
-//       "serviceName": "jet_lag.name".tr,
-//       "description": "jet_lag.description".tr,
-//       "components": "jet_lag.ingredients".tr,
-//       "price": "jet_lag.price".tr,
-//       "imagePath": "assets/images/vitamin.png",
-//     },
-//     {
-//       "id": 10,
-//       "serviceName": "migraine_relief.name".tr,
-//       "description": "migraine_relief.description".tr,
-//       "components": "migraine_relief.ingredients".tr,
-//       "price": "migraine_relief.price".tr,
-//       "imagePath": "assets/images/vitamin.png",
-//     },
-//     {
-//       "id": 11,
-//       "serviceName": "depression_relief.name".tr,
-//       "description": "depression_relief.description".tr,
-//       "components": "depression_relief.ingredients".tr,
-//       "price": "depression_relief.price".tr,
-//       "imagePath": "assets/images/vitamin.png",
-//     },
-//     {
-//       "id": 12,
-//       "serviceName": "weight_loss.name".tr,
-//       "description": "weight_loss.description".tr,
-//       "components": "weight_loss.ingredients".tr,
-//       "price": "weight_loss.price".tr,
-//       "imagePath": "assets/images/vitamin.png",
-//     },
-//     {
-//       "id": 13,
-//       "serviceName": "diet_detox.name".tr,
-//       "description": "diet_detox.description".tr,
-//       "components": "diet_detox.ingredients".tr,
-//       "price": "diet_detox.price".tr,
-//       "imagePath": "assets/images/vitamin.png",
-//     },
-//     {
-//       "id": 14,
-//       "serviceName": "mayers_cocktail.name".tr,
-//       "description": "mayers_cocktail.description".tr,
-//       "components": "mayers_cocktail.ingredients".tr,
-//       "price": "mayers_cocktail.price".tr,
-//       "imagePath": "assets/images/vitamin.png",
-//     },
-//     {
-//       "id": 15,
-//       "serviceName": "immunity_boost.name".tr,
-//       "description": "immunity_boost.description".tr,
-//       "components": "immunity_boost.ingredients".tr,
-//       "price": "immunity_boost.price".tr,
-//       "imagePath": "assets/images/vitamin.png",
-//     },
-//   ];
 }

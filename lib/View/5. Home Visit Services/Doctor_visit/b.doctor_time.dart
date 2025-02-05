@@ -803,8 +803,6 @@ class _Doctor_TimeState extends State<Doctor_Time> {
         setState(() {
           selectedTime = time;
         });
-
-        print("thiss is time: $time this is date : $selectedDate");
         doctorController.selectedDateController.value = selectedDate;
         doctorController.selectedTimeController.value = time;
         doctorController.convertToFirebaseTimestamp(selectedDate, time);

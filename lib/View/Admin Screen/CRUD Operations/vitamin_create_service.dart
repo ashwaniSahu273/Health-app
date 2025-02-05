@@ -91,9 +91,9 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
         controller.vitaminUploadedImageUrl.value = downloadUrl;
 
         controller.isLoadingNurseService.value = false;
-        print("uploading==========>$controller.vitaminUploadedImageUrl.value");
+     
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Image uploaded successfully!')),
+          const SnackBar(content: Text('Image uploaded successfully!')),
         );
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -147,16 +147,16 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
                             ? Container(
                                 height: 70,
                                 width: 70,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: const Color(
+                                  color: Color(
                                       0xFFE6F5FF), // Circle background color
                                 ),
                                 child: Image.network(
                                   controller.vitaminUploadedImageUrl.value!,
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) {
-                                    return Text(
+                                    return const Text(
                                       "No Image",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -165,7 +165,7 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
                                   },
                                 ),
                               )
-                            : Text(
+                            : const Text(
                                 "There Is No Image",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
@@ -175,12 +175,12 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
                   const SizedBox(height: 10),
                   ElevatedButton.icon(
                     onPressed: () => selectImage(ImageSource.gallery),
-                    icon: Icon(Icons.image),
-                    label: Text('Select Image'),
+                    icon: const Icon(Icons.image),
+                    label: const Text('Select Image'),
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
 
@@ -255,12 +255,12 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
                           //     maxLines: 6),
                         ],
                       )
-                    : SizedBox.shrink(),
+                    : const SizedBox.shrink(),
               ),
 
               _buildTextField(_priceController, 'Price'),
               // _buildTextField(_imagePathController, 'Image Path'),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   print(
@@ -273,25 +273,21 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
                     'localized': {
                       'ar': {
                         'serviceName':
-                            _arServiceNameController.text ?? "No service name",
+                            _arServiceNameController.text,
                         'description':
-                            _arAboutController.text ?? "No description",
-                        'components': _arServiceIncludesController.text ??
-                            "No service includes",
-                        'instructions': _arDescriptionController.text ??
-                            "No service includes",
-                        'price': _priceController.text ?? "No price",
+                            _arAboutController.text,
+                        'components': _arServiceIncludesController.text,
+                        'instructions': _arDescriptionController.text,
+                        'price': _priceController.text,
                       },
                       'en': {
                         'serviceName':
-                            _enServiceNameController.text ?? "No service name",
+                            _enServiceNameController.text,
                         'description':
-                            _enAboutController.text ?? "No description",
-                        'components': _enServiceIncludesController.text ??
-                            "No service includes",
-                        'instructions': _enDescriptionController.text ??
-                            "No service includes",
-                        'price': _priceController.text ?? "No price",
+                            _enAboutController.text,
+                        'components': _enServiceIncludesController.text,
+                        'instructions': _enDescriptionController.text,
+                        'price': _priceController.text,
                       },
                     },
                   };
@@ -331,13 +327,13 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
         children: [
           Text(
             label,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           TextFormField(
             controller: controller,
             maxLines: maxLines,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
             ),
             // validator: (value) => value!.isEmpty ? 'Please enter $label' : null,

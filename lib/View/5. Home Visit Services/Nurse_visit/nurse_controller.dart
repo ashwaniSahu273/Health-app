@@ -6,7 +6,6 @@ import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit
 import 'package:harees_new_project/View/8.%20Chats/Models/nurse_service_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/Payment/payment_success.dart';
-// import 'package:harees_new_project/View/8.%20Chats/Models/vitamin_service_model.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -42,16 +41,9 @@ class NurseController extends GetxController {
     fetchNurseVisitDuration();
   }
 
-  // void durationOfService(String duration, String price) {
-  //   duration.value = duration;
-  //   price.value = price;
-
-  //   print("price ======${price}");
-  // }
-
   Future<void> signInWithPhoneNumber(
       String verificationId, String smsCode) async {
-    FirebaseAuth _auth = FirebaseAuth.instance;
+    FirebaseAuth auth = FirebaseAuth.instance;
 
     // Create a PhoneAuthCredential with the code
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
@@ -60,17 +52,16 @@ class NurseController extends GetxController {
     );
 
     // Sign in the user with the credential
-    await _auth.signInWithCredential(credential);
+    await auth.signInWithCredential(credential);
   }
 
   Future<void> verifyPhoneNumber(String phoneNumber) async {
-    FirebaseAuth _auth = FirebaseAuth.instance;
+    FirebaseAuth auth = FirebaseAuth.instance;
 
-    await _auth.verifyPhoneNumber(
+    await auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) async {
-        // Automatically sign in the user when verification is completed
-        await _auth.signInWithCredential(credential);
+        await auth.signInWithCredential(credential);
       },
       verificationFailed: (FirebaseAuthException e) {
         if (e.code == 'invalid-phone-number') {
@@ -98,8 +89,6 @@ class NurseController extends GetxController {
       }).toList();
 
       servicesList.assignAll(services);
-
-      print("======================> $servicesList");
     } catch (e) {
       print("Error fetching services: $e");
     }
@@ -119,11 +108,12 @@ class NurseController extends GetxController {
 
       durationList.assignAll(services);
 
-      print("======================> $servicesList");
+      // print("======================> $servicesList");
     } catch (e) {
       print("Error fetching services: $e");
     }
   }
+
   void fetchNurseVisitArDuration() async {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -138,7 +128,7 @@ class NurseController extends GetxController {
 
       durationList.assignAll(services);
 
-      print("======================> $servicesList");
+      // print("======================> $servicesList");
     } catch (e) {
       print("Error fetching services: $e");
     }
@@ -202,32 +192,32 @@ class NurseController extends GetxController {
     }
   }
 
-void convertToFirebaseTimestamp(String date, String time) {
-  try {
-    String cleanedDate = date.replaceAll(RegExp(r'\s+'), ' ').trim();
-    String cleanedTime = time.replaceAll(RegExp(r'\s+'), ' ').trim();
-    cleanedTime = cleanedTime.toUpperCase();
+  void convertToFirebaseTimestamp(String date, String time) {
+    try {
+      String cleanedDate = date.replaceAll(RegExp(r'\s+'), ' ').trim();
+      String cleanedTime = time.replaceAll(RegExp(r'\s+'), ' ').trim();
+      cleanedTime = cleanedTime.toUpperCase();
 
-    // Handle Arabic time format and replace with AM/PM
-    cleanedTime = cleanedTime.replaceAll(RegExp(r'صباحا', caseSensitive: false), 'AM')
-                             .replaceAll(RegExp(r'مساء', caseSensitive: false), 'PM');
+      // Handle Arabic time format and replace with AM/PM
+      cleanedTime = cleanedTime
+          .replaceAll(RegExp(r'صباحا', caseSensitive: false), 'AM')
+          .replaceAll(RegExp(r'مساء', caseSensitive: false), 'PM');
 
-    String dateTimeString = "$cleanedDate $cleanedTime";
+      String dateTimeString = "$cleanedDate $cleanedTime";
 
-    print("Parsing DateTime String: '$dateTimeString'");
+      // print("Parsing DateTime String: '$dateTimeString'");
 
-    DateTime dateTime =
-        DateFormat("MMMM d, yyyy h:mm a", "en_US").parse(dateTimeString);
+      DateTime dateTime =
+          DateFormat("MMMM d, yyyy h:mm a", "en_US").parse(dateTimeString);
 
-    String isoTimestamp = dateTime.toUtc().toIso8601String();
-    currentTime.value = isoTimestamp;
+      String isoTimestamp = dateTime.toUtc().toIso8601String();
+      currentTime.value = isoTimestamp;
 
-    print("Parsed ISO Timestamp: $currentTime");
-  } catch (e) {
-    print("Error parsing date and time: $e");
+      // print("Parsed ISO Timestamp: $currentTime");
+    } catch (e) {
+      print("Error parsing date and time: $e");
+    }
   }
-}
-
 
   bool isCartEmpty() {
     return cartItems.isEmpty;
@@ -334,7 +324,7 @@ void convertToFirebaseTimestamp(String date, String time) {
   }
 
   void storeServices() async {
-    final List<Map<String, dynamic>> servicess = [
+    final List<Map<String, dynamic>> services = [
       {
         "id": "",
         "type": "group",
@@ -595,7 +585,7 @@ void convertToFirebaseTimestamp(String date, String time) {
     CollectionReference servicesCollection =
         FirebaseFirestore.instance.collection('NurseServices');
 
-    for (var service in servicess) {
+    for (var service in services) {
       final docRef = servicesCollection.doc();
       final id = docRef.id;
 

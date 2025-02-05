@@ -1,7 +1,5 @@
-import 'package:app_links/app_links.dart';
 import 'package:file_picker/file_picker.dart' as FilePicker;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/2.%20Authentication/User_Auth/Complete_Profile_User.dart';
@@ -11,12 +9,14 @@ import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dar
 import 'package:harees_new_project/View/8.%20Chats/Models/firebase_helper.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/Admin%20Screen/admin_home.dart';
-import 'package:harees_new_project/View/Payment/payment_success.dart';
 import 'package:harees_new_project/ViewModel/Localization/localization.dart';
 import 'package:uuid/uuid.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+// import 'package:harees_new_project/View/Payment/payment_success.dart';
+// import 'package:flutter/foundation.dart';
+// import 'package:app_links/app_links.dart';
 
 var uuid = const Uuid();
 
@@ -25,14 +25,16 @@ void main() async {
   FilePicker.PlatformFile;
 
   try {
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
   } catch (e) {
     print("Firebase initialization failed: $e");
   }
 
   User? currentUser = FirebaseAuth.instance.currentUser;
   if (currentUser != null) {
-    UserModel? thisUserModel = await FirebaseHelper.getUserModelById(currentUser.uid);
+    UserModel? thisUserModel =
+        await FirebaseHelper.getUserModelById(currentUser.uid);
     if (thisUserModel != null) {
       runApp(MyApp(userModel: thisUserModel, firebaseUser: currentUser));
     } else {
@@ -62,7 +64,7 @@ Widget decideHomeScreen(UserModel? userModel, User? credential) {
         userEmail: userModel.email ?? '', // Use userModel.email if available
       );
     case "user":
-      return userModel.fullname == "" 
+      return userModel.fullname == ""
           ? CompleteProfile(
               userModel: userModel,
               firebaseUser: credential,
@@ -87,46 +89,44 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final AppLinks _appLinks = AppLinks();
+  // final AppLinks _appLinks = AppLinks();
 
   @override
   void initState() {
     super.initState();
-    _handleDeepLinks();
+    // _handleDeepLinks();
   }
 
-  void _handleDeepLinks() async {
-    try {
-      _appLinks.uriLinkStream.listen((Uri? uri) {
-        if (uri != null) {
+  // void _handleDeepLinks() async {
+  //   try {
+  //     _appLinks.uriLinkStream.listen((Uri? uri) {
+  //       if (uri != null) {
 
-          
-          if (kDebugMode) {
-            print("Deep Link Triggered:=============> ${uri.toString()}");
-          }
+  //         if (kDebugMode) {
+  //           print("Deep Link Triggered:=============> ${uri.toString()}");
+  //         }
 
-          if (uri.scheme == "harees_new_project" &&
-              uri.host == "www.harees_new_project.com" &&
-              uri.pathPrefix == "payment") {
-            // Get.to(PaymentSuccessScreen());
-          }
-        }
-      });
-    } catch (e) {
-      print("Deep link handling failed: $e");
-    }
-  }
+  //         if (uri.scheme == "harees_new_project" &&
+  //             uri.host == "www.harees_new_project.com" &&
+  //             uri.pathPrefix == "payment") {
+  //           // Get.to(PaymentSuccessScreen());
+  //         }
+  //       }
+  //     });
+  //   } catch (e) {
+  //     print("Deep link handling failed: $e");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: decideHomeScreen(widget.userModel, widget.firebaseUser),
-      debugShowCheckedModeBanner: false,
-      locale: const Locale("en", "US"),
-      fallbackLocale: const Locale("en", "US"),
-      translations: Language(),
-      builder: EasyLoading.init()
-    );
+        home: decideHomeScreen(widget.userModel, widget.firebaseUser),
+        debugShowCheckedModeBanner: false,
+        locale: const Locale("en", "US"),
+        fallbackLocale: const Locale("en", "US"),
+        translations: Language(),
+        builder: EasyLoading.init());
   }
 }
 

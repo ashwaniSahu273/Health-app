@@ -45,7 +45,7 @@ class _User_RegisterState extends State<User_Register> {
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
-      // print("The passwords you entered do not match!");
+     
     } else {
       signUp(email, password);
     }
@@ -100,7 +100,7 @@ class _User_RegisterState extends State<User_Register> {
           .doc(uid)
           .set(newUser.tomap())
           .then((value) {
-        print("New User Created!");
+
         Navigator.popUntil(context, (route) => route.isFirst);
         Navigator.pushReplacement(
           context,

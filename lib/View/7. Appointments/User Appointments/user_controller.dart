@@ -47,12 +47,12 @@ class UserController extends GetxController {
           DateFormat("MMMM d, yyyy", "en_US").format(dateTime);
       String formattedTime = DateFormat("h:mm a", "en_US").format(dateTime);
 
-      print("Readable Date: $formattedDate");
-      print("Readable Time: $formattedTime");
+      // print("Readable Date: $formattedDate");
+      // print("Readable Time: $formattedTime");
 
       date.value = formattedDate;
       time.value = formattedTime;
-      print("============================> ${date.value}================>");
+      // print("============================> ${date.value}================>");
     } catch (e) {
       print("Error converting ISO timestamp: $e");
     }

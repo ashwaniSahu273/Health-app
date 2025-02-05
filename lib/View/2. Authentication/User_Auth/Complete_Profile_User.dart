@@ -117,7 +117,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
         iqamaNumber.isEmpty ||
         gender == null ||
         dob.isEmpty) {
-      print("Please fill all the fields");
+
       UIHelper.showAlertDialog(
           context, "Incomplete Data", "Please fill all the fields");
     } else {

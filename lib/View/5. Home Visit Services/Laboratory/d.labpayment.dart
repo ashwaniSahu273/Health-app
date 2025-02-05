@@ -82,10 +82,6 @@ class LabPaymentPage extends StatelessWidget {
     double total = cartController.getTotalAmount();
     double tax = total * 0.15;
 
-    // // Extract numeric value from packagePrice by removing non-numeric characters
-    // final double parsedPackagePrice =
-    //     double.parse(packagePrice.replaceAll(RegExp(r'[^\d.]'), ''));
-
     final double totalAmount = cartController.getTotalAmount() + tax;
 
     return Scaffold(

@@ -1,7 +1,7 @@
-import 'dart:typed_data';
+// import 'dart:typed_data';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -26,35 +26,35 @@ class NurseDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     NurseController cartController = Get.put(NurseController());
 
-    Future<void> uploadImage() async {
-      print("===========>Starting upload");
+    // Future<void> uploadImage() async {
+    //   print("===========>Starting upload");
 
-      try {
-        // Load image from assets
-        ByteData byteData =
-            await rootBundle.load('assets/images/std.png');
-        Uint8List imageData = byteData.buffer.asUint8List();
+    //   try {
+    //     // Load image from assets
+    //     ByteData byteData =
+    //         await rootBundle.load('assets/images/std.png');
+    //     Uint8List imageData = byteData.buffer.asUint8List();
 
-        // Reference to Firebase Storage location
-        FirebaseStorage storage = FirebaseStorage.instance;
-        Reference ref = storage
-            .ref()
-            .child('images/${DateTime.now().millisecondsSinceEpoch}.png');
+    //     // Reference to Firebase Storage location
+    //     FirebaseStorage storage = FirebaseStorage.instance;
+    //     Reference ref = storage
+    //         .ref()
+    //         .child('images/${DateTime.now().millisecondsSinceEpoch}.png');
 
-        // Upload the image
-        UploadTask uploadTask = ref.putData(imageData);
+    //     // Upload the image
+    //     UploadTask uploadTask = ref.putData(imageData);
 
-        // Wait for upload to complete
-        TaskSnapshot snapshot = await uploadTask.whenComplete(() => null);
+    //     // Wait for upload to complete
+    //     TaskSnapshot snapshot = await uploadTask.whenComplete(() => null);
 
-        // Get the download URL of the uploaded image
-        String url = await snapshot.ref.getDownloadURL();
+    //     // Get the download URL of the uploaded image
+    //     String url = await snapshot.ref.getDownloadURL();
 
-        print('Image uploaded! URL:==========> $url<===============');
-      } catch (e) {
-        print('Error uploading image: $e');
-      }
-    }
+    //     print('Image uploaded! URL:==========> $url<===============');
+    //   } catch (e) {
+    //     print('Error uploading image: $e');
+    //   }
+    // }
 
     return Scaffold(
       appBar: AppBar(
@@ -85,14 +85,14 @@ class NurseDetails extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: Color(0xFFEEF8FF),
+      backgroundColor: const Color(0xFFEEF8FF),
       body: Column(
         children: [
           Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
-              child: StepProgressBar(currentStep: 2, totalSteps: 4)),
+              child: const StepProgressBar(currentStep: 2, totalSteps: 4)),
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(12),
@@ -140,9 +140,9 @@ class NurseDetails extends StatelessWidget {
                           Container(
                             height: 60,
                             width: 60,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               shape: BoxShape.circle,
-                              color: const Color(
+                              color: Color(
                                   0xFFE6F5FF), // Circle background color
                             ),
                             child: ClipOval(
@@ -165,7 +165,7 @@ class NurseDetails extends StatelessWidget {
                               children: [
                                 Text(
                                   localizedData.serviceName,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
                                     color: Color(0xFF007ABB),
@@ -175,7 +175,7 @@ class NurseDetails extends StatelessWidget {
                                 service.type == "package"
                                     ? Text(
                                         localizedData.description,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 12,
                                           color: Colors.black54,
                                         ),
@@ -187,7 +187,7 @@ class NurseDetails extends StatelessWidget {
                                 service.type == "package"
                                     ?  Text(
                                         "Know more".tr,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.blueAccent,
@@ -195,7 +195,7 @@ class NurseDetails extends StatelessWidget {
                                         ),
                                       )
                                     : Container(
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                           horizontal: 8,
                                           vertical: 4,
                                         ),
@@ -238,7 +238,7 @@ class NurseDetails extends StatelessWidget {
                         borderRadius:
                             BorderRadius.circular(8), // Rounded corners
                       ),
-                      minimumSize: Size(160, 55),
+                      minimumSize: const Size(160, 55),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 8), // Padding
                     ),
@@ -262,7 +262,7 @@ class NurseDetails extends StatelessWidget {
                           width: 30,
                           height: 30,
                           decoration: BoxDecoration(
-                            color: Color(0xFF009788), // Background color
+                            color: const Color(0xFF009788), // Background color
                             borderRadius:
                                 BorderRadius.circular(8), // Make it circular
                           ),
@@ -297,8 +297,8 @@ class NurseDetails extends StatelessWidget {
                     () => ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: cartController.isCartEmpty()
-                            ? Color(0xFFD9D9D9)
-                            : Color(0xFF007ABB),
+                            ? const Color(0xFFD9D9D9)
+                            : const Color(0xFF007ABB),
                         minimumSize: const Size(160, 55),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -323,7 +323,7 @@ class NurseDetails extends StatelessWidget {
                         style: TextStyle(
                             fontFamily: "schyler",
                             color: cartController.isCartEmpty()
-                                ? Color(0xFF9C9C9C)
+                                ? const Color(0xFF9C9C9C)
                                 : Colors.white,
                             fontSize: 15),
                       ),
@@ -336,21 +336,4 @@ class NurseDetails extends StatelessWidget {
     );
   }
 
-  Widget _buildChip(String label) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: Color(0xFFEAF6FE), // Light blue background
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Text(
-        label,
-        style: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: Color(0xFF007ABB),
-        ),
-      ),
-    );
-  }
 }

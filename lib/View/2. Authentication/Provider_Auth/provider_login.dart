@@ -78,9 +78,6 @@ class _Provider_loginState extends State<Provider_login> {
       UserModel userModel =
           UserModel.frommap(userData.data() as Map<String, dynamic>);
 
-      print("Log In Successful!");
-
-      // Navigate to the home page
       Navigator.popUntil(context, (route) => route.isFirst);
       Navigator.pushReplacement(
         context,

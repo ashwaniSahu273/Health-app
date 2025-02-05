@@ -101,9 +101,9 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
         controller.nurseUploadedImageUrl.value = downloadUrl;
 
         controller.isLoadingNurseService.value = false;
-        print("uploading==========>$controller.nurseUploadedImageUrl.value");
+      
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Image uploaded successfully!')),
+          const SnackBar(content: Text('Image uploaded successfully!')),
         );
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -157,16 +157,16 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
                             ? Container(
                                 height: 70,
                                 width: 70,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: const Color(
+                                  color: Color(
                                       0xFFE6F5FF), // Circle background color
                                 ),
                                 child: Image.network(
                                   controller.nurseUploadedImageUrl.value!,
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) {
-                                    return Text(
+                                    return const Text(
                                       "No Image",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -175,7 +175,7 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
                                   },
                                 ),
                               )
-                            : Text(
+                            : const Text(
                                 "There Is No Image",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
@@ -185,12 +185,12 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
                   const SizedBox(height: 10),
                   ElevatedButton.icon(
                     onPressed: () => selectImage(ImageSource.gallery),
-                    icon: Icon(Icons.image),
-                    label: Text('Select Image'),
+                    icon: const Icon(Icons.image),
+                    label: const Text('Select Image'),
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
 
@@ -264,12 +264,12 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
                               maxLines: 6),
                         ],
                       )
-                    : SizedBox.shrink(),
+                    : const SizedBox.shrink(),
               ),
 
               _buildTextField(_priceController, 'Price'),
               // _buildTextField(_imagePathController, 'Image Path'),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   print(
@@ -281,27 +281,23 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
                     'localized': {
                       'ar': {
                         'serviceName':
-                            _arServiceNameController.text ?? "No service name",
+                            _arServiceNameController.text,
                         'description':
-                            _arDescriptionController.text ?? "No description",
-                        'about': _arAboutController.text ?? "No about",
-                        'serviceIncludes': _arServiceIncludesController.text ??
-                            "No service includes",
-                        'TermsOfService': _arTermsOfServiceController.text ??
-                            "No service terms of service",
-                        'price': _priceController.text ?? "No price",
+                            _arDescriptionController.text,
+                        'about': _arAboutController.text,
+                        'serviceIncludes': _arServiceIncludesController.text,
+                        'TermsOfService': _arTermsOfServiceController.text,
+                        'price': _priceController.text,
                       },
                       'en': {
                         'serviceName':
-                            _enServiceNameController.text ?? "No service name",
+                            _enServiceNameController.text,
                         'description':
-                            _enDescriptionController.text ?? "No description",
-                        'about': _enAboutController.text ?? "No about",
-                        'serviceIncludes': _enServiceIncludesController.text ??
-                            "No service includes",
-                        'TermsOfService': _enTermsOfServiceController.text ??
-                            "No terms of service",
-                        'price': _priceController.text ?? "No price",
+                            _enDescriptionController.text,
+                        'about': _enAboutController.text,
+                        'serviceIncludes': _enServiceIncludesController.text,
+                        'TermsOfService': _enTermsOfServiceController.text,
+                        'price': _priceController.text,
                       },
                     },
                   };
@@ -341,13 +337,13 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
         children: [
           Text(
             label,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           TextFormField(
             controller: controller,
             maxLines: maxLines,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
             ),
             // validator: (value) => value!.isEmpty ? 'Please enter $label' : null,

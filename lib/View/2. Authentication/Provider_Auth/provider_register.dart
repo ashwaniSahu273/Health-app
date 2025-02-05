@@ -65,7 +65,7 @@ class _Provider_RegisterState extends State<Provider_Register> {
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
-      print(ex.message.toString());
+      // print(ex.message.toString());
     }
 
     if (credential != null) {

@@ -9,8 +9,7 @@ import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/U
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class ServicesScreen extends StatelessWidget {
-
-    final UserModel userModel;
+  final UserModel userModel;
   final User firebaseUser;
   final String userEmail;
 
@@ -21,22 +20,18 @@ class ServicesScreen extends StatelessWidget {
     required this.userEmail,
   }) : super(key: key);
 
-
-      
   @override
   Widget build(BuildContext context) {
     final _auth = FirebaseAuth.instance;
 
-  // final user_appointments =
-  //     FirebaseFirestore.instance.collection("User_appointments").snapshots();
+    // final user_appointments =
+    //     FirebaseFirestore.instance.collection("User_appointments").snapshots();
 
-  // final accepted_appointments =
-  //     FirebaseFirestore.instance.collection("Accepted_appointments");
+    // final accepted_appointments =
+    //     FirebaseFirestore.instance.collection("Accepted_appointments");
 
-  // final CollectionReference user_appointment_delete =
-  //     FirebaseFirestore.instance.collection("User_appointments");
-
-
+    // final CollectionReference user_appointment_delete =
+    //     FirebaseFirestore.instance.collection("User_appointments");
 
     return Scaffold(
       appBar: AppBar(
@@ -54,7 +49,10 @@ class ServicesScreen extends StatelessWidget {
                 )), // Double-arrow icon
             Text(
               'Services'.tr,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700,fontFamily: "Roboto"),
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Roboto"),
             ),
           ],
         ),
@@ -66,7 +64,7 @@ class ServicesScreen extends StatelessWidget {
           });
         },
         userModel: userModel,
-        firebaseUser:firebaseUser,
+        firebaseUser: firebaseUser,
         targetUser: userModel,
       ),
       body: Container(
@@ -82,20 +80,20 @@ class ServicesScreen extends StatelessWidget {
           itemCount: services.length,
           itemBuilder: (context, index) {
             final service = services[index];
-            
+
             return GestureDetector(
               onTap: () {
-                if(index == 0) {
-                     Get.to(() => UserRequests(
-                    userModel: userModel,
-                    firebaseUser: firebaseUser,
-                  ));
+                if (index == 0) {
+                  Get.to(() => UserRequests(
+                        userModel: userModel,
+                        firebaseUser: firebaseUser,
+                      ));
                 }
               },
               child: ServiceCard(
                 userModel: userModel,
                 firebaseUser: firebaseUser,
-                id:service["id"],
+                id: service["id"],
                 image: service['image'],
                 label: service['label'],
               ),
@@ -108,9 +106,7 @@ class ServicesScreen extends StatelessWidget {
 }
 
 class ServiceCard extends StatelessWidget {
-
-  
-    final UserModel userModel;
+  final UserModel userModel;
   final User firebaseUser;
   final String image;
   final String label;
@@ -118,8 +114,8 @@ class ServiceCard extends StatelessWidget {
 
   const ServiceCard({
     Key? key,
-     this.id,
-        required this.userModel,
+    this.id,
+    required this.userModel,
     required this.firebaseUser,
     required this.image,
     required this.label,
@@ -135,21 +131,18 @@ class ServiceCard extends StatelessWidget {
       elevation: 4,
       child: InkWell(
         onTap: () {
-            print("thisdfdfdfdfdfdfdffdf ==$id");
-          if(id==1){
-
-              Get.to(() => UserRequests(
-                    userModel: userModel,
-                    firebaseUser: firebaseUser,
-                  ));
+          if (id == 1) {
+            Get.to(() => UserRequests(
+                  userModel: userModel,
+                  firebaseUser: firebaseUser,
+                ));
           }
-          if(id==2){
-               Get.to(() => AcceptedRequests(
-                    userModel: userModel,
-                    firebaseUser: firebaseUser,
-                  ));
+          if (id == 2) {
+            Get.to(() => AcceptedRequests(
+                  userModel: userModel,
+                  firebaseUser: firebaseUser,
+                ));
           }
-          
         },
         borderRadius: BorderRadius.circular(16.0),
         child: Padding(
@@ -157,20 +150,19 @@ class ServiceCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-                Image.asset(
-            image,
-            height: 50, // Adjust the size as needed
-            width: 50,
-          ),
+              Image.asset(
+                image,
+                height: 50, // Adjust the size as needed
+                width: 50,
+              ),
               const SizedBox(height: 12),
               Text(
                 label,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "Roboto"
-                ),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Roboto"),
               ),
             ],
           ),
@@ -181,12 +173,20 @@ class ServiceCard extends StatelessWidget {
 }
 
 final List<Map<String, dynamic>> services = [
-  {'image': "assets/images/appoint.png", 'label': 'Appointments',"id":1},
-  {'image': "assets/images/accept.png", 'label': 'Accepted Appointments',"id":2},
-  {'image': "assets/images/upload.png", 'label': 'Upload Results',"id":3},
-  {'image': "assets/images/service_contact.png", 'label': 'Contact Us',"id":4},
-  {'image': "assets/images/family.png", 'label': 'Family',"id":5},
-  {'image': "assets/images/chat.png", 'label': 'Chats',"id":6},
-  {'image': "assets/images/about.png", 'label': 'About Us',"id":7},
-  {'image': "assets/images/faq1.png", 'label': 'FAQ',"id":8},
+  {'image': "assets/images/appoint.png", 'label': 'Appointments', "id": 1},
+  {
+    'image': "assets/images/accept.png",
+    'label': 'Accepted Appointments',
+    "id": 2
+  },
+  {'image': "assets/images/upload.png", 'label': 'Upload Results', "id": 3},
+  {
+    'image': "assets/images/service_contact.png",
+    'label': 'Contact Us',
+    "id": 4
+  },
+  {'image': "assets/images/family.png", 'label': 'Family', "id": 5},
+  {'image': "assets/images/chat.png", 'label': 'Chats', "id": 6},
+  {'image': "assets/images/about.png", 'label': 'About Us', "id": 7},
+  {'image': "assets/images/faq1.png", 'label': 'FAQ', "id": 8},
 ];

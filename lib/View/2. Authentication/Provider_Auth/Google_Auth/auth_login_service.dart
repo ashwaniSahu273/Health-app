@@ -70,7 +70,7 @@ class AuthServiceUserLoginProvider {
       // 5. User exists, proceed based on role
       _navigateToHomePage(existingUserModel, firebaseUser);
     } catch (error) {
-      print("Error signing in with Google: $error");
+      // print("Error signing in with Google: $error");
       Get.snackbar(
         "Sign-In Error",
         "An error occurred during sign-in. Please try again.",

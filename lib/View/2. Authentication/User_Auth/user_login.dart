@@ -91,8 +91,6 @@ class _LoginScreenState extends State<LoginScreen> {
       UserModel userModel =
           UserModel.frommap(userData.data() as Map<String, dynamic>);
 
-      // Go to HomePage
-      print("Log In Successful!");
 
       Navigator.popUntil(context, (route) => route.isFirst);
 
@@ -124,16 +122,6 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Stack(
           children: [
-            // Background image
-            // Container(
-            //   decoration: const BoxDecoration(
-            //     image: DecorationImage(
-            //       image: AssetImage("assets/images/back_image.png"),
-            //       fit: BoxFit.cover,
-            //     ),
-            //   ),
-            // ),
-            // Foreground content
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 20,
@@ -141,6 +129,45 @@ class _LoginScreenState extends State<LoginScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
+                    //     Padding(
+                    //   padding: const EdgeInsets.only(right: 0, top: 2),
+                    //   child: Column(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       DropdownButton<String>(
+                    //         value: selectedLanguage,
+                    //         onChanged: (String? newValue) {
+                    //           setState(() {
+                    //             selectedLanguage = newValue!;
+
+                    //             if (selectedLanguage == 'Arabic') {
+                    //               Get.updateLocale(const Locale('ar', 'AE'));
+                    //             } else if (selectedLanguage == 'English') {
+                    //               Get.updateLocale(const Locale('en', 'US'));
+                    //             }
+                    //           });
+                    //         },
+                    //         dropdownColor: Colors.black,
+                    //         items: <String>[
+                    //           'English',
+                    //           'Arabic',
+                    //         ]
+                    //             .map<DropdownMenuItem<String>>(
+                    //               (String value) => DropdownMenuItem<String>(
+                    //                 value: value,
+                    //                 child: Text(
+                    //                   value.tr,
+                    //                   style: const TextStyle(
+                    //                       fontWeight: FontWeight.bold,
+                    //                       color: Colors.green),
+                    //                 ),
+                    //               ),
+                    //             )
+                    //             .toList(),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     const Padding(
                       padding: EdgeInsets.only(top: 30.0),
                       child: CircleAvatar(
@@ -152,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 5,
                     ),
-                    Text(
+                    const Text(
                       "Harees",
                       style: TextStyle(
                           fontSize: 36,
@@ -162,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Text(
                       "Care about you and your family".tr,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           fontFamily: "Schyler"),
@@ -207,7 +234,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderColor: Colors.white,
                         textColor: Colors.white,
                         fontSize: 16,
-                        color: Color(0xFF007ABB),
+                        color: const Color(0xFF007ABB),
                         text: "Sign in".tr,
                         onTap: () {
                           checkValues();
@@ -241,7 +268,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         controller.isLoading.value
-                            ? CircularProgressIndicator()
+                            ? const CircularProgressIndicator()
                             : GestureDetector(
                                 onTap: () {
                                   controller.isLoading.value = true;
@@ -257,14 +284,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                         Image.asset("assets/images/google.png")
                                             .image),
                               ),
-
-                        // GestureDetector(
-                        //   onTap: () {},
-                        //   child: CircleAvatar(
-                        //       radius: 20,
-                        //       backgroundImage:
-                        //           Image.asset("assets/images/fb.png").image),
-                        // ),
                       ],
                     ),
                     const SizedBox(
@@ -287,7 +306,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Get.to(User_Register());
+                            Get.to(const User_Register());
                           },
                           child: Text(
                             "Sign Up".tr,
@@ -309,8 +328,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         RoundButton(
                           textColor: Colors.white,
-                          color: Color(0xFF009788),
-                          borderColor: Color(0xFF009788),
+                          color: const Color(0xFF009788),
+                          borderColor: const Color(0xFF009788),
                           height: 32,
                           width: 123,
                           fontSize: 12,

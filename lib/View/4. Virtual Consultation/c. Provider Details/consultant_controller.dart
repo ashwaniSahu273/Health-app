@@ -157,7 +157,6 @@ class ConsultationController extends GetxController {
     )
     );
 
-    // Debugging
-    print("++++++ Consultation Data: $consultationData");
+    
   }
 }

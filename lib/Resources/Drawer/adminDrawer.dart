@@ -217,13 +217,13 @@ class _AdminDrawerState extends State<AdminDrawer> {
                         onChanged: (String? newValue) {
                           setState(() {
                             selectedLanguage = newValue!;
-                            // Perform language change logic here
+                      
                             if (selectedLanguage == 'Arabic') {
                               Get.updateLocale(const Locale('ar', 'AE'));
                             } else if (selectedLanguage == 'English') {
                               Get.updateLocale(const Locale('en', 'US'));
                             }
-                            print('Selected Language: $selectedLanguage');
+                            // print('Selected Language: $selectedLanguage');
                           });
                         },
                         dropdownColor: Colors.black,

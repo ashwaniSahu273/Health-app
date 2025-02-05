@@ -21,12 +21,11 @@ class UserMeetingRequestController extends GetxController {
   final textData = "".obs;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void resetData(){
+  void resetData() {
     meetingLinkController.clear();
     textData.value = "";
   }
 
-  // Regular expression to validate a Google Meet link
   final RegExp googleMeetRegex = RegExp(
     r'^(https:\/\/)?meet\.google\.com\/[a-zA-Z0-9\-]{12}$',
   );
@@ -43,7 +42,7 @@ class UserMeetingRequestController extends GetxController {
 
   Future<void> openConsultationDialog(id) async {
     await Get.dialog(AlertDialog(
-      title: Text('Please Enter Google Meeting Link'),
+      title: const Text('Please Enter Google Meeting Link'),
       content: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -68,19 +67,17 @@ class UserMeetingRequestController extends GetxController {
       actions: [
         TextButton(
           onPressed: () {
-            Get.back(); 
+            Get.back();
           },
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
         ),
         ElevatedButton(
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-            
               try {
-                textData.value =
-                    meetingLinkController.text.trim(); 
-                accept(id, textData.value); 
-                Get.back(); 
+                textData.value = meetingLinkController.text.trim();
+                accept(id, textData.value);
+                Get.back();
               } catch (e) {
                 Get.snackbar(
                   'Error',
@@ -96,7 +93,7 @@ class UserMeetingRequestController extends GetxController {
               );
             }
           },
-          child: Text('Save'),
+          child: const Text('Save'),
         ),
       ],
     ));
@@ -104,20 +101,16 @@ class UserMeetingRequestController extends GetxController {
 
   void convertFromFirebaseTimestampStart(String isoTimestamp) {
     try {
-      // Parse the ISO timestamp into a DateTime object
       DateTime dateTime = DateTime.parse(isoTimestamp).toLocal();
 
-      // Format the DateTime object into date and time separately
       String formattedDate =
           DateFormat("MMMM d, yyyy", "en_US").format(dateTime);
       String formattedTime = DateFormat("h:mm a", "en_US").format(dateTime);
 
-      print("Readable Date: $formattedDate");
-      print("Readable Time: $formattedTime");
+      // print("Readable Date: $formattedDate");
+      // print("Readable Time: $formattedTime");
 
       date.value = "$formattedDate,  $formattedTime";
-
-      print("============================> ${date.value}================>");
     } catch (e) {
       print("Error converting ISO timestamp: $e");
     }
@@ -125,19 +118,16 @@ class UserMeetingRequestController extends GetxController {
 
   void convertFromFirebaseTimestampEnd(String isoTimestamp) {
     try {
-      // Parse the ISO timestamp into a DateTime object
       DateTime dateTime = DateTime.parse(isoTimestamp).toLocal();
 
-      // Format the DateTime object into date and time separately
       String formattedDate =
           DateFormat("MMMM d, yyyy", "en_US").format(dateTime);
       String formattedTime = DateFormat("h:mm a", "en_US").format(dateTime);
 
-      print("Readable Date: $formattedDate");
-      print("Readable Time: $formattedTime");
+      // print("Readable Date: $formattedDate");
+      // print("Readable Time: $formattedTime");
 
       time.value = "$formattedDate,  $formattedTime";
-      print("============================> ${date.value}================>");
     } catch (e) {
       print("Error converting ISO timestamp: $e");
     }
@@ -159,21 +149,6 @@ class UserMeetingRequestController extends GetxController {
         if (!userAppointmentSnapshot.exists) {
           throw Exception("User appointment does not exist");
         }
-        // Map<String, dynamic> appointmentData =
-        //     userAppointmentSnapshot.data() as Map<String, dynamic>;
-
-        // transaction.set(
-        //     acceptedAppointments
-        //         .doc(user!.email)
-        //         .collection("accepted_appointments_list")
-        //         .doc(appointmentId),
-        //     {
-        //       ...appointmentData, // Copy all fields
-        //       'status': 'Accepted',
-        //       'accepted_by': user.email // Update the status
-        //     });
-
-        // Update the status field in User_appointments
         transaction.update(userAppointmentsRef.doc(appointmentId), {
           'status': 'Accepted',
           'accepted_by': user?.email,
@@ -193,7 +168,7 @@ class UserMeetingRequestController extends GetxController {
       );
       Get.back();
 
-      print('Appointment accepted successfully.');
+      // print('Appointment accepted successfully.');
     } catch (e) {
       print('Error accepting appointment: $e');
     }

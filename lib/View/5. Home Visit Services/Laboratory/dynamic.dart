@@ -42,7 +42,6 @@ class LabSelectPackage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LabController cartController = Get.put(LabController());
-    print("thisidlflkdfldfdkfdfldfdfdfdfdfdffdf===========>$type");
 
     return Scaffold(
       appBar: AppBar(
@@ -75,11 +74,11 @@ class LabSelectPackage extends StatelessWidget {
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
-              child: StepProgressBar(currentStep: 2, totalSteps: 4)),
+              child: const StepProgressBar(currentStep: 2, totalSteps: 4)),
 
           Expanded(
             child: Container(
-              color: Color(0xFFEEF8FF),
+              color: const Color(0xFFEEF8FF),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 16.0, vertical: 16.0),
@@ -104,7 +103,7 @@ class LabSelectPackage extends StatelessWidget {
                                 child: Container(
                                   height: 50,
                                   width: 50,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: const Color(
                                         0xFFE6F5FF), // Circle background color
@@ -133,7 +132,7 @@ class LabSelectPackage extends StatelessWidget {
                                   children: [
                                     Text(
                                       title,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
                                         fontFamily: "Roboto",
@@ -172,7 +171,7 @@ class LabSelectPackage extends StatelessWidget {
                                                   children: [
                                                     Text(
                                                       'Qty: '.tr,
-                                                      style: TextStyle(
+                                                      style:const TextStyle(
                                                           fontSize: 14,
                                                           fontWeight:
                                                               FontWeight.w500),
@@ -191,7 +190,7 @@ class LabSelectPackage extends StatelessWidget {
                                                               .decreaseQuantity(
                                                                   id);
                                                         },
-                                                        child: Center(
+                                                        child: const Center(
                                                           child: Icon(
                                                             Icons.remove,
                                                             size:
@@ -223,7 +222,7 @@ class LabSelectPackage extends StatelessWidget {
                                                               .increaseQuantity(
                                                                   id);
                                                         },
-                                                        child: Center(
+                                                        child: const Center(
                                                           child: Icon(
                                                             Icons.add,
                                                             size:
@@ -246,7 +245,7 @@ class LabSelectPackage extends StatelessWidget {
                                                         horizontal: 20,
                                                         vertical: 6),
                                                     decoration: BoxDecoration(
-                                                      color: Color(
+                                                      color: const Color(
                                                           0xFF007ABB), // Subtle light blue background
                                                       borderRadius:
                                                           BorderRadius.circular(
@@ -298,7 +297,7 @@ class LabSelectPackage extends StatelessWidget {
                                     ),
                                     child: Text(
                                       "About This Package".tr,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
                                         fontFamily: "Roboto",
@@ -306,10 +305,10 @@ class LabSelectPackage extends StatelessWidget {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(10.0),
                                     child: Text(
                                       description,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 14,
                                         color: Colors.black54,
                                         fontFamily: "Roboto",
@@ -327,7 +326,7 @@ class LabSelectPackage extends StatelessWidget {
 
                       const SizedBox(height: 8),
                       type == "package"
-                          ? Container(
+                          ? SizedBox(
                               width: double.infinity,
                               child: Card(
                                 shape: RoundedRectangleBorder(
@@ -342,7 +341,7 @@ class LabSelectPackage extends StatelessWidget {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
                                         "Instructions".tr,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -371,7 +370,7 @@ class LabSelectPackage extends StatelessWidget {
                       const SizedBox(height: 16),
 
                       type == "package"
-                          ? Container(
+                          ? SizedBox(
                               width: double.infinity,
                               child: Card(
                                 shape: RoundedRectangleBorder(
@@ -386,7 +385,7 @@ class LabSelectPackage extends StatelessWidget {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
                                         "Test Includes".tr,
-                                        style: TextStyle(
+                                        style: const  TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -435,7 +434,7 @@ class LabSelectPackage extends StatelessWidget {
                         borderRadius:
                             BorderRadius.circular(8), // Rounded corners
                       ),
-                      minimumSize: Size(160, 55),
+                      minimumSize: const Size(160, 55),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 8), // Padding
                     ),
@@ -457,7 +456,7 @@ class LabSelectPackage extends StatelessWidget {
                           width: 30,
                           height: 30,
                           decoration: BoxDecoration(
-                            color: Color(0xFF009788), // Background color
+                            color:const Color(0xFF009788), // Background color
                             borderRadius:
                                 BorderRadius.circular(8), // Make it circular
                           ),
@@ -465,7 +464,7 @@ class LabSelectPackage extends StatelessWidget {
                             () => Center(
                               child: Text(
                                 '${cartController.cartItems.length}',
-                                style: TextStyle(
+                                style:const  TextStyle(
                                   color: Colors.white, // Text color
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -478,7 +477,7 @@ class LabSelectPackage extends StatelessWidget {
                             width: 8), // Space between the icon and text
                         Text(
                           'Selected item'.tr,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF009788),
@@ -491,8 +490,8 @@ class LabSelectPackage extends StatelessWidget {
                     () => ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: cartController.isCartEmpty()
-                            ? Color(0xFFD9D9D9)
-                            : Color(0xFF007ABB),
+                            ?const Color(0xFFD9D9D9)
+                            :const Color(0xFF007ABB),
                         minimumSize: const Size(160, 55),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -510,7 +509,7 @@ class LabSelectPackage extends StatelessWidget {
                         'Continue'.tr,
                         style: TextStyle(
                             color: cartController.isCartEmpty()
-                                ? Color(0xFF9C9C9C)
+                                ? const Color(0xFF9C9C9C)
                                 : Colors.white,
                             fontSize: 15),
                       ),
@@ -527,7 +526,7 @@ class LabSelectPackage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: Color(0xFFEAF6FE), // Light blue background
+        color: const Color(0xFFEAF6FE), // Light blue background
         borderRadius: BorderRadius.circular(16),
       ),
       child: Text(

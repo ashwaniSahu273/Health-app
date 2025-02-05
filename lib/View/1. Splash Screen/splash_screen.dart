@@ -44,7 +44,7 @@ class _Splash_ScreenState extends State<Splash_Screen> {
                       } else if (selectedLanguage == 'English') {
                         Get.updateLocale(const Locale('en', 'US'));
                       }
-                      print('Selected Language: $selectedLanguage');
+                
                     });
                   },
                   dropdownColor: Colors.black,

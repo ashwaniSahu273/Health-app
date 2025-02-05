@@ -88,9 +88,9 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
         controller.labUploadedImageUrl.value = downloadUrl;
 
         controller.isLoadingNurseService.value = false;
-        print("uploading==========>$controller.labUploadedImageUrl.value");
+       
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Image uploaded successfully!')),
+          const SnackBar(content: Text('Image uploaded successfully!')),
         );
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -143,16 +143,16 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
                             ? Container(
                                 height: 70,
                                 width: 70,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: const Color(
+                                  color: Color(
                                       0xFFE6F5FF), // Circle background color
                                 ),
                                 child: Image.network(
                                   controller.labUploadedImageUrl.value!,
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) {
-                                    return Text(
+                                    return const Text(
                                       "No Image",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
@@ -161,7 +161,7 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
                                   },
                                 ),
                               )
-                            : Text(
+                            : const Text(
                                 "There Is No Image",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
@@ -171,12 +171,12 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
                   const SizedBox(height: 10),
                   ElevatedButton.icon(
                     onPressed: () => selectImage(ImageSource.gallery),
-                    icon: Icon(Icons.image),
-                    label: Text('Select Image'),
+                    icon: const Icon(Icons.image),
+                    label: const Text('Select Image'),
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
 
@@ -250,12 +250,12 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
                           //     maxLines: 6),
                         ],
                       )
-                    : SizedBox.shrink(),
+                    : const SizedBox.shrink(),
               ),
 
               _buildTextField(_priceController, 'Price'),
               // _buildTextField(_imagePathController, 'Image Path'),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   print(
@@ -267,25 +267,21 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
                     'localized': {
                       'ar': {
                         'serviceName':
-                            _arServiceNameController.text ?? "No service name",
+                            _arServiceNameController.text,
                         'description':
-                            _arAboutController.text ?? "No description",
-                        'includesTests': _arServiceIncludesController.text ??
-                            "No service includes",
-                        'instructions': _arDescriptionController.text ??
-                            "No service includes",
-                        'price': _priceController.text ?? "No price",
+                            _arAboutController.text,
+                        'includesTests': _arServiceIncludesController.text,
+                        'instructions': _arDescriptionController.text,
+                        'price': _priceController.text,
                       },
                       'en': {
                         'serviceName':
-                            _enServiceNameController.text ?? "No service name",
+                            _enServiceNameController.text,
                         'description':
-                            _enAboutController.text ?? "No description",
-                        'includesTests': _enServiceIncludesController.text ??
-                            "No service includes",
-                        'instructions': _enDescriptionController.text ??
-                            "No service includes",
-                        'price': _priceController.text ?? "No price",
+                            _enAboutController.text,
+                        'includesTests': _enServiceIncludesController.text,
+                        'instructions': _enDescriptionController.text,
+                        'price': _priceController.text,
                       },
                     },
                   };
@@ -325,13 +321,13 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
         children: [
           Text(
             label,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           TextFormField(
             controller: controller,
             maxLines: maxLines,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
             ),
             // validator: (value) => value!.isEmpty ? 'Please enter $label' : null,

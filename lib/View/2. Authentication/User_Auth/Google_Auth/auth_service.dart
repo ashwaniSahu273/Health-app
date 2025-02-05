@@ -118,7 +118,7 @@ class AuthServiceUserLogin {
           .collection("Registered Users")
           .doc(uid)
           .set(newUser.tomap());
-      print("New User Created!");
+
 
       Get.to(
         CompleteProfile(userModel: newUser, firebaseUser: firebaseUser),
