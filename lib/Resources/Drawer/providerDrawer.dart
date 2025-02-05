@@ -114,21 +114,21 @@ class _ProviderDrawerState extends State<ProviderDrawer> {
                   ));
             },
           ),
-          Divider(thickness: 2, color: Colors.grey[300]),
-          _buildListTile(
-            context,
-            1,
-            Icons.terminal_sharp,
-            "Family".tr,
-            () {
-              Navigator.pop(context);
+          // Divider(thickness: 2, color: Colors.grey[300]),
+          // _buildListTile(
+          //   context,
+          //   1,
+          //   Icons.terminal_sharp,
+          //   "Family".tr,
+          //   () {
+          //     Navigator.pop(context);
 
-              Get.to(() => Family(
-                    userModel: widget.userModel,
-                    firebaseUser: widget.firebaseUser,
-                  ));
-            },
-          ),
+          //     Get.to(() => Family(
+          //           userModel: widget.userModel,
+          //           firebaseUser: widget.firebaseUser,
+          //         ));
+          //   },
+          // ),
           Divider(thickness: 2, color: Colors.grey[300]),
           _buildListTile(
             context,

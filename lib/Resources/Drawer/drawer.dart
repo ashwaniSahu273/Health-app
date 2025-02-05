@@ -111,20 +111,20 @@ class _MyDrawerState extends State<MyDrawer> {
                   ));
             },
           ),
-          Divider(thickness: 2, color: Colors.grey[300]),
-          _buildListTile(
-            context,
-            2,
-            Icons.terminal_sharp,
-            "Family".tr,
-            () {
-              Navigator.pop(context);
-              Get.to(() => Family(
-                    userModel: widget.userModel,
-                    firebaseUser: widget.firebaseUser,
-                  ));
-            },
-          ),
+          // Divider(thickness: 2, color: Colors.grey[300]),
+          // _buildListTile(
+          //   context,
+          //   2,
+          //   Icons.terminal_sharp,
+          //   "Family".tr,
+          //   () {
+          //     Navigator.pop(context);
+          //     Get.to(() => Family(
+          //           userModel: widget.userModel,
+          //           firebaseUser: widget.firebaseUser,
+          //         ));
+          //   },
+          // ),
           Divider(thickness: 2, color: Colors.grey[300]),
           _buildListTile(
             context,

@@ -114,21 +114,21 @@ class _AdminDrawerState extends State<AdminDrawer> {
                   ));
             },
           ),
-          Divider(thickness: 2, color: Colors.grey[300]),
-          _buildListTile(
-            context,
-            1,
-            Icons.terminal_sharp,
-            "Family".tr,
-            () {
-              Navigator.pop(context);
+          // Divider(thickness: 2, color: Colors.grey[300]),
+          // _buildListTile(
+          //   context,
+          //   1,
+          //   Icons.terminal_sharp,
+          //   "Family".tr,
+          //   () {
+          //     Navigator.pop(context);
 
-              Get.to(() => Family(
-                    userModel: widget.userModel,
-                    firebaseUser: widget.firebaseUser,
-                  ));
-            },
-          ),
+          //     Get.to(() => Family(
+          //           userModel: widget.userModel,
+          //           firebaseUser: widget.firebaseUser,
+          //         ));
+          //   },
+          // ),
           Divider(thickness: 2, color: Colors.grey[300]),
           _buildListTile(
             context,
@@ -144,20 +144,20 @@ class _AdminDrawerState extends State<AdminDrawer> {
                   ));
             },
           ),
-          Divider(thickness: 2, color: Colors.grey[300]),
-          _buildListTile(
-            context,
-            3,
-            Icons.contacts,
-            "Contact us".tr,
-            () {
-              Navigator.pop(context);
-              Get.to(() => UserContact(
-                    userModel: widget.userModel,
-                    firebaseUser: widget.firebaseUser,
-                  ));
-            },
-          ),
+          // Divider(thickness: 2, color: Colors.grey[300]),
+          // _buildListTile(
+          //   context,
+          //   3,
+          //   Icons.contacts,
+          //   "Contact us".tr,
+          //   () {
+          //     Navigator.pop(context);
+          //     Get.to(() => UserContact(
+          //           userModel: widget.userModel,
+          //           firebaseUser: widget.firebaseUser,
+          //         ));
+          //   },
+          // ),
           Divider(thickness: 2, color: Colors.grey[300]),
           _buildListTile(
             context,

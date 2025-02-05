@@ -1,17 +1,15 @@
-// ignore_for_file: unused_field, unused_import
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harees_new_project/Resources/Drawer/drawer.dart';
-import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/requested_appointment_details.dart';
-import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/user_controller.dart';
+// import 'package:harees_new_project/Resources/Drawer/drawer.dart';
+// import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/requested_appointment_details.dart';
+// import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/user_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
-import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
-import 'package:harees_new_project/Resources/Bottom_Navigation_Bar/bottom_nav.dart';
-import 'package:harees_new_project/Resources/Search_bar/search_bar.dart';
-import 'package:harees_new_project/View/9.%20Settings/settings.dart';
+// import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
+// import 'package:harees_new_project/Resources/Bottom_Navigation_Bar/bottom_nav.dart';
+// import 'package:harees_new_project/Resources/Search_bar/search_bar.dart';
+// import 'package:harees_new_project/View/9.%20Settings/settings.dart';
 
 class TotalUsers extends StatefulWidget {
   final UserModel userModel;
@@ -38,7 +36,6 @@ class _TotalUsersState extends State<TotalUsers> {
 
   final CollectionReference userAppointmentDelete =
       FirebaseFirestore.instance.collection("User_appointments");
-  final _auth = FirebaseAuth.instance;
 
   final List<Color> colors = [
     const Color(0xFFb3e4ff),
@@ -72,6 +69,95 @@ class _TotalUsersState extends State<TotalUsers> {
           ],
         );
       },
+    );
+  }
+
+  void _showUserDetails(BuildContext context, Map<String, dynamic> data) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Title
+                Center(
+                  child: Text(
+                    data['fullname'] ?? 'User Details',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueAccent,
+                    ),
+                  ),
+                ),
+                const Divider(),
+
+                // User Info Section
+                _buildUserInfoRow(Icons.perm_identity, "ID", data['iqamaNumber']),
+             
+                _buildUserInfoRow(Icons.phone, "Number", data['mobileNumber']),
+              _buildUserInfoRow(Icons.accessibility, "Gender", data['gender']),
+              _buildUserInfoRow(Icons.cake, "Birth", data['dob']),
+              _buildUserInfoRow(Icons.access_time, "Joining", data['dateOfJoining']),
+              _buildUserInfoRow(Icons.work, "Role", data['role']),
+
+                const SizedBox(height: 20),
+
+                // Close Button
+                Align(
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueAccent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12),
+                    ),
+                    child: const Text(
+                      'Close',
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+// Helper function for user info row
+  Widget _buildUserInfoRow(IconData icon, String label, String? value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        children: [
+          Icon(icon, color: Colors.blueAccent, size: 18),
+          const SizedBox(width: 12),
+          Text(
+            "$label: ",
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          Expanded(
+            child: Text(
+              value ?? 'N/A',
+              style: const TextStyle(fontSize: 16, color: Colors.black54),
+              // overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -122,7 +208,7 @@ class _TotalUsersState extends State<TotalUsers> {
                     }
 
                     if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                      return const Center(child: Text('No doctors available'));
+                      return const Center(child: Text('No users available'));
                     }
 
                     final userData = snapshot.data!.docs;
@@ -150,8 +236,7 @@ class _TotalUsersState extends State<TotalUsers> {
                               width: 50,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: const Color(
-                                    0xFFE6F5FF), // Circle background color
+                                color: const Color(0xFFE6F5FF),
                               ),
                               child: ClipOval(
                                 child: Image.network(
@@ -194,6 +279,7 @@ class _TotalUsersState extends State<TotalUsers> {
                               icon: const Icon(Icons.delete, color: Colors.red),
                               onPressed: () => _deleteDoctor(context, doc.id),
                             ),
+                            onTap: () => _showUserDetails(context, data),
                           ),
                         );
                       },

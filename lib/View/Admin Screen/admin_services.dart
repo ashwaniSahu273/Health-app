@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/Admin%20Screen/CRUD%20Operations/services_screen.dart';
+import 'package:harees_new_project/View/Admin%20Screen/admin_message_screen.dart';
 import 'package:harees_new_project/View/Admin%20Screen/all_chat_rooms.dart';
 import 'package:harees_new_project/View/Admin%20Screen/all_users.dart';
 import 'package:harees_new_project/View/Admin%20Screen/total_orders.dart';
@@ -137,6 +138,17 @@ class AdminServices extends StatelessWidget {
               Get.to(() => ServiceCategoriesPage(
                     userModel: userModel,
                     firebaseUser: firebaseUser,
+                  ));
+            },
+            userModel: userModel,
+            firebaseUser: firebaseUser,
+          ),
+          ServiceIconButton(
+            serviceIcon: "assets/images/about.png",
+            serviceName: "Messages".tr,
+            onPressed: () {
+              Get.to(() => AdminMessagesScreen(
+            
                   ));
             },
             userModel: userModel,
