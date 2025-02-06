@@ -13,6 +13,7 @@ import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/Resources/Bottom_Navigation_Bar/bottom_nav.dart';
 import 'package:harees_new_project/Resources/Search_bar/search_bar.dart';
 import 'package:harees_new_project/View/9.%20Settings/settings.dart';
+import 'package:intl/intl.dart';
 
 class TotalProviders extends StatefulWidget {
   final UserModel userModel;
@@ -77,6 +78,103 @@ class _TotalProvidersState extends State<TotalProviders> {
           ],
         );
       },
+    );
+  }
+
+  void showUserDetails(BuildContext context, Map<String, dynamic> data) {
+
+    final Timestamp? timestamp = data["timeStamp"];
+    final String formattedTime = timestamp != null
+        ? DateFormat('yyyy-MM-dd HH:mm').format(timestamp.toDate())
+        : "Unknown Time";
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Title
+                Center(
+                  child: Text(
+                    data['fullname'] ?? 'User Details',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueAccent,
+                    ),
+                  ),
+                ),
+                const Divider(),
+
+                // User Info Section
+                _buildUserInfoRow(
+                    Icons.perm_identity, "ID", data['idNumber']),
+
+                _buildUserInfoRow(Icons.work, "Role", data['role']),
+                _buildUserInfoRow(
+                    Icons.access_time, "Joining", formattedTime),
+                _buildUserInfoRow(
+                    Icons.accessibility, "Experience", data['experience']),
+                _buildUserInfoRow(Icons.phone, "Number", data['mobileNumber']),
+                _buildUserInfoRow(Icons.cake, "Birth", data['dob']),
+
+                const SizedBox(height: 20),
+
+                // Close Button
+                Align(
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueAccent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12),
+                    ),
+                    child: const Text(
+                      'Close',
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildUserInfoRow(IconData icon, String label, String? value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        children: [
+          Icon(icon, color: Colors.blueAccent, size: 18),
+          const SizedBox(width: 12),
+          Text(
+            "$label: ",
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          Expanded(
+            child: Text(
+              value ?? 'N/A',
+              style: const TextStyle(fontSize: 16, color: Colors.black54),
+              // overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -207,6 +305,7 @@ class _TotalProvidersState extends State<TotalProviders> {
                               icon: const Icon(Icons.delete, color: Colors.red),
                               onPressed: () => _deleteDoctor(context, doc.id),
                             ),
+                            onTap: () => showUserDetails(context, data),
                           ),
                         );
                       },

@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   String? fullname;
-  String? iqamaNumber;
+  String? idNumber;
   String? email;
   String? uid;
   String? profilePic;
@@ -10,10 +12,11 @@ class UserModel {
   String? gender;
   String? dob;
   String? role;
+  FieldValue? timeStamp;
 
   UserModel({
     this.fullname,
-    this.iqamaNumber,
+    this.idNumber,
     this.email,
     this.uid,
     this.profilePic,
@@ -23,13 +26,14 @@ class UserModel {
     this.gender,
     this.dob,
     this.role,
+    this.timeStamp,
   });
 
   UserModel.frommap(Map<String, dynamic> map) {
     uid = map['uid'];
     email = map['email'];
     fullname = map['fullname'];
-    iqamaNumber = map['iqamaNumber'];
+    idNumber = map['idNumber'];
     profilePic = map['profilePic'];
     experience = map['experience'];
     designation = map['designation'];
@@ -37,6 +41,7 @@ class UserModel {
     gender = map['gender'];
     dob = map['dob'];
     role = map['role'];
+    timeStamp = map['timeStamp'];
   }
 
   Map<String, dynamic> tomap() {
@@ -44,7 +49,7 @@ class UserModel {
       'uid': uid,
       'email': email,
       'fullname': fullname,
-      'iqamaNumber': iqamaNumber,
+      'idNumber': idNumber,
       'profilePic': profilePic,
       'experience': experience,
       'designation': designation,
@@ -52,6 +57,7 @@ class UserModel {
       'gender': gender,
       'dob': dob,
       'role': role,
+      'timeStamp': timeStamp
     };
   }
 }

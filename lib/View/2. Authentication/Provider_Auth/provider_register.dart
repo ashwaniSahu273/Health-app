@@ -75,7 +75,9 @@ class _Provider_RegisterState extends State<Provider_Register> {
           email: email,
           fullname: "",
           profilePic: "",
-          role: "provider");
+          role: "provider",
+          timeStamp: FieldValue.serverTimestamp(),
+          );
 
       // Add user to "Registered Users" collection
       await FirebaseFirestore.instance

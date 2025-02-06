@@ -49,7 +49,7 @@ class _NurseGetPatientInfoState extends State<NurseGetPatientInfo> {
     fullNameController.text = widget.userModel.fullname ?? "";
     mobileNumberController.text = widget.userModel.mobileNumber ?? "";
     dobController.text = widget.userModel.dob ?? "";
-    idNumberController.text = widget.userModel.iqamaNumber ?? "";
+    idNumberController.text = widget.userModel.idNumber ?? "";
     selectedGender = widget.userModel.gender ?? "";
   }
 

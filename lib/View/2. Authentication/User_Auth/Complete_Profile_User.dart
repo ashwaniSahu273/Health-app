@@ -33,7 +33,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
   TextEditingController fullNameController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
   TextEditingController dobController = TextEditingController();
-  TextEditingController iqamaNumberController = TextEditingController();
+  TextEditingController idNumberController = TextEditingController();
   String? selectedGender;
   File? imageFile;
 
@@ -107,14 +107,14 @@ class _CompleteProfileState extends State<CompleteProfile> {
 
   void checkValues() {
     String fullname = fullNameController.text.trim();
-    String iqamaNumber = iqamaNumberController.text.trim();
+    String idNumber = idNumberController.text.trim();
     String mobileNumber = mobileNumberController.text.trim();
     String dob = dobController.text.trim();
     String? gender = selectedGender;
 
     if (fullname.isEmpty ||
         mobileNumber.isEmpty ||
-        iqamaNumber.isEmpty ||
+        idNumber.isEmpty ||
         gender == null ||
         dob.isEmpty) {
 
@@ -142,18 +142,18 @@ class _CompleteProfileState extends State<CompleteProfile> {
     }
 
     String fullname = fullNameController.text.trim();
-    String iqamaNumber = iqamaNumberController.text.trim();
+    String idNumber = idNumberController.text.trim();
     String mobileNumber = mobileNumberController.text.trim();
     String dob = dobController.text.trim();
     String? gender = selectedGender;
 
     widget.userModel.fullname = fullname;
-    widget.userModel.iqamaNumber = iqamaNumber;
+    widget.userModel.idNumber = idNumber;
     widget.userModel.profilePic = imageUrl;
     widget.userModel.mobileNumber = mobileNumber;
     widget.userModel.gender = gender;
     widget.userModel.dob = dob;
-
+    
     await FirebaseFirestore.instance
         .collection("Registered Users")
         .doc(widget.userModel.uid)
@@ -213,7 +213,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                       backgroundColor: Colors.grey[600],
                       radius: 50,
                       child: (imageFile == null)
-                          ? const Icon(Icons.person,
+                          ? const Icon(Icons.add_a_photo,
                               size: 60, color: Colors.white)
                           : null,
                     ),
@@ -243,7 +243,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                   ),
                   SizedBox(height: 20),
                   TextField(
-                    controller: iqamaNumberController,
+                    controller: idNumberController,
                     decoration: InputDecoration(
                       hintText: "ID Number".tr,
                       hintStyle: TextStyle(color: Colors.grey),

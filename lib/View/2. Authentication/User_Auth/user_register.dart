@@ -94,7 +94,13 @@ class _User_RegisterState extends State<User_Register> {
     if (credential != null) {
       String uid = credential.user!.uid;
       UserModel newUser = UserModel(
-          uid: uid, email: email, fullname: "", profilePic: "", role: "user");
+        uid: uid,
+        email: email,
+        fullname: "",
+        profilePic: "",
+        role: "user",
+        timeStamp: FieldValue.serverTimestamp(),
+      );
       await FirebaseFirestore.instance
           .collection("Registered Users")
           .doc(uid)

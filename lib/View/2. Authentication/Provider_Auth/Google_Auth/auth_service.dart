@@ -102,7 +102,8 @@ class AuthServiceUserRegisterProvider {
         email: email,
         fullname: "",
         profilePic: "",
-        role: "provider", // Default role (could change based on your flow)
+        role: "provider",
+        timeStamp: FieldValue.serverTimestamp(),
       );
       await FirebaseFirestore.instance
           .collection("Registered Users")

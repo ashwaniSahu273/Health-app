@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 // import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/requested_appointment_details.dart';
 // import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/user_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
+import 'package:intl/intl.dart';
 // import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 // import 'package:harees_new_project/Resources/Bottom_Navigation_Bar/bottom_nav.dart';
 // import 'package:harees_new_project/Resources/Search_bar/search_bar.dart';
@@ -29,7 +30,7 @@ class TotalUsers extends StatefulWidget {
 
 class _TotalUsersState extends State<TotalUsers> {
   final user_appointments =
-      FirebaseFirestore.instance.collection("Registered Users").snapshots();
+      FirebaseFirestore.instance.collection("Registered Users").where("role",isEqualTo: "user").snapshots();
 
   final acceptedAppointments =
       FirebaseFirestore.instance.collection("Accepted_appointments");
@@ -73,6 +74,11 @@ class _TotalUsersState extends State<TotalUsers> {
   }
 
   void _showUserDetails(BuildContext context, Map<String, dynamic> data) {
+    final Timestamp? timestamp = data["timeStamp"];
+    final String formattedTime = timestamp != null
+        ? DateFormat('yyyy-MM-dd HH:mm').format(timestamp.toDate())
+        : "Unknown Time";
+
     showDialog(
       context: context,
       builder: (context) {
@@ -100,13 +106,15 @@ class _TotalUsersState extends State<TotalUsers> {
                 const Divider(),
 
                 // User Info Section
-                _buildUserInfoRow(Icons.perm_identity, "ID", data['iqamaNumber']),
-             
+                _buildUserInfoRow(
+                    Icons.perm_identity, "ID", data['iqamaNumber']),
+
+                _buildUserInfoRow(Icons.work, "Role", data['role']),
+                _buildUserInfoRow(Icons.access_time, "Joining", formattedTime),
                 _buildUserInfoRow(Icons.phone, "Number", data['mobileNumber']),
-              _buildUserInfoRow(Icons.accessibility, "Gender", data['gender']),
-              _buildUserInfoRow(Icons.cake, "Birth", data['dob']),
-              _buildUserInfoRow(Icons.access_time, "Joining", data['dateOfJoining']),
-              _buildUserInfoRow(Icons.work, "Role", data['role']),
+                _buildUserInfoRow(
+                    Icons.accessibility, "Gender", data['gender']),
+                _buildUserInfoRow(Icons.cake, "Birth", data['dob']),
 
                 const SizedBox(height: 20),
 
@@ -234,9 +242,9 @@ class _TotalUsersState extends State<TotalUsers> {
                             leading: Container(
                               height: 50,
                               width: 50,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: const Color(0xFFE6F5FF),
+                                color: Color(0xFFE6F5FF),
                               ),
                               child: ClipOval(
                                 child: Image.network(

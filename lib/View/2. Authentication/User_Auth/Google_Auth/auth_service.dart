@@ -113,6 +113,7 @@ class AuthServiceUserLogin {
         fullname: "",
         profilePic: "",
         role: "user",
+        timeStamp: FieldValue.serverTimestamp(),
       );
       await FirebaseFirestore.instance
           .collection("Registered Users")
