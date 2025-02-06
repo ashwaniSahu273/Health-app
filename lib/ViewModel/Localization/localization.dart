@@ -395,7 +395,7 @@ class Language extends Translations {
           "Meetings": "الاجتماعات",
           "Doctor Consultation": "استشارة طبيب عن بعد",
           "Our Services": "خدماتنا",
-          "Your peace of mind starts here!": "احة البال تبدأ راحة!",
+          "Your peace of mind starts here!":" راحة البال تبدأ هنا!",
           "Your healthcare just got easier and closer! get trusted home care services from certified providers through our app.":
               "رعايتك الصحية أصبحت أسهل وأقرب! عبر تطبيقنا، نوفر لك خدمات منزلية متميزة من نخبة مقدمي الرعاية الصحية المعتمدين، لتعيش بصحة وراحة.",
           "Instructions": "إرشادات",
