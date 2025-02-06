@@ -12,7 +12,7 @@ class UserModel {
   String? gender;
   String? dob;
   String? role;
-  FieldValue? timeStamp;
+  Timestamp? timeStamp;
 
   UserModel({
     this.fullname,

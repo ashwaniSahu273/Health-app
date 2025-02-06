@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart' as FilePicker;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/View/2.%20Authentication/Provider_Auth/provider_complete_profile.dart';
 import 'package:harees_new_project/View/2.%20Authentication/User_Auth/Complete_Profile_User.dart';
 import 'package:harees_new_project/View/2.%20Authentication/User_Auth/user_login.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/provider_home.dart';
@@ -55,11 +56,17 @@ Widget decideHomeScreen(UserModel? userModel, User? credential) {
         userEmail: userModel.email!,
       );
     case "provider":
-      return Service_Provider_Home(
-        userModel: userModel,
-        firebaseUser: credential,
-        userEmail: userModel.email ?? '', // Use userModel.email if available
-      );
+      return userModel.fullname == ""
+          ? CompleteProfileProvider(
+              userModel: userModel,
+              firebaseUser: credential,
+            )
+          : Service_Provider_Home(
+              userModel: userModel,
+              firebaseUser: credential,
+              userEmail:
+                  userModel.email ?? '', // Use userModel.email if available
+            );
     case "user":
       return userModel.fullname == ""
           ? CompleteProfile(

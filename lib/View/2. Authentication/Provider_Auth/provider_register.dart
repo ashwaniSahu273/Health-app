@@ -76,7 +76,7 @@ class _Provider_RegisterState extends State<Provider_Register> {
           fullname: "",
           profilePic: "",
           role: "provider",
-          timeStamp: FieldValue.serverTimestamp(),
+          timeStamp: Timestamp.now(),
           );
 
       // Add user to "Registered Users" collection

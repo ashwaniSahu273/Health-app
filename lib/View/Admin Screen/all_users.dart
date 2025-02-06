@@ -107,7 +107,7 @@ class _TotalUsersState extends State<TotalUsers> {
 
                 // User Info Section
                 _buildUserInfoRow(
-                    Icons.perm_identity, "ID", data['iqamaNumber']),
+                    Icons.perm_identity, "ID", data['idNumber']),
 
                 _buildUserInfoRow(Icons.work, "Role", data['role']),
                 _buildUserInfoRow(Icons.access_time, "Joining", formattedTime),

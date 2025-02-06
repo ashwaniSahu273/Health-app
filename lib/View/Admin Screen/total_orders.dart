@@ -31,8 +31,10 @@ class TotalOrders extends StatefulWidget {
 }
 
 class _TotalOrdersState extends State<TotalOrders> {
-  final userAppointments =
-      FirebaseFirestore.instance.collection("User_appointments").orderBy("createdAt", descending: true).snapshots();
+  final userAppointments = FirebaseFirestore.instance
+      .collection("User_appointments")
+      .orderBy("createdAt", descending: true)
+      .snapshots();
 
   final acceptedAppointments =
       FirebaseFirestore.instance.collection("Accepted_appointments");
@@ -47,6 +49,8 @@ class _TotalOrdersState extends State<TotalOrders> {
     const Color(0xFFccffda),
     const Color(0xFFfcd1c7),
   ];
+
+  String selectedFilter = 'All'; // Default filter
 
   @override
   Widget build(BuildContext context) {
@@ -73,33 +77,68 @@ class _TotalOrdersState extends State<TotalOrders> {
             ),
           ],
         ),
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: (String value) {
+              setState(() {
+                selectedFilter = value;
+              });
+            },
+            itemBuilder: (BuildContext context) {
+              return [
+                const PopupMenuItem<String>(
+                  value: 'All',
+                  child: Text('All'),
+                ),
+                const PopupMenuItem<String>(
+                  value: 'Requested',
+                  child: Text('Requested'),
+                ),
+                const PopupMenuItem<String>(
+                  value: 'Accepted',
+                  child: Text('Accepted'),
+                ),
+                const PopupMenuItem<String>(
+                  value: 'Completed',
+                  child: Text('Completed'),
+                ),
+              ];
+            },
+            icon: const Icon(Icons.filter_list),
+          ),
+        ],
       ),
-      // drawer: MyDrawer(
-      //   userModel: widget.userModel,
-      //   firebaseUser: widget.firebaseUser,
-      //   targetUser: widget.userModel,
-      // ),
       backgroundColor: Colors.blue[50],
       body: SafeArea(
         child: Column(
           children: [
-            // const SizedBox(height: 20),
-            // const MySearchBar(),
             const SizedBox(height: 15),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream: userAppointments,
+                stream: selectedFilter == 'All'
+                    ? userAppointments
+                    : FirebaseFirestore.instance
+                        .collection("User_appointments")
+                        .where("status", isEqualTo: selectedFilter)
+                        .orderBy("createdAt", descending: true)
+                        .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasError) {
+                    if (snapshot.error is FirebaseException && (snapshot.error as FirebaseException).code == 'failed-precondition') {
+                      return Center(
+                        child: Text(
+                            'Index creation in progress. Please wait...'.tr),
+                      );
+                    }
                     return Text('Something went wrong'.tr);
                   } else if (snapshot.connectionState ==
                       ConnectionState.waiting) {
                     return Text("Loading".tr);
                   }
-                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                      return const Center(child: Text('No Orders'));
-                    }
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return const Center(child: Text('No Orders'));
+                  }
 
                   return ListView.builder(
                     itemCount: snapshot.data!.docs.length,
@@ -123,10 +162,6 @@ class _TotalOrdersState extends State<TotalOrders> {
           ],
         ),
       ),
-      // bottomNavigationBar: MyBottomNavBar(
-      //   userModel: widget.userModel,
-      //   firebaseUser: widget.firebaseUser,
-      // ),
     );
   }
 }
