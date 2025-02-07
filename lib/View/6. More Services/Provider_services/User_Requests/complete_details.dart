@@ -169,31 +169,16 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                 ),
                                 // const SizedBox(height: 8), // Spacing between buttons
                                 // Accept Button
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.defaultDialog(
-                                      title: 'Accept Appointment'.tr,
-                                      middleText: "Are you sure?".tr,
-                                      textConfirm: 'Yes'.tr,
-                                      textCancel: 'No'.tr,
-                                      onConfirm: () {
-                                        controller.accept(doc.id);
-                                        Get.back();
-                                      },
-                                      onCancel: () => Get.back(),
-                                    );
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10.0, vertical: 8),
-                                    child: Text(
-                                      "Completed",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Color(0xFF00AAAD),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0, vertical: 8),
+                                  child: Text(
+                                    "Completed",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xFF00AAAD),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
                                     ),
                                   ),
                                 ),

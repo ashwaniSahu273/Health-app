@@ -110,12 +110,12 @@ class DoctorController extends GetxController {
         chargeId: chargeId.value,
       ));
 
-      Get.snackbar(
-        "Success",
-        "Successfully completed",
-        backgroundColor: Colors.lightGreen,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   "Success",
+      //   "Successfully completed",
+      //   backgroundColor: Colors.lightGreen,
+      //   colorText: Colors.white,
+      // );
     } catch (e) {
       Get.snackbar('Error', 'Failed to confirm. Please try again.');
     } finally {

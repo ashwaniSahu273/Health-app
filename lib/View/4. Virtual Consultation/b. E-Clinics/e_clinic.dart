@@ -75,10 +75,10 @@ class _E_ClinicsState extends State<E_Clinics> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: const MySearchBar(),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              //   child: const MySearchBar(),
+              // ),
               const SizedBox(height: 25),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),

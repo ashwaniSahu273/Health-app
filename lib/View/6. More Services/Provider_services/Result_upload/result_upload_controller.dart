@@ -32,14 +32,12 @@ class ResultUploadController extends GetxController {
     addDoctorsNotes(doc.id);
   }
 
-
-
   var pdfData = <String, dynamic>{}.obs;
   var resultPdfData = <String, dynamic>{}.obs;
   var isUploading = false.obs;
   var isResultUploading = false.obs;
 
- void resetData() {
+  void resetData() {
     pdfData.value = {};
     resultPdfData.value = {};
     doctorNotesController.clear();
@@ -90,9 +88,8 @@ class ResultUploadController extends GetxController {
         });
 
         isUploading.value = false;
-        
       });
-        resetData();
+      resetData();
 
       print('Appointment accepted successfully.');
     } catch (e) {
@@ -132,7 +129,6 @@ class ResultUploadController extends GetxController {
         // Update the status field in User_appointments
         transaction.update(userAppointmentsRef.doc(appointmentId),
             {"test_details_link": downloadLink});
-
       });
 
       print('Appointment accepted successfully.');
@@ -146,41 +142,52 @@ class ResultUploadController extends GetxController {
         .pickFiles(type: FileType.custom, allowedExtensions: ["pdf"]);
 
     if (pickedFile != null) {
-      isUploading.value = true; // Set uploading status to true
       String fileName = pickedFile.files[0].name;
-      File file = File(pickedFile.files[0].path!);
+      String? filePath = pickedFile.files[0].path;
 
-      final downloadLink = await uploadPdf(fileName, file);
+      if (filePath != null) {
+        // Ensure the file is a PDF
+        if (!fileName.toLowerCase().endsWith(".pdf")) {
+          Get.snackbar("Invalid File", "Please select a PDF file only.",
+              snackPosition: SnackPosition.BOTTOM);
+          return;
+        }
+        isUploading.value = true; // Set uploading status to true
 
-      // Save or replace file in Firestore
-      if (pdfData.isNotEmpty) {
-        // Replace existing file
-        final existingDocId = pdfData["docId"];
-        await _firebaseFirestore
-            .collection("pdfs")
-            .doc(existingDocId)
-            .set({"name": fileName, "url": downloadLink});
-        pdfData.value = {
-          "name": fileName,
-          "url": downloadLink,
-        };
-        updateData(doc.id, downloadLink);
-      } else {
-        // Add new file
-        final docRef = await _firebaseFirestore
-            .collection("pdfs")
-            .add({"name": fileName, "url": downloadLink});
-        pdfData.value = {
-          "name": fileName,
-          "url": downloadLink,
-          "docId": docRef.id
-        };
+        File file = File(filePath);
 
-        updateData(doc.id, downloadLink);
+        final downloadLink = await uploadPdf(fileName, file);
+
+        // Save or replace file in Firestore
+        if (pdfData.isNotEmpty) {
+          // Replace existing file
+          final existingDocId = pdfData["docId"];
+          await _firebaseFirestore
+              .collection("pdfs")
+              .doc(existingDocId)
+              .set({"name": fileName, "url": downloadLink});
+          pdfData.value = {
+            "name": fileName,
+            "url": downloadLink,
+          };
+          updateData(doc.id, downloadLink);
+        } else {
+          // Add new file
+          final docRef = await _firebaseFirestore
+              .collection("pdfs")
+              .add({"name": fileName, "url": downloadLink});
+          pdfData.value = {
+            "name": fileName,
+            "url": downloadLink,
+            "docId": docRef.id
+          };
+
+          updateData(doc.id, downloadLink);
+        }
+
+        isUploading.value = false; // Set uploading status to false
+        print("PDF Uploaded and Saved");
       }
-
-      isUploading.value = false; // Set uploading status to false
-      print("PDF Uploaded and Saved");
     }
   }
 
@@ -253,42 +260,53 @@ class ResultUploadController extends GetxController {
         .pickFiles(type: FileType.custom, allowedExtensions: ["pdf"]);
 
     if (pickedFile != null) {
-      isResultUploading.value = true;
       String fileName = pickedFile.files[0].name;
-      File file = File(pickedFile.files[0].path!);
+      String? filePath = pickedFile.files[0].path;
 
-      final downloadLink = await uploadResultPdf(fileName, file);
+      if (filePath != null) {
+        // Ensure the file is a PDF
+        if (!fileName.toLowerCase().endsWith(".pdf")) {
+          Get.snackbar("Invalid File", "Please select a PDF file only.",
+              snackPosition: SnackPosition.BOTTOM);
+          return;
+        }
 
-      // Save or replace file in Firestore
-      if (pdfData.isNotEmpty) {
-        // Replace existing file
-        final existingDocId = pdfData["docId"];
-        await _firebaseFirestore
-            .collection("resultPdfs")
-            .doc(existingDocId)
-            .set({"name": fileName, "url": downloadLink});
+        isResultUploading.value = true;
+        File file = File(filePath);
+        final downloadLink = await uploadResultPdf(fileName, file);
 
-        resultPdfData.value = {
-          "name": fileName,
-          "url": downloadLink,
-        };
-        addResultData(doc.id, downloadLink);
-      } else {
-        // Add new file
-        final docRef = await _firebaseFirestore
-            .collection("pdfs")
-            .add({"name": fileName, "url": downloadLink});
-        resultPdfData.value = {
-          "name": fileName,
-          "url": downloadLink,
-          "docId": docRef.id
-        };
+        // Save or replace file in Firestore
+        if (pdfData.isNotEmpty) {
+          final existingDocId = pdfData["docId"];
+          await _firebaseFirestore
+              .collection("resultPdfs")
+              .doc(existingDocId)
+              .set({"name": fileName, "url": downloadLink});
 
-        addResultData(doc.id, downloadLink);
+          resultPdfData.value = {
+            "name": fileName,
+            "url": downloadLink,
+          };
+          addResultData(doc.id, downloadLink);
+        } else {
+          final docRef = await _firebaseFirestore
+              .collection("pdfs")
+              .add({"name": fileName, "url": downloadLink});
+          resultPdfData.value = {
+            "name": fileName,
+            "url": downloadLink,
+            "docId": docRef.id
+          };
+
+          addResultData(doc.id, downloadLink);
+        }
+
+        isResultUploading.value = false; // Set uploading status to false
+        print("PDF Uploaded and Saved");
       }
-
-      isResultUploading.value = false; // Set uploading status to false
-      print("PDF Uploaded and Saved");
+    } else {
+      Get.snackbar("No File Selected", "Please select a PDF file.",
+          snackPosition: SnackPosition.BOTTOM);
     }
   }
 

@@ -29,6 +29,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserRequestsController controller = Get.put(UserRequestsController());
     controller.status.value = doc["status"];
+    controller.paymentStatus.value = doc["paymentStatus"];
 
     LatLng location = LatLng(
       double.parse(doc["latitude"]),
@@ -241,23 +242,24 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                 ),
                                 // const SizedBox(height: 8), // Spacing between buttons
                                 // Accept Button
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.defaultDialog(
-                                      title: 'Accept Appointment'.tr,
-                                      middleText: "Are you sure?".tr,
-                                      textConfirm: 'Yes'.tr,
-                                      textCancel: 'No'.tr,
-                                      onConfirm: () {
-                                        controller.accept(doc.id);
-                                        Get.back();
-                                      },
-                                      onCancel: () => Get.back(),
-                                    );
-                                  },
-                                  child: Obx(() => controller.status.value ==
-                                          "Requested"
-                                      ? Container(
+                                Obx(() => controller.status.value == "Requested" || controller.paymentStatus.value == ""
+                                    ? GestureDetector(
+                                        onTap: () {
+                                          Get.defaultDialog(
+                                            title: 'Accept Appointment'.tr,
+                                            middleText: "Are you sure?".tr,
+                                            textConfirm: 'Yes'.tr,
+                                            textCancel: 'No'.tr,
+                                            onConfirm: () {
+                                              controller.accept(doc.id);
+                                              Get.back(); // Close the dialog
+                                            },
+                                            onCancel: () {
+                                      
+                                            },
+                                          );
+                                        },
+                                        child: Container(
                                           width: 80, // Customize the width
                                           height: 27, // Customize the height
                                           decoration: BoxDecoration(
@@ -277,21 +279,21 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                               fontSize: 11,
                                             ),
                                           ),
-                                        )
-                                      : const Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 10.0, vertical: 8),
-                                          child: Text(
-                                            "Accepted",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: Color(0xFF00AAAD),
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                            ),
+                                        ),
+                                      )
+                                    : const Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10.0, vertical: 8),
+                                        child: Text(
+                                          "Accepted",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Color(0xFF00AAAD),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
                                           ),
-                                        )),
-                                ),
+                                        ),
+                                      )),
                               ],
                             ),
                           ],

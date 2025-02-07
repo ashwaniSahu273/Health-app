@@ -33,25 +33,19 @@ class GetPatientInfo extends StatefulWidget {
 }
 
 class _GetPatientInfoState extends State<GetPatientInfo> {
-  final TextEditingController fullNameController = TextEditingController();
-  final TextEditingController mobileNumberController = TextEditingController();
-  final TextEditingController dobController = TextEditingController();
-  TextEditingController idNumberController = TextEditingController();
-
   LabController cartController = Get.put(LabController());
 
-  String? selectedGender;
   File? imageFile;
 
-  @override
-  void initState() {
-    super.initState();
-    fullNameController.text = widget.userModel.fullname ?? "";
-    mobileNumberController.text = widget.userModel.mobileNumber ?? "";
-    dobController.text = widget.userModel.dob ?? "";
-    idNumberController.text = widget.userModel.idNumber ?? "";
-    selectedGender = widget.userModel.gender ?? "";
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   fullNameController.text = widget.userModel.fullname ?? "";
+  //   mobileNumberController.text = widget.userModel.mobileNumber ?? "";
+  //   dobController.text = widget.userModel.dob ?? "";
+  //   idNumberController.text = widget.userModel.idNumber ?? "";
+  //   selectedGender = widget.userModel.gender ?? "";
+  // }
 
   void selectImage(ImageSource source) async {
     XFile? pickedFile = await ImagePicker().pickImage(source: source);
@@ -115,19 +109,18 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
     );
 
     if (pickedDate != null) {
-      setState(() {
-        dobController.text = "${pickedDate.toLocal()}".split(' ')[0];
-      });
+      cartController.dobController.text =
+          "${pickedDate.toLocal()}".split(' ')[0];
     }
   }
 
   void checkValues() {
-    String fullname = fullNameController.text.trim();
-    // String mobileNumber = mobileNumberController.text.trim();
-    String dob = dobController.text.trim();
-    String? gender = selectedGender;
+    String fullname = cartController.fullNameController.text.trim();
+    String idNumber = cartController.idNumberController.text.trim();
+    String dob = cartController.dobController.text.trim();
+    String? gender = cartController.selectedGender.value;
 
-    if (fullname.isEmpty || gender == null || dob.isEmpty) {
+    if (fullname.isEmpty || idNumber.isEmpty || gender.isEmpty || dob.isEmpty) {
       UIHelper.showAlertDialog(
           context, "Incomplete Data", "Please fill all the fields");
     } else {
@@ -137,15 +130,15 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
   }
 
   void uploadData() async {
-    String fullname = fullNameController.text.trim();
-    // String mobileNumber = mobileNumberController.text.trim();
-    String dob = dobController.text.trim();
-    String? gender = selectedGender;
+    // String fullname = fullNameController.text.trim();
+    // // String mobileNumber = mobileNumberController.text.trim();
+    // String dob = dobController.text.trim();
+    // String? gender = selectedGender;
 
-    widget.userModel.fullname = fullname;
-    // widget.userModel.mobileNumber = mobileNumber;
-    widget.userModel.gender = gender;
-    widget.userModel.dob = dob;
+    // widget.userModel.fullname = fullname;
+    // // widget.userModel.mobileNumber = mobileNumber;
+    // widget.userModel.gender = gender;
+    // widget.userModel.dob = dob;
 
     Get.to(PhoneInputScreen(
       userModel: widget.userModel,
@@ -219,7 +212,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                       const SizedBox(height: 30),
 
                       TextField(
-                        controller: fullNameController,
+                        controller: cartController.fullNameController,
                         decoration: InputDecoration(
                           hintText: "Full Name".tr,
                           hintStyle: const TextStyle(
@@ -251,7 +244,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                       const SizedBox(height: 20),
 
                       TextField(
-                        controller: idNumberController,
+                        controller: cartController.idNumberController,
                         decoration: InputDecoration(
                           hintText: "ID Number".tr,
                           hintStyle: const TextStyle(color: Colors.grey),
@@ -304,7 +297,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                       // ),
                       const SizedBox(height: 20),
                       TextField(
-                        controller: dobController,
+                        controller: cartController.dobController,
                         readOnly: true,
                         decoration: InputDecoration(
                           suffixIcon: const Icon(
@@ -341,7 +334,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                       ),
                       const SizedBox(height: 20),
                       DropdownButtonFormField<String>(
-                        value: selectedGender,
+                        value: cartController.selectedGender.value,
                         decoration: InputDecoration(
                           labelText: "Gender".tr,
                           labelStyle: const TextStyle(color: Colors.grey),
@@ -375,9 +368,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                           );
                         }).toList(),
                         onChanged: (newValue) {
-                          setState(() {
-                            selectedGender = newValue;
-                          });
+                          cartController.selectedGender.value = newValue!;
                         },
                       ),
                     ],

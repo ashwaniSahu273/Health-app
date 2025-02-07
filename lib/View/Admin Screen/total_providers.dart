@@ -260,7 +260,7 @@ class _TotalProvidersState extends State<TotalProviders> {
                                     0xFFE6F5FF), // Circle background color
                               ),
                               child: ClipOval(
-                                child: Image.network(
+                                child: doc["profilePic"] !=null? Image.network(
                                   doc["profilePic"],
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) {
@@ -269,7 +269,10 @@ class _TotalProvidersState extends State<TotalProviders> {
                                       fit: BoxFit.cover,
                                     );
                                   },
-                                ),
+                                ): Image.asset(
+                                      "assets/images/user.png",
+                                      fit: BoxFit.cover,
+                                    ),
                               ),
                             ),
                             title: Text(

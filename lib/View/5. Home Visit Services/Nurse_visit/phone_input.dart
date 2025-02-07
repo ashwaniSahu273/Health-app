@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/Button/mybutton.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_controller.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/otp_verification.dart';
 // import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/otp_verification_screen.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -22,7 +23,8 @@ class NursePhoneInput extends StatefulWidget {
 }
 
 class _NursePhoneInputState extends State<NursePhoneInput> {
-  final TextEditingController phoneController = TextEditingController();
+  NurseController cartController = Get.put(NurseController());
+
   String? verificationId;
   var isLoading = false;
 
@@ -109,7 +111,7 @@ class _NursePhoneInputState extends State<NursePhoneInput> {
                   const SizedBox(width: 5),
                   Expanded(
                     child: TextField(
-                      controller: phoneController,
+                      controller: cartController.phoneController,
                       decoration: InputDecoration(
                         hintText: 'Enter your phone number'.tr,
                         hintStyle: TextStyle(fontFamily: "schyler"),
@@ -141,7 +143,7 @@ class _NursePhoneInputState extends State<NursePhoneInput> {
                         text: "Next".tr,
                         onTap: () {
                           sendOtp(selectedCountryCode +
-                              phoneController.text.trim());
+                              cartController.phoneController.text.trim());
                         }),
               ),
               // // Next button
@@ -209,13 +211,13 @@ class _NursePhoneInputState extends State<NursePhoneInput> {
       },
       codeSent: (String verificationId, int? resendToken) {
         this.verificationId = verificationId;
-        widget.userModel.mobileNumber = phoneNumber;
+      
 
         setState(() {
           isLoading = false;
         });
 
-        Get.off(
+        Get.to(
   NurseOtpVerificationScreen(
               verificationId: verificationId,
               userModel: widget.userModel,

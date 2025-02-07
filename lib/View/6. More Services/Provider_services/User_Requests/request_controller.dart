@@ -17,6 +17,7 @@ class UserRequestsController extends GetxController {
   final date = "".obs;
   final time = "".obs;
   final status = "".obs;
+  final paymentStatus = "".obs;
 
   void convertFromFirebaseTimestamp(String isoTimestamp) {
     try {

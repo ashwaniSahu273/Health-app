@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/Button/mybutton.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/otp_verification_screen.dart';
+import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Vitamin%20Drips/vitamin_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class PhoneInputScreen extends StatefulWidget {
@@ -21,7 +22,9 @@ class PhoneInputScreen extends StatefulWidget {
 }
 
 class _PhoneInputScreenState extends State<PhoneInputScreen> {
-  final TextEditingController phoneController = TextEditingController();
+  // final TextEditingController phoneController = TextEditingController();
+  VitaminCartController cartController = Get.put(VitaminCartController());
+
   String? verificationId;
   var isLoading = false;
 
@@ -108,7 +111,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                   const SizedBox(width: 5),
                   Expanded(
                     child: TextField(
-                      controller: phoneController,
+                      controller: cartController.phoneController,
                       decoration: InputDecoration(
                         hintText: 'Enter your phone number'.tr,
                         hintStyle: TextStyle(fontFamily: "schyler"),
@@ -140,7 +143,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                         text: "Next".tr,
                         onTap: () {
                           sendOtp(selectedCountryCode +
-                              phoneController.text.trim());
+                              cartController.phoneController.text.trim());
                         }),
               ),
               // // Next button
@@ -208,22 +211,17 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
       },
       codeSent: (String verificationId, int? resendToken) {
         this.verificationId = verificationId;
-        widget.userModel.mobileNumber = phoneNumber;
 
         setState(() {
           isLoading = false;
         });
 
-        Get.off(
-  OtpVerificationScreen(
-              verificationId: verificationId,
-              userModel: widget.userModel,
-              firebaseUser: widget.firebaseUser,
-              selectedTime: widget.selectedTime,
-            )
-      
-        );
-      
+        Get.off(OtpVerificationScreen(
+          verificationId: verificationId,
+          userModel: widget.userModel,
+          firebaseUser: widget.firebaseUser,
+          selectedTime: widget.selectedTime,
+        ));
       },
       codeAutoRetrievalTimeout: (String verificationId) {
         this.verificationId = verificationId;

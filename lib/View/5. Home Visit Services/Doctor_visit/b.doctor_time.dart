@@ -108,7 +108,7 @@ class _Doctor_TimeState extends State<Doctor_Time> {
       showDatePicker(
         context: context,
         initialDate: selectedDateNow,
-        firstDate: DateTime(2020),
+        firstDate: DateTime.now(),
         lastDate: DateTime(2030),
       ).then((pickedDate) {
         if (pickedDate != null) {

@@ -423,45 +423,48 @@ class TotalOrdersDetails extends StatelessWidget {
                           : const SizedBox.shrink(),
                       const SizedBox(height: 8),
                       doc["status"] != "Completed"
-                          ? Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              elevation: 0,
-                              color: Colors.white,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Padding(
-                                    padding: EdgeInsets.only(
-                                      top: 8.0,
-                                      left: 16,
-                                    ),
-                                    child: Text(
-                                      "About This Package",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: "Roboto",
+                            ? Container(
+                              width: double.infinity,
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                elevation: 0,
+                                color: Colors.white,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.only(
+                                        top: 8.0,
+                                        left: 16,
                                       ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 16.0, vertical: 8),
-                                    child: Obx(
-                                      () => Text(
-                                        controller.description.value,
+                                      child: Text(
+                                        "About This Package",
                                         style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black54,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
                                           fontFamily: "Roboto",
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 16.0, vertical: 8),
+                                      child: Obx(
+                                        () => Text(
+                                          controller.description.value.isEmpty ? "This is Individual Package" : controller.description.value,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black54,
+                                            fontFamily: "Roboto",
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             )
                           : Card(

@@ -9,6 +9,14 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class VitaminCartController extends GetxController {
+
+    final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController idNumberController = TextEditingController();
+  // final TextEditingController mobileNumberController = TextEditingController();
+  final TextEditingController dobController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  var selectedGender = "".obs;
+
   var cartItems = <Map<String, dynamic>>[].obs;
   var stAddress = "".obs;
   var latitude = "".obs;
@@ -97,10 +105,11 @@ class VitaminCartController extends GetxController {
 
       await docRef.set({
         "email": firebaseUser.email,
-        "name": userModel.fullname,
-        "phone": userModel.mobileNumber,
-        "gender": userModel.gender,
-        "dob": userModel.dob,
+        "name": fullNameController.text,
+        "phone": phoneController.text,
+        "gender": selectedGender.value,
+        "idNumber": idNumberController.text,
+        "dob": dobController.text,
         "address": stAddress.value,
         "latitude": latitude.value,
         "longitude": longitude.value,
@@ -121,12 +130,12 @@ class VitaminCartController extends GetxController {
         chargeId: chargeId.value,
       ));
 
-      Get.snackbar(
-        "Success",
-        "Successfully completed",
-        backgroundColor: Colors.lightGreen,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   "Success",
+      //   "Successfully completed",
+      //   backgroundColor: Colors.lightGreen,
+      //   colorText: Colors.white,
+      // );
     } catch (e) {
       Get.snackbar('Error', 'Failed to confirm. Please try again.');
     } finally {
