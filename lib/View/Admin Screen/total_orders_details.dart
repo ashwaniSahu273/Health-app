@@ -423,7 +423,7 @@ class TotalOrdersDetails extends StatelessWidget {
                           : const SizedBox.shrink(),
                       const SizedBox(height: 8),
                       doc["status"] != "Completed"
-                            ? Container(
+                          ? Container(
                               width: double.infinity,
                               child: Card(
                                 shape: RoundedRectangleBorder(
@@ -454,7 +454,9 @@ class TotalOrdersDetails extends StatelessWidget {
                                           horizontal: 16.0, vertical: 8),
                                       child: Obx(
                                         () => Text(
-                                          controller.description.value.isEmpty ? "This is Individual Package" : controller.description.value,
+                                          controller.description.value.isEmpty
+                                              ? "This is Individual Package"
+                                              : controller.description.value,
                                           style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black54,
@@ -522,6 +524,43 @@ class TotalOrdersDetails extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                             
+                                children: [
+                                  const Text(
+                                    "Payment:          ",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 2),
+                                    decoration: BoxDecoration(
+                                      color: doc["paymentStatus"] == "CAPTURED"
+                                          ? Colors.green.withOpacity(0.2)
+                                          : Colors.red.withOpacity(0.2),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text(
+                                      doc["paymentStatus"] == "CAPTURED"
+                                          ? "PAID"
+                                          : "FAILED",
+                                      style: TextStyle(
+                                        color:
+                                            doc["paymentStatus"] == "CAPTURED"
+                                                ? Colors.green
+                                                : Colors.red,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                               doc["status"] == "Accepted"
                                   ? _buildDetailRow(
                                       "Accepted_By", doc["accepted_by"],

@@ -190,6 +190,40 @@ class UserRequests extends StatelessWidget {
                                                           FontWeight.w500,
                                                     ),
                                                   ),
+                                                  Container(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 2),
+                                                    decoration: BoxDecoration(
+                                                      color: doc[
+                                                                  "paymentStatus"] ==
+                                                              "CAPTURED"
+                                                          ? Colors.green
+                                                              .withOpacity(0.2)
+                                                          : Colors.red
+                                                              .withOpacity(0.2),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
+                                                    child: Text(
+                                                      doc["paymentStatus"] ==
+                                                              "CAPTURED"
+                                                          ? "PAID"
+                                                          : "FAILED",
+                                                      style: TextStyle(
+                                                        color: doc[
+                                                                    "paymentStatus"] ==
+                                                                "CAPTURED"
+                                                            ? Colors.green
+                                                            : Colors.red,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             ),

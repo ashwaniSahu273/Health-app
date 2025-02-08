@@ -533,12 +533,13 @@ class LabPaymentPage extends StatelessWidget {
                                       ? item["localized"]["ar"]
                                       : item["localized"]["en"];
 
-                                  return Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                  return IntrinsicWidth(
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .start, // Ensures text wraps properly
                                     children: [
-                                      Flexible(
-                                        flex: 3, // Takes 3 parts of the row
+                                      Expanded(
+                                        flex: 2,
                                         child: Text(
                                           localizedData['serviceName'],
                                           maxLines: 2,
@@ -551,20 +552,22 @@ class LabPaymentPage extends StatelessWidget {
                                         ),
                                       ),
                                       SizedBox(width: 8),
-                                      Text(
-                                        item['quantity'] != null
-                                            ? item['quantity'].toString()
-                                            : "1",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500,
+                                      SizedBox(
+                                        width:
+                                            40, // Fixed width for quantity to keep alignment
+                                        child: Text(
+                                          item['quantity']?.toString() ?? "1",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          textAlign: TextAlign.center,
                                         ),
-                                        textAlign: TextAlign
-                                            .end, // Aligns text to the end
                                       ),
-                                      Flexible(
-                                        flex: 1, // Takes 1 part of the row
+                                      SizedBox(width: 10),
+                                      Expanded(
+                                        flex: 1,
                                         child: Text(
                                           localizedData['price'],
                                           style: TextStyle(
@@ -572,12 +575,12 @@ class LabPaymentPage extends StatelessWidget {
                                             color: Colors.black,
                                             fontWeight: FontWeight.w500,
                                           ),
-                                          textAlign: TextAlign
-                                              .end, // Aligns text to the end
+                                          textAlign: TextAlign.end,
                                         ),
                                       ),
                                     ],
-                                  );
+                                  ),
+                                );
                                 }),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -66,7 +66,7 @@ class LabCartPage extends StatelessWidget {
                 '${'Your Package tests'.tr} (${controller.cartItems.length})',
                 style: TextStyle(
                     fontSize: 16,
-                    fontFamily: "schyler",
+                 
                     fontWeight: FontWeight.w500),
               ),
             ),
@@ -104,11 +104,28 @@ class LabCartPage extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            Image.asset(
-                              'assets/images/vitamin1.png',
-                              height: 64,
-                              width: 40,
-                            ),
+                           Container(
+                             height: 50,
+                             width: 50,
+                             decoration: const BoxDecoration(
+                               shape: BoxShape.circle,
+                               color: const Color(
+                                   0xFFE6F5FF), // Circle background color
+                             ),
+                             child: ClipOval(
+                               child: Image.network(
+                                 item["imagePath"],
+                                 fit: BoxFit.cover,
+                                 errorBuilder:
+                                     (context, error, stackTrace) {
+                                   return Image.asset(
+                                     "assets/images/blood-sample.png",
+                                     fit: BoxFit.cover,
+                                   );
+                                 },
+                               ),
+                             ),
+                           ),
                             Expanded(
                               child: Column(
                                 // crossAxisAlignment: CrossAxisAlignment.center,

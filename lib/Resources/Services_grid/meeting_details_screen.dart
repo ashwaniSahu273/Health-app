@@ -179,34 +179,27 @@ class MeetingDetailsScreen extends StatelessWidget {
                                 ),
                                 // const SizedBox(height: 8), // Spacing between buttons
                                 // Accept Button
-                                GestureDetector(
-                                  onTap: () {
-                                    controller.openConsultationDialog(doc.id);
-                                    // Get.defaultDialog(
-                                    //   title: 'Accept Appointment'.tr,
-                                    //   middleText: "Are you sure?".tr,
-                                    //   textConfirm: 'Yes'.tr,
-                                    //   textCancel: 'No'.tr,
-                                    //   onConfirm: () {
-                                    //     controller.accept(doc.id);
-                                    //     Get.back();
-                                    //   },
-                                    //   onCancel: () => Get.back(),
-                                    // );
-                                  },
-                                  child: Obx(
-                                    () => controller.status.value == "Requested"
-                                        ? Container(
+                                Obx(
+                                  () => controller.status.value == "Requested"
+                                      ? GestureDetector(
+                                          onTap: () {
+                                            controller.openConsultationDialog(
+                                                doc.id);
+                                          },
+                                          child: Container(
                                             width: 80, // Customize the width
-                                            height: 27, // Customize the height
+                                            height:
+                                                27, // Customize the height
                                             decoration: BoxDecoration(
                                               color: Color(
                                                   0xFF00AAAD), // Background color
                                               borderRadius:
                                                   BorderRadius.circular(50),
                                             ),
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 12, vertical: 5),
+                                            padding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: 12,
+                                                    vertical: 5),
                                             child: const Text(
                                               "Accept",
                                               textAlign: TextAlign.center,
@@ -216,21 +209,21 @@ class MeetingDetailsScreen extends StatelessWidget {
                                                 fontSize: 11,
                                               ),
                                             ),
-                                          )
-                                        : Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10.0, vertical: 8),
-                                            child: Text(
-                                              "Accepted",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Color(0xFF00AAAD),
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14,
-                                              ),
+                                          ),
+                                        )
+                                      : Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10.0, vertical: 8),
+                                          child: Text(
+                                            "Accepted",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Color(0xFF00AAAD),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14,
                                             ),
                                           ),
-                                  ),
+                                        ),
                                 ),
                               ],
                             ),
@@ -311,6 +304,9 @@ class MeetingDetailsScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              _buildDetailRow("Description",
+                                  doc["meeting_data"]["description"],
+                                  isHighlighted: true),
                               Obx(
                                 () => _buildDetailRow(
                                     "Start At", controller.date.value,
@@ -461,7 +457,7 @@ class MeetingDetailsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 60, // Fixed width for the first text
+            width: 80, // Fixed width for the first text
             child: Text(
               key,
               style: TextStyle(

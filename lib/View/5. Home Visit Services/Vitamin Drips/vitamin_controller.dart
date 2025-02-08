@@ -9,20 +9,21 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class VitaminCartController extends GetxController {
-
-    final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController fullNameController = TextEditingController();
   final TextEditingController idNumberController = TextEditingController();
   // final TextEditingController mobileNumberController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   var selectedGender = "".obs;
 
+  final TextEditingController searchController = TextEditingController();
   var cartItems = <Map<String, dynamic>>[].obs;
   var stAddress = "".obs;
   var latitude = "".obs;
   var longitude = "".obs;
   var currentTime = "".obs;
   var isLoading = false.obs;
+  var filteredServices = <Service>[].obs; // New filtered list
   var servicesList = <Service>[].obs;
 
   var selectedDateController = "".obs;
@@ -36,6 +37,20 @@ class VitaminCartController extends GetxController {
   void onInit() {
     super.onInit();
     fetchServices();
+    searchController.addListener(_filterServices);
+  }
+
+  void _filterServices() {
+    String query = searchController.text.toLowerCase();
+    if (query.isEmpty) {
+      filteredServices.assignAll(servicesList);
+    } else {
+      filteredServices.assignAll(
+        servicesList.where((service) =>
+            service.localized.en.serviceName.toLowerCase().contains(query) ||
+            service.localized.ar.serviceName.toLowerCase().contains(query)),
+      );
+    }
   }
 
   Future<void> signInWithPhoneNumber(
@@ -87,6 +102,7 @@ class VitaminCartController extends GetxController {
       }).toList();
 
       servicesList.assignAll(services);
+      filteredServices.assignAll(servicesList);
 
       // print("======================> $servicesList");
     } catch (e) {
@@ -117,6 +133,8 @@ class VitaminCartController extends GetxController {
         "type": "Vitamin Drips",
         "selected_time": currentTime.value,
         "status": "Requested",
+        "paymentStatus": paymentStatus.value,
+        "chargeId": chargeId.value,
         'createdAt': DateTime.now(),
         "accepted_by": null
       });

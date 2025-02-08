@@ -26,7 +26,7 @@ class NurseController extends GetxController {
   var isLoading = false.obs;
   var servicesList = <NurseServiceModel>[].obs;
   var durationList = <NurseVisitDuration>[].obs;
-  var selectedIndex = 0.obs;
+  var selectedIndex = 1.obs;
   var imageUrl = ''.obs;
   var durationData = <String, dynamic>{
     "duration": "1 Week",

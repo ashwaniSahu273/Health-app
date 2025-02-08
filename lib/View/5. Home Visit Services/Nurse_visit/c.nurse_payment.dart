@@ -34,10 +34,9 @@ class NursePayment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final String currentDate = DateFormat.yMMMd().format(DateTime.now());
-    NurseController nurseController =
-        Get.put(NurseController());
+    NurseController nurseController = Get.put(NurseController());
 
-       Future<void> createPayment({
+    Future<void> createPayment({
       required double amount,
       required String name,
       required String email,
@@ -83,9 +82,7 @@ class NursePayment extends StatelessWidget {
       }
     }
 
-
-
-   double total = nurseController.getTotalAmount();
+    double total = nurseController.getTotalAmount();
     double tax = total * 0.15;
 
     // // Extract numeric value from packagePrice by removing non-numeric characters
@@ -159,7 +156,7 @@ class NursePayment extends StatelessWidget {
                         ),
                       ),
                       subtitle: Text(
-                        'Laboratory Riyadh, Saudi Arabia'.tr,
+                        'Riyadh, Saudi Arabia'.tr,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -519,7 +516,7 @@ class NursePayment extends StatelessWidget {
                   ),
 
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
@@ -546,27 +543,24 @@ class NursePayment extends StatelessWidget {
                             SizedBox(height: 10),
                             SizedBox(height: 10),
                             ListView.builder(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount:
-                                    nurseController.cartItems.length,
-                                itemBuilder: (context, index) {
-                                  final item =
-                                      nurseController.cartItems[index];
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: nurseController.cartItems.length,
+                              itemBuilder: (context, index) {
+                                final item = nurseController.cartItems[index];
+                                String languageCode =
+                                    Get.locale?.languageCode ?? 'en';
+                                final localizedData = languageCode == 'ar'
+                                    ? item["localized"]["ar"]
+                                    : item["localized"]["en"];
 
-                                  String languageCode =
-                                      Get.locale?.languageCode ?? 'en';
-
-                                  final localizedData = languageCode == 'ar'
-                                      ? item["localized"]["ar"]
-                                      : item["localized"]["en"];
-
-                                  return Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                return IntrinsicWidth(
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .start, // Ensures text wraps properly
                                     children: [
-                                      Flexible(
-                                        flex: 2, // Takes 3 parts of the row
+                                      Expanded(
+                                        flex: 2,
                                         child: Text(
                                           localizedData['serviceName'],
                                           maxLines: 2,
@@ -579,70 +573,59 @@ class NursePayment extends StatelessWidget {
                                         ),
                                       ),
                                       SizedBox(width: 8),
-                                      Text(
-                                        item['quantity'] != null
-                                            ? item['quantity'].toString()
-                                            : "1",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500,
+                                      SizedBox(
+                                        width:
+                                            40, // Fixed width for quantity to keep alignment
+                                        child: Text(
+                                          item['quantity']?.toString() ?? "1",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          textAlign: TextAlign.center,
                                         ),
-                                        textAlign: TextAlign
-                                            .end, // Aligns text to the end
                                       ),
-                                      Flexible(
-                                        flex: 1, // Takes 1 part of the row
-                                        child: Row(
-                                          children: [
-                                            SizedBox(width: 10),
-                                            Text(
-                                              localizedData['price'],
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                              textAlign: TextAlign
-                                                  .end, // Aligns text to the end
-                                            ),
-                                          ],
+                                      SizedBox(width: 10),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Text(
+                                          localizedData['price'],
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          textAlign: TextAlign.end,
                                         ),
                                       ),
                                     ],
-                                  );
-                                }),
+                                  ),
+                                );
+                              },
+                            ),
                             SizedBox(height: 10),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 20.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Flexible(
-                                    // flex: 3,
-                                    child: Text(
-                                      'TAX (15%)'.tr,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
+                            Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'TAX (15%)'.tr,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w500,
                                   ),
-                                  
-                                  Flexible(
-                                    // flex: 1,
-                                    child: Text(
-                                      '$tax ${'SAR'.tr}',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
+                                ),
+                                Text(
+                                  '$tax ${'SAR'.tr}',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                             SizedBox(height: 10),
                           ],
@@ -680,13 +663,12 @@ class NursePayment extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: GestureDetector(
                       onTap: () {
-
-                         createPayment(
+                        createPayment(
                           amount: totalAmount,
                           name: userModel.fullname!,
                           email: userModel.email!,
                         );
-                        
+
                         // nurseController.setUserOrderInfo(
                         //     userModel, firebaseUser);
                         // Get.offAll(() => HomePage(

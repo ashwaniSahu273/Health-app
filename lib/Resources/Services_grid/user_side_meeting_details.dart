@@ -148,44 +148,29 @@ class UserSideMeetingDetails extends StatelessWidget {
                                 ),
                                 // const SizedBox(height: 8), // Spacing between buttons
                                 // Accept Button
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.defaultDialog(
-                                      title: 'Accept Appointment'.tr,
-                                      middleText: "Are you sure?".tr,
-                                      textConfirm: 'Yes'.tr,
-                                      textCancel: 'No'.tr,
-                                      onConfirm: () {
-                                        controller.accept(doc.id);
-                                        Get.back();
-                                      },
-                                      onCancel: () => Get.back(),
-                                    );
-                                  },
-                                  child: doc["status"] == "Requested"
-                                      ? Text(
-                                          "Requested",
+                                doc["status"] == "Requested"
+                                    ? Text(
+                                        "Requested",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.orange[400],
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                        ),
+                                      )
+                                    : const Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10.0, vertical: 8),
+                                        child: Text(
+                                          "Accepted",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                            color: Colors.orange[400],
+                                            color: Color(0xFF00AAAD),
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14,
                                           ),
-                                        )
-                                      : const Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 10.0, vertical: 8),
-                                          child: Text(
-                                            "Accepted",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: Color(0xFF00AAAD),
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                            ),
-                                          ),
                                         ),
-                                ),
+                                      ),
                               ],
                             ),
                           ],
@@ -229,6 +214,10 @@ class UserSideMeetingDetails extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                          _buildDetailRow(
+                                    "Description", doc["meeting_data"]["description"],
+                                    isHighlighted: true),
+                              
                               Obx(
                                 () => _buildDetailRow(
                                     "Start At", controller.date.value,
@@ -352,7 +341,7 @@ class UserSideMeetingDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 60, // Fixed width for the first text
+            width: 80, // Fixed width for the first text
             child: Text(
               key,
               style: TextStyle(

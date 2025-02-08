@@ -242,7 +242,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                 ),
                                 // const SizedBox(height: 8), // Spacing between buttons
                                 // Accept Button
-                                Obx(() => controller.status.value == "Requested" || controller.paymentStatus.value == ""
+                                 doc["paymentStatus"] == "CAPTURED" ? Obx(() => controller.status.value == "Requested"
                                     ? GestureDetector(
                                         onTap: () {
                                           Get.defaultDialog(
@@ -293,7 +293,8 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                             fontSize: 14,
                                           ),
                                         ),
-                                      )),
+                                      )
+                                      ):SizedBox.shrink(),
                               ],
                             ),
                           ],
@@ -312,10 +313,50 @@ class AppointmentDetailsScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        "Payment: ",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 2),
+                                        decoration: BoxDecoration(
+                                          color: doc["paymentStatus"] ==
+                                                  "CAPTURED"
+                                              ? Colors.green.withOpacity(0.2)
+                                              : Colors.red.withOpacity(0.2),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Text(
+                                          doc["paymentStatus"] == "CAPTURED"
+                                              ? "PAID"
+                                              : "FAILED",
+                                          style: TextStyle(
+                                            color: doc["paymentStatus"] ==
+                                                    "CAPTURED"
+                                                ? Colors.green
+                                                : Colors.red,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                               _buildDetailRow(
                                 "Name",
                                 doc["name"],
                               ),
+                            
                               _buildDetailRow("Gender", doc["gender"]),
                               _buildDetailRow("DOB", doc["dob"]),
                               _buildDetailRow(

@@ -518,7 +518,7 @@ class _Selected_PackageState extends State<Selected_Package> {
                   //     ),
                   //   ),
                   // ),
-                  SizedBox(height: 10),
+                  // SizedBox(height: 10),
                   // Padding(
                   //   padding: const EdgeInsets.symmetric(horizontal: 10),
                   //   child: Text(
@@ -530,7 +530,7 @@ class _Selected_PackageState extends State<Selected_Package> {
                   //     ),
                   //   ),
                   // ),
-                  SizedBox(height: 10),
+                  // SizedBox(height: 10),
 
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),

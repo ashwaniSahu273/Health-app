@@ -71,6 +71,9 @@ class _Provider_DetailsState extends State<Provider_Details> {
           // cartController.paymentUrl.value = paymentUrl;
 
           // cartController.setUserOrderInfo(userModel, firebaseUser);
+
+
+          
         } else {
           Get.snackbar("Error", "Payment initiation failed");
         }

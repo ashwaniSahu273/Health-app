@@ -13,6 +13,7 @@ class UserSideMeetingRequestController extends GetxController {
 
   final date = "".obs;
   final time = "".obs;
+  final description = "".obs;
   final status = "".obs;
 
   void convertFromFirebaseTimestampStart(String isoTimestamp) {

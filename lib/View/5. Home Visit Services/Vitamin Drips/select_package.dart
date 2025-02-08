@@ -27,7 +27,7 @@ class SelectPackagesPage extends StatelessWidget {
     // String? selectedService;
     cartController.fetchServices();
     // Method to handle the service selection
-    void _onServiceSelected(
+    void onServiceSelected(
         String serviceName,
         String id,
         String description,
@@ -71,7 +71,7 @@ class SelectPackagesPage extends StatelessWidget {
                 )), // Double-arrow icon
             Text(
               'Select Packages'.tr,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   fontFamily: "Roboto"),
@@ -86,18 +86,18 @@ class SelectPackagesPage extends StatelessWidget {
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
-              child: StepProgressBar(currentStep: 2, totalSteps: 4)),
+              child: const StepProgressBar(currentStep: 2, totalSteps: 4)),
           // Address Section
           Padding(
             padding: const EdgeInsets.only(left: 16.0, top: 16.0, bottom: 0),
             child: Row(
               children: [
-                Icon(Icons.location_on, color: Colors.blue),
-                SizedBox(width: 8),
+                const Icon(Icons.location_on, color: Colors.blue),
+                const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     address,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 14,
                         fontFamily: "Roboto",
                         color: Colors.black),
@@ -114,26 +114,22 @@ class SelectPackagesPage extends StatelessWidget {
             child: SizedBox(
               height: 32, // Set your desired height
               child: TextField(
+                controller:
+                    cartController.searchController, // Use the controller
                 decoration: InputDecoration(
                   hintText: "Search Vitamin IV".tr,
                   hintStyle: const TextStyle(
-                      color: Colors.grey, // Set the hint text color
-                      fontSize: 14,
-                      fontFamily:
-                          "Roboto" // Optional: Set font size for hint text
-                      ),
-                  prefixIcon: Icon(Icons.search, color: Colors.grey),
+                      color: Colors.grey, fontSize: 14, fontFamily: "Roboto"),
+                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide: const BorderSide(
-                        color:
-                            Color(0xFFC7C7C7), // Color for the default border
-                        width: 0.51, // Border width
+                        color: Color(0xFFC7C7C7),
+                        width: 0.51,
                       )),
-                  contentPadding:
-                      const EdgeInsets.only(top: 1), // Adjust padding for text
+                  contentPadding: const EdgeInsets.only(top: 1),
                 ),
               ),
             ),
@@ -142,77 +138,68 @@ class SelectPackagesPage extends StatelessWidget {
           // GridView Section
           Expanded(
             child: Container(
-              color: Color(0xFFEEF8FF),
+              color: const Color(0xFFEEF8FF),
               padding: const EdgeInsets.only(
                 left: 16.0,
                 right: 16,
                 top: 20.0,
               ),
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 5,
-                  mainAxisSpacing: 5,
-                  childAspectRatio: 1.4,
-                ),
-                itemCount: cartController.servicesList.length,
-                itemBuilder: (context, index) {
-                  final service = cartController.servicesList[index];
+              child: Obx(
+                () => GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 5,
+                    childAspectRatio: 1.4,
+                  ),
+                  itemCount: cartController.filteredServices.length,
+                  itemBuilder: (context, index) {
+                    final service = cartController.filteredServices[index];
+                    String languageCode = Get.locale?.languageCode ?? 'en';
+                    final localizedData = languageCode == 'ar'
+                        ? service.localized.ar
+                        : service.localized.en;
 
-                  String languageCode = Get.locale?.languageCode ?? 'en';
-
-                  final localizedData = languageCode == 'ar'
-                      ? service.localized.ar
-                      : service.localized.en;
-                  String imagePath = imagePaths[index % imagePaths.length];
-                  return GestureDetector(
-                    onTap: () {
-                      _onServiceSelected(
-                          localizedData.serviceName,
-                          service.id,
-                          localizedData.description,
-                          localizedData.components,
-                          localizedData.instructions,
-                          localizedData.price,
-                          imagePath);
-                    },
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(5), // Rounded corners
-                      ),
-                      elevation: 2, // Subtle shadow
-                      child: Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: Colors.white, // White card background
+                    return GestureDetector(
+                      onTap: () {
+                        onServiceSelected(
+                            localizedData.serviceName,
+                            service.id,
+                            localizedData.description,
+                            localizedData.components,
+                            localizedData.instructions,
+                            localizedData.price,
+                            service.imagePath);
+                      },
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment
-                              .spaceBetween, // Space between image and text
-                          children: [
-                            // Image Section
-
-                            Container(
-                              height: 64,
-                              width: 40,
-                              child: Image.network(
-                                service.imagePath,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Image.asset(
-                                      "assets/images/blood-sample.png",
-                                      fit: BoxFit.cover);
-                                },
+                        elevation: 2,
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            color: Colors.white,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                height: 64,
+                                width: 40,
+                                child: Image.network(
+                                  service.imagePath,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(
+                                        "assets/images/blood-sample.png",
+                                        fit: BoxFit.cover);
+                                  },
+                                ),
                               ),
-                            ),
-                            const SizedBox(
-                                width: 12), // Space between image and text
-
-                            Expanded(
-                              child: Container(
-                                // color: Colors.green,
+                              const SizedBox(width: 12),
+                              Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   mainAxisAlignment:
@@ -221,7 +208,6 @@ class SelectPackagesPage extends StatelessWidget {
                                     Text(
                                       localizedData.serviceName,
                                       textAlign: TextAlign.end,
-                                      // textDirection: TextDirection.rtl,
                                       softWrap: true,
                                       maxLines: 3,
                                       style: const TextStyle(
@@ -229,16 +215,14 @@ class SelectPackagesPage extends StatelessWidget {
                                         fontSize: 14,
                                         fontFamily: "Roboto",
                                         fontWeight: FontWeight.w600,
-                                        color: Color(
-                                            0xFF007ABB), // Blue text for title
+                                        color: Color(0xFF007ABB),
                                       ),
                                     ),
                                     Container(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 8, vertical: 6),
                                       decoration: BoxDecoration(
-                                        color: Colors.lightBlue[
-                                            50], // Subtle light blue background
+                                        color: Colors.lightBlue[50],
                                         borderRadius: BorderRadius.circular(5),
                                       ),
                                       child: Text(
@@ -246,23 +230,20 @@ class SelectPackagesPage extends StatelessWidget {
                                         style: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors
-                                              .teal, // Highlighted teal price text
+                                          color: Colors.teal,
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                            ),
-
-                            // Price Tag
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
           ),
@@ -282,7 +263,7 @@ class SelectPackagesPage extends StatelessWidget {
                         borderRadius:
                             BorderRadius.circular(8), // Rounded corners
                       ),
-                      minimumSize: Size(160, 55),
+                      minimumSize: const Size(160, 55),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 8), // Padding
                     ),
@@ -304,7 +285,7 @@ class SelectPackagesPage extends StatelessWidget {
                           width: 30,
                           height: 30,
                           decoration: BoxDecoration(
-                            color: Color(0xFF009788), // Background color
+                            color: const Color(0xFF009788), // Background color
                             borderRadius:
                                 BorderRadius.circular(8), // Make it circular
                           ),
@@ -312,7 +293,7 @@ class SelectPackagesPage extends StatelessWidget {
                             () => Center(
                               child: Text(
                                 '${cartController.cartItems.length}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white, // Text color
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -325,7 +306,7 @@ class SelectPackagesPage extends StatelessWidget {
                             width: 8), // Space between the icon and text
                         Text(
                           'Selected item'.tr,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF009788),
@@ -338,8 +319,8 @@ class SelectPackagesPage extends StatelessWidget {
                     () => ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: cartController.isCartEmpty()
-                            ? Color(0xFFD9D9D9)
-                            : Color(0xFF007ABB),
+                            ? const Color(0xFFD9D9D9)
+                            : const Color(0xFF007ABB),
                         minimumSize: const Size(160, 55),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -363,7 +344,7 @@ class SelectPackagesPage extends StatelessWidget {
                         'Continue'.tr,
                         style: TextStyle(
                             color: cartController.isCartEmpty()
-                                ? Color(0xFF9C9C9C)
+                                ? const Color(0xFF9C9C9C)
                                 : Colors.white,
                             fontSize: 15),
                       ),

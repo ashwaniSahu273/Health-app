@@ -93,10 +93,18 @@ class SelectPackage extends StatelessWidget {
                           padding: const EdgeInsets.all(16.0),
                           child: Row(
                             children: [
-                              Image.asset(
-                              image!, // Replace with your asset
+                               Container(
                                 height: 64,
                                 width: 40,
+                                child: Image.network(
+                                  image!,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(
+                                        "assets/images/vitamin1.png",
+                                        fit: BoxFit.cover);
+                                  },
+                                ),
                               ),
                               const SizedBox(width: 12),
                               Expanded(

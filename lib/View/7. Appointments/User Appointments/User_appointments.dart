@@ -95,7 +95,6 @@ class _MyAppointmentsState extends State<MyAppointments> {
             ],
           ),
         ),
-     
         backgroundColor: Colors.blue[50],
         body: SafeArea(
           child: Column(
@@ -196,8 +195,6 @@ class _AppointmentTileState extends State<AppointmentTile> {
       // mainAxisAlignment: MainAxisAlignment.center,
       // crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-      
-
         GestureDetector(
           onTap: () {
             Get.to(RequestedAppointmentDetails(
@@ -240,13 +237,41 @@ class _AppointmentTileState extends State<AppointmentTile> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          widget.reportName,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF007ABB),
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                          children: [
+                            Text(
+                              widget.reportName,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF007ABB),
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: widget.doc["paymentStatus"] == "CAPTURED"
+                                    ? Colors.green.withOpacity(0.2)
+                                    : Colors.red.withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
+                                widget.doc["paymentStatus"] == "CAPTURED"
+                                    ? "PAID"
+                                    : "FAILED",
+                                style: TextStyle(
+                                  color: widget.doc["paymentStatus"] == "CAPTURED"
+                                      ? Colors.green
+                                      : Colors.red,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(height: 8),
                         Row(
@@ -266,7 +291,7 @@ class _AppointmentTileState extends State<AppointmentTile> {
                                 fontSize: 14,
                                 color: widget.name == "Requested"
                                     ? Color(0xFFC06440)
-                                    : widget.name == "accepted"
+                                    : widget.name == "Accepted"
                                         ? Color(0xFFFFC300)
                                         : Colors.green,
                                 fontWeight: FontWeight.bold,

@@ -511,7 +511,7 @@ class _Nurse_TimeState extends State<Nurse_Time> {
                       ),
                     ),
                     subtitle: Text(
-                      'Laboratory Riyadh, Saudi Arabia'.tr,
+                      'Riyadh, Saudi Arabia'.tr,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -609,13 +609,13 @@ class _Nurse_TimeState extends State<Nurse_Time> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(
-                      'Excluding visit fee'.tr,
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  //   child: Text(
+                  //     'Excluding visit fee'.tr,
+                  //     style: TextStyle(color: Colors.grey),
+                  //   ),
+                  // ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Row(
@@ -734,7 +734,7 @@ class _Nurse_TimeState extends State<Nurse_Time> {
                           //   address:nurseController.stAddress.value ,
                           // ));
                         } else {
-                          Get.snackbar("Error", "Please select a time slot");
+                          Get.snackbar("Message", "Please select a time slot",backgroundColor: Colors.red[200]);
                         }
                       },
 
