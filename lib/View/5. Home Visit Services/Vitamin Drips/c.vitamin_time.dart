@@ -385,15 +385,8 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
                                 setState(() {
                                   genderIndex = 0;
 
-                                  if (genderIndex == 0) {
-                                    widget.userModel.gender = "Any";
-                                  }
-                                  if (genderIndex == 1) {
-                                    widget.userModel.gender = "Male";
-                                  }
-                                  if (genderIndex == 0) {
-                                    widget.userModel.gender = "Female";
-                                  }
+                                  vitaminCartController.selectedGender.value =
+                                      "Other";
                                 });
                               },
                               child: Container(
@@ -414,7 +407,7 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
                                       const Icon(Icons.person),
                                       const SizedBox(width: 5),
                                       Text(
-                                        "Any".tr,
+                                        "Other".tr,
                                         style: TextStyle(
                                           color: genderIndex == 0
                                               ? Colors.white
@@ -430,6 +423,8 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
                               onTap: () {
                                 setState(() {
                                   genderIndex = 1;
+                                  vitaminCartController.selectedGender.value =
+                                      "Male";
                                 });
                               },
                               child: Container(
@@ -466,6 +461,8 @@ class _Vitamin_TimeState extends State<Vitamin_Time> {
                               onTap: () {
                                 setState(() {
                                   genderIndex = 2;
+                                  vitaminCartController.selectedGender.value =
+                                      "Female";
                                 });
                               },
                               child: Container(

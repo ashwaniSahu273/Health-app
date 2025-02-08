@@ -43,7 +43,7 @@ class AcceptedAppointments extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                MySearchBar(),
+                // MySearchBar(),
                 const SizedBox(height: 15),
                 Expanded(
                   child: StreamBuilder<QuerySnapshot>(

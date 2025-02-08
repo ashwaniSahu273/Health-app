@@ -280,6 +280,7 @@ class _Selected_PackageState extends State<Selected_Package> {
                               onTap: () {
                                 setState(() {
                                   genderIndex = 0;
+                                  cartController.selectedGender.value = "Other";
                                 });
                               },
                               child: Container(
@@ -300,7 +301,7 @@ class _Selected_PackageState extends State<Selected_Package> {
                                       const Icon(Icons.person),
                                       const SizedBox(width: 5),
                                       Text(
-                                        "Any".tr,
+                                        "Other".tr,
                                         style: TextStyle(
                                           color: genderIndex == 0
                                               ? Colors.white
@@ -316,6 +317,8 @@ class _Selected_PackageState extends State<Selected_Package> {
                               onTap: () {
                                 setState(() {
                                   genderIndex = 1;
+                                  cartController.selectedGender.value = "Male";
+
                                 });
                               },
                               child: Container(
@@ -352,6 +355,8 @@ class _Selected_PackageState extends State<Selected_Package> {
                               onTap: () {
                                 setState(() {
                                   genderIndex = 2;
+                                  cartController.selectedGender.value = "Female";
+
                                 });
                               },
                               child: Container(

@@ -48,7 +48,7 @@ class Laboratory extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                const MySearchBar(),
+                // const MySearchBar(),
                 const SizedBox(height: 20),
                 // Expanded(
                 //   child: SingleChildScrollView(

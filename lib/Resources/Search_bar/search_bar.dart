@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MySearchBar extends StatelessWidget {
-  const MySearchBar({Key? key});
+  final TextEditingController controller;
+
+  const MySearchBar({Key? key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -20,24 +22,20 @@ class MySearchBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(Icons.search,
-                color: Colors.grey),
-                 SizedBox(
-                width: 5),
+            Icon(Icons.search, color: Colors.grey),
+            SizedBox(width: 5),
             Expanded(
               child: TextFormField(
+                controller: controller,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Search'.tr,
-                  hintStyle: TextStyle(
-                    color: Colors.grey
-                  ),
-                  contentPadding: EdgeInsets.only(bottom:10)
+                  hintStyle: TextStyle(color: Colors.grey),
+                  contentPadding: EdgeInsets.only(bottom: 10),
                 ),
               ),
             ),
-            SizedBox(
-                width: 10),
+            SizedBox(width: 10),
           ],
         ),
       ),

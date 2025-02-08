@@ -385,16 +385,8 @@ class _Nurse_TimeState extends State<Nurse_Time> {
                               onTap: () {
                                 setState(() {
                                   genderIndex = 0;
+                                  nurseController.selectedGender.value = "Other";
 
-                                  if (genderIndex == 0) {
-                                    widget.userModel.gender = "Any";
-                                  }
-                                  if (genderIndex == 1) {
-                                    widget.userModel.gender = "Male";
-                                  }
-                                  if (genderIndex == 0) {
-                                    widget.userModel.gender = "Female";
-                                  }
                                 });
                               },
                               child: Container(
@@ -415,7 +407,7 @@ class _Nurse_TimeState extends State<Nurse_Time> {
                                       const Icon(Icons.person),
                                       const SizedBox(width: 5),
                                       Text(
-                                        "Any".tr,
+                                        "Other".tr,
                                         style: TextStyle(
                                           color: genderIndex == 0
                                               ? Colors.white
@@ -431,6 +423,8 @@ class _Nurse_TimeState extends State<Nurse_Time> {
                               onTap: () {
                                 setState(() {
                                   genderIndex = 1;
+                                  nurseController.selectedGender.value = "Male";
+
                                 });
                               },
                               child: Container(
@@ -467,6 +461,8 @@ class _Nurse_TimeState extends State<Nurse_Time> {
                               onTap: () {
                                 setState(() {
                                   genderIndex = 2;
+                                  nurseController.selectedGender.value = "Female";
+
                                 });
                               },
                               child: Container(

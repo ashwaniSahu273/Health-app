@@ -31,6 +31,25 @@ class E_Clinics extends StatefulWidget {
 class _E_ClinicsState extends State<E_Clinics> {
   final user_appointments =
       FirebaseFirestore.instance.collection("Registered Providers").snapshots();
+  
+  TextEditingController searchController = TextEditingController();
+  String searchQuery = "";
+
+  @override
+  void initState() {
+    super.initState();
+    searchController.addListener(() {
+      setState(() {
+        searchQuery = searchController.text;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,10 +94,12 @@ class _E_ClinicsState extends State<E_Clinics> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              //   child: const MySearchBar(),
-              // ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: MySearchBar(
+                  controller: searchController,
+                ),
+              ),
               const SizedBox(height: 25),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
@@ -89,9 +110,24 @@ class _E_ClinicsState extends State<E_Clinics> {
                 ),
               ),
               // const SizedBox(height: 15),
-              AvailableDoctors(
-                userModel: widget.userModel,
-                firebaseUser: widget.firebaseUser,
+              StreamBuilder<QuerySnapshot>(
+                stream: user_appointments,
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  var doctors = snapshot.data!.docs.where((doc) {
+                    var data = doc.data() as Map<String, dynamic>;
+                    var name = data['fullname'] as String;
+                    return name.toLowerCase().contains(searchQuery.toLowerCase());
+                  }).toList();
+
+                  return AvailableDoctors(
+                    doctors: doctors,
+                    userModel: widget.userModel,
+                    firebaseUser: widget.firebaseUser,
+                  );
+                },
               ),
             ],
           ),

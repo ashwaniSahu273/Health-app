@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/doctor_service_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -16,6 +16,7 @@ class DoctorController extends GetxController {
   var currentTime = "".obs;
   var isLoading = false.obs;
   var servicesList = <DoctorServiceModel>[].obs;
+  var selectedGender = "".obs;
 
   var paymentStatus = "".obs;
   var paymentUrl = "".obs;
@@ -59,7 +60,7 @@ class DoctorController extends GetxController {
         "email": firebaseUser.email,
         "name": userModel.fullname,
         "phone": userModel.mobileNumber,
-        "gender": userModel.gender,
+        "gender": selectedGender.value.isEmpty? userModel.gender: selectedGender.value,
         "dob": userModel.dob,
         "address": stAddress.value,
         "latitude": latitude.value,

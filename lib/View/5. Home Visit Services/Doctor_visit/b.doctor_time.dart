@@ -147,31 +147,9 @@ class _Doctor_TimeState extends State<Doctor_Time> {
         ),
         backgroundColor: Colors.white,
         elevation: 1,
-        // actions: [
-        //   Row(
-        //     children: [
-        //       Text(
-        //         "Search".tr,
-        //         style: TextStyle(
-        //           fontSize: 16,
-        //         ),
-        //       ),
-        //       IconButton(
-        //         icon: const Icon(Icons.search),
-        //         onPressed: () {},
-        //       ),
-        //     ],
-        //   ),
-        // ],
       ),
       body: Stack(
         children: [
-          // Positioned.fill(
-          //   child: Image.asset(
-          //     'assets/images/back_image.png',
-          //     fit: BoxFit.cover,
-          //   ),
-          // ),
           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(0.0),
@@ -179,113 +157,9 @@ class _Doctor_TimeState extends State<Doctor_Time> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   StepProgressBar(currentStep: 3, totalSteps: 4),
-                  //   padding: const EdgeInsets.only(left: 10, right: 10),
-                  //   child: Text(
-                  //     "Vitamin Drips Details",
-                  //     style: TextStyle(
-                  //       fontSize: 20,
-                  //       fontWeight: FontWeight.w500,
-                  //       color: Colors.black,
-                  //     ),
-                  //   ),
-                  // ),
-                  // SizedBox(height: 15),
-                  // Container(
-                  //   decoration: BoxDecoration(
-                  //     color: Colors.blue[50],
-                  //     borderRadius: BorderRadius.circular(10),
-                  //   ),
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.all(
-                  //         8.0), // Optional padding for more spacing
-                  //     child: Column(
-                  //       crossAxisAlignment: CrossAxisAlignment.start,
-                  //       children: [
-                  //         Text(
-                  //           'Package: ${widget.providerData['type'] ?? 'N/A'}',
-                  //           style: TextStyle(
-                  //             fontSize: 18,
-                  //             fontWeight: FontWeight.bold,
-                  //           ),
-                  //         ),
-                  //         SizedBox(
-                  //             height:
-                  //                 8), // Adds spacing between Vitamin Type and Benefits
-                  //         Text(
-                  //           'Description: ${widget.providerData['benefits'] ?? 'N/A'}',
-                  //           style: TextStyle(
-                  //             fontSize: 16,
-                  //             fontWeight: FontWeight.w500,
-                  //           ),
-                  //         ),
-                  //         SizedBox(
-                  //             height:
-                  //                 8), // Adds spacing between Benefits and Price
-                  //         Text(
-                  //           'Price: ${widget.providerData['price'] ?? 'N/A'}',
-                  //           style: TextStyle(
-                  //             fontSize: 16,
-                  //             fontWeight: FontWeight.w500,
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-                  // SizedBox(height: 20),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(left: 10, right: 10),
-                  //   child: Text(
-                  //     "Choose Your Slot",
-                  //     style: TextStyle(
-                  //       fontSize: 20,
-                  //       fontWeight: FontWeight.w500,
-                  //       color: Colors.black,
-                  //     ),
-                  //   ),
-                  // ),
+
                   SizedBox(height: 10),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(left: 10, right: 10),
-                  //   child: Text(
-                  //     "Morning",
-                  //     style: TextStyle(
-                  //       fontSize: 18,
-                  //       fontWeight: FontWeight.w500,
-                  //       color: Colors.black,
-                  //     ),
-                  //   ),
-                  // ),
-                  SizedBox(height: 10),
-                  // buildTimeSelectionRow("09:00 am", "10:00 am", "11:00 am"),
-                  // SizedBox(height: 15),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(left: 10, right: 10),
-                  //   child: Text(
-                  //     "Afternoon",
-                  //     style: TextStyle(
-                  //       fontSize: 18,
-                  //       fontWeight: FontWeight.w500,
-                  //       color: Colors.black,
-                  //     ),
-                  //   ),
-                  // ),
-                  // SizedBox(height: 10),
-                  // buildTimeSelectionRow("12:00 pm", "1:00 pm", "02:00 pm"),
-                  // SizedBox(height: 15),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(left: 10, right: 10),
-                  //   child: Text(
-                  //     "Evening",
-                  //     style: TextStyle(
-                  //       fontSize: 18,
-                  //       fontWeight: FontWeight.w500,
-                  //       color: Colors.black,
-                  //     ),
-                  //   ),
-                  // ),
-                  // SizedBox(height: 10),
-                  // buildTimeSelectionRow("04:00 pm", "05:00 pm", "06:00 pm"),
+
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: GestureDetector(
@@ -384,16 +258,8 @@ class _Doctor_TimeState extends State<Doctor_Time> {
                               onTap: () {
                                 setState(() {
                                   genderIndex = 0;
-
-                                  if (genderIndex == 0) {
-                                    widget.userModel.gender = "Any";
-                                  }
-                                  if (genderIndex == 1) {
-                                    widget.userModel.gender = "Male";
-                                  }
-                                  if (genderIndex == 0) {
-                                    widget.userModel.gender = "Female";
-                                  }
+                                  doctorController.selectedGender.value =
+                                      "Other";
                                 });
                               },
                               child: Container(
@@ -414,7 +280,7 @@ class _Doctor_TimeState extends State<Doctor_Time> {
                                       const Icon(Icons.person),
                                       const SizedBox(width: 5),
                                       Text(
-                                        "Any".tr,
+                                        "Other".tr,
                                         style: TextStyle(
                                           color: genderIndex == 0
                                               ? Colors.white
@@ -430,6 +296,8 @@ class _Doctor_TimeState extends State<Doctor_Time> {
                               onTap: () {
                                 setState(() {
                                   genderIndex = 1;
+                                  doctorController.selectedGender.value =
+                                      "Male";
                                 });
                               },
                               child: Container(
@@ -466,6 +334,8 @@ class _Doctor_TimeState extends State<Doctor_Time> {
                               onTap: () {
                                 setState(() {
                                   genderIndex = 2;
+                                  doctorController.selectedGender.value =
+                                      "Female";
                                 });
                               },
                               child: Container(
@@ -725,11 +595,11 @@ class _Doctor_TimeState extends State<Doctor_Time> {
 
                           // Navigate to Payment Details with the package name and price
                           Get.to(DoctorPayment(
-                                // address: doctorController.stAddress.value,
-                                userModel: widget.userModel,
-                                firebaseUser: widget.firebaseUser,
-                                selectedTime: selectedTime!,
-                              ));
+                            // address: doctorController.stAddress.value,
+                            userModel: widget.userModel,
+                            firebaseUser: widget.firebaseUser,
+                            selectedTime: selectedTime!,
+                          ));
 
                           // Get.to(GetPatientInfo(
                           //   userModel: widget.userModel,
