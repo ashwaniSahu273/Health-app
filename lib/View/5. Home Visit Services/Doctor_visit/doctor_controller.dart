@@ -16,7 +16,7 @@ class DoctorController extends GetxController {
   var currentTime = "".obs;
   var isLoading = false.obs;
   var servicesList = <DoctorServiceModel>[].obs;
-  var selectedGender = "".obs;
+  var selectedGender = "Male".obs;
 
   var paymentStatus = "".obs;
   var paymentUrl = "".obs;

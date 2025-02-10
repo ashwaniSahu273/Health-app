@@ -14,7 +14,7 @@ class VitaminCartController extends GetxController {
   // final TextEditingController mobileNumberController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  var selectedGender = "".obs;
+  var selectedGender = "Male".obs;
 
   final TextEditingController searchController = TextEditingController();
   var cartItems = <Map<String, dynamic>>[].obs;

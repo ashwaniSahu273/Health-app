@@ -146,7 +146,7 @@ class DoctorPayment extends StatelessWidget {
                         ),
                       ),
                       subtitle: Text(
-                        'Laboratory Riyadh, Saudi Arabia'.tr,
+                        'Riyadh, Saudi Arabia'.tr,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,

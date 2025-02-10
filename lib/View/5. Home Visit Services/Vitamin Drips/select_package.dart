@@ -34,10 +34,13 @@ class SelectPackagesPage extends StatelessWidget {
         String components,
         String instructions,
         String price,
-        String imagePath) {
+        String imagePath,
+        String type
+        ) {
       Get.to(SelectPackage(
         image: imagePath,
         id: id,
+        type: type,
         title: serviceName,
         description: description,
         instructions: instructions,
@@ -48,12 +51,6 @@ class SelectPackagesPage extends StatelessWidget {
         firebaseUser: firebaseUser,
       ));
     }
-
-    final List<String> imagePaths = [
-      "assets/images/vitamin1.png",
-      "assets/images/vitamin2.png",
-      "assets/images/vitaminthree.png",
-    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -169,7 +166,8 @@ class SelectPackagesPage extends StatelessWidget {
                             localizedData.components,
                             localizedData.instructions,
                             localizedData.price,
-                            service.imagePath);
+                            service.imagePath
+                            ,service.type);
                       },
                       child: Card(
                         shape: RoundedRectangleBorder(
@@ -193,7 +191,7 @@ class SelectPackagesPage extends StatelessWidget {
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) {
                                     return Image.asset(
-                                        "assets/images/blood-sample.png",
+                                        "assets/images/vitamin1.png",
                                         fit: BoxFit.cover);
                                   },
                                 ),
