@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 // import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
@@ -119,21 +120,19 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
       lastDate: DateTime.now(),
     );
 
-  if (pickedDate != null) {
-
-        cartController.dobController.text = "${pickedDate.toLocal()}".split(' ')[0];
-
+    if (pickedDate != null) {
+      cartController.dobController.text =
+          "${pickedDate.toLocal()}".split(' ')[0];
     }
   }
 
- void checkValues() {
+  void checkValues() {
     String fullname = cartController.fullNameController.text.trim();
     String idNumber = cartController.idNumberController.text.trim();
     String dob = cartController.dobController.text.trim();
     String? gender = cartController.selectedGender.value;
 
     if (fullname.isEmpty || idNumber.isEmpty || gender.isEmpty || dob.isEmpty) {
-
       UIHelper.showAlertDialog(
           context, "Incomplete Data", "Please fill all the fields");
     } else {
@@ -143,8 +142,6 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
   }
 
   void uploadData() async {
-
-
     // String fullname = fullNameController.text.trim();
     // // String mobileNumber = mobileNumberController.text.trim();
     // String dob = dobController.text.trim();
@@ -154,8 +151,6 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
     // // widget.userModel.mobileNumber = mobileNumber;
     // widget.userModel.gender = gender;
     // widget.userModel.dob = dob;
-
-
 
     Get.to(PhoneInputScreen(
       userModel: widget.userModel,
@@ -243,31 +238,31 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                         controller: cartController.fullNameController,
                         decoration: InputDecoration(
                           hintText: "Full Name".tr,
-                          hintStyle: const TextStyle(
-                              color: Colors
-                                  .grey), // Matches the placeholder text color
+                          hintStyle: const TextStyle(color: Colors.grey),
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 16, horizontal: 16),
                           filled: true,
-                          fillColor: Colors
-                              .white, // Background color of the text field
+                          fillColor: Colors.white,
                           enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(8), // Rounded corners
+                            borderRadius: BorderRadius.circular(8),
                             borderSide: BorderSide(
-                              color: Colors
-                                  .blue.shade100, // Light blue border color
+                              color: Colors.blue.shade100,
                               width: 1.0,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                             borderSide: const BorderSide(
-                              color: Colors.blue, // Highlighted border color
+                              color: Colors.blue,
                               width: 1.5,
                             ),
                           ),
                         ),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                              RegExp(r'^[a-zA-Z\s]*$')),
+                        ],
+                        keyboardType: TextInputType.text,
                       ),
                       const SizedBox(height: 20),
                       TextField(
@@ -286,8 +281,8 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide:
-                                const BorderSide(color: Colors.blue, width: 1.5),
+                            borderSide: const BorderSide(
+                                color: Colors.blue, width: 1.5),
                           ),
                         ),
                       ),
@@ -368,8 +363,8 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                           hintStyle: const TextStyle(
                               color: Colors
                                   .grey), // Matches the placeholder text color
-                          contentPadding:
-                              const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 0, horizontal: 16),
                           filled: true,
                           fillColor: Colors
                               .white, // Background color of the text field
@@ -397,9 +392,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                           );
                         }).toList(),
                         onChanged: (newValue) {
-                        
-                            cartController.selectedGender.value = newValue!;
-                      
+                          cartController.selectedGender.value = newValue!;
                         },
                       ),
                     ],

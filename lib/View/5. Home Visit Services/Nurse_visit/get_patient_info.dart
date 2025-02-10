@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/StepProgressBar/step_progress_bar.dart';
 import 'package:harees_new_project/View/5.%20Home%20Visit%20Services/Nurse_visit/nurse_cart_page.dart';
@@ -32,8 +33,6 @@ class NurseGetPatientInfo extends StatefulWidget {
 }
 
 class _NurseGetPatientInfoState extends State<NurseGetPatientInfo> {
-
-
   NurseController cartController = Get.put(NurseController());
 
   File? imageFile;
@@ -110,9 +109,8 @@ class _NurseGetPatientInfoState extends State<NurseGetPatientInfo> {
     );
 
     if (pickedDate != null) {
-
-        cartController.dobController.text = "${pickedDate.toLocal()}".split(' ')[0];
-
+      cartController.dobController.text =
+          "${pickedDate.toLocal()}".split(' ')[0];
     }
   }
 
@@ -123,7 +121,6 @@ class _NurseGetPatientInfoState extends State<NurseGetPatientInfo> {
     String? gender = cartController.selectedGender.value;
 
     if (fullname.isEmpty || idNumber.isEmpty || gender.isEmpty || dob.isEmpty) {
-
       UIHelper.showAlertDialog(
           context, "Incomplete Data", "Please fill all the fields");
     } else {
@@ -133,8 +130,6 @@ class _NurseGetPatientInfoState extends State<NurseGetPatientInfo> {
   }
 
   void uploadData() async {
-
-
     // widget.userModel.fullname = fullname;
     // widget.userModel.gender = gender;
     // widget.userModel.dob = dob;
@@ -179,7 +174,7 @@ class _NurseGetPatientInfoState extends State<NurseGetPatientInfo> {
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
-              child:const StepProgressBar(currentStep: 2, totalSteps: 4)),
+              child: const StepProgressBar(currentStep: 2, totalSteps: 4)),
 
           Expanded(
             child: Container(
@@ -209,39 +204,37 @@ class _NurseGetPatientInfoState extends State<NurseGetPatientInfo> {
                         ),
                       ),
                       const SizedBox(height: 30),
-                      
                       TextField(
                         controller: cartController.fullNameController,
                         decoration: InputDecoration(
                           hintText: "Full Name".tr,
-                          hintStyle: const TextStyle(
-                              color: Colors
-                                  .grey), // Matches the placeholder text color
+                          hintStyle: const TextStyle(color: Colors.grey),
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 16, horizontal: 16),
                           filled: true,
-                          fillColor: Colors
-                              .white, // Background color of the text field
+                          fillColor: Colors.white,
                           enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(8), // Rounded corners
+                            borderRadius: BorderRadius.circular(8),
                             borderSide: BorderSide(
-                              color: Colors
-                                  .blue.shade100, // Light blue border color
+                              color: Colors.blue.shade100,
                               width: 1.0,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                             borderSide: const BorderSide(
-                              color: Colors.blue, // Highlighted border color
+                              color: Colors.blue,
                               width: 1.5,
                             ),
                           ),
                         ),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                              RegExp(r'^[a-zA-Z\s]*$')),
+                        ],
+                        keyboardType: TextInputType.text,
                       ),
                       const SizedBox(height: 20),
-
                       TextField(
                         controller: cartController.idNumberController,
                         decoration: InputDecoration(
@@ -258,8 +251,8 @@ class _NurseGetPatientInfoState extends State<NurseGetPatientInfo> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide:
-                                const BorderSide(color: Colors.blue, width: 1.5),
+                            borderSide: const BorderSide(
+                                color: Colors.blue, width: 1.5),
                           ),
                         ),
                       ),
@@ -309,8 +302,8 @@ class _NurseGetPatientInfoState extends State<NurseGetPatientInfo> {
                           hintStyle: const TextStyle(
                               color: Colors
                                   .grey), // Matches the placeholder text color
-                          contentPadding:
-                              const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 0, horizontal: 16),
                           filled: true,
                           fillColor: Colors
                               .white, // Background color of the text field
@@ -338,9 +331,7 @@ class _NurseGetPatientInfoState extends State<NurseGetPatientInfo> {
                           );
                         }).toList(),
                         onChanged: (newValue) {
-                    
-                            cartController.selectedGender.value = newValue!;
-                       
+                          cartController.selectedGender.value = newValue!;
                         },
                       ),
                     ],

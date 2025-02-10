@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/provider_home.dart';
 // import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/services_sreen.dart';
@@ -202,7 +203,7 @@ class _CompleteProfileProviderState extends State<CompleteProfileProvider> {
         title: Text("Complete Your Profile".tr),
         centerTitle: true,
       ),
-      backgroundColor: Color(0xFFEEF8FF),
+      backgroundColor: const Color(0xFFEEF8FF),
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -221,7 +222,8 @@ class _CompleteProfileProviderState extends State<CompleteProfileProvider> {
                   backgroundColor: MyColors.purple,
                   radius: 50,
                   child: (imageFile == null)
-                      ? const Icon(Icons.add_a_photo, size: 60, color: Colors.white)
+                      ? const Icon(Icons.add_a_photo,
+                          size: 60, color: Colors.white)
                       : null,
                 ),
               ),
@@ -232,30 +234,39 @@ class _CompleteProfileProviderState extends State<CompleteProfileProvider> {
                 controller: fullNameController,
                 decoration: InputDecoration(
                   hintText: "Full Name".tr,
-                  hintStyle: TextStyle(color: Colors.grey),
+                  hintStyle: const TextStyle(color: Colors.grey),
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                   filled: true,
                   fillColor: Colors.white,
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide:
-                        BorderSide(color: Colors.blue.shade100, width: 1.0),
+                    borderSide: BorderSide(
+                      color: Colors.blue.shade100,
+                      width: 1.0,
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.blue, width: 1.5),
+                    borderSide: const BorderSide(
+                      color: Colors.blue,
+                      width: 1.5,
+                    ),
                   ),
                 ),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z\s]*$')),
+                ],
+                keyboardType: TextInputType.text,
               ),
               const SizedBox(height: 20),
               TextField(
                 controller: experienceController,
                 decoration: InputDecoration(
                   hintText: "Experience".tr,
-                  hintStyle: TextStyle(color: Colors.grey),
+                  hintStyle: const TextStyle(color: Colors.grey),
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                   filled: true,
                   fillColor: Colors.white,
                   enabledBorder: OutlineInputBorder(
@@ -265,7 +276,8 @@ class _CompleteProfileProviderState extends State<CompleteProfileProvider> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.blue, width: 1.5),
+                    borderSide:
+                        const BorderSide(color: Colors.blue, width: 1.5),
                   ),
                 ),
               ),
@@ -274,9 +286,9 @@ class _CompleteProfileProviderState extends State<CompleteProfileProvider> {
                 controller: idNumberController,
                 decoration: InputDecoration(
                   hintText: "ID Number".tr,
-                  hintStyle: TextStyle(color: Colors.grey),
+                  hintStyle: const TextStyle(color: Colors.grey),
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                   filled: true,
                   fillColor: Colors.white,
                   enabledBorder: OutlineInputBorder(
@@ -286,19 +298,20 @@ class _CompleteProfileProviderState extends State<CompleteProfileProvider> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.blue, width: 1.5),
+                    borderSide:
+                        const BorderSide(color: Colors.blue, width: 1.5),
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextField(
                 controller: mobileNumberController,
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
                   hintText: "Mobile Number".tr,
-                  hintStyle: TextStyle(color: Colors.grey),
+                  hintStyle: const TextStyle(color: Colors.grey),
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                   filled: true,
                   fillColor: Colors.white,
                   enabledBorder: OutlineInputBorder(
@@ -308,19 +321,21 @@ class _CompleteProfileProviderState extends State<CompleteProfileProvider> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.blue, width: 1.5),
+                    borderSide:
+                        const BorderSide(color: Colors.blue, width: 1.5),
                   ),
                 ),
+           
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextField(
                 controller: dobController,
                 readOnly: true,
                 decoration: InputDecoration(
                   hintText: "Date of Birth".tr,
-                  hintStyle: TextStyle(color: Colors.grey),
+                  hintStyle: const TextStyle(color: Colors.grey),
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                   filled: true,
                   fillColor: Colors.white,
                   enabledBorder: OutlineInputBorder(
@@ -330,21 +345,22 @@ class _CompleteProfileProviderState extends State<CompleteProfileProvider> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.blue, width: 1.5),
+                    borderSide:
+                        const BorderSide(color: Colors.blue, width: 1.5),
                   ),
                 ),
                 onTap: showDatePickerDialog,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               DropdownButtonFormField<String>(
                 value: selectedGender,
                 decoration: InputDecoration(
                   labelText: "Gender".tr,
-                  labelStyle: TextStyle(color: Colors.grey),
-                  hintStyle: TextStyle(
+                  labelStyle: const TextStyle(color: Colors.grey),
+                  hintStyle: const TextStyle(
                       color: Colors.grey), // Matches the placeholder text color
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                      const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
                   filled: true,
                   fillColor: Colors.white, // Background color of the text field
                   enabledBorder: OutlineInputBorder(
@@ -356,7 +372,7 @@ class _CompleteProfileProviderState extends State<CompleteProfileProvider> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: Colors.blue, // Highlighted border color
                       width: 1.5,
                     ),

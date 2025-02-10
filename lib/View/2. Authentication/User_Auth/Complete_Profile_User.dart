@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/ui_helper.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -117,7 +118,6 @@ class _CompleteProfileState extends State<CompleteProfile> {
         idNumber.isEmpty ||
         gender == null ||
         dob.isEmpty) {
-
       UIHelper.showAlertDialog(
           context, "Incomplete Data", "Please fill all the fields");
     } else {
@@ -153,7 +153,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
     widget.userModel.mobileNumber = mobileNumber;
     widget.userModel.gender = gender;
     widget.userModel.dob = dob;
-    
+
     await FirebaseFirestore.instance
         .collection("Registered Users")
         .doc(widget.userModel.uid)
@@ -225,21 +225,31 @@ class _CompleteProfileState extends State<CompleteProfile> {
                     controller: fullNameController,
                     decoration: InputDecoration(
                       hintText: "Full Name".tr,
-                      hintStyle: TextStyle(color: Colors.grey),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 16),
                       filled: true,
                       fillColor: Colors.white,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
-                        borderSide:
-                            BorderSide(color: Colors.blue.shade100, width: 1.0),
+                        borderSide: BorderSide(
+                          color: Colors.blue.shade100,
+                          width: 1.0,
+                        ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.blue, width: 1.5),
+                        borderSide: const BorderSide(
+                          color: Colors.blue,
+                          width: 1.5,
+                        ),
                       ),
                     ),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                          RegExp(r'^[a-zA-Z\s]*$')),
+                    ],
+                    keyboardType: TextInputType.text,
                   ),
                   SizedBox(height: 20),
                   TextField(
@@ -308,49 +318,48 @@ class _CompleteProfileState extends State<CompleteProfile> {
                     onTap: showDatePickerDialog,
                   ),
                   SizedBox(height: 20),
-
-                 DropdownButtonFormField<String>(
-                        value: selectedGender,
-                        decoration: InputDecoration(
-                          labelText: "Gender".tr,
-                          labelStyle: TextStyle(color: Colors.grey),
-                          hintStyle: TextStyle(
-                              color: Colors
-                                  .grey), // Matches the placeholder text color
-                          contentPadding:
-                              EdgeInsets.symmetric(vertical: 0, horizontal: 16),
-                          filled: true,
-                          fillColor: Colors
-                              .white, // Background color of the text field
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(8), // Rounded corners
-                            borderSide: BorderSide(
-                              color: Colors
-                                  .blue.shade100, // Light blue border color
-                              width: 1.0,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: Colors.blue, // Highlighted border color
-                              width: 1.5,
-                            ),
-                          ),
+                  DropdownButtonFormField<String>(
+                    value: selectedGender,
+                    decoration: InputDecoration(
+                      labelText: "Gender".tr,
+                      labelStyle: TextStyle(color: Colors.grey),
+                      hintStyle: TextStyle(
+                          color: Colors
+                              .grey), // Matches the placeholder text color
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+                      filled: true,
+                      fillColor:
+                          Colors.white, // Background color of the text field
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius:
+                            BorderRadius.circular(8), // Rounded corners
+                        borderSide: BorderSide(
+                          color:
+                              Colors.blue.shade100, // Light blue border color
+                          width: 1.0,
                         ),
-                        items: ['Male', 'Female', 'Other'].map((String gender) {
-                          return DropdownMenuItem<String>(
-                            value: gender,
-                            child: Text(gender),
-                          );
-                        }).toList(),
-                        onChanged: (newValue) {
-                          setState(() {
-                            selectedGender = newValue;
-                          });
-                        },
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(
+                          color: Colors.blue, // Highlighted border color
+                          width: 1.5,
+                        ),
+                      ),
+                    ),
+                    items: ['Male', 'Female', 'Other'].map((String gender) {
+                      return DropdownMenuItem<String>(
+                        value: gender,
+                        child: Text(gender),
+                      );
+                    }).toList(),
+                    onChanged: (newValue) {
+                      setState(() {
+                        selectedGender = newValue;
+                      });
+                    },
+                  ),
                   SizedBox(
                     height: 40,
                   ),
