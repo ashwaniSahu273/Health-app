@@ -35,8 +35,7 @@ class SelectPackagesPage extends StatelessWidget {
         String instructions,
         String price,
         String imagePath,
-        String type
-        ) {
+        String type) {
       Get.to(SelectPackage(
         image: imagePath,
         id: id,
@@ -142,106 +141,124 @@ class SelectPackagesPage extends StatelessWidget {
                 top: 20.0,
               ),
               child: Obx(
-                () => GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 5,
-                    childAspectRatio: 1.4,
-                  ),
-                  itemCount: cartController.filteredServices.length,
-                  itemBuilder: (context, index) {
-                    final service = cartController.filteredServices[index];
-                    String languageCode = Get.locale?.languageCode ?? 'en';
-                    final localizedData = languageCode == 'ar'
-                        ? service.localized.ar
-                        : service.localized.en;
-
-                    return GestureDetector(
-                      onTap: () {
-                        onServiceSelected(
-                            localizedData.serviceName,
-                            service.id,
-                            localizedData.description,
-                            localizedData.components,
-                            localizedData.instructions,
-                            localizedData.price,
-                            service.imagePath
-                            ,service.type);
-                      },
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        elevation: 2,
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: Colors.white,
+                () => cartController.filteredServices.isEmpty
+                    ? Center(
+                        child: Text(
+                          'No search data found',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.grey[600],
+                            fontWeight: FontWeight.bold,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                height: 64,
-                                width: 40,
-                                child: Image.network(
+                        ),
+                      )
+                    : GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 5,
+                          mainAxisSpacing: 5,
+                          childAspectRatio: 1.4,
+                        ),
+                        itemCount: cartController.filteredServices.length,
+                        itemBuilder: (context, index) {
+                          final service =
+                              cartController.filteredServices[index];
+                          String languageCode =
+                              Get.locale?.languageCode ?? 'en';
+                          final localizedData = languageCode == 'ar'
+                              ? service.localized.ar
+                              : service.localized.en;
+
+                          return GestureDetector(
+                            onTap: () {
+                              onServiceSelected(
+                                  localizedData.serviceName,
+                                  service.id,
+                                  localizedData.description,
+                                  localizedData.components,
+                                  localizedData.instructions,
+                                  localizedData.price,
                                   service.imagePath,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Image.asset(
-                                        "assets/images/vitamin1.png",
-                                        fit: BoxFit.cover);
-                                  },
-                                ),
+                                  service.type);
+                            },
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
                               ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                              elevation: 2,
+                              child: Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  color: Colors.white,
+                                ),
+                                child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      localizedData.serviceName,
-                                      textAlign: TextAlign.end,
-                                      softWrap: true,
-                                      maxLines: 3,
-                                      style: const TextStyle(
-                                        height: 1.2,
-                                        fontSize: 14,
-                                        fontFamily: "Roboto",
-                                        fontWeight: FontWeight.w600,
-                                        color: Color(0xFF007ABB),
+                                    Container(
+                                      height: 64,
+                                      width: 40,
+                                      child: Image.network(
+                                        service.imagePath,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Image.asset(
+                                              "assets/images/vitamin1.png",
+                                              fit: BoxFit.cover);
+                                        },
                                       ),
                                     ),
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 6),
-                                      decoration: BoxDecoration(
-                                        color: Colors.lightBlue[50],
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: Text(
-                                        localizedData.price,
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.teal,
-                                        ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            localizedData.serviceName,
+                                            textAlign: TextAlign.end,
+                                            softWrap: true,
+                                            maxLines: 3,
+                                            style: const TextStyle(
+                                              height: 1.2,
+                                              fontSize: 14,
+                                              fontFamily: "Roboto",
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xFF007ABB),
+                                            ),
+                                          ),
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8, vertical: 6),
+                                            decoration: BoxDecoration(
+                                              color: Colors.lightBlue[50],
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            child: Text(
+                                              localizedData.price,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.teal,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
               ),
             ),
           ),

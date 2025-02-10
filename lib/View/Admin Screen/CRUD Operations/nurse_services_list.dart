@@ -39,34 +39,104 @@ class _NurseServicesListState extends State<NurseServicesList> {
     }
   }
 
-  void _deleteService(String serviceId) async {
-    await FirebaseFirestore.instance
-        .collection('NurseServices')
-        .doc(serviceId)
-        .delete();
+  void _deleteService(BuildContext context, String docId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Confirm Deletion"),
+          content: const Text("Are you sure you want to delete this Service?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+                await FirebaseFirestore.instance
+                    .collection('NurseServices')
+                    .doc(docId)
+                    .delete();
 
-    // Refresh the list
-    setState(() {
-      _serviceListFuture = _fetchServices();
-    });
+                setState(() {
+                  _serviceListFuture = _fetchServices();
+                });
+              },
+              child: const Text("Delete", style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  void _editService(service) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => NurseCreateService(
-          isEditing: true,
-          service: service,
-        ),
-      ),
-    ).then((_) {
-      // Refresh the list after editing
-      setState(() {
-        _serviceListFuture = _fetchServices();
-      });
-    });
+  // void _deleteService(String serviceId) async {
+  //   await FirebaseFirestore.instance
+  //       .collection('NurseServices')
+  //       .doc(serviceId)
+  //       .delete();
+
+  //   // Refresh the list
+  //   setState(() {
+  //     _serviceListFuture = _fetchServices();
+  //   });
+  // }
+
+  void _editService(BuildContext context, service) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Confirm Edition"),
+          content: const Text("Are you sure you want to edit this Service?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NurseCreateService(
+                      isEditing: true,
+                      service: service,
+                    ),
+                  ),
+                ).then((_) {
+                  // Refresh the list after editing
+                  setState(() {
+                    _serviceListFuture = _fetchServices();
+                  });
+                  Navigator.pop(context);
+                });
+              },
+              child: const Text("Edit", style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
   }
+
+  // void _editService(service) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => NurseCreateService(
+  //         isEditing: true,
+  //         service: service,
+  //       ),
+  //     ),
+  //   ).then((_) {
+  //     // Refresh the list after editing
+  //     setState(() {
+  //       _serviceListFuture = _fetchServices();
+  //     });
+  //   });
+  // }
 
   void _addService() {
     Navigator.push(
@@ -138,12 +208,12 @@ class _NurseServicesListState extends State<NurseServicesList> {
                       children: [
                         IconButton(
                           icon: Icon(Icons.edit, color: Colors.blue),
-                          onPressed: () => _editService(service),
+                          onPressed: () => _editService(context, service),
                         ),
                         IconButton(
                           icon: Icon(Icons.delete, color: Colors.red),
                           onPressed: () =>
-                              _deleteService(service.id.toString()),
+                              _deleteService(context, service.id.toString()),
                         ),
                       ],
                     ),

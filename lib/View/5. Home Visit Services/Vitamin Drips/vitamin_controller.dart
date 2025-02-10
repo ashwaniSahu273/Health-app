@@ -109,17 +109,15 @@ class VitaminCartController extends GetxController {
       print("Error fetching services: $e");
     }
   }
+Future<void> setUserOrderInfo(UserModel userModel, User firebaseUser) async {
+  try {
+    isLoading.value = true;
 
-  Future<void> setUserOrderInfo(UserModel userModel, User firebaseUser) async {
-    try {
-      isLoading.value = true;
-
-      final docRef =
-          FirebaseFirestore.instance.collection("User_appointments").doc();
-
-      final docId = docRef.id;
-
-      await docRef.set({
+    // Navigate to Payment Screen without creating Firestore doc
+    Get.to(PaymentSuccessScreen(
+      userModel: userModel,
+      firebaseUser: firebaseUser,
+      orderData: {
         "email": firebaseUser.email,
         "name": fullNameController.text,
         "phone": phoneController.text,
@@ -130,36 +128,25 @@ class VitaminCartController extends GetxController {
         "latitude": latitude.value,
         "longitude": longitude.value,
         "packages": cartItems,
-        "type": "Vitamin Drips",
-        "selected_time": currentTime.value,
         "status": "Requested",
-        "paymentStatus": paymentStatus.value,
+        "type": "Vitamin Drips",
+        "paymentStatus": "INITIATED",
+        "paymentUrl": paymentUrl.value,
         "chargeId": chargeId.value,
+        "selected_time": currentTime.value,
         'createdAt': DateTime.now(),
         "accepted_by": null
-      });
+      },
+    ));
 
-      await openPaymentUrl(paymentUrl.value);
-
-      Get.to(PaymentSuccessScreen(
-        userModel: userModel,
-        firebaseUser: firebaseUser,
-        docId: docId,
-        chargeId: chargeId.value,
-      ));
-
-      // Get.snackbar(
-      //   "Success",
-      //   "Successfully completed",
-      //   backgroundColor: Colors.lightGreen,
-      //   colorText: Colors.white,
-      // );
-    } catch (e) {
-      Get.snackbar('Error', 'Failed to confirm. Please try again.');
-    } finally {
-      isLoading.value = false; // Hide loading state
-    }
+    await openPaymentUrl(paymentUrl.value);
+  } catch (e) {
+    Get.snackbar('Error', 'Failed to confirm. Please try again.');
+  } finally {
+    isLoading.value = false; // Hide loading state
   }
+}
+
 
   Future<void> openPaymentUrl(String url) async {
     Uri uri = Uri.parse(url);

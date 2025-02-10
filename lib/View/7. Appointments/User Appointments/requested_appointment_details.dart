@@ -15,9 +15,9 @@ import 'package:harees_new_project/View/8.%20Chats/Pages/Chat_Room.dart';
 import 'package:harees_new_project/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:dio/dio.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:open_file/open_file.dart';
+// import 'package:dio/dio.dart';
+// import 'package:path_provider/path_provider.dart';
+// import 'package:open_file/open_file.dart';
 
 class RequestedAppointmentDetails extends StatelessWidget {
   final DocumentSnapshot doc;
@@ -40,19 +40,9 @@ class RequestedAppointmentDetails extends StatelessWidget {
       double.parse(doc["latitude"]),
       double.parse(doc["longitude"]),
     );
-    void openGoogleMap() async {
-      var latitude = double.parse(doc["latitude"]);
-      var longitude = double.parse(doc["longitude"]);
-      String googleUrl =
-          "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
-      if (await canLaunch(googleUrl)) {
-        await launch(googleUrl);
-      } else {
-        throw "Could not open the map.";
-      }
-    }
 
-    void _openInGoogleMaps(double latitude, double longitude) async {
+
+    void openInGoogleMaps(double latitude, double longitude) async {
       String googleUrl =
           "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
       if (await canLaunch(googleUrl)) {
@@ -134,27 +124,27 @@ class RequestedAppointmentDetails extends StatelessWidget {
       }
     }
 
-    Future<void> downloadAndOpenPdf(BuildContext context, String pdfUrl) async {
-      try {
-        // Get temporary directory
-        final directory = await getTemporaryDirectory();
-        final filePath = '${directory.path}/downloaded_file.pdf';
+    // Future<void> downloadAndOpenPdf(BuildContext context, String pdfUrl) async {
+    //   try {
+    //     // Get temporary directory
+    //     final directory = await getTemporaryDirectory();
+    //     final filePath = '${directory.path}/downloaded_file.pdf';
 
-        // Download file
-        final dio = Dio();
-        await dio.download(pdfUrl, filePath);
+    //     // Download file
+    //     final dio = Dio();
+    //     await dio.download(pdfUrl, filePath);
 
-        // Open the file
-        OpenFile.open(filePath);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Download complete. File opened.")),
-        );
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Failed to download file: $e")),
-        );
-      }
-    }
+    //     // Open the file
+    //     OpenFile.open(filePath);
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       const SnackBar(content: Text("Download complete. File opened.")),
+    //     );
+    //   } catch (e) {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(content: Text("Failed to download file: $e")),
+    //     );
+    //   }
+    // }
 
     return Scaffold(
       appBar: AppBar(
@@ -716,7 +706,7 @@ class RequestedAppointmentDetails extends StatelessWidget {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        _openInGoogleMaps(
+                                        openInGoogleMaps(
                                           double.parse(doc["latitude"]),
                                           double.parse(doc["longitude"]),
                                         );
@@ -728,7 +718,7 @@ class RequestedAppointmentDetails extends StatelessWidget {
                                       height: 200,
                                       child: GestureDetector(
                                         onTap: () {
-                                          _openInGoogleMaps(
+                                          openInGoogleMaps(
                                             double.parse(doc["latitude"]),
                                             double.parse(doc["longitude"]),
                                           );

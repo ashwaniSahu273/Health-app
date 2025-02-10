@@ -22,7 +22,6 @@ class _VitaminServicesListState extends State<VitaminServicesList> {
     setState(() {
       _serviceListFuture = _fetchServices();
     });
-
   }
 
   Future<List<Service>> _fetchServices() async {
@@ -41,34 +40,92 @@ class _VitaminServicesListState extends State<VitaminServicesList> {
     }
   }
 
-  void _deleteService(String serviceId) async {
-    await FirebaseFirestore.instance
-        .collection('VitaminServices')
-        .doc(serviceId.toString())
-        .delete();
+  void _deleteService(BuildContext context, String docId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Confirm Deletion"),
+          content: const Text("Are you sure you want to delete this Service?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+                await FirebaseFirestore.instance
+                    .collection('VitaminServices')
+                    .doc(docId)
+                    .delete();
 
-    // Refresh the list
-    setState(() {
-      _serviceListFuture = _fetchServices();
-    });
+                setState(() {
+                  _serviceListFuture = _fetchServices();
+                });
+              },
+              child: const Text("Delete", style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  void _editService(service) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => VitaminCreateService(
-          isEditing: true,
-          service: service,
-        ),
-      ),
-    ).then((_) {
-      // Refresh the list after editing
-      setState(() {
-        _serviceListFuture = _fetchServices();
-      });
-    });
+  void _editService(BuildContext context, service) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Confirm Edition"),
+          content: const Text("Are you sure you want to edit this Service?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => VitaminCreateService(
+                      isEditing: true,
+                      service: service,
+                    ),
+                  ),
+                ).then((_) {
+                  // Refresh the list after editing
+                  setState(() {
+                    _serviceListFuture = _fetchServices();
+                  });
+                  Navigator.pop(context);
+                });
+              },
+              child: const Text("Edit", style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
   }
+
+  // void _editService(service) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => VitaminCreateService(
+  //         isEditing: true,
+  //         service: service,
+  //       ),
+  //     ),
+  //   ).then((_) {
+  //     // Refresh the list after editing
+  //     setState(() {
+  //       _serviceListFuture = _fetchServices();
+  //     });
+  //   });
+  // }
 
   void _addService() {
     Navigator.push(
@@ -105,7 +162,6 @@ class _VitaminServicesListState extends State<VitaminServicesList> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-     
             return const Center(child: Text('Error fetching services.'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('No services available.'));
@@ -126,7 +182,6 @@ class _VitaminServicesListState extends State<VitaminServicesList> {
 
               // Extract fields from localized data
               final serviceName = localizedData.serviceName;
-         
 
               return Padding(
                 padding:
@@ -141,11 +196,11 @@ class _VitaminServicesListState extends State<VitaminServicesList> {
                       children: [
                         IconButton(
                           icon: const Icon(Icons.edit, color: Colors.blue),
-                          onPressed: () => _editService(service),
+                          onPressed: () => _editService(context, service),
                         ),
                         IconButton(
                           icon: const Icon(Icons.delete, color: Colors.red),
-                          onPressed: () => _deleteService(service.id),
+                          onPressed: () => _deleteService(context, service.id),
                         ),
                       ],
                     ),

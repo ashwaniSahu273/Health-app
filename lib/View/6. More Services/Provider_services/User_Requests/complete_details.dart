@@ -9,7 +9,7 @@ import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/provider_
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/Result_upload/result_upload_controller.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 
 class CompleteAppointmentDetailsScreen extends StatelessWidget {
   final UserModel userModel;
@@ -29,33 +29,6 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
     final ResultUploadController uploadController =
         Get.put(ResultUploadController());
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-    // LatLng location = LatLng(
-    //   double.parse(doc["latitude"]),
-    //   double.parse(doc["longitude"]),
-    // );
-
-    void openGoogleMap() async {
-      var latitude = double.parse(doc["latitude"]);
-      var longitude = double.parse(doc["longitude"]);
-      String googleUrl =
-          "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
-      if (await canLaunch(googleUrl)) {
-        await launch(googleUrl);
-      } else {
-        throw "Could not open the map.";
-      }
-    }
-
-    void _openInGoogleMaps(double latitude, double longitude) async {
-      String googleUrl =
-          "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
-      if (await canLaunch(googleUrl)) {
-        await launch(googleUrl);
-      } else {
-        throw "Could not open the map.";
-      }
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -169,8 +142,8 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                 ),
                                 // const SizedBox(height: 8), // Spacing between buttons
                                 // Accept Button
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(
                                       horizontal: 10.0, vertical: 8),
                                   child: Text(
                                     "Completed",
@@ -215,9 +188,9 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 // Title
-                                Text(
+                                const Text(
                                   "Tests",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -227,9 +200,9 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                 // Reactive UI for upload status
                                 Obx(() {
                                   if (uploadController.isUploading.value) {
-                                    return Padding(
+                                    return const Padding(
                                       padding:
-                                          const EdgeInsets.only(bottom: 16.0),
+                                          EdgeInsets.only(bottom: 16.0),
                                       child: Center(
                                           child: CircularProgressIndicator()),
                                     );
@@ -319,7 +292,7 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text(
+                                        const Text(
                                           "Upload test details in pdf",
                                           style: TextStyle(
                                             color: Color(0xFF007ABB),
@@ -380,9 +353,9 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   // Title
-                                  Text(
+                                  const Text(
                                     "Results",
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -393,9 +366,9 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                   Obx(() {
                                     if (uploadController
                                         .isResultUploading.value) {
-                                      return Padding(
+                                      return const Padding(
                                         padding:
-                                            const EdgeInsets.only(bottom: 16.0),
+                                            EdgeInsets.only(bottom: 16.0),
                                         child: Center(
                                             child: CircularProgressIndicator()),
                                       );
@@ -485,7 +458,7 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
+                                          const Text(
                                             "Upload test result in pdf",
                                             style: TextStyle(
                                               color: Color(0xFF007ABB),
@@ -537,11 +510,10 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                       hintText: "Write Notes",
                                       hintStyle: TextStyle(color: Colors.grey),
                                       border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: const Color(0xFFE3E3E5),
-                                              width: 1) ,// Border color
-
-                                          ),
+                                        borderSide: BorderSide(
+                                            color: const Color(0xFFE3E3E5),
+                                            width: 1), // Border color
+                                      ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: const Color(
@@ -621,11 +593,11 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                             Flexible(
                                                 child: Text(
                                               name,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: Color(0xFF004AAD)),
                                             )),
                                             Text("$quantity"),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 8,
                                             ),
                                             Container(
@@ -657,7 +629,7 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                   return Column(children: widgets);
                                 }
 
-                                return Text(" ");
+                                return const Text(" ");
                               }),
                             ],
                           ),
@@ -678,7 +650,7 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF007ABB),
+                      backgroundColor: const Color(0xFF007ABB),
                       minimumSize: const Size(160, 55),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -718,7 +690,7 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                     },
                     child: Text(
                       'Continue'.tr,
-                      style: TextStyle(color: Colors.white, fontSize: 15),
+                      style: const TextStyle(color: Colors.white, fontSize: 15),
                     ),
                   ),
                 ),
@@ -742,7 +714,7 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
             color: Colors.grey.shade300,
             blurRadius: 5,
             spreadRadius: 2,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -787,7 +759,7 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
               value,
               style: TextStyle(
                 fontWeight: isHighlighted ? FontWeight.bold : FontWeight.normal,
-                color: Color(0xFF004AAD),
+                color: const Color(0xFF004AAD),
               ),
             ),
           ),
@@ -823,11 +795,11 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           uploadController.resultPdfData.isEmpty
-              ? Text(" ")
+              ? const Text(" ")
               : Obx(
                   () => uploadController.isResultUploading.value
-                      ? Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
+                      ? const Padding(
+                          padding: EdgeInsets.only(bottom: 16.0),
                           child: Center(child: CircularProgressIndicator()),
                         )
                       : Center(
@@ -839,14 +811,14 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                             },
                             child: Container(
                               width: 200,
-                              padding: EdgeInsets.all(8),
-                              margin: EdgeInsets.only(
+                              padding: const EdgeInsets.all(8),
+                              margin: const EdgeInsets.only(
                                 bottom: 16,
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
-                                  color: Color(0xFFE3E3E5), // Border color
+                                  color: const Color(0xFFE3E3E5), // Border color
                                   width: 1, //
                                 ),
                               ),
@@ -871,11 +843,11 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                         ),
                 ),
           Container(
-            padding: EdgeInsets.all(5),
+            padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(
-                  color: Color(0xFFE3E3E5), // Border color
+                  color: const Color(0xFFE3E3E5), // Border color
                   width: 1, // Border width
                 ),
                 borderRadius: BorderRadius.circular(10)),
@@ -915,120 +887,6 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
   }
 }
 
-Widget _buildUploadCard(String title, String hint, uploadController) {
-  return Container(
-    padding: const EdgeInsets.all(16),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(12),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey.shade300,
-          blurRadius: 5,
-          spreadRadius: 2,
-          offset: const Offset(0, 3),
-        ),
-      ],
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 12),
-        uploadController.pdfData.isEmpty
-            ? Text(" ")
-            : Obx(
-                () => uploadController.isUploading.value
-                    ? Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: Center(child: CircularProgressIndicator()),
-                      )
-                    : Center(
-                        child: InkWell(
-                          onTap: () {
-                            Get.to(() => PdfViewerScreen(
-                                pdfUrl: uploadController.pdfData["url"]));
-                          },
-                          child: Container(
-                            width: 200,
-                            padding: EdgeInsets.all(8),
-                            margin: EdgeInsets.only(
-                              bottom: 16,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: Color(0xFFE3E3E5), // Border color
-                                width: 1, //
-                              ),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Image.asset(
-                                  "assets/logo/harees_logo.png",
-                                  height: 80,
-                                  width: 80,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(uploadController.pdfData["name"]),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-              ),
-        Container(
-          padding: EdgeInsets.all(5),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(
-                color: Color(0xFFE3E3E5), // Border color
-                width: 1, // Border width
-              ),
-              borderRadius: BorderRadius.circular(10)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                hint,
-                style: TextStyle(
-                  color: Colors.grey[700],
-                ),
-              ),
-              const SizedBox(width: 8),
-              Icon(
-                Icons.upload_file,
-                color: Colors.blue[700],
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "PDF size should not exceed 10MB",
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[500],
-              ),
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
-}
 
 class PdfViewerScreen extends StatelessWidget {
   final String pdfUrl;

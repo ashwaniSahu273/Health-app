@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
-import 'package:harees_new_project/Resources/Search_bar/search_bar.dart';
 
 class UserPackages extends StatelessWidget {
   final UserModel userModel;

@@ -51,16 +51,14 @@ class DoctorController extends GetxController {
     try {
       isLoading.value = true;
 
-      final docRef =
-          FirebaseFirestore.instance.collection("User_appointments").doc();
-
-      final docId = docRef.id;
-
-      await docRef.set({
+      // Prepare data to send to Payment Screen
+      final orderData = {
         "email": firebaseUser.email,
         "name": userModel.fullname,
         "phone": userModel.mobileNumber,
-        "gender": selectedGender.value.isEmpty? userModel.gender: selectedGender.value,
+        "gender": selectedGender.value.isEmpty
+            ? userModel.gender
+            : selectedGender.value,
         "dob": userModel.dob,
         "address": stAddress.value,
         "latitude": latitude.value,
@@ -100,29 +98,100 @@ class DoctorController extends GetxController {
         "selected_time": currentTime.value,
         'createdAt': DateTime.now(),
         "accepted_by": null
-      });
+      };
 
       await openPaymentUrl(paymentUrl.value);
 
       Get.to(PaymentSuccessScreen(
         userModel: userModel,
         firebaseUser: firebaseUser,
-        docId: docId,
-        chargeId: chargeId.value,
+        orderData: orderData, // Pass order data instead of docId
       ));
-
-      // Get.snackbar(
-      //   "Success",
-      //   "Successfully completed",
-      //   backgroundColor: Colors.lightGreen,
-      //   colorText: Colors.white,
-      // );
     } catch (e) {
       Get.snackbar('Error', 'Failed to confirm. Please try again.');
     } finally {
       isLoading.value = false; // Hide loading state
     }
   }
+
+  // Future<void> setUserOrderInfo(UserModel userModel, User firebaseUser) async {
+  //   try {
+  //     isLoading.value = true;
+
+  //     final docRef =
+  //         FirebaseFirestore.instance.collection("User_appointments").doc();
+
+  //     final docId = docRef.id;
+
+  //     await docRef.set({
+  //       "email": firebaseUser.email,
+  //       "name": userModel.fullname,
+  //       "phone": userModel.mobileNumber,
+  //       "gender": selectedGender.value.isEmpty
+  //           ? userModel.gender
+  //           : selectedGender.value,
+  //       "dob": userModel.dob,
+  //       "address": stAddress.value,
+  //       "latitude": latitude.value,
+  //       "longitude": longitude.value,
+  //       "packages": [
+  //         {
+  //           "id": 1,
+  //           "imagePath": "assets/images/vitamin.png",
+  //           "localized": {
+  //             "en": {
+  //               "serviceName": "Doctor Visit",
+  //               "description":
+  //                   "Experience expert medical care in the comfort of your home with our doctor visit service. We provide personalized attention, accurate assessments, and effective treatments, ensuring your health needs are met with convenience and care.",
+  //               "instructions": "",
+  //               "includesTests":
+  //                   "History taking, Vital signs measurements, Physical examination, Diagnosis and treatment plan, Referral if needed, Documentation and medical reports, Patient Education, Prescription if needed, Sick leave when medically justified",
+  //               "price": "400 SR"
+  //             },
+  //             "ar": {
+  //               "serviceName": "Doctor Visit",
+  //               "description":
+  //                   "Experience expert medical care in the comfort of your home with our doctor visit service. We provide personalized attention, accurate assessments, and effective treatments, ensuring your health needs are met with convenience and care.",
+  //               "instructions": "",
+  //               "includesTests":
+  //                   "History taking, Vital signs measurements, Physical examination, Diagnosis and treatment plan, Referral if needed, Documentation and medical reports, Patient Education, Prescription if needed, Sick leave when medically justified",
+  //               "price": "400 SR"
+  //             },
+  //             "quantity": 1
+  //           }
+  //         },
+  //       ],
+  //       "status": "Requested",
+  //       "type": "Doctor Visit",
+  //       "paymentStatus": paymentStatus.value,
+  //       "paymentUrl": paymentUrl.value,
+  //       "chargeId": chargeId.value,
+  //       "selected_time": currentTime.value,
+  //       'createdAt': DateTime.now(),
+  //       "accepted_by": null
+  //     });
+
+  //     await openPaymentUrl(paymentUrl.value);
+
+  //     Get.to(PaymentSuccessScreen(
+  //       userModel: userModel,
+  //       firebaseUser: firebaseUser,
+  //       docId: docId,
+  //       chargeId: chargeId.value,
+  //     ));
+
+  //     // Get.snackbar(
+  //     //   "Success",
+  //     //   "Successfully completed",
+  //     //   backgroundColor: Colors.lightGreen,
+  //     //   colorText: Colors.white,
+  //     // );
+  //   } catch (e) {
+  //     Get.snackbar('Error', 'Failed to confirm. Please try again.');
+  //   } finally {
+  //     isLoading.value = false; // Hide loading state
+  //   }
+  // }
 
   Future<void> openPaymentUrl(String url) async {
     Uri uri = Uri.parse(url);
@@ -258,7 +327,6 @@ class DoctorController extends GetxController {
     cartItems.clear();
     // _saveCartToStorage();
   }
-
 
   void storeServices() async {
     final List<Map<String, dynamic>> services = [

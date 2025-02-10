@@ -19,59 +19,116 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
   void initState() {
     super.initState();
     setState(() {
-      
-    _serviceListFuture = _fetchServices();
+      _serviceListFuture = _fetchServices();
     });
     print(_serviceListFuture);
   }
 
-Future<List<LabService>> _fetchServices() async {
-  try {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('LaboratoryServices').get();
+  Future<List<LabService>> _fetchServices() async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('LaboratoryServices')
+          .get();
 
-    return querySnapshot.docs.map((doc) {
-      final data = doc.data() as Map<String, dynamic>;
-          print('Document ID: ${doc.id}');
-      print('Document Data: $data');
-      return LabService.fromJson(data);
-    }).toList();
-
-
-  } catch (e) {
-    print('Error fetching services: $e');
-    return [];
-  }
-}
-
-  void _deleteService(String serviceId) async {
-    await FirebaseFirestore.instance
-        .collection('LaboratoryServices')
-        .doc(serviceId.toString())
-        .delete();
-
-    // Refresh the list
-    setState(() {
-      _serviceListFuture = _fetchServices();
-    });
+      return querySnapshot.docs.map((doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        print('Document ID: ${doc.id}');
+        print('Document Data: $data');
+        return LabService.fromJson(data);
+      }).toList();
+    } catch (e) {
+      print('Error fetching services: $e');
+      return [];
+    }
   }
 
-  void _editService( service) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => AddOrEditServiceForm(
-          isEditing: true,
-          service: service,
-        ),
-      ),
-    ).then((_) {
-      // Refresh the list after editing
-      setState(() {
-        _serviceListFuture = _fetchServices();
-      });
-    });
+  void _deleteService(BuildContext context, String docId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Confirm Deletion"),
+          content: const Text("Are you sure you want to delete this Service?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+                await FirebaseFirestore.instance
+                    .collection('LaboratoryServices')
+                    .doc(docId)
+                    .delete();
+
+                setState(() {
+                  _serviceListFuture = _fetchServices();
+                });
+              },
+              child: const Text("Delete", style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
   }
+
+  void _editService(BuildContext context, service) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Confirm Edition"),
+          content: const Text("Are you sure you want to edit this Service?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddOrEditServiceForm(
+                      isEditing: true,
+                      service: service,
+                    ),
+                  ),
+                ).then((_) {
+        
+                  setState(() {
+                    _serviceListFuture = _fetchServices();
+                  });
+
+                  Navigator.pop(context);
+                });
+              },
+              child: const Text("Edit", style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // void _editService(service) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => AddOrEditServiceForm(
+  //         isEditing: true,
+  //         service: service,
+  //       ),
+  //     ),
+  //   ).then((_) {
+  //     // Refresh the list after editing
+  //     setState(() {
+  //       _serviceListFuture = _fetchServices();
+  //     });
+  //   });
+  // }
 
   void _addService() {
     Navigator.push(
@@ -94,10 +151,10 @@ Future<List<LabService>> _fetchServices() async {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Service List'),
+        title: const Text('Service List'),
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed: _addService,
           ),
         ],
@@ -106,12 +163,12 @@ Future<List<LabService>> _fetchServices() async {
         future: _serviceListFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-             print('Error: ${snapshot.error}');
-            return Center(child: Text('Error fetching services.'));
+            print('Error: ${snapshot.error}');
+            return const Center(child: Text('Error fetching services.'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No services available.'));
+            return const Center(child: Text('No services available.'));
           }
 
           final services = snapshot.data!;
@@ -128,27 +185,27 @@ Future<List<LabService>> _fetchServices() async {
                   : service.localized.en;
 
               // Extract fields from localized data
-              final serviceName =
-                  localizedData.serviceName;
-      
+              final serviceName = localizedData.serviceName;
 
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 6),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6),
                 child: Card(
                   child: ListTile(
-                    leading:  Icon(Icons.image),
+                    leading: const Icon(Icons.image),
                     title: Text(serviceName),
                     subtitle: Text(localizedData.price),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
-                          icon: Icon(Icons.edit, color: Colors.blue),
-                          onPressed: () => _editService(service),
+                          icon: const Icon(Icons.edit, color: Colors.blue),
+                          onPressed: () => _editService(context, service),
                         ),
                         IconButton(
-                          icon: Icon(Icons.delete, color: Colors.red),
-                          onPressed: () => _deleteService(service.id.toString()),
+                          icon: const Icon(Icons.delete, color: Colors.red),
+                          onPressed: () =>
+                              _deleteService(context, service.id.toString()),
                         ),
                       ],
                     ),

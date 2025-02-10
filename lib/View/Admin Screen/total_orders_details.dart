@@ -1,23 +1,12 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/complete_details.dart';
-// import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
 import 'package:harees_new_project/View/7.%20Appointments/User%20Appointments/user_controller.dart';
-import 'package:harees_new_project/View/8.%20Chats/Models/chat_room_model.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
-import 'package:harees_new_project/View/8.%20Chats/Pages/Chat_Room.dart';
-import 'package:harees_new_project/main.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'package:dio/dio.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:open_file/open_file.dart';
 
 class TotalOrdersDetails extends StatelessWidget {
   final DocumentSnapshot doc;
@@ -38,119 +27,14 @@ class TotalOrdersDetails extends StatelessWidget {
       double.parse(doc["latitude"]),
       double.parse(doc["longitude"]),
     );
-    void openGoogleMap() async {
-      var latitude = double.parse(doc["latitude"]);
-      var longitude = double.parse(doc["longitude"]);
+
+    void openInGoogleMaps(double latitude, double longitude) async {
       String googleUrl =
           "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
       if (await canLaunch(googleUrl)) {
         await launch(googleUrl);
       } else {
         throw "Could not open the map.";
-      }
-    }
-
-    void _openInGoogleMaps(double latitude, double longitude) async {
-      String googleUrl =
-          "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
-      if (await canLaunch(googleUrl)) {
-        await launch(googleUrl);
-      } else {
-        throw "Could not open the map.";
-      }
-    }
-
-    Future<ChatRoomModel?> getChatroomModel(UserModel targetUser) async {
-      ChatRoomModel? chatRoom;
-
-      QuerySnapshot snapshot = await FirebaseFirestore.instance
-          .collection("Chat Rooms")
-          .where("participants.${userModel.uid}", isEqualTo: true)
-          .where("participants.${targetUser.uid}", isEqualTo: true)
-          .get();
-
-      if (snapshot.docs.isNotEmpty) {
-        var docData = snapshot.docs[0].data();
-        if (docData != null) {
-          chatRoom = ChatRoomModel.fromMap(docData as Map<String, dynamic>);
-        }
-      } else {
-        ChatRoomModel newChatroom = ChatRoomModel(
-          chatroomid: uuid.v1(),
-          lastMessage: "",
-          participants: {
-            userModel.uid.toString(): true,
-            targetUser.uid.toString(): true,
-          },
-        );
-
-        await FirebaseFirestore.instance
-            .collection("Chat Rooms")
-            .doc(newChatroom.chatroomid)
-            .set(newChatroom.toMap());
-
-        chatRoom = newChatroom;
-        log("New Chatroom Created!");
-      }
-
-      return chatRoom;
-    }
-
-    void createChatroom() async {
-      try {
-        // Get a single snapshot of the query
-        QuerySnapshot dataSnapshot = await FirebaseFirestore.instance
-            .collection("Registered Users")
-            .where("email", isEqualTo: doc["accepted_by"])
-            .where("email", isNotEqualTo: userModel.email)
-            .get();
-
-        if (dataSnapshot.docs.isNotEmpty) {
-          Map<String, dynamic> userMap =
-              dataSnapshot.docs[0].data() as Map<String, dynamic>;
-
-          UserModel searchedUser = UserModel.frommap(userMap);
-
-          ChatRoomModel? chatroomModel = await getChatroomModel(searchedUser);
-
-          if (chatroomModel != null) {
-            Navigator.pop(context);
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return ChatRoomPage(
-                targetUser: searchedUser,
-                userModel: userModel,
-                firebaseUser: firebaseUser,
-                chatroom: chatroomModel,
-              );
-            }));
-          }
-        } else {
-          print("No user found with the specified email.");
-        }
-      } catch (e) {
-        print("Error creating chatroom: $e");
-      }
-    }
-
-    Future<void> downloadAndOpenPdf(BuildContext context, String pdfUrl) async {
-      try {
-        // Get temporary directory
-        final directory = await getTemporaryDirectory();
-        final filePath = '${directory.path}/downloaded_file.pdf';
-
-        // Download file
-        final dio = Dio();
-        await dio.download(pdfUrl, filePath);
-
-        // Open the file
-        OpenFile.open(filePath);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Download complete. File opened.")),
-        );
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Failed to download file: $e")),
-        );
       }
     }
 
@@ -272,9 +156,9 @@ class TotalOrdersDetails extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: doc["status"] == "Requested"
-                                          ? Color(0xFFC06440)
+                                          ? const Color(0xFFC06440)
                                           : doc["status"] == "accepted"
-                                              ? Color(0xFFFFC300)
+                                              ? const Color(0xFFFFC300)
                                               : Colors.green,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14,
@@ -381,7 +265,7 @@ class TotalOrdersDetails extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Reports",
                                       style: TextStyle(
                                         fontSize: 16,
@@ -450,14 +334,14 @@ class TotalOrdersDetails extends StatelessWidget {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.symmetric(
+                                      padding: const EdgeInsets.symmetric(
                                           horizontal: 16.0, vertical: 8),
                                       child: Obx(
                                         () => Text(
                                           controller.description.value.isEmpty
                                               ? "This is Individual Package"
                                               : controller.description.value,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 14,
                                             color: Colors.black54,
                                             fontFamily: "Roboto",
@@ -488,7 +372,7 @@ class TotalOrdersDetails extends StatelessWidget {
                                       ),
                                       child: Text(
                                         "Notes From Doctor".tr,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
                                           fontFamily: "Roboto",
@@ -496,11 +380,11 @@ class TotalOrdersDetails extends StatelessWidget {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.symmetric(
+                                      padding: const EdgeInsets.symmetric(
                                           horizontal: 16.0, vertical: 16),
                                       child: Text(
                                         doc["doctor_notes"],
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 14,
                                           color: Colors.black54,
                                           fontFamily: "Roboto",
@@ -526,7 +410,6 @@ class TotalOrdersDetails extends StatelessWidget {
                             children: [
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                             
                                 children: [
                                   const Text(
                                     "Payment:          ",
@@ -633,11 +516,11 @@ class TotalOrdersDetails extends StatelessWidget {
                                             Flexible(
                                                 child: Text(
                                               name,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: Color(0xFF004AAD)),
                                             )),
                                             Text("$quantity"),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 4,
                                             ),
                                             Container(
@@ -669,7 +552,7 @@ class TotalOrdersDetails extends StatelessWidget {
                                   return Column(children: widgets);
                                 }
 
-                                return Text(" ");
+                                return const Text(" ");
                               }),
                             ],
                           ),
@@ -699,7 +582,7 @@ class TotalOrdersDetails extends StatelessWidget {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  _openInGoogleMaps(
+                                  openInGoogleMaps(
                                     double.parse(doc["latitude"]),
                                     double.parse(doc["longitude"]),
                                   );
@@ -711,7 +594,7 @@ class TotalOrdersDetails extends StatelessWidget {
                                 height: 200,
                                 child: GestureDetector(
                                   onTap: () {
-                                    _openInGoogleMaps(
+                                    openInGoogleMaps(
                                       double.parse(doc["latitude"]),
                                       double.parse(doc["longitude"]),
                                     );
@@ -724,7 +607,7 @@ class TotalOrdersDetails extends StatelessWidget {
                                     ),
                                     markers: {
                                       Marker(
-                                        markerId: MarkerId("cartLocation"),
+                                        markerId: const MarkerId("cartLocation"),
                                         position: location,
                                       ),
                                     },
@@ -786,7 +669,7 @@ class TotalOrdersDetails extends StatelessWidget {
     required VoidCallback onPressed,
   }) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
           border: Border.all(color: const Color.fromARGB(255, 241, 241, 241)),
           borderRadius: BorderRadius.circular(10)),
@@ -799,7 +682,7 @@ class TotalOrdersDetails extends StatelessWidget {
           Text(
             label,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 12),
+            style: const TextStyle(fontSize: 12),
           ),
         ],
       ),
@@ -831,7 +714,7 @@ class TotalOrdersDetails extends StatelessWidget {
               value,
               style: TextStyle(
                 fontWeight: isHighlighted ? FontWeight.bold : FontWeight.normal,
-                color: Color(0xFF004AAD),
+                color: const Color(0xFF004AAD),
               ),
             ),
           ),
@@ -865,7 +748,7 @@ class TotalOrdersDetails extends StatelessWidget {
               style: TextStyle(
                   fontWeight:
                       isHighlighted ? FontWeight.bold : FontWeight.normal,
-                  color: Color(0xFF004AAD),
+                  color: const Color(0xFF004AAD),
                   decoration: TextDecoration.underline
                   //                     .underline,
                   ),

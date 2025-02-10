@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/details_page.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 class UserRequests extends StatelessWidget {
   final UserModel userModel;
@@ -17,15 +17,15 @@ class UserRequests extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void _openInGoogleMaps(double latitude, double longitude) async {
-      String googleUrl =
-          "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
-      if (await canLaunch(googleUrl)) {
-        await launch(googleUrl);
-      } else {
-        throw "Could not open the map.";
-      }
-    }
+    // void _openInGoogleMaps(double latitude, double longitude) async {
+    //   String googleUrl =
+    //       "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
+    //   if (await canLaunch(googleUrl)) {
+    //     await launch(googleUrl);
+    //   } else {
+    //     throw "Could not open the map.";
+    //   }
+    // }
 
     return Scaffold(
       appBar: AppBar(
@@ -256,31 +256,4 @@ class UserRequests extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(IconData icon, String label, String value) {
-    return Row(
-      children: [
-        Icon(icon, color: Colors.blue[700], size: 20),
-        const SizedBox(width: 8),
-        Text(
-          "$label: ",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-            color: Colors.blue[800],
-          ),
-        ),
-        Expanded(
-          child: Text(
-            value,
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.black87,
-            ),
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-          ),
-        ),
-      ],
-    );
-  }
 }

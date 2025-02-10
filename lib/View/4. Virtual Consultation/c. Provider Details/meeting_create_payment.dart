@@ -7,11 +7,13 @@ import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dar
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class PaymentController extends GetxController with WidgetsBindingObserver {
+class MeetingCreatePaymentController extends GetxController
+    with WidgetsBindingObserver {
   final String chargeId;
   final Map<String, dynamic> orderData;
 
-  PaymentController({required this.chargeId, required this.orderData});
+  MeetingCreatePaymentController(
+      {required this.chargeId, required this.orderData});
 
   var paymentStatus = "INITIATED".obs;
   var isButtonEnabled = false.obs;
@@ -35,7 +37,7 @@ class PaymentController extends GetxController with WidgetsBindingObserver {
   Future<void> createOrder() async {
     try {
       final docRef =
-          FirebaseFirestore.instance.collection("User_appointments").doc();
+          FirebaseFirestore.instance.collection("User_meetings").doc();
       final docId = docRef.id;
       orderData["docId"] = docId;
       orderData["paymentStatus"] = "CAPTURED";
@@ -83,12 +85,12 @@ class PaymentController extends GetxController with WidgetsBindingObserver {
   }
 }
 
-class PaymentSuccessScreen extends StatelessWidget {
+class MeetingCreatePaymentScreen extends StatelessWidget {
   final UserModel userModel;
   final User firebaseUser;
   final Map<String, dynamic> orderData;
 
-  const PaymentSuccessScreen({
+  const MeetingCreatePaymentScreen({
     super.key,
     required this.userModel,
     required this.firebaseUser,
@@ -97,8 +99,9 @@ class PaymentSuccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PaymentController controller = Get.put(
-      PaymentController(chargeId: orderData["chargeId"], orderData: orderData),
+    final MeetingCreatePaymentController controller = Get.put(
+      MeetingCreatePaymentController(
+          chargeId: orderData["chargeId"], orderData: orderData),
     );
 
     Future.delayed(const Duration(seconds: 10), () {

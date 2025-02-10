@@ -79,61 +79,54 @@ class LabController extends GetxController {
       }).toList();
 
       servicesList.assignAll(services);
+      filteredServices.assignAll(services);
     } catch (e) {
       print("Error fetching services: $e");
     }
   }
 
-  Future<void> setUserOrderInfo(UserModel userModel, User firebaseUser) async {
-    try {
-      isLoading.value = true;
+  
+Future<void> setUserOrderInfo(UserModel userModel, User firebaseUser) async {
+  try {
+    isLoading.value = true;
 
-      final docRef =
-          FirebaseFirestore.instance.collection("User_appointments").doc();
-
-      final docId = docRef.id;
-
-      await docRef.set({
-        "email": firebaseUser.email,
+    // Prepare data to send to Payment Screen
+    final orderData = {
+      "email": firebaseUser.email,
       "name": fullNameController.text,
-        "phone": phoneController.text,
-        "gender": selectedGender.value,
-        "idNumber": idNumberController.text,
-        "dob": dobController.text,
-        "address": stAddress.value,
-        "latitude": latitude.value,
-        "longitude": longitude.value,
-        "packages": cartItems,
-        "status": "Requested",
-        "type": "Lab Test",
-        "paymentStatus": paymentStatus.value,
-        "paymentUrl": paymentUrl.value,
-        "chargeId": chargeId.value,
-        "selected_time": currentTime.value,
-        'createdAt': DateTime.now(),
-        "accepted_by": null
-      });
+      "phone": phoneController.text,
+      "gender": selectedGender.value,
+      "idNumber": idNumberController.text,
+      "dob": dobController.text,
+      "address": stAddress.value,
+      "latitude": latitude.value,
+      "longitude": longitude.value,
+      "packages": cartItems,
+      "status": "Requested",
+      "type": "Lab Test",
+      "paymentStatus": "INITIATED",
+      "paymentUrl": paymentUrl.value,
+      "chargeId": chargeId.value,
+      "selected_time": currentTime.value,
+      'createdAt': DateTime.now(),
+      "accepted_by": null
+    };
 
-      await openPaymentUrl(paymentUrl.value);
+    await openPaymentUrl(paymentUrl.value);
 
-      Get.to(PaymentSuccessScreen(
-        userModel: userModel,
-        firebaseUser: firebaseUser,
-        docId: docId,
-        chargeId: chargeId.value,
-      ));
-      // Get.snackbar(
-      //   "Success",
-      //   "Successfully completed",
-      //   backgroundColor: Colors.lightGreen,
-      //   colorText: Colors.white,
-      // );
-    } catch (e) {
-      Get.snackbar('Error', 'Failed to confirm. Please try again.');
-    } finally {
-      isLoading.value = false; // Hide loading state
-    }
+    Get.to(PaymentSuccessScreen(
+      userModel: userModel,
+      firebaseUser: firebaseUser,
+      orderData: orderData, // Pass order data instead of docId
+    ));
+  } catch (e) {
+    Get.snackbar('Error', 'Failed to confirm. Please try again.');
+  } finally {
+    isLoading.value = false; // Hide loading state
   }
+}
+
+
 
   Future<void> openPaymentUrl(String url) async {
     Uri uri = Uri.parse(url);

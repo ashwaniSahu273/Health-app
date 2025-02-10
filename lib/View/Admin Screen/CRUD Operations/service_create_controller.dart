@@ -15,6 +15,12 @@ class ServiceCreateController extends GetxController {
     selectedServiceNurseType.value = serviceType;
   }
 
+  @override
+  void onClose() {
+    labUploadedImageUrl.value = ''; // Reset the variable
+    super.onClose();
+  }
+
   void setImageFile(File file) {
     nurseImageFile.value = file;
   }

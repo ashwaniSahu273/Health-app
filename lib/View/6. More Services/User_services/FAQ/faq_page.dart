@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
-import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class FAQ extends StatelessWidget {

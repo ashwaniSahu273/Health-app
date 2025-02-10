@@ -15,9 +15,9 @@ import 'package:harees_new_project/View/8.%20Chats/Pages/Chat_Room.dart';
 import 'package:harees_new_project/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:dio/dio.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:open_file/open_file.dart';
+// import 'package:dio/dio.dart';
+// import 'package:path_provider/path_provider.dart';
+// import 'package:open_file/open_file.dart';
 
 class CompletedAppointByProvider extends StatelessWidget {
   final DocumentSnapshot doc;
@@ -38,19 +38,8 @@ class CompletedAppointByProvider extends StatelessWidget {
       double.parse(doc["latitude"]),
       double.parse(doc["longitude"]),
     );
-    void openGoogleMap() async {
-      var latitude = double.parse(doc["latitude"]);
-      var longitude = double.parse(doc["longitude"]);
-      String googleUrl =
-          "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
-      if (await canLaunch(googleUrl)) {
-        await launch(googleUrl);
-      } else {
-        throw "Could not open the map.";
-      }
-    }
 
-    void _openInGoogleMaps(double latitude, double longitude) async {
+    void openInGoogleMaps(double latitude, double longitude) async {
       String googleUrl =
           "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
       if (await canLaunch(googleUrl)) {
@@ -132,27 +121,27 @@ class CompletedAppointByProvider extends StatelessWidget {
       }
     }
 
-    Future<void> downloadAndOpenPdf(BuildContext context, String pdfUrl) async {
-      try {
-        // Get temporary directory
-        final directory = await getTemporaryDirectory();
-        final filePath = '${directory.path}/downloaded_file.pdf';
+    // Future<void> downloadAndOpenPdf(BuildContext context, String pdfUrl) async {
+    //   try {
+    //     // Get temporary directory
+    //     final directory = await getTemporaryDirectory();
+    //     final filePath = '${directory.path}/downloaded_file.pdf';
 
-        // Download file
-        final dio = Dio();
-        await dio.download(pdfUrl, filePath);
+    //     // Download file
+    //     final dio = Dio();
+    //     await dio.download(pdfUrl, filePath);
 
-        // Open the file
-        OpenFile.open(filePath);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Download complete. File opened.")),
-        );
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Failed to download file: $e")),
-        );
-      }
-    }
+    //     // Open the file
+    //     OpenFile.open(filePath);
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       const SnackBar(content: Text("Download complete. File opened.")),
+    //     );
+    //   } catch (e) {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(content: Text("Failed to download file: $e")),
+    //     );
+    //   }
+    // }
 
     return Scaffold(
       appBar: AppBar(
@@ -270,7 +259,7 @@ class CompletedAppointByProvider extends StatelessWidget {
                                   child: Text(
                                     doc["status"],
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.green,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14,
@@ -377,7 +366,7 @@ class CompletedAppointByProvider extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Reports",
                                       style: TextStyle(
                                         fontSize: 16,
@@ -436,7 +425,7 @@ class CompletedAppointByProvider extends StatelessWidget {
                                     ),
                                     child: Text(
                                       "About This Package".tr,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
                                         fontFamily: "Roboto",
@@ -444,12 +433,12 @@ class CompletedAppointByProvider extends StatelessWidget {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.symmetric(
+                                    padding: const EdgeInsets.symmetric(
                                         horizontal: 16.0, vertical: 8),
                                     child: Obx(
                                       () => Text(
                                         controller.description.value,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 14,
                                           color: Colors.black54,
                                           fontFamily: "Roboto",
@@ -479,7 +468,7 @@ class CompletedAppointByProvider extends StatelessWidget {
                                       ),
                                       child: Text(
                                         "Notes From Doctor".tr,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
                                           fontFamily: "Roboto",
@@ -487,11 +476,11 @@ class CompletedAppointByProvider extends StatelessWidget {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.symmetric(
+                                      padding: const EdgeInsets.symmetric(
                                           horizontal: 16.0, vertical: 16),
                                       child: Text(
                                         doc["doctor_notes"],
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 14,
                                           color: Colors.black54,
                                           fontFamily: "Roboto",
@@ -577,11 +566,11 @@ class CompletedAppointByProvider extends StatelessWidget {
                                             Flexible(
                                                 child: Text(
                                               name,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: Color(0xFF004AAD)),
                                             )),
                                             Text("$quantity"),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 4,
                                             ),
                                             Container(
@@ -613,7 +602,7 @@ class CompletedAppointByProvider extends StatelessWidget {
                                   return Column(children: widgets);
                                 }
 
-                                return Text(" ");
+                                return const Text(" ");
                               }),
                             ],
                           ),
@@ -645,7 +634,7 @@ class CompletedAppointByProvider extends StatelessWidget {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        _openInGoogleMaps(
+                                        openInGoogleMaps(
                                           double.parse(doc["latitude"]),
                                           double.parse(doc["longitude"]),
                                         );
@@ -657,7 +646,7 @@ class CompletedAppointByProvider extends StatelessWidget {
                                       height: 200,
                                       child: GestureDetector(
                                         onTap: () {
-                                          _openInGoogleMaps(
+                                          openInGoogleMaps(
                                             double.parse(doc["latitude"]),
                                             double.parse(doc["longitude"]),
                                           );
@@ -670,8 +659,8 @@ class CompletedAppointByProvider extends StatelessWidget {
                                           ),
                                           markers: {
                                             Marker(
-                                              markerId:
-                                                  MarkerId("cartLocation"),
+                                              markerId: const MarkerId(
+                                                  "cartLocation"),
                                               position: location,
                                             ),
                                           },
@@ -700,7 +689,7 @@ class CompletedAppointByProvider extends StatelessWidget {
                       Expanded(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF007ABB),
+                            backgroundColor: const Color(0xFF007ABB),
                             minimumSize: const Size(160, 55),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -712,16 +701,16 @@ class CompletedAppointByProvider extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.chat_rounded,
                                 color: Colors.white,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 8,
                               ),
                               Text(
                                 'Chat With User'.tr,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 16),
                               ),
                             ],
@@ -775,7 +764,7 @@ class CompletedAppointByProvider extends StatelessWidget {
     required VoidCallback onPressed,
   }) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
           border: Border.all(color: const Color.fromARGB(255, 241, 241, 241)),
           borderRadius: BorderRadius.circular(10)),
@@ -788,7 +777,7 @@ class CompletedAppointByProvider extends StatelessWidget {
           Text(
             label,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 12),
+            style: const TextStyle(fontSize: 12),
           ),
         ],
       ),
@@ -820,7 +809,7 @@ class CompletedAppointByProvider extends StatelessWidget {
               value,
               style: TextStyle(
                 fontWeight: isHighlighted ? FontWeight.bold : FontWeight.normal,
-                color: Color(0xFF004AAD),
+                color: const Color(0xFF004AAD),
               ),
             ),
           ),
@@ -854,7 +843,7 @@ class CompletedAppointByProvider extends StatelessWidget {
               style: TextStyle(
                   fontWeight:
                       isHighlighted ? FontWeight.bold : FontWeight.normal,
-                  color: Color(0xFF004AAD),
+                  color: const Color(0xFF004AAD),
                   decoration: TextDecoration.underline
                   //                     .underline,
                   ),

@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables, camel_case_types
 
 import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -10,10 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
-// import 'package:harees_new_project/Resources/AppColors/app_colors.dart';
-import 'package:harees_new_project/View/3.%20Home%20Page/User_Home/user_home.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/c.%20Provider%20Details/consultant_controller.dart';
+import 'package:harees_new_project/View/4.%20Virtual%20Consultation/c.%20Provider%20Details/meeting_create_payment.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
+import 'package:url_launcher/url_launcher.dart';
 // import 'package:intl/intl.dart';
 
 class Provider_Details extends StatefulWidget {
@@ -35,55 +33,79 @@ class _Provider_DetailsState extends State<Provider_Details> {
   final ConsultationController consultationController =
       Get.put(ConsultationController());
 
-      
-    Future<void> createPayment({
-      required double amount,
-      required String name,
-      required String email,
-    }) async {
-      print("Function Calling.........................");
+  Future<void> createPayment({
+    required double amount,
+    required String name,
+    required String email,
+  }) async {
+    print("Function Calling.........................");
 
-      final HttpsCallable callable =
-          FirebaseFunctions.instance.httpsCallable('createTapPayment');
-      EasyLoading.show(status: 'Processing...');
-      try {
-        final response = await callable.call({
-          'amount': amount,
-          'name': name,
-          'email': email,
-          'currency': 'SAR', // Default currency as per your Firebase function
-        });
+    final HttpsCallable callable =
+        FirebaseFunctions.instance.httpsCallable('createTapPayment');
+    EasyLoading.show(status: 'Processing...');
+    try {
+      final response = await callable.call({
+        'amount': amount,
+        'name': name,
+        'email': email,
+        'currency': 'SAR', // Default currency as per your Firebase function
+      });
 
-        if (response.data["success"]) {
-          String paymentUrl = response.data["paymentUrl"];
-          String chargeID = response.data["chargeID"];
-          String paymentStatus = response.data["paymentStatus"];
+      if (response.data["success"]) {
+        String paymentUrl = response.data["paymentUrl"];
+        String chargeID = response.data["chargeID"];
+        String paymentStatus = response.data["paymentStatus"];
 
-          if (kDebugMode) {
-            print("Response Data: ${jsonEncode(response.data)}");
-            print("Charge ID: $chargeID");
-            print("Payment Status: $paymentStatus");
-            print("Payment URL: =💵💵💵💵============>$paymentUrl");
-          }
-
-          // cartController.paymentStatus.value = paymentStatus;
-          // cartController.chargeId.value = chargeID;
-          // cartController.paymentUrl.value = paymentUrl;
-
-          // cartController.setUserOrderInfo(userModel, firebaseUser);
-
-
-          
-        } else {
-          Get.snackbar("Error", "Payment initiation failed");
+        if (kDebugMode) {
+          print("Response Data: ${jsonEncode(response.data)}");
+          print("Charge ID: $chargeID");
+          print("Payment Status: $paymentStatus");
+          print("Payment URL: =💵💵💵💵============>$paymentUrl");
         }
-      } catch (e) {
-        Get.snackbar("Error", "${e.toString()}");
-        return;
-      } finally {
-        EasyLoading.dismiss();
+
+        Get.to(MeetingCreatePaymentScreen(
+          userModel: widget.userModel,
+          firebaseUser: widget.firebaseUser,
+          orderData: {
+            "email": widget.firebaseUser.email,
+            "name": widget.userModel.fullname,
+            "phone": widget.userModel.mobileNumber,
+            "gender": widget.userModel.gender,
+            "dob": widget.userModel.dob,
+            "type": "Virtual Consultation",
+            "selected_time":
+                consultationController.consultationData['startDateTime'],
+            "status": "Requested",
+            "requested_to": widget.providerData["name"],
+            "requested_to_email": widget.providerData["email"],
+            "accepted_by": null,
+            "meeting_link": null,
+            "meeting_data": consultationController.consultationData,
+            "paymentStatus": "INITIATED",
+            "paymentUrl": paymentUrl,
+            "chargeId": chargeID,
+            'createdAt': DateTime.now(),
+          },
+        ));
+
+        await openPaymentUrl(paymentUrl);
+      } else {
+        Get.snackbar("Error", "Payment initiation failed");
       }
+    } catch (e) {
+      Get.snackbar("Error", "${e.toString()}");
+      return;
+    } finally {
+      EasyLoading.dismiss();
     }
+  }
+
+  Future<void> openPaymentUrl(String url) async {
+    Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      Get.snackbar("Error", "Could not open payment link");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -291,14 +313,16 @@ class _Provider_DetailsState extends State<Provider_Details> {
                       ),
                       readOnly: true,
                       onTap: () async {
-                        if (consultationController.startDateController.text.isNotEmpty) {
+                        if (consultationController
+                            .startDateController.text.isNotEmpty) {
                           DateTime startDateTime = consultationController
                               .dateFormat
                               .parse(consultationController
                                   .startDateController.text);
                           TimeOfDay? pickedTime = await showTimePicker(
                             context: context,
-                            initialTime: TimeOfDay.fromDateTime(startDateTime.add(Duration(minutes: 30))),
+                            initialTime: TimeOfDay.fromDateTime(
+                                startDateTime.add(Duration(minutes: 30))),
                           );
                           if (pickedTime != null) {
                             DateTime finalDateTime = DateTime(
@@ -308,8 +332,10 @@ class _Provider_DetailsState extends State<Provider_Details> {
                               pickedTime.hour,
                               pickedTime.minute,
                             );
-                            if (finalDateTime.isAfter(startDateTime.add(Duration(minutes: 30))) &&
-                                finalDateTime.isBefore(startDateTime.add(Duration(hours: 5)))) {
+                            if (finalDateTime.isAfter(
+                                    startDateTime.add(Duration(minutes: 30))) &&
+                                finalDateTime.isBefore(
+                                    startDateTime.add(Duration(hours: 5)))) {
                               consultationController.endDateController.text =
                                   consultationController.dateFormat
                                       .format(finalDateTime);
@@ -355,14 +381,17 @@ class _Provider_DetailsState extends State<Provider_Details> {
                               .dateFormat
                               .parse(consultationController
                                   .endDateController.text);
-                          if (endDateTime.isAfter(startDateTime.add(Duration(minutes: 30))) &&
-                              endDateTime.isBefore(startDateTime.add(Duration(hours: 2)))) {
+                          if (endDateTime.isAfter(
+                                  startDateTime.add(Duration(minutes: 30))) &&
+                              endDateTime.isBefore(
+                                  startDateTime.add(Duration(hours: 2)))) {
                             try {
                               // Save data to RxMap
                               consultationController.consultationData.value = {
                                 'description': consultationController
                                     .descriptionController.text,
-                                'startDateTime': consultationController.dateFormat
+                                'startDateTime': consultationController
+                                    .dateFormat
                                     .parse(consultationController
                                         .startDateController.text)
                                     .toIso8601String(),
@@ -372,46 +401,11 @@ class _Provider_DetailsState extends State<Provider_Details> {
                                     .toIso8601String(),
                               };
 
-                             
-
-
-                              FirebaseFirestore.instance
-                                  .collection("User_meetings")
-                                  .doc()
-                                  .set({
-                                "email": widget.firebaseUser.email,
-                                "name": widget.userModel.fullname,
-                                "phone": widget.userModel.mobileNumber,
-                                "gender": widget.userModel.gender,
-                                "dob": widget.userModel.dob,
-                                "type": "Virtual Consultation",
-                                "selected_time": consultationController
-                                    .consultationData['startDateTime'],
-                                "status": "Requested",
-                                "requested_to": widget.providerData["name"],
-                                "requested_to_email":
-                                    widget.providerData["email"],
-                                "accepted_by": null,
-                                "meeting_link": null,
-                                "meeting_data":
-                                    consultationController.consultationData,
-                              });
-
-                              // Feedback to the user
-                              Get.snackbar(
-                                "Success",
-                                "Successfully Requested Appointment",
-                                backgroundColor: Colors.green.shade600,
-                                colorText: Colors.white,
-                                icon:
-                                    Icon(Icons.check_circle, color: Colors.white),
+                              createPayment(
+                                amount: 300,
+                                name: widget.userModel.fullname!,
+                                email: widget.userModel.email!,
                               );
-
-                              // Optionally navigate back
-                              Get.offAll(() => HomePage(
-                                    userModel: widget.userModel,
-                                    firebaseUser: widget.firebaseUser,
-                                  ));
                             } catch (e) {
                               Get.snackbar(
                                 'Error',
@@ -444,11 +438,12 @@ class _Provider_DetailsState extends State<Provider_Details> {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                       backgroundColor : Colors.blueAccent,
+                        backgroundColor: Colors.blueAccent,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        padding: EdgeInsets.symmetric(vertical: 14,horizontal: 16),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 14, horizontal: 16),
                       ),
                       child: const Text(
                         'Save Consultation',

@@ -2,34 +2,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harees_new_project/Resources/Services_grid/meeting_controller.dart';
-import 'package:harees_new_project/Resources/Services_grid/meeting_details_screen.dart';
-// import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/details_page.dart';
-// import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
+import 'package:harees_new_project/Resources/Bottom_Navigation_Bar/bottom_controller.dart';
+import 'package:harees_new_project/Resources/Bottom_Navigation_Bar/bottom_nav.dart';
+import 'package:harees_new_project/Resources/Services_grid/user_side_meeting_controller.dart';
+import 'package:harees_new_project/Resources/Services_grid/user_side_meeting_details.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
-class UserMeetingRequest extends StatelessWidget {
+class AllMeetings extends StatelessWidget {
   final UserModel userModel;
   final User firebaseUser;
-  final UserMeetingRequestController controller =
-      Get.put(UserMeetingRequestController());
-
-  UserMeetingRequest(
-      {Key? key, required this.userModel, required this.firebaseUser})
+  final UserSideMeetingRequestController controller =
+      Get.put(UserSideMeetingRequestController());
+  final BottomNavIndexController indexController =
+      Get.put(BottomNavIndexController());
+  AllMeetings({Key? key, required this.userModel, required this.firebaseUser})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Future<void> launchURL(url) async {
-      // const url = "https://meet.google.com/oph-nuzx-vpw";
-      if (await launch(url)) {
-        await canLaunch(url);
-      } else {
-        throw 'Could not launch $url';
-      }
-    }
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -38,7 +29,9 @@ class UserMeetingRequest extends StatelessWidget {
         leading: Row(
           children: [
             IconButton(
-                onPressed: () => Get.back(),
+                onPressed: () {
+                  Get.back();
+                },
                 icon: const Icon(
                   Icons.keyboard_double_arrow_left,
                   size: 25,
@@ -59,12 +52,12 @@ class UserMeetingRequest extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              const SizedBox(height: 20),
+              // const SizedBox(height: 20),
               // const MySearchBar(),
               const SizedBox(height: 15),
               StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
-                    .collection("User_meetings")
+                    .collection('User_meetings')
                     .orderBy('createdAt', descending: true)
                     .snapshots(),
                 builder: (BuildContext context,
@@ -78,25 +71,15 @@ class UserMeetingRequest extends StatelessWidget {
                   if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
                     return Center(child: Text('No User Appointments'.tr));
                   }
-
-                  var filteredAppointments = snapshot.data!.docs.where((doc) {
-                    return doc['requested_to_email'] == firebaseUser.email;
-                  }).toList();
-
-                  if (filteredAppointments.isEmpty) {
-                    return Center(child: Text('No User Appointments'.tr));
-                  }
-
                   return Expanded(
                     child: ListView.builder(
-                        itemCount: filteredAppointments.length,
+                        itemCount: snapshot.data!.docs.length,
                         itemBuilder: (context, index) {
-                          DocumentSnapshot doc = filteredAppointments[index];
+                          DocumentSnapshot doc = snapshot.data!.docs[index];
 
-                          // if (doc["requested_to"] == userModel.fullname) {
                           return GestureDetector(
                             onTap: () {
-                              Get.to(MeetingDetailsScreen(
+                              Get.to(UserSideMeetingDetails(
                                 doc: doc,
                                 userModel: userModel,
                                 firebaseUser: firebaseUser,
@@ -150,7 +133,8 @@ class UserMeetingRequest extends StatelessWidget {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    doc['name'].toString(),
+                                                    doc['requested_to']
+                                                        .toString(),
                                                     style: TextStyle(
                                                       fontSize: 18,
                                                       fontWeight:
@@ -169,6 +153,7 @@ class UserMeetingRequest extends StatelessWidget {
                                                   //       TextOverflow.ellipsis,
                                                   //   maxLines: 2,
                                                   // ),
+                                                  const SizedBox(height: 4),
                                                   Text(
                                                     doc['type'].toString(),
                                                     style: const TextStyle(
@@ -178,52 +163,6 @@ class UserMeetingRequest extends StatelessWidget {
                                                           FontWeight.w500,
                                                     ),
                                                   ),
-                                                  const SizedBox(height: 4),
-
-                                                  doc["meeting_link"] != null
-                                                      ? GestureDetector(
-                                                          onTap: () => launchURL(
-                                                              "https://${doc["meeting_link"]}"),
-                                                          child: Container(
-                                                            height: 30,
-                                                            width: 100,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: Colors
-                                                                  .blue, // Background color
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8), // Rounded corners
-                                                              boxShadow: const [
-                                                                BoxShadow(
-                                                                  color: Colors
-                                                                      .black26,
-                                                                  blurRadius: 4,
-                                                                  offset: Offset(
-                                                                      0,
-                                                                      2), // Shadow position
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            alignment: Alignment
-                                                                .center, // Center the text
-                                                            child: const Text(
-                                                              "Join Meet",
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .white, // Text color
-                                                                fontSize:
-                                                                    16, // Text size
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        )
-                                                      : const Text(
-                                                          "Please accept request"),
                                                 ],
                                               ),
                                             ),
@@ -236,40 +175,21 @@ class UserMeetingRequest extends StatelessWidget {
                                                   size: 35,
                                                 ),
                                                 doc["status"] == "Requested"
-                                                    ? Container(
-                                                        width:
-                                                            80, // Customize the width
-                                                        height:
-                                                            27, // Customize the height
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: const Color(
-                                                              0xFF00AAAD), // Background color
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(50),
-                                                        ),
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal: 12,
-                                                                vertical: 5),
-                                                        child: const Text(
-                                                          "Accept",
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 11,
-                                                          ),
+                                                    ? Text(
+                                                        "Requested",
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                          color: Colors
+                                                              .orange[400],
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 14,
                                                         ),
                                                       )
                                                     : const Padding(
-                                                        padding:
-                                                            EdgeInsets
-                                                                .symmetric(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
                                                                 horizontal:
                                                                     10.0,
                                                                 vertical: 8),
@@ -285,7 +205,7 @@ class UserMeetingRequest extends StatelessWidget {
                                                             fontSize: 14,
                                                           ),
                                                         ),
-                                                      ),
+                                                      )
                                               ],
                                             ),
                                           ],
@@ -297,10 +217,7 @@ class UserMeetingRequest extends StatelessWidget {
                               ),
                             ),
                           );
-                        }
-                        //   return null;
-                        // }
-                        ),
+                        }),
                   );
                 },
               )
@@ -308,7 +225,10 @@ class UserMeetingRequest extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: MyBottomNavBar(
+        userModel: userModel,
+        firebaseUser: firebaseUser,
+      ),
     );
   }
-
 }

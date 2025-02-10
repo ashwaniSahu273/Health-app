@@ -311,7 +311,7 @@ class _LabTestState extends State<LabTest> {
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.only(
-                                                left: 16.0, top: 8,right: 16),
+                                                left: 16.0, top: 8, right: 16),
                                             child: Container(
                                               height: 50,
                                               width: 50,
@@ -337,7 +337,10 @@ class _LabTestState extends State<LabTest> {
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(
-                                                left: 16, top: 8, right: 16, ),
+                                              left: 16,
+                                              top: 8,
+                                              right: 16,
+                                            ),
                                             child: Align(
                                                 alignment: Alignment.topLeft,
                                                 child: Text(
@@ -538,43 +541,56 @@ class _LabTestState extends State<LabTest> {
                 SizedBox(height: 16),
                 // Display filtered services
                 Obx(() {
-                  return SizedBox(
-                    height:
-                        250, // Limit the height of the list to fit inside the dialog
-                    child: ListView.builder(
-                      itemCount: controller.filteredServices.length,
-                      itemBuilder: (context, index) {
-                        final service = controller.filteredServices[index];
+                  return controller.filteredServices.isEmpty
+                      ? Center(
+                          child: Text(
+                            'No search data found',
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.grey[600],
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        )
+                      : SizedBox(
+                          height:
+                              250, // Limit the height of the list to fit inside the dialog
+                          child: ListView.builder(
+                            itemCount: controller.filteredServices.length,
+                            itemBuilder: (context, index) {
+                              final service =
+                                  controller.filteredServices[index];
 
-                        String languageCode = Get.locale?.languageCode ?? 'en';
+                              String languageCode =
+                                  Get.locale?.languageCode ?? 'en';
 
-                        final localizedData = languageCode == 'ar'
-                            ? service.localized.ar
-                            : service.localized.en;
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                            _onServiceSelected(
-                                localizedData.serviceName,
-                                service.id,
-                                service.imagePath,
-                                localizedData.description,
-                                localizedData.instructions,
-                                localizedData.includesTests,
-                                localizedData.price,
-                                service.type);
-                          },
-                          child: ListTile(
-                              title: Text(localizedData.serviceName),
-                              // onTap: () {
-                              //   Get.back(); // Close the dialog after selecting a service
-                              //   // Handle item tap (e.g., navigate to service details)
-                              // },
-                              trailing: Text(localizedData.price)),
+                              final localizedData = languageCode == 'ar'
+                                  ? service.localized.ar
+                                  : service.localized.en;
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  _onServiceSelected(
+                                      localizedData.serviceName,
+                                      service.id,
+                                      service.imagePath,
+                                      localizedData.description,
+                                      localizedData.instructions,
+                                      localizedData.includesTests,
+                                      localizedData.price,
+                                      service.type);
+                                },
+                                child: ListTile(
+                                    title: Text(localizedData.serviceName),
+                                    // onTap: () {
+                                    //   Get.back(); // Close the dialog after selecting a service
+                                    //   // Handle item tap (e.g., navigate to service details)
+                                    // },
+                                    trailing: Text(localizedData.price)),
+                              );
+                            },
+                          ),
                         );
-                      },
-                    ),
-                  );
                 }),
               ],
             ),

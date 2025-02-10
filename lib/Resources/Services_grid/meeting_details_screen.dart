@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:harees_new_project/Resources/Services_grid/meeting_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -25,37 +24,7 @@ class MeetingDetailsScreen extends StatelessWidget {
         Get.put(UserMeetingRequestController());
     controller.status.value = doc["status"];
 
-    // LatLng location = LatLng(
-    //   double.parse(doc["latitude"]),
-    //   double.parse(doc["longitude"]),
-    // );
-
-    void openGoogleMap() async {
-      var latitude = double.parse(doc["latitude"]);
-      var longitude = double.parse(doc["longitude"]);
-      String googleUrl =
-          "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
-      if (await canLaunch(googleUrl)) {
-        await launch(googleUrl);
-      } else {
-        throw "Could not open the map.";
-      }
-    }
-
-    void _openInGoogleMaps(double latitude, double longitude) async {
-      String googleUrl =
-          "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
-      if (await canLaunch(googleUrl)) {
-        await launch(googleUrl);
-      } else {
-        throw "Could not open the map.";
-      }
-    }
-
-    // const String googleMeetLink = "https://meet.google.com/oph-nuzx-vpw";
-
     Future<void> _launchURL(url) async {
-      // const url = "https://meet.google.com/oph-nuzx-vpw";
       if (await launch(url)) {
         await canLaunch(url);
       } else {
@@ -183,23 +152,20 @@ class MeetingDetailsScreen extends StatelessWidget {
                                   () => controller.status.value == "Requested"
                                       ? GestureDetector(
                                           onTap: () {
-                                            controller.openConsultationDialog(
-                                                doc.id);
+                                            controller
+                                                .openConsultationDialog(doc.id);
                                           },
                                           child: Container(
                                             width: 80, // Customize the width
-                                            height:
-                                                27, // Customize the height
+                                            height: 27, // Customize the height
                                             decoration: BoxDecoration(
-                                              color: Color(
+                                              color: const Color(
                                                   0xFF00AAAD), // Background color
                                               borderRadius:
                                                   BorderRadius.circular(50),
                                             ),
-                                            padding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 12,
-                                                    vertical: 5),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 12, vertical: 5),
                                             child: const Text(
                                               "Accept",
                                               textAlign: TextAlign.center,
@@ -211,8 +177,8 @@ class MeetingDetailsScreen extends StatelessWidget {
                                             ),
                                           ),
                                         )
-                                      : Padding(
-                                          padding: const EdgeInsets.symmetric(
+                                      : const Padding(
+                                          padding: EdgeInsets.symmetric(
                                               horizontal: 10.0, vertical: 8),
                                           child: Text(
                                             "Accepted",
@@ -349,9 +315,9 @@ class MeetingDetailsScreen extends StatelessWidget {
                                         ? ElevatedButton(
                                             onPressed: () => _launchURL(
                                                 "https://${controller.textData.value.isNotEmpty ? controller.textData.value : doc["meeting_link"]}"),
-                                            child: Text("Join Google Meet"),
+                                            child: const Text("Join Google Meet"),
                                           )
-                                        : Text("Please accept the request"),
+                                        : const Text("Please accept the request"),
                                     const SizedBox(height: 12),
                                   ],
                                 ),
@@ -427,7 +393,7 @@ class MeetingDetailsScreen extends StatelessWidget {
             color: Colors.grey.shade300,
             blurRadius: 5,
             spreadRadius: 2,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -473,7 +439,7 @@ class MeetingDetailsScreen extends StatelessWidget {
               value,
               style: TextStyle(
                 fontWeight: isHighlighted ? FontWeight.bold : FontWeight.normal,
-                color: Color(0xFF004AAD),
+                color: const Color(0xFF004AAD),
               ),
             ),
           ),
@@ -507,7 +473,7 @@ class MeetingDetailsScreen extends StatelessWidget {
               style: TextStyle(
                   fontWeight:
                       isHighlighted ? FontWeight.bold : FontWeight.normal,
-                  color: Color(0xFF004AAD),
+                  color: const Color(0xFF004AAD),
                   decoration: TextDecoration.underline
                   //                     .underline,
                   ),

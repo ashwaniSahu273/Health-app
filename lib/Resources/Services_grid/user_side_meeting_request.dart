@@ -80,7 +80,7 @@ class UserSideMeetingRequest extends StatelessWidget {
                 StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('User_meetings')
-                      .where('email', isEqualTo: firebaseUser.email)
+                      .orderBy('createdAt', descending: true)
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -93,11 +93,20 @@ class UserSideMeetingRequest extends StatelessWidget {
                     if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
                       return Center(child: Text('No User Appointments'.tr));
                     }
+
+                    var filteredAppointments = snapshot.data!.docs.where((doc) {
+                      return doc['email'] == firebaseUser.email;
+                    }).toList();
+
+                    if (filteredAppointments.isEmpty) {
+                      return Center(child: Text('No User Appointments'.tr));
+                    }
+
                     return Expanded(
                       child: ListView.builder(
-                          itemCount: snapshot.data!.docs.length,
+                          itemCount: filteredAppointments.length,
                           itemBuilder: (context, index) {
-                            DocumentSnapshot doc = snapshot.data!.docs[index];
+                            DocumentSnapshot doc = filteredAppointments[index];
 
                             return GestureDetector(
                               onTap: () {

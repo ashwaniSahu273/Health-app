@@ -67,7 +67,9 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
       _enServiceIncludesController.text =
           widget.service!.localized.en.includesTests ?? '';
 
-      _priceController.text = widget.service!.localized.en.price?.replaceAll(RegExp(r'[^0-9]'), '') ?? '';
+      _priceController.text = widget.service!.localized.en.price
+              ?.replaceAll(RegExp(r'[^0-9]'), '') ??
+          '';
 
       controller.labUploadedImageUrl.value = widget.service!.imagePath ?? '';
       controller.selectedServiceLabType.value = widget.service!.type;
@@ -123,186 +125,196 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
       }
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.isEditing ? 'Edit Service' : 'Add Service'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Obx(
-                    () => controller.isLoadingNurseService.value
-                        ? const CircularProgressIndicator()
-                        : controller.labUploadedImageUrl.value != null &&
-                                controller.labUploadedImageUrl.value!.isNotEmpty
-                            ? Container(
-                                height: 70,
-                                width: 70,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color(
-                                      0xFFE6F5FF), // Circle background color
+    return WillPopScope(
+      onWillPop: () async {
+        controller.labUploadedImageUrl.value = ''; // Reset the variable
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.isEditing ? 'Edit Service' : 'Add Service'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Obx(
+                      () => controller.isLoadingNurseService.value
+                          ? const CircularProgressIndicator()
+                          : controller.labUploadedImageUrl.value != null &&
+                                  controller
+                                      .labUploadedImageUrl.value!.isNotEmpty
+                              ? Container(
+                                  height: 70,
+                                  width: 70,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(
+                                        0xFFE6F5FF), // Circle background color
+                                  ),
+                                  child: Image.network(
+                                    controller.labUploadedImageUrl.value!,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return const Text(
+                                        "No Image",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 14, color: Colors.black),
+                                      );
+                                    },
+                                  ),
+                                )
+                              : const Text(
+                                  "There Is No Image",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 14, color: Colors.black),
                                 ),
-                                child: Image.network(
-                                  controller.labUploadedImageUrl.value!,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return const Text(
-                                      "No Image",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 14, color: Colors.black),
-                                    );
-                                  },
-                                ),
-                              )
-                            : const Text(
-                                "There Is No Image",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 14, color: Colors.black),
-                              ),
-                  ),
-                  const SizedBox(height: 10),
-                  ElevatedButton.icon(
-                    onPressed: () => selectImage(ImageSource.gallery),
-                    icon: const Icon(Icons.image),
-                    label: const Text('Select Image'),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-
-              Obx(
-                () => DropdownButtonFormField<String>(
-                  value: controller.selectedServiceLabType.value,
-                  decoration: InputDecoration(
-                      labelText: "Package Type",
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 0, horizontal: 16),
-                      // filled: true,
-                      // fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(
-                          color: Colors.black,
-                          width: 1.0,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(
-                          color: Colors.black,
-                          width: 1.0,
-                        ),
-                      )),
-                  items: ['package', 'individual'].map((String type) {
-                    return DropdownMenuItem<String>(
-                      value: type,
-                      child: Text(type),
-                    );
-                  }).toList(),
-                  onChanged: (newValue) {
-                    controller.selectedServiceLabType.value = newValue!;
-                  },
+                    ),
+                    const SizedBox(height: 10),
+                    ElevatedButton.icon(
+                      onPressed: () => selectImage(ImageSource.gallery),
+                      icon: const Icon(Icons.image),
+                      label: const Text('Select Image'),
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              _buildTextField(
-                  _arServiceNameController, 'Service Name (Arabic)'),
-              _buildTextField(
-                  _enServiceNameController, 'Service Name (English)'),
+                const SizedBox(
+                  height: 20,
+                ),
 
-              Obx(
-                () => controller.selectedServiceLabType.value != "individual"
-                    ? Column(
-                        children: [
-                          _buildTextField(
-                              _arDescriptionController, 'Instructions (Arabic)',
-                              maxLines: 4),
-                          _buildTextField(_enDescriptionController,
-                              'Instructions (English)',
-                              maxLines: 4),
-                          _buildTextField(_arAboutController, 'About (Arabic)',
-                              maxLines: 5),
-                          _buildTextField(_enAboutController, 'About (English)',
-                              maxLines: 5),
-                          _buildTextField(_arServiceIncludesController,
-                              'Includes Tests (Arabic)',
-                              maxLines: 6),
-                          _buildTextField(_enServiceIncludesController,
-                              'Includes Tests (English)',
-                              maxLines: 6),
-                          // _buildTextField(_arTermsOfServiceController,
-                          //     'Terms of Service (Arabic)',
-                          //     maxLines: 6),
-                          // _buildTextField(_enTermsOfServiceController,
-                          //     'Terms of Service (English)',
-                          //     maxLines: 6),
-                        ],
-                      )
-                    : const SizedBox.shrink(),
-              ),
-
-              _buildTextField(_priceController, 'Price',keyboardType: TextInputType.number),
-              // _buildTextField(_imagePathController, 'Image Path'),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  print(
-                      "uploading==========>${controller.labUploadedImageUrl.value}");
-                  var newService = {
-                    'id': widget.isEditing ? widget.service.id : '',
-                    'imagePath': controller.labUploadedImageUrl.value ?? " ",
-                    "type": controller.selectedServiceLabType.value,
-                    'localized': {
-                      'ar': {
-                        'serviceName': _arServiceNameController.text,
-                        'description': _arAboutController.text,
-                        'includesTests': _arServiceIncludesController.text,
-                        'instructions': _arDescriptionController.text,
-                        'price': "${_priceController.text} ريال",
-                      },
-                      'en': {
-                        'serviceName': _enServiceNameController.text,
-                        'description': _enAboutController.text,
-                        'includesTests': _enServiceIncludesController.text,
-                        'instructions': _enDescriptionController.text,
-                        'price': "${_priceController.text} SAR",
-                      },
+                Obx(
+                  () => DropdownButtonFormField<String>(
+                    value: controller.selectedServiceLabType.value,
+                    decoration: InputDecoration(
+                        labelText: "Package Type",
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 16),
+                        // filled: true,
+                        // fillColor: Colors.white,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        )),
+                    items: ['package', 'individual'].map((String type) {
+                      return DropdownMenuItem<String>(
+                        value: type,
+                        child: Text(type),
+                      );
+                    }).toList(),
+                    onChanged: (newValue) {
+                      controller.selectedServiceLabType.value = newValue!;
                     },
-                  };
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                _buildTextField(
+                    _arServiceNameController, 'Service Name (Arabic)'),
+                _buildTextField(
+                    _enServiceNameController, 'Service Name (English)'),
 
-                  if (widget.isEditing) {
-                    FirebaseFirestore.instance
-                        .collection('LaboratoryServices')
-                        .doc(widget.service.id.toString())
-                        .update(newService);
-                  } else {
-                    final docRef = FirebaseFirestore.instance
-                        .collection('LaboratoryServices')
-                        .doc();
-                    final id = docRef.id;
-                    newService['id'] = id;
-                    docRef.set(newService);
-                  }
+                Obx(
+                  () => controller.selectedServiceLabType.value != "individual"
+                      ? Column(
+                          children: [
+                            _buildTextField(_arDescriptionController,
+                                'Instructions (Arabic)',
+                                maxLines: 4),
+                            _buildTextField(_enDescriptionController,
+                                'Instructions (English)',
+                                maxLines: 4),
+                            _buildTextField(
+                                _arAboutController, 'About (Arabic)',
+                                maxLines: 5),
+                            _buildTextField(
+                                _enAboutController, 'About (English)',
+                                maxLines: 5),
+                            _buildTextField(_arServiceIncludesController,
+                                'Includes Tests (Arabic)',
+                                maxLines: 6),
+                            _buildTextField(_enServiceIncludesController,
+                                'Includes Tests (English)',
+                                maxLines: 6),
+                            // _buildTextField(_arTermsOfServiceController,
+                            //     'Terms of Service (Arabic)',
+                            //     maxLines: 6),
+                            // _buildTextField(_enTermsOfServiceController,
+                            //     'Terms of Service (English)',
+                            //     maxLines: 6),
+                          ],
+                        )
+                      : const SizedBox.shrink(),
+                ),
 
-                  Navigator.pop(context, newService);
-                },
-                child:
-                    Text(widget.isEditing ? 'Update Service' : 'Add Service'),
-              ),
-            ],
+                _buildTextField(_priceController, 'Price',
+                    keyboardType: TextInputType.number),
+                // _buildTextField(_imagePathController, 'Image Path'),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    print(
+                        "uploading==========>${controller.labUploadedImageUrl.value}");
+                    var newService = {
+                      'id': widget.isEditing ? widget.service.id : '',
+                      'imagePath': controller.labUploadedImageUrl.value ?? " ",
+                      "type": controller.selectedServiceLabType.value,
+                      'localized': {
+                        'ar': {
+                          'serviceName': _arServiceNameController.text,
+                          'description': _arAboutController.text,
+                          'includesTests': _arServiceIncludesController.text,
+                          'instructions': _arDescriptionController.text,
+                          'price': "${_priceController.text} ريال",
+                        },
+                        'en': {
+                          'serviceName': _enServiceNameController.text,
+                          'description': _enAboutController.text,
+                          'includesTests': _enServiceIncludesController.text,
+                          'instructions': _enDescriptionController.text,
+                          'price': "${_priceController.text} SAR",
+                        },
+                      },
+                    };
+
+                    if (widget.isEditing) {
+                      FirebaseFirestore.instance
+                          .collection('LaboratoryServices')
+                          .doc(widget.service.id.toString())
+                          .update(newService);
+                    } else {
+                      final docRef = FirebaseFirestore.instance
+                          .collection('LaboratoryServices')
+                          .doc();
+                      final id = docRef.id;
+                      newService['id'] = id;
+                      docRef.set(newService);
+                    }
+
+                    Navigator.pop(context, newService);
+                  },
+                  child:
+                      Text(widget.isEditing ? 'Update Service' : 'Add Service'),
+                ),
+              ],
+            ),
           ),
         ),
       ),

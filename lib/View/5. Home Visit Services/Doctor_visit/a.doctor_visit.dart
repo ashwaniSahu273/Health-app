@@ -39,6 +39,7 @@ class _DoctorVisitState extends State<DoctorVisit> {
   late Position position;
   final fireStore = FirebaseFirestore.instance.collection("User_appointments");
 
+  @override
   void initState() {
     // vitaminCartController.fetchServices();
     getCurrentLoc();
@@ -66,40 +67,42 @@ class _DoctorVisitState extends State<DoctorVisit> {
     ));
   }
 
-  Future<void> _handleTap(LatLng tappedPoint) async {
-    final GoogleMapController mapController = await _controller.future;
+  // Future<void> _handleTap(LatLng tappedPoint) async {
+  //   final GoogleMapController mapController = await _controller.future;
 
-    // Animate to tapped location
-    mapController.animateCamera(CameraUpdate.newLatLng(tappedPoint));
+  //   // Animate to tapped location
+  //   mapController.animateCamera(CameraUpdate.newLatLng(tappedPoint));
 
-    // Address fetching and marker updates
-    setState(() {
-      stAddress = "Fetching address...";
-      Latitude = tappedPoint.latitude.toString();
-      Longitude = tappedPoint.longitude.toString();
+  //   // Address fetching and marker updates
+  //   setState(() {
+  //     stAddress = "Fetching address...";
+  //     Latitude = tappedPoint.latitude.toString();
+  //     Longitude = tappedPoint.longitude.toString();
 
-      _marker.clear();
-      _marker.add(Marker(
-        markerId: const MarkerId("selectedLocation"),
-        position: tappedPoint,
-        infoWindow: InfoWindow(title: "Selected Location"),
-      ));
-    });
+  //     _marker.clear();
+  //     _marker.add(Marker(
+  //       markerId: const MarkerId("selectedLocation"),
+  //       position: tappedPoint,
+  //       infoWindow: InfoWindow(title: "Selected Location"),
+  //     ));
+  //   });
 
-    try {
-      List<Placemark> placemarks = await placemarkFromCoordinates(
-          tappedPoint.latitude, tappedPoint.longitude);
+  //   try {
+  //     List<Placemark> placemarks = await placemarkFromCoordinates(
+  //         tappedPoint.latitude, tappedPoint.longitude);
 
-      setState(() {
-        stAddress =
-            "${placemarks.reversed.last.country}, ${placemarks.reversed.last.locality}, ${placemarks.reversed.last.street}";
-      });
-    } catch (e) {
-      setState(() {
-        stAddress = "Failed to fetch address. Try again.";
-      });
-    }
-  }
+  //     setState(() {
+  //       stAddress =
+  //           "${placemarks.reversed.last.country}, ${placemarks.reversed.last.locality}, ${placemarks.reversed.last.street}";
+  //     });
+  //   } catch (e) {
+  //     setState(() {
+  //       stAddress = "Failed to fetch address. Try again.";
+  //     });
+  //   }
+  // }
+
+
 
   Future<Position> getUserCurrentLocation() async {
     await Geolocator.requestPermission()
@@ -198,6 +201,7 @@ class _DoctorVisitState extends State<DoctorVisit> {
       _marker.add(Marker(
         markerId: const MarkerId("currentLocation"),
         position: LatLng(lat, lng),
+        // ignore: prefer_const_constructors
         infoWindow: InfoWindow(title: "Current Location"),
       ));
     });

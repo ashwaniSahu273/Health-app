@@ -66,7 +66,7 @@ class DynamicNurse extends StatelessWidget {
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
-              child: StepProgressBar(currentStep: 2, totalSteps: 4)),
+              child: const StepProgressBar(currentStep: 2, totalSteps: 4)),
           Expanded(
             child: Container(
               color: const Color(0xFFEEF8FF),
@@ -92,9 +92,9 @@ class DynamicNurse extends StatelessWidget {
                               Container(
                                 height: 60,
                                 width: 60,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: const Color(
+                                  color: Color(
                                       0xFFE6F5FF), // Circle background color
                                 ),
                                 child: ClipOval(
@@ -170,7 +170,7 @@ class DynamicNurse extends StatelessWidget {
                                                   children: [
                                                     Text(
                                                       'Qty: '.tr,
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontSize: 14,
                                                           fontWeight:
                                                               FontWeight.w500),
@@ -189,7 +189,7 @@ class DynamicNurse extends StatelessWidget {
                                                               .decreaseQuantity(
                                                                   service.id);
                                                         },
-                                                        child: Center(
+                                                        child: const Center(
                                                           child: Icon(
                                                             Icons.remove,
                                                             size:
@@ -221,7 +221,7 @@ class DynamicNurse extends StatelessWidget {
                                                               .increaseQuantity(
                                                                   service.id);
                                                         },
-                                                        child: Center(
+                                                        child: const Center(
                                                           child: Icon(
                                                             Icons.add,
                                                             size:
@@ -249,7 +249,7 @@ class DynamicNurse extends StatelessWidget {
                                                         horizontal: 20,
                                                         vertical: 6),
                                                     decoration: BoxDecoration(
-                                                      color: Color(
+                                                      color: const Color(
                                                           0xFF007ABB), // Subtle light blue background
                                                       borderRadius:
                                                           BorderRadius.circular(
@@ -305,10 +305,10 @@ class DynamicNurse extends StatelessWidget {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(10.0),
                                     child: Text(
                                       localizedData.about,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12,
                                         color: Colors.black54,
                                         fontFamily: "Roboto",
@@ -341,7 +341,7 @@ class DynamicNurse extends StatelessWidget {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
                                         "Service Includes".tr,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -386,7 +386,7 @@ class DynamicNurse extends StatelessWidget {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
                                         "Terms of Service".tr,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -419,7 +419,7 @@ class DynamicNurse extends StatelessWidget {
 
                       service.type == "package"
                           ? Container(
-                              margin: EdgeInsets.symmetric(
+                              margin: const EdgeInsets.symmetric(
                                   horizontal: 4, vertical: 16),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
@@ -431,17 +431,17 @@ class DynamicNurse extends StatelessWidget {
                                   children: [
                                     Text(
                                       "Select duration of service".tr,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    SizedBox(height: 16),
+                                    const SizedBox(height: 16),
                                     SizedBox(
                                       height: 250,
                                       child: GridView.builder(
                                         gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 2,
                                           childAspectRatio: 3 / 2.5,
                                           crossAxisSpacing: 16,
@@ -495,11 +495,11 @@ class DynamicNurse extends StatelessWidget {
                                                     BoxShadow(
                                                       color: Colors.grey[100]!,
                                                       blurRadius: 1,
-                                                      offset: Offset(0, 0),
+                                                      offset: const Offset(0, 0),
                                                     ),
                                                   ],
                                                 ),
-                                                padding: EdgeInsets.symmetric(
+                                                padding: const EdgeInsets.symmetric(
                                                     vertical: 16,
                                                     horizontal: 8),
                                                 child: Column(
@@ -515,7 +515,7 @@ class DynamicNurse extends StatelessWidget {
                                                         color: Colors.blue[700],
                                                       ),
                                                     ),
-                                                    SizedBox(height: 4),
+                                                    const SizedBox(height: 4),
                                                     Text(
                                                       durationService.hours,
                                                       style: TextStyle(
@@ -525,7 +525,7 @@ class DynamicNurse extends StatelessWidget {
                                                         color: Colors.grey[600],
                                                       ),
                                                     ),
-                                                    Spacer(),
+                                                    const Spacer(),
                                                     Row(
                                                       children: [
                                                         Text(
@@ -536,9 +536,9 @@ class DynamicNurse extends StatelessWidget {
                                                                 .grey[500],
                                                           ),
                                                         ),
-                                                        SizedBox(width: 4),
+                                                        const SizedBox(width: 4),
                                                         Container(
-                                                          padding: EdgeInsets
+                                                          padding: const EdgeInsets
                                                               .symmetric(
                                                             horizontal: 8,
                                                             vertical: 4,
@@ -600,7 +600,7 @@ class DynamicNurse extends StatelessWidget {
                         borderRadius:
                             BorderRadius.circular(8), // Rounded corners
                       ),
-                      minimumSize: Size(160, 55),
+                      minimumSize: const Size(160, 55),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 8), // Padding
                     ),
@@ -623,7 +623,7 @@ class DynamicNurse extends StatelessWidget {
                           width: 30,
                           height: 30,
                           decoration: BoxDecoration(
-                            color: Color(0xFF009788), // Background color
+                            color: const Color(0xFF009788), // Background color
                             borderRadius:
                                 BorderRadius.circular(8), // Make it circular
                           ),
@@ -658,8 +658,8 @@ class DynamicNurse extends StatelessWidget {
                     () => ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: controller.isCartEmpty()
-                            ? Color(0xFFD9D9D9)
-                            : Color(0xFF007ABB),
+                            ? const Color(0xFFD9D9D9)
+                            : const Color(0xFF007ABB),
                         minimumSize: const Size(160, 55),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -684,7 +684,7 @@ class DynamicNurse extends StatelessWidget {
                         style: TextStyle(
                             fontFamily: "schyler",
                             color: controller.isCartEmpty()
-                                ? Color(0xFF9C9C9C)
+                                ? const Color(0xFF9C9C9C)
                                 : Colors.white,
                             fontSize: 15),
                       ),
@@ -712,7 +712,7 @@ class DynamicNurse extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.blueAccent,
                   borderRadius: BorderRadius.circular(15)),
-              child: Text(
+              child: const Text(
                 "*",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 14, color: Colors.white),
@@ -730,21 +730,4 @@ class DynamicNurse extends StatelessWidget {
     );
   }
 
-  Widget _buildChip(String label) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: Color(0xFFEAF6FE), // Light blue background
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Text(
-        label,
-        style: const TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
-          color: Color(0xFF007ABB),
-        ),
-      ),
-    );
-  }
 }

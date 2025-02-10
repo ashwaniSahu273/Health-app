@@ -5,6 +5,7 @@ import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:harees_new_project/View/Admin%20Screen/CRUD%20Operations/services_screen.dart';
 import 'package:harees_new_project/View/Admin%20Screen/admin_message_screen.dart';
 import 'package:harees_new_project/View/Admin%20Screen/all_chat_rooms.dart';
+import 'package:harees_new_project/View/Admin%20Screen/all_meetings.dart';
 import 'package:harees_new_project/View/Admin%20Screen/all_users.dart';
 import 'package:harees_new_project/View/Admin%20Screen/total_orders.dart';
 import 'package:harees_new_project/View/Admin%20Screen/total_providers.dart';
@@ -87,6 +88,19 @@ class AdminServices extends StatelessWidget {
                     userModel: userModel,
                     firebaseUser: firebaseUser,
                     targetUser: userModel,
+                  ));
+            },
+            userModel: userModel,
+            firebaseUser: firebaseUser,
+          ),
+          ServiceIconButton(
+            serviceIcon: "assets/images/appoint.png",
+            serviceName: "Meetings".tr,
+            onPressed: () {
+              Get.to(() => AllMeetings(
+                    userModel: userModel,
+                    firebaseUser: firebaseUser,
+                    // targetUser: userModel,
                   ));
             },
             userModel: userModel,

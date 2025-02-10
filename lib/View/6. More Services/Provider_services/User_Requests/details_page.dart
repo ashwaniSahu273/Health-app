@@ -36,19 +36,9 @@ class AppointmentDetailsScreen extends StatelessWidget {
       double.parse(doc["longitude"]),
     );
 
-    void openGoogleMap() async {
-      var latitude = double.parse(doc["latitude"]);
-      var longitude = double.parse(doc["longitude"]);
-      String googleUrl =
-          "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
-      if (await canLaunch(googleUrl)) {
-        await launch(googleUrl);
-      } else {
-        throw "Could not open the map.";
-      }
-    }
 
-    void _openInGoogleMaps(double latitude, double longitude) async {
+
+    void openInGoogleMaps(double latitude, double longitude) async {
       String googleUrl =
           "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
       if (await canLaunch(googleUrl)) {
@@ -263,7 +253,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                           width: 80, // Customize the width
                                           height: 27, // Customize the height
                                           decoration: BoxDecoration(
-                                            color: Color(
+                                            color: const Color(
                                                 0xFF00AAAD), // Background color
                                             borderRadius:
                                                 BorderRadius.circular(50),
@@ -294,7 +284,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                           ),
                                         ),
                                       )
-                                      ):SizedBox.shrink(),
+                                      ):const SizedBox.shrink(),
                               ],
                             ),
                           ],
@@ -365,7 +355,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  _openInGoogleMaps(
+                                  openInGoogleMaps(
                                     double.parse(doc["latitude"]),
                                     double.parse(doc["longitude"]),
                                   );
@@ -378,7 +368,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                 height: 200,
                                 child: GestureDetector(
                                   onTap: () {
-                                    _openInGoogleMaps(
+                                    openInGoogleMaps(
                                       double.parse(doc["latitude"]),
                                       double.parse(doc["longitude"]),
                                     );
@@ -391,7 +381,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                     ),
                                     markers: {
                                       Marker(
-                                        markerId: MarkerId("cartLocation"),
+                                        markerId: const MarkerId("cartLocation"),
                                         position: location,
                                       ),
                                     },
@@ -465,11 +455,11 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                             Flexible(
                                                 child: Text(
                                               name,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: Color(0xFF004AAD)),
                                             )),
                                             Text("$quantity"),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 8,
                                             ),
                                             Container(
@@ -527,7 +517,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                 backgroundColor:
                                     controller.status.value == "Requested"
                                         ? Colors.grey
-                                        : Color(0xFF007ABB),
+                                        : const Color(0xFF007ABB),
                                 minimumSize: const Size(160, 55),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
@@ -546,7 +536,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                               },
                               child: Text(
                                 'Continue'.tr,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 15),
                               ),
                             ),
@@ -565,7 +555,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
                           Expanded(
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xFF007ABB),
+                                backgroundColor: const Color(0xFF007ABB),
                                 minimumSize: const Size(160, 55),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
@@ -577,16 +567,16 @@ class AppointmentDetailsScreen extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.chat_rounded,
                                     color: Colors.white,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 8,
                                   ),
                                   Text(
                                     'Chat With User'.tr,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.white, fontSize: 16),
                                   ),
                                 ],
@@ -613,7 +603,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
             color: Colors.grey.shade300,
             blurRadius: 5,
             spreadRadius: 2,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -659,7 +649,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
               value,
               style: TextStyle(
                 fontWeight: isHighlighted ? FontWeight.bold : FontWeight.normal,
-                color: Color(0xFF004AAD),
+                color: const Color(0xFF004AAD),
               ),
             ),
           ),
@@ -693,7 +683,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
               style: TextStyle(
                   fontWeight:
                       isHighlighted ? FontWeight.bold : FontWeight.normal,
-                  color: Color(0xFF004AAD),
+                  color: const Color(0xFF004AAD),
                   decoration: TextDecoration.underline
                   //                     .underline,
                   ),

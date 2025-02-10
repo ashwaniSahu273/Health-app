@@ -10,7 +10,6 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NurseController extends GetxController {
-
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController idNumberController = TextEditingController();
   // final TextEditingController mobileNumberController = TextEditingController();
@@ -146,12 +145,8 @@ class NurseController extends GetxController {
     try {
       isLoading.value = true;
 
-      final docRef =
-          FirebaseFirestore.instance.collection("User_appointments").doc();
-
-      final docId = docRef.id;
-
-      await docRef.set({
+      // Prepare data to send to Payment Screen
+      final orderData = {
         "email": firebaseUser.email,
         "name": fullNameController.text,
         "phone": phoneController.text,
@@ -162,31 +157,23 @@ class NurseController extends GetxController {
         "latitude": latitude.value,
         "longitude": longitude.value,
         "packages": cartItems,
+        "status": "Requested",
         "type": "Nurse Visit",
-        "paymentStatus": paymentStatus.value,
+        "paymentStatus": "INITIATED",
         "paymentUrl": paymentUrl.value,
         "chargeId": chargeId.value,
         "selected_time": currentTime.value,
-        "status": "Requested",
         'createdAt': DateTime.now(),
         "accepted_by": null
-      });
+      };
 
       await openPaymentUrl(paymentUrl.value);
 
       Get.to(PaymentSuccessScreen(
         userModel: userModel,
         firebaseUser: firebaseUser,
-        docId: docId,
-        chargeId: chargeId.value,
+        orderData: orderData, // Pass order data instead of docId
       ));
-
-      // Get.snackbar(
-      //   "Success",
-      //   "Successfully completed",
-      //   backgroundColor: Colors.lightGreen,
-      //   colorText: Colors.white,
-      // );
     } catch (e) {
       Get.snackbar('Error', 'Failed to confirm. Please try again.');
     } finally {

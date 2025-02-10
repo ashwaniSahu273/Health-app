@@ -594,7 +594,7 @@ class LabPaymentPage extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '$tax ${'SAR'.tr}',
+                                  '${tax.toStringAsFixed(2)} ${'SAR'.tr}',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.black,
