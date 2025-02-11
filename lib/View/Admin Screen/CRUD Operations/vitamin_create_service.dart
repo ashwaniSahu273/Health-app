@@ -299,6 +299,13 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
                           .collection('VitaminServices')
                           .doc(widget.service.id.toString())
                           .update(newService);
+
+                      Get.snackbar(
+                        "Success!",
+                        "Service Updated Successfully",
+                        backgroundColor: Colors.green,
+                        colorText: Colors.white,
+                      );
                     } else {
                       final docRef = FirebaseFirestore.instance
                           .collection('VitaminServices')
@@ -306,6 +313,13 @@ class _VitaminCreateServiceState extends State<VitaminCreateService> {
                       final id = docRef.id;
                       newService['id'] = id;
                       docRef.set(newService);
+
+                      Get.snackbar(
+                        "Success!",
+                        "New Service Created Successfully",
+                        backgroundColor: Colors.green,
+                        colorText: Colors.white,
+                      );
                     }
 
                     Navigator.pop(context, newService);

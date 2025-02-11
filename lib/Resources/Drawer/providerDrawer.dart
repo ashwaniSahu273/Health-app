@@ -88,7 +88,7 @@ class _ProviderDrawerState extends State<ProviderDrawer> {
           _buildListTile(
             context,
             0,
-            Icons.info,
+            Icons.home,
             "Home".tr,
             () {
               Get.offAll(() => Service_Provider_Home(

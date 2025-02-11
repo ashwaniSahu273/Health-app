@@ -225,10 +225,7 @@ class AllMeetings extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: MyBottomNavBar(
-        userModel: userModel,
-        firebaseUser: firebaseUser,
-      ),
+     
     );
   }
 }

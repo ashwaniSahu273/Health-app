@@ -50,73 +50,89 @@ class _User_RegisterState extends State<User_Register> {
       signUp(email, password);
     }
   }
+void signUp(String email, String password) async {
+  UserCredential? credential;
 
-  void signUp(String email, String password) async {
-    UserCredential? credential;
+  UIHelper.showLoadingDialog(context, "Creating new account..");
 
-    UIHelper.showLoadingDialog(context, "Creating new account..");
+  try {
+    // Check if the email already exists in Firestore
+    QuerySnapshot existingUserSnapshot = await FirebaseFirestore.instance
+        .collection("Registered Users")
+        .where("email", isEqualTo: email)
+        .get();
 
-    try {
-      // Check if the user already exists
-      User? existingUser = await FirebaseAuth.instance
-          .fetchSignInMethodsForEmail(email)
-          .then((methods) {
-        return methods.isNotEmpty ? FirebaseAuth.instance.currentUser : null;
-      });
+    if (existingUserSnapshot.docs.isNotEmpty) {
+      var existingUserData = existingUserSnapshot.docs.first.data() as Map<String, dynamic>;
 
-      if (existingUser != null) {
+      // If the user was deleted, prevent sign-up
+      if (existingUserData.containsKey("isDeleted") &&
+          existingUserData["isDeleted"] == true) {
         Navigator.pop(context);
-
         Get.snackbar(
           "Sign Up Error",
-          "The email address is already in use by another account.",
+          "This email has been Blocked by an admin.",
           backgroundColor: Colors.red,
-          colorText: Colors.white,
+          colorText: Colors.black,
         );
         return;
       }
 
-      credential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException catch (ex) {
+      // If email exists and not deleted, prevent new sign-up
       Navigator.pop(context);
-
       Get.snackbar(
         "Sign Up Error",
-        ex.message!,
+        "The email address is already in use by another account.",
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
-
-      print(ex.message.toString());
+      return;
     }
 
-    if (credential != null) {
-      String uid = credential.user!.uid;
-      UserModel newUser = UserModel(
-        uid: uid,
-        email: email,
-        fullname: "",
-        profilePic: "",
-        role: "user",
-        timeStamp: Timestamp.now(),
-      );
-      await FirebaseFirestore.instance
-          .collection("Registered Users")
-          .doc(uid)
-          .set(newUser.tomap())
-          .then((value) {
-        Navigator.popUntil(context, (route) => route.isFirst);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return CompleteProfile(
-                userModel: newUser, firebaseUser: credential!.user!);
-          }),
-        );
-      });
-    }
+    // Create new account in FirebaseAuth
+    credential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password);
+  } on FirebaseAuthException catch (ex) {
+    Navigator.pop(context);
+    Get.snackbar(
+      "Sign Up Error",
+      ex.message!,
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+    );
+    print(ex.message.toString());
+    return;
   }
+
+  if (credential != null) {
+    String uid = credential.user!.uid;
+    UserModel newUser = UserModel(
+      uid: uid,
+      email: email,
+      fullname: "",
+      profilePic: "",
+      role: "user",
+      isDeleted: false,
+      timeStamp: Timestamp.now(),
+    );
+
+    await FirebaseFirestore.instance
+        .collection("Registered Users")
+        .doc(uid)
+        .set(newUser.tomap())
+        .then((value) {
+      Navigator.popUntil(context, (route) => route.isFirst);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) {
+          return CompleteProfile(
+              userModel: newUser, firebaseUser: credential!.user!);
+        }),
+      );
+    });
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {

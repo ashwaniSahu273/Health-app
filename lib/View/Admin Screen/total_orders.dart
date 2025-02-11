@@ -234,7 +234,7 @@ class _AppointmentTileState extends State<AppointmentTile> {
               borderRadius: BorderRadius.circular(12),
             ),
             elevation: 0,
-            margin: EdgeInsets.only(left: 16, right: 16, top: 16),
+            margin: const EdgeInsets.only(left: 16, right: 16, top: 16),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
@@ -247,13 +247,13 @@ class _AppointmentTileState extends State<AppointmentTile> {
                       borderRadius: BorderRadius.circular(8),
                       color: Colors.lightBlue[50],
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons
                           .medical_services, // Replace with the actual icon or asset
                       color: Colors.blue,
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   // Content
                   Expanded(
                     child: Column(
@@ -261,19 +261,19 @@ class _AppointmentTileState extends State<AppointmentTile> {
                       children: [
                         Text(
                           widget.reportName,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFF007ABB),
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               widget.doc["type"],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,
@@ -284,9 +284,9 @@ class _AppointmentTileState extends State<AppointmentTile> {
                               style: TextStyle(
                                 fontSize: 14,
                                 color: widget.name == "Requested"
-                                    ? Color(0xFFC06440)
+                                    ? const Color(0xFFC06440)
                                     : widget.name == "accepted"
-                                        ? Color(0xFFFFC300)
+                                        ? const Color(0xFFFFC300)
                                         : Colors.green,
                                 fontWeight: FontWeight.bold,
                               ),

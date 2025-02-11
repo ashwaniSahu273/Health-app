@@ -87,7 +87,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
                   )), // Double-arrow icon
               Text(
                 'Patient Record'.tr,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
                     fontFamily: "Roboto"),
@@ -212,7 +212,7 @@ class _AppointmentTileState extends State<AppointmentTile> {
               borderRadius: BorderRadius.circular(12),
             ),
             elevation: 0,
-            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
@@ -225,13 +225,13 @@ class _AppointmentTileState extends State<AppointmentTile> {
                       borderRadius: BorderRadius.circular(8),
                       color: Colors.lightBlue[50],
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons
                           .medical_services, // Replace with the actual icon or asset
                       color: Colors.blue,
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   // Content
                   Expanded(
                     child: Column(
@@ -239,14 +239,19 @@ class _AppointmentTileState extends State<AppointmentTile> {
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                           children: [
-                            Text(
-                              widget.reportName,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF007ABB),
+                            Expanded(
+                              child: Text(
+                                widget.reportName,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF007ABB),
+                                ),
+                                overflow: TextOverflow
+                                    .visible, // Ensures wrapping instead of ellipsis
+                                softWrap:
+                                    true, // Allows text to wrap to the next line
                               ),
                             ),
                             Container(
@@ -263,9 +268,10 @@ class _AppointmentTileState extends State<AppointmentTile> {
                                     ? "PAID"
                                     : "FAILED",
                                 style: TextStyle(
-                                  color: widget.doc["paymentStatus"] == "CAPTURED"
-                                      ? Colors.green
-                                      : Colors.red,
+                                  color:
+                                      widget.doc["paymentStatus"] == "CAPTURED"
+                                          ? Colors.green
+                                          : Colors.red,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -273,13 +279,13 @@ class _AppointmentTileState extends State<AppointmentTile> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               widget.doc['type'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,
@@ -290,9 +296,9 @@ class _AppointmentTileState extends State<AppointmentTile> {
                               style: TextStyle(
                                 fontSize: 14,
                                 color: widget.name == "Requested"
-                                    ? Color(0xFFC06440)
+                                    ? const Color(0xFFC06440)
                                     : widget.name == "Accepted"
-                                        ? Color(0xFFFFC300)
+                                        ? const Color(0xFFFFC300)
                                         : Colors.green,
                                 fontWeight: FontWeight.bold,
                               ),

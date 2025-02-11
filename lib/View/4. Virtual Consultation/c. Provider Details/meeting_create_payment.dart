@@ -104,7 +104,7 @@ class MeetingCreatePaymentScreen extends StatelessWidget {
           chargeId: orderData["chargeId"], orderData: orderData),
     );
 
-    Future.delayed(const Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 15), () {
       controller.isButtonEnabled.value = true;
     });
 
@@ -122,30 +122,32 @@ class MeetingCreatePaymentScreen extends StatelessWidget {
                 if (controller.paymentStatus.value == "INITIATED") ...[
                   const CircularProgressIndicator(),
                   const SizedBox(height: 20),
-                  const Text(
-                    "Payment Pending...",
-                    style: TextStyle(fontSize: 20, color: Colors.orange),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    "If you did not complete the payment, please retry.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 14, color: Colors.black54),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await openPaymentUrl(orderData["paymentUrl"]);
-                    },
-                    child: const Text("Retry Payment"),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Get.offAll(HomePage(
+                  if (controller.isButtonEnabled.value) ...[
+                    const Text(
+                      "Payment Pending...",
+                      style: TextStyle(fontSize: 20, color: Colors.orange),
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      "If you did not complete the payment, please retry.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 14, color: Colors.black54),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () async {
+                        await openPaymentUrl(orderData["paymentUrl"]);
+                      },
+                      child: const Text("Retry Payment"),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Get.offAll(HomePage(
                           userModel: userModel, firebaseUser: firebaseUser));
-                    },
-                    child: const Text("Cancel Order"),
-                  ),
+                      },
+                      child: const Text("Cancel Order"),
+                    ),
+                  ],
                 ],
 
                 // ✅ CASE: Payment Success

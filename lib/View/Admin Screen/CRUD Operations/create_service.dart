@@ -299,6 +299,13 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
                           .collection('LaboratoryServices')
                           .doc(widget.service.id.toString())
                           .update(newService);
+
+                      Get.snackbar(
+                        "Success!",
+                        "Service Edited Successfully",
+                        backgroundColor: Colors.green,
+                        colorText: Colors.white,
+                      );
                     } else {
                       final docRef = FirebaseFirestore.instance
                           .collection('LaboratoryServices')
@@ -306,6 +313,12 @@ class _AddOrEditServiceFormState extends State<AddOrEditServiceForm> {
                       final id = docRef.id;
                       newService['id'] = id;
                       docRef.set(newService);
+                      Get.snackbar(
+                        "Success!",
+                        "New Service Created Successfully",
+                        backgroundColor: Colors.green,
+                        colorText: Colors.white,
+                      );
                     }
 
                     Navigator.pop(context, newService);

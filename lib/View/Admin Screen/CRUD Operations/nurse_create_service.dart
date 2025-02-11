@@ -138,8 +138,6 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
       }
     }
 
-    
-
     return WillPopScope(
       onWillPop: () async {
         controller.nurseUploadedImageUrl.value = ''; // Reset the variable
@@ -318,6 +316,13 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
                           .collection('NurseServices')
                           .doc(widget.service.id.toString())
                           .update(newService);
+
+                      Get.snackbar(
+                        "Success!",
+                        "Service Updated Successfully",
+                        backgroundColor: Colors.green,
+                        colorText: Colors.white,
+                      );
                     } else {
                       final docRef = FirebaseFirestore.instance
                           .collection('NurseServices')
@@ -325,6 +330,13 @@ class _NurseCreateServiceState extends State<NurseCreateService> {
                       final id = docRef.id;
                       newService['id'] = id;
                       docRef.set(newService);
+
+                      Get.snackbar(
+                        "Success!",
+                        "New Service Created Successfully",
+                        backgroundColor: Colors.green,
+                        colorText: Colors.white,
+                      );
                     }
 
                     Navigator.pop(context, newService);

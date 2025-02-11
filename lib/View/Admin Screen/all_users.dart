@@ -29,8 +29,10 @@ class TotalUsers extends StatefulWidget {
 }
 
 class _TotalUsersState extends State<TotalUsers> {
-  final user_appointments =
-      FirebaseFirestore.instance.collection("Registered Users").where("role",isEqualTo: "user").snapshots();
+  final user_appointments = FirebaseFirestore.instance
+      .collection("Registered Users")
+      .where("role", isEqualTo: "user")
+      .snapshots();
 
   final acceptedAppointments =
       FirebaseFirestore.instance.collection("Accepted_appointments");
@@ -45,13 +47,13 @@ class _TotalUsersState extends State<TotalUsers> {
     const Color(0xFFfcd1c7),
   ];
 
-  void _deleteDoctor(BuildContext context, String docId) {
+  void blockUser(BuildContext context, String docId) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Confirm Deletion"),
-          content: const Text("Are you sure you want to delete this User?"),
+          title: const Text("Confirm"),
+          content: const Text("Are you sure you want to Block this User?"),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
@@ -63,9 +65,51 @@ class _TotalUsersState extends State<TotalUsers> {
                 await FirebaseFirestore.instance
                     .collection('Registered Users')
                     .doc(docId)
-                    .delete();
+                    .update({'isDeleted': true});
+
+                Get.snackbar(
+                  "User Blocked",
+                  "The user has been marked as blocked.",
+                  backgroundColor: Colors.red,
+                  colorText: Colors.white,
+                );
               },
-              child: const Text("Delete", style: TextStyle(color: Colors.red)),
+              child: const Text("Block", style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void unBlockUser(BuildContext context, String docId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Confirm"),
+          content: const Text("Are you sure you want to UnBlock this User?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+                await FirebaseFirestore.instance
+                    .collection('Registered Users')
+                    .doc(docId)
+                    .update({'isDeleted': false});
+
+                Get.snackbar(
+                  "User UnBlocked",
+                  "The user has been marked as UnBlocked.",
+                  backgroundColor: Colors.green,
+                  colorText: Colors.white,
+                );
+              },
+              child: const Text("UnBlock", style: TextStyle(color: Colors.red)),
             ),
           ],
         );
@@ -106,8 +150,7 @@ class _TotalUsersState extends State<TotalUsers> {
                 const Divider(),
 
                 // User Info Section
-                _buildUserInfoRow(
-                    Icons.perm_identity, "ID", data['idNumber']),
+                _buildUserInfoRow(Icons.perm_identity, "ID", data['idNumber']),
 
                 _buildUserInfoRow(Icons.work, "Role", data['role']),
                 _buildUserInfoRow(Icons.access_time, "Joining", formattedTime),
@@ -283,10 +326,23 @@ class _TotalUsersState extends State<TotalUsers> {
                                 ),
                               ],
                             ),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.delete, color: Colors.red),
-                              onPressed: () => _deleteDoctor(context, doc.id),
-                            ),
+                            trailing: data["isDeleted"] == true
+                                ? ElevatedButton(
+                                  onPressed: () { 
+                                    unBlockUser(context, doc.id);
+                                   },
+                                  child: const Text(
+                                      'Blocked',
+                                      style: TextStyle(
+                                          fontSize: 14.0, color: Colors.red),
+                                    ),
+                                )
+                                : IconButton(
+                                    icon: const Icon(Icons.block,
+                                        color: Colors.red),
+                                    onPressed: () =>
+                                        blockUser(context, doc.id),
+                                  ),
                             onTap: () => _showUserDetails(context, data),
                           ),
                         );

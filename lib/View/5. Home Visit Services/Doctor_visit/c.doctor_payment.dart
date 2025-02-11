@@ -71,17 +71,17 @@ class DoctorPayment extends StatelessWidget {
 
           cartController.setUserOrderInfo(userModel, firebaseUser);
         } else {
-          Get.snackbar("Error", "Payment initiation failed");
+          Get.snackbar("Error", "Payment initiation failed",
+              backgroundColor: Colors.red[500], colorText: Colors.white);
         }
       } catch (e) {
-        Get.snackbar("Error", "${e.toString()}");
+        Get.snackbar("Error", "Payment initiation failed",
+            backgroundColor: Colors.red[500], colorText: Colors.white);
         return;
       } finally {
         EasyLoading.dismiss();
       }
     }
-
-
 
     return Scaffold(
       appBar: AppBar(
@@ -185,7 +185,7 @@ class DoctorPayment extends StatelessWidget {
                             ),
                             SizedBox(width: 5),
                             Obx(
-                             ()=>Text(
+                              () => Text(
                                 '${cartController.selectedDateController.value} - ${cartController.selectedTimeController.value}',
                                 style: TextStyle(
                                     fontSize: 16,

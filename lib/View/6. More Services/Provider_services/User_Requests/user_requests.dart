@@ -181,47 +181,62 @@ class UserRequests extends StatelessWidget {
                                                     maxLines: 2,
                                                   ),
                                                   const SizedBox(height: 4),
-                                                  Text(
-                                                    doc['type'].toString(),
-                                                    style: const TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.red,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 2),
-                                                    decoration: BoxDecoration(
-                                                      color: doc[
-                                                                  "paymentStatus"] ==
-                                                              "CAPTURED"
-                                                          ? Colors.green
-                                                              .withOpacity(0.2)
-                                                          : Colors.red
-                                                              .withOpacity(0.2),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                    child: Text(
-                                                      doc["paymentStatus"] ==
-                                                              "CAPTURED"
-                                                          ? "PAID"
-                                                          : "FAILED",
-                                                      style: TextStyle(
-                                                        color: doc[
-                                                                    "paymentStatus"] ==
-                                                                "CAPTURED"
-                                                            ? Colors.green
-                                                            : Colors.red,
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(right: 16.0),
+                                                    child: Row(
+                                                    
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          doc['type'].toString(),
+                                                          style: const TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.red,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(width:20),
+                                                        Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  horizontal: 10,
+                                                                  vertical: 2),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: doc["paymentStatus"] ==
+                                                                    "CAPTURED"
+                                                                ? Colors.green
+                                                                    .withOpacity(
+                                                                        0.2)
+                                                                : Colors.red
+                                                                    .withOpacity(
+                                                                        0.2),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(8),
+                                                          ),
+                                                          child: Text(
+                                                            doc["paymentStatus"] ==
+                                                                    "CAPTURED"
+                                                                ? "PAID"
+                                                                : "FAILED",
+                                                            style: TextStyle(
+                                                              color:
+                                                                  doc["paymentStatus"] ==
+                                                                          "CAPTURED"
+                                                                      ? Colors
+                                                                          .green
+                                                                      : Colors
+                                                                          .red,
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
                                                 ],
@@ -255,5 +270,4 @@ class UserRequests extends StatelessWidget {
       ),
     );
   }
-
 }

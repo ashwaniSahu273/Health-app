@@ -62,6 +62,13 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                     .doc(docId)
                     .delete();
 
+                Get.snackbar(
+                  "Success!",
+                  "Service Deleted Successfully",
+                  backgroundColor: Colors.green,
+                  colorText: Colors.white,
+                );
+
                 setState(() {
                   _serviceListFuture = _fetchServices();
                 });
@@ -97,7 +104,6 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                     ),
                   ),
                 ).then((_) {
-        
                   setState(() {
                     _serviceListFuture = _fetchServices();
                   });

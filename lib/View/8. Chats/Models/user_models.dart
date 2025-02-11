@@ -13,8 +13,10 @@ class UserModel {
   String? dob;
   String? role;
   Timestamp? timeStamp;
+  bool? isDeleted;
 
   UserModel({
+    this.isDeleted,
     this.fullname,
     this.idNumber,
     this.email,
@@ -42,6 +44,7 @@ class UserModel {
     dob = map['dob'];
     role = map['role'];
     timeStamp = map['timeStamp'];
+    isDeleted = map['isDeleted'];
   }
 
   Map<String, dynamic> tomap() {
@@ -57,7 +60,8 @@ class UserModel {
       'gender': gender,
       'dob': dob,
       'role': role,
-      'timeStamp': timeStamp
+      'timeStamp': timeStamp,
+      'isDeleted': isDeleted
     };
   }
 }

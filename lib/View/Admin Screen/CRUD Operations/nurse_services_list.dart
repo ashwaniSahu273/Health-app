@@ -59,6 +59,13 @@ class _NurseServicesListState extends State<NurseServicesList> {
                     .doc(docId)
                     .delete();
 
+                Get.snackbar(
+                  "Success!",
+                  "Service Deleted Successfully",
+                  backgroundColor: Colors.green,
+                  colorText: Colors.white,
+                );
+
                 setState(() {
                   _serviceListFuture = _fetchServices();
                 });
