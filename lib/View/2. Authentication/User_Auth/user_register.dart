@@ -104,33 +104,31 @@ void signUp(String email, String password) async {
     return;
   }
 
-  if (credential != null) {
-    String uid = credential.user!.uid;
-    UserModel newUser = UserModel(
-      uid: uid,
-      email: email,
-      fullname: "",
-      profilePic: "",
-      role: "user",
-      isDeleted: false,
-      timeStamp: Timestamp.now(),
-    );
+  String uid = credential.user!.uid;
+  UserModel newUser = UserModel(
+    uid: uid,
+    email: email,
+    fullname: "",
+    profilePic: "",
+    role: "user",
+    isDeleted: false,
+    timeStamp: Timestamp.now(),
+  );
 
-    await FirebaseFirestore.instance
-        .collection("Registered Users")
-        .doc(uid)
-        .set(newUser.tomap())
-        .then((value) {
-      Navigator.popUntil(context, (route) => route.isFirst);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) {
-          return CompleteProfile(
-              userModel: newUser, firebaseUser: credential!.user!);
-        }),
-      );
-    });
-  }
+  await FirebaseFirestore.instance
+      .collection("Registered Users")
+      .doc(uid)
+      .set(newUser.tomap())
+      .then((value) {
+    Navigator.popUntil(context, (route) => route.isFirst);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return CompleteProfile(
+            userModel: newUser, firebaseUser: credential!.user!);
+      }),
+    );
+  });
 }
 
 

@@ -69,68 +69,66 @@ void logIn(String email, String password) async {
     return;
   }
 
-  if (credential != null) {
-    String uid = credential.user!.uid;
+  String uid = credential.user!.uid;
 
-    DocumentSnapshot userData = await FirebaseFirestore.instance
-        .collection("Registered Users")
-        .doc(uid)
-        .get();
+  DocumentSnapshot userData = await FirebaseFirestore.instance
+      .collection("Registered Users")
+      .doc(uid)
+      .get();
 
-    if (!userData.exists) {
-      // User is not registered
-      Get.snackbar(
-        "Login Error",
-        "This email is not registered.",
-        backgroundColor: Colors.white,
-        colorText: Colors.black,
-      );
+  if (!userData.exists) {
+    // User is not registered
+    Get.snackbar(
+      "Login Error",
+      "This email is not registered.",
+      backgroundColor: Colors.white,
+      colorText: Colors.black,
+    );
 
-      FirebaseAuth.instance.signOut(); // Log user out
-      Navigator.pop(context);
-      return;
-    }
+    FirebaseAuth.instance.signOut(); // Log user out
+    Navigator.pop(context);
+    return;
+  }
 
-    UserModel userModel =
-        UserModel.frommap(userData.data() as Map<String, dynamic>);
+  UserModel userModel =
+      UserModel.frommap(userData.data() as Map<String, dynamic>);
 
-    // Check if user is deleted
-    Map<String, dynamic> data = userData.data() as Map<String, dynamic>;
-    if (data.containsKey("isDeleted") &&
-        data["isDeleted"] == true) {
-      Get.snackbar(
-        "Account Disabled",
-        "Your account has been Blocked by an admin.",
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+  // Check if user is deleted
+  Map<String, dynamic> data = userData.data() as Map<String, dynamic>;
+  if (data.containsKey("isDeleted") &&
+      data["isDeleted"] == true) {
+    Get.snackbar(
+      "Account Disabled",
+      "Your account has been Blocked by an admin.",
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+    );
 
-      FirebaseAuth.instance.signOut(); // Log user out
-      Navigator.pop(context);
-      return;
-    }
+    FirebaseAuth.instance.signOut(); // Log user out
+    Navigator.pop(context);
+    return;
+  }
 
-    Navigator.popUntil(context, (route) => route.isFirst);
+  Navigator.popUntil(context, (route) => route.isFirst);
 
-    // Navigate based on user role
-    if (userModel.role == "admin") {
-      Get.offAll(Admin_Home(
-        userModel: userModel,
-        firebaseUser: credential.user!,
-        userEmail: userModel.email!,
-      ));
-    } else if (userModel.role == "provider") {
-      Get.offAll(Service_Provider_Home(
-        userModel: userModel,
-        firebaseUser: credential.user!,
-        userEmail: '',
-      ));
-    } else if (userModel.role == "user") {
-      Get.offAll(HomePage(
-        userModel: userModel,
-        firebaseUser: credential.user!,
-      ));
-    }
+  // Navigate based on user role
+  if (userModel.role == "admin") {
+    Get.offAll(Admin_Home(
+      userModel: userModel,
+      firebaseUser: credential.user!,
+      userEmail: userModel.email!,
+    ));
+  } else if (userModel.role == "provider") {
+    Get.offAll(Service_Provider_Home(
+      userModel: userModel,
+      firebaseUser: credential.user!,
+      userEmail: '',
+    ));
+  } else if (userModel.role == "user") {
+    Get.offAll(HomePage(
+      userModel: userModel,
+      firebaseUser: credential.user!,
+    ));
   }
 }
 

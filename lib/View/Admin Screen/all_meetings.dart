@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/Bottom_Navigation_Bar/bottom_controller.dart';
-import 'package:harees_new_project/Resources/Bottom_Navigation_Bar/bottom_nav.dart';
 import 'package:harees_new_project/Resources/Services_grid/user_side_meeting_controller.dart';
 import 'package:harees_new_project/Resources/Services_grid/user_side_meeting_details.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
