@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/provider_home.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/complete_details.dart';
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/chat_room_model.dart';
@@ -35,8 +36,6 @@ class AppointmentDetailsScreen extends StatelessWidget {
       double.parse(doc["latitude"]),
       double.parse(doc["longitude"]),
     );
-
-
 
     void openInGoogleMaps(double latitude, double longitude) async {
       String googleUrl =
@@ -232,59 +231,62 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                 ),
                                 // const SizedBox(height: 8), // Spacing between buttons
                                 // Accept Button
-                                 doc["paymentStatus"] == "CAPTURED" ? Obx(() => controller.status.value == "Requested"
-                                    ? GestureDetector(
-                                        onTap: () {
-                                          Get.defaultDialog(
-                                            title: 'Accept Appointment'.tr,
-                                            middleText: "Are you sure?".tr,
-                                            textConfirm: 'Yes'.tr,
-                                            textCancel: 'No'.tr,
-                                            onConfirm: () {
-                                              controller.accept(doc.id);
-                                              Get.back(); // Close the dialog
+                                doc["paymentStatus"] == "CAPTURED"
+                                    ? Obx(() => controller.status.value ==
+                                            "Requested"
+                                        ? GestureDetector(
+                                            onTap: () {
+                                              Get.defaultDialog(
+                                                title: 'Accept Appointment'.tr,
+                                                middleText: "Are you sure?".tr,
+                                                textConfirm: 'Yes'.tr,
+                                                textCancel: 'No'.tr,
+                                                onConfirm: () {
+                                                  controller.accept(doc.id);
+                                                  Get.back(); // Close the dialog
+                                                },
+                                                onCancel: () {},
+                                              );
                                             },
-                                            onCancel: () {
-                                      
-                                            },
-                                          );
-                                        },
-                                        child: Container(
-                                          width: 80, // Customize the width
-                                          height: 27, // Customize the height
-                                          decoration: BoxDecoration(
-                                            color: const Color(
-                                                0xFF00AAAD), // Background color
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                          ),
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 12, vertical: 5),
-                                          child: const Text(
-                                            "Accept",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 11,
+                                            child: Container(
+                                              width: 80, // Customize the width
+                                              height:
+                                                  27, // Customize the height
+                                              decoration: BoxDecoration(
+                                                color: const Color(
+                                                    0xFF00AAAD), // Background color
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                              ),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12,
+                                                      vertical: 5),
+                                              child: const Text(
+                                                "Accept",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 11,
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      )
-                                    : const Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10.0, vertical: 8),
-                                        child: Text(
-                                          "Accepted",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: Color(0xFF00AAAD),
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      )
-                                      ):const SizedBox.shrink(),
+                                          )
+                                        : const Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 10.0, vertical: 8),
+                                            child: Text(
+                                              "Accepted",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Color(0xFF00AAAD),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ))
+                                    : const SizedBox.shrink(),
                               ],
                             ),
                           ],
@@ -304,49 +306,45 @@ class AppointmentDetailsScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      const Text(
-                                        "Payment: ",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 2),
-                                        decoration: BoxDecoration(
-                                          color: doc["paymentStatus"] ==
-                                                  "CAPTURED"
-                                              ? Colors.green.withOpacity(0.2)
-                                              : Colors.red.withOpacity(0.2),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Text(
-                                          doc["paymentStatus"] == "CAPTURED"
-                                              ? "PAID"
-                                              : "FAILED",
-                                          style: TextStyle(
-                                            color: doc["paymentStatus"] ==
-                                                    "CAPTURED"
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    "Payment: ",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 2),
+                                    decoration: BoxDecoration(
+                                      color: doc["paymentStatus"] == "CAPTURED"
+                                          ? Colors.green.withOpacity(0.2)
+                                          : Colors.red.withOpacity(0.2),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text(
+                                      doc["paymentStatus"] == "CAPTURED"
+                                          ? "PAID"
+                                          : "FAILED",
+                                      style: TextStyle(
+                                        color:
+                                            doc["paymentStatus"] == "CAPTURED"
                                                 ? Colors.green
                                                 : Colors.red,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                    ],
+                                    ),
                                   ),
+                                ],
+                              ),
                               _buildDetailRow(
                                 "Name",
                                 doc["name"],
                               ),
-                            
                               _buildDetailRow("Gender", doc["gender"]),
                               _buildDetailRow("DOB", doc["dob"]),
                               _buildDetailRow(
@@ -381,7 +379,8 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                     ),
                                     markers: {
                                       Marker(
-                                        markerId: const MarkerId("cartLocation"),
+                                        markerId:
+                                            const MarkerId("cartLocation"),
                                         position: location,
                                       ),
                                     },
@@ -508,38 +507,91 @@ class AppointmentDetailsScreen extends StatelessWidget {
                   () => Container(
                       color: Colors.white,
                       padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Column(
                         children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    controller.status.value == "Requested"
-                                        ? Colors.grey
-                                        : const Color(0xFF007ABB),
-                                minimumSize: const Size(160, 55),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                          controller.status.value != "Requested" ||
+                                  doc["status"] == "Accepted"
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              const Color(0xFF007ABB),
+                                          minimumSize: const Size(160, 55),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          createChatroom();
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const Icon(
+                                              Icons.chat_rounded,
+                                              color: Colors.white,
+                                            ),
+                                            const SizedBox(
+                                              width: 8,
+                                            ),
+                                            Text(
+                                              'Chat With User'.tr,
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : SizedBox.shrink(),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        controller.status.value == "Requested"
+                                            ? Colors.grey
+                                            : const Color(0xFF007ABB),
+                                    minimumSize: const Size(160, 55),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    if (controller.status.value !=
+                                        "Requested") {
+                                      Get.to(() =>
+                                          CompleteAppointmentDetailsScreen(
+                                            userModel: userModel,
+                                            firebaseUser: firebaseUser,
+                                            doc: doc,
+                                            // userModel: userModel,
+                                            // firebaseUser: firebaseUser,
+                                          ));
+                                    }
+                                  },
+                                  child: Text(
+                                    'Continue'.tr,
+                                    style: const TextStyle(
+                                        color: Colors.white, fontSize: 15),
+                                  ),
                                 ),
                               ),
-                              onPressed: () {
-                                if (controller.status.value != "Requested") {
-                                  Get.to(() => CompleteAppointmentDetailsScreen(
-                                        userModel: userModel,
-                                        firebaseUser: firebaseUser,
-                                        doc: doc,
-                                        // userModel: userModel,
-                                        // firebaseUser: firebaseUser,
-                                      ));
-                                }
-                              },
-                              child: Text(
-                                'Continue'.tr,
-                                style: const TextStyle(
-                                    color: Colors.white, fontSize: 15),
-                              ),
-                            ),
+                            ],
                           ),
                         ],
                       )),
@@ -549,39 +601,81 @@ class AppointmentDetailsScreen extends StatelessWidget {
                   ? Container(
                       color: Colors.white,
                       padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Column(
                         children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF007ABB),
-                                minimumSize: const Size(160, 55),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF007ABB),
+                                    minimumSize: const Size(160, 55),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    createChatroom();
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        Icons.chat_rounded,
+                                        color: Colors.white,
+                                      ),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                        'Chat With User'.tr,
+                                        style: const TextStyle(
+                                            color: Colors.white, fontSize: 16),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                              onPressed: () {
-                                createChatroom();
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.chat_rounded,
-                                    color: Colors.white,
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        controller.status.value == "Requested"
+                                            ? Colors.grey
+                                            : const Color(0xFF007ABB),
+                                    minimumSize: const Size(160, 55),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
                                   ),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  Text(
-                                    'Chat With User'.tr,
+                                  onPressed: () {
+                                    if (controller.status.value !=
+                                        "Requested") {
+                                      controller.completeAppointment(doc.id);
+                                      Get.offAll(Service_Provider_Home(
+                                        userModel: userModel,
+                                        firebaseUser: firebaseUser,
+                                        userEmail: '',
+                                      ));
+                                    }
+                                  },
+                                  child: Text(
+                                    'Complete Appointment'.tr,
                                     style: const TextStyle(
-                                        color: Colors.white, fontSize: 16),
+                                        color: Colors.white, fontSize: 15),
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                         ],
                       ))

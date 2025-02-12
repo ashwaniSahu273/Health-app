@@ -77,6 +77,61 @@ class UserRequestsController extends GetxController {
         });
 
         status.value = 'Accepted';
+        Get.snackbar(
+          "Success".tr,
+          "Appointment Accepted. Check your accepted appointments.".tr,
+          backgroundColor: const Color.fromARGB(255, 104, 247, 109),
+          colorText: Colors.black,
+          borderColor: Colors.black,
+          borderWidth: 1,
+          duration: const Duration(seconds: 1),
+        );
+      });
+
+      print('Appointment accepted successfully.');
+    } catch (e) {
+      print('Error accepting appointment: $e');
+    }
+  }
+
+  Future<void> completeAppointment(String appointmentId) async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    final user = _auth.currentUser;
+
+    final userAppointmentsRef = firestore.collection('User_appointments');
+
+    try {
+      await firestore.runTransaction((transaction) async {
+        DocumentSnapshot userAppointmentSnapshot =
+            await transaction.get(userAppointmentsRef.doc(appointmentId));
+
+        if (!userAppointmentSnapshot.exists) {
+          throw Exception("User appointment does not exist");
+        }
+        Map<String, dynamic> appointmentData =
+            userAppointmentSnapshot.data() as Map<String, dynamic>;
+
+        transaction.set(
+            acceptedAppointments
+                .doc(user!.email)
+                .collection("accepted_appointments_list")
+                .doc(appointmentId),
+            {
+              ...appointmentData, // Copy all fields
+
+              "status": "Completed"
+            });
+
+        transaction.update(
+            userAppointmentsRef.doc(appointmentId), {"status": "Completed"});
+
+        Get.snackbar(
+          "Success".tr,
+          "Appointment Completed. Check your completed appointments.".tr,
+          backgroundColor: const Color.fromARGB(255, 104, 247, 109),
+          colorText: Colors.black,
+        );
       });
 
       print('Appointment accepted successfully.');
@@ -105,9 +160,6 @@ class UserRequestsController extends GetxController {
           "Appointment Accepted. Check your accepted appointments.".tr,
           backgroundColor: const Color.fromARGB(255, 104, 247, 109),
           colorText: Colors.black,
-          borderColor: Colors.black,
-          borderWidth: 1,
-          duration: const Duration(seconds: 1),
         );
       }
     } catch (e) {

@@ -252,7 +252,7 @@ class TotalOrdersDetails extends StatelessWidget {
                       doc["status"] != "Completed"
                           ? const SizedBox(height: 16)
                           : const SizedBox(height: 8),
-                      doc["status"] == "Completed"
+                   (doc["type"] != "Doctor Visit" && doc["type"] != "Nurse Visit" &&  doc["status"] == "Completed")
                           ? Card(
                               elevation: 0, // Shadow effect
                               shape: RoundedRectangleBorder(
@@ -306,8 +306,7 @@ class TotalOrdersDetails extends StatelessWidget {
                             )
                           : const SizedBox.shrink(),
                       const SizedBox(height: 8),
-                      doc["status"] != "Completed"
-                          ? Container(
+                      Container(
                               width: double.infinity,
                               child: Card(
                                 shape: RoundedRectangleBorder(
@@ -352,8 +351,13 @@ class TotalOrdersDetails extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                            )
-                          : Card(
+                            ),
+                          
+                          
+                          
+                          
+                          
+                          (doc["type"] != "Doctor Visit" && doc["type"] != "Nurse Visit" &&  doc["status"] == "Completed") ?Card(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),
@@ -394,7 +398,7 @@ class TotalOrdersDetails extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                            ),
+                            ) : const SizedBox.shrink(),
                       doc["status"] != "Completed"
                           ? const SizedBox(height: 12)
                           : const SizedBox(height: 8),

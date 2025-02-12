@@ -689,7 +689,7 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                       }
                     },
                     child: Text(
-                      'Continue'.tr,
+                      'Complete Appointment'.tr,
                       style: const TextStyle(color: Colors.white, fontSize: 15),
                     ),
                   ),
