@@ -7,7 +7,6 @@ class Language extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         "en_US": {
-          
           "Virtual Consultation": "Virtual Consultation",
           "Vitamin IV drips and fluids": "Vitamin IV drips and fluids",
           "Laboratory": "Laboratory",
@@ -192,6 +191,7 @@ class Language extends Translations {
           "Riyadh, Saudi Arabia": "Riyadh, Saudi Arabia",
           "Add promo code here": "Add promo code here",
           "Apply": "Apply",
+          "Other": "Other",
           "Use wallet balance": "Use wallet balance",
           "Pay with bank points": "Pay with bank points",
           "Select payment method": "Select payment method",
@@ -347,7 +347,6 @@ class Language extends Translations {
           "Search Services": "Search Services",
           "IV & vitamins": "IV & vitamins",
           "Qty: ": "Qty: ",
-          
           "Send": "Send",
           "Search Vitamin IV": "Search Vitamin IV",
           "Appointment Details": "Appointment Details",
@@ -360,11 +359,11 @@ class Language extends Translations {
           "Service Includes": "Service Includes",
           "Terms of Service": "Terms of Service",
           "Know more": "Know more",
-          "TAX (15%)":"TAX (15%)",
-          "Select duration of service":"Select duration of service",
+          "TAX (15%)": "TAX (15%)",
+          "Select duration of service": "Select duration of service",
         },
         "ar_AE": {
-          "Select duration of service":"اختر مدة الخدمة",
+          "Select duration of service": "اختر مدة الخدمة",
           "Know more": "المزيد",
           "Terms of Service": "شروط الخدمة",
           "Service Includes": "تتضمن الخدمة",
@@ -395,7 +394,7 @@ class Language extends Translations {
           "Meetings": "الاجتماعات",
           "Doctor Consultation": "استشارة طبيب عن بعد",
           "Our Services": "خدماتنا",
-          "Your peace of mind starts here!":" راحة البال تبدأ هنا!",
+          "Your peace of mind starts here!": " راحة البال تبدأ هنا!",
           "Your healthcare just got easier and closer! get trusted home care services from certified providers through our app.":
               "رعايتك الصحية أصبحت أسهل وأقرب! عبر تطبيقنا، نوفر لك خدمات منزلية متميزة من نخبة مقدمي الرعاية الصحية المعتمدين، لتعيش بصحة وراحة.",
           "Instructions": "إرشادات",
@@ -673,6 +672,7 @@ class Language extends Translations {
               "سيظهر العنوان هنا عند الضغط على الزر",
           "Our Services:": "خدماتنا:",
           "Other Services:": "خدمات اخرى:",
+          "Other": "اخرى",
           "Pending appointments": "مواعيد معلقة",
           "Your result": "نتيجتك",
           "Upload Results": "تحميل نتيجتك",

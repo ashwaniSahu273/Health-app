@@ -161,16 +161,26 @@ class _AdminDrawerState extends State<AdminDrawer> {
           Divider(thickness: 2, color: Colors.grey[300]),
           _buildListTile(
             context,
-            4,
+            5,
             Icons.logout,
             "Logout".tr,
             () async {
-              await GoogleSignIn().signOut();
-              await FirebaseAuth.instance.signOut();
-              _auth.signOut();
-              Get.offAll(() => LoginScreen());
+              Get.defaultDialog(
+                title: "Confirm Logout",
+                middleText: "Are you sure you want to logout?",
+                textConfirm: "Yes",
+                textCancel: "No",
+                confirmTextColor: Colors.white,
+                onConfirm: () async {
+                  await GoogleSignIn().signOut();
+                  await FirebaseAuth.instance.signOut();
+                  _auth.signOut();
+                  Get.offAll(() => LoginScreen());
+                },
+              );
             },
           ),
+
           Divider(thickness: 2, color: Colors.grey[300]),
 
           Padding(
@@ -217,7 +227,7 @@ class _AdminDrawerState extends State<AdminDrawer> {
                         onChanged: (String? newValue) {
                           setState(() {
                             selectedLanguage = newValue!;
-                      
+
                             if (selectedLanguage == 'Arabic') {
                               Get.updateLocale(const Locale('ar', 'AE'));
                             } else if (selectedLanguage == 'English') {

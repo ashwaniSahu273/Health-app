@@ -190,7 +190,7 @@ class _Provider_DetailsState extends State<Provider_Details> {
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  '300 SAR',
+                                  '345 SAR',
                                   textAlign: TextAlign.end,
                                   style: const TextStyle(
                                     fontSize: 18,
@@ -382,9 +382,9 @@ class _Provider_DetailsState extends State<Provider_Details> {
                               .parse(consultationController
                                   .endDateController.text);
                           if (endDateTime.isAfter(
-                                  startDateTime.add(Duration(minutes: 30))) &&
+                                  startDateTime.add(Duration(minutes: 20))) &&
                               endDateTime.isBefore(
-                                  startDateTime.add(Duration(hours: 2)))) {
+                                  startDateTime.add(Duration(hours: 5)))) {
                             try {
                               // Save data to RxMap
                               consultationController.consultationData.value = {
@@ -402,7 +402,7 @@ class _Provider_DetailsState extends State<Provider_Details> {
                               };
 
                               createPayment(
-                                amount: 300,
+                                amount: 345,
                                 name: widget.userModel.fullname!,
                                 email: widget.userModel.email!,
                               );
@@ -419,7 +419,7 @@ class _Provider_DetailsState extends State<Provider_Details> {
                           } else {
                             Get.snackbar(
                               'Error',
-                              'End date and time must be at least 30 minutes and at most 2 hours after the start date and time.',
+                              'End date and time must be at least 20 minutes and at most 5 hours after the start date and time.',
                               snackPosition: SnackPosition.BOTTOM,
                               backgroundColor: Colors.red.shade100,
                               colorText: Colors.black,

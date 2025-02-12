@@ -64,11 +64,11 @@ class DynamicDoctor extends StatelessWidget {
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
-              child: StepProgressBar(currentStep: 2, totalSteps: 4)),
+              child: const StepProgressBar(currentStep: 2, totalSteps: 4)),
 
           Expanded(
             child: Container(
-              color: Color(0xFFEEF8FF),
+              color: const Color(0xFFEEF8FF),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 16.0, vertical: 16.0),
@@ -99,7 +99,7 @@ class DynamicDoctor extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Doctor visit",
                                       style: TextStyle(
                                         fontSize: 16,
@@ -122,9 +122,9 @@ class DynamicDoctor extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(5),
                                           ),
-                                          child: Text(
+                                          child: const Text(
                                             "400 SAR",
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.bold,
                                               color: Colors
@@ -191,17 +191,17 @@ class DynamicDoctor extends StatelessWidget {
                         ),
                         elevation: 0,
                         color: Colors.white,
-                        child: Column(
+                        child: const Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(
+                              padding: EdgeInsets.only(
                                 top: 8.0,
                                 left: 8,
                               ),
                               child: Text(
-                                "About This Package".tr,
+                                "About This Package",
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
@@ -240,10 +240,10 @@ class DynamicDoctor extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
+                              const Padding(
+                                padding: EdgeInsets.all(8.0),
                                 child: Text(
-                                  "Components Included".tr,
+                                  "Components Included",
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
@@ -344,7 +344,7 @@ class DynamicDoctor extends StatelessWidget {
                   Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:  Color(0xFF007ABB),
+                          backgroundColor:  const Color(0xFF007ABB),
                           minimumSize: const Size(160, 55),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -360,7 +360,7 @@ class DynamicDoctor extends StatelessWidget {
                         },
                         child: Text(
                           'Continue'.tr,
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.white,
                               fontSize: 15),
                         ),
@@ -378,7 +378,7 @@ class DynamicDoctor extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: Color(0xFFEAF6FE), // Light blue background
+        color: const Color(0xFFEAF6FE), // Light blue background
         borderRadius: BorderRadius.circular(16),
       ),
       child: Text(

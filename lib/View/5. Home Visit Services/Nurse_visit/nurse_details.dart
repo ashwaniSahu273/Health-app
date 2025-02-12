@@ -23,6 +23,14 @@ class NurseDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     NurseController cartController = Get.put(NurseController());
 
+    String languageCode = Get.locale?.languageCode ?? 'en';
+
+    if (languageCode == 'ar') {
+      cartController.fetchNurseVisitArDuration();
+    } else {
+      cartController.fetchNurseVisitDuration();
+    }
+
     // Future<void> uploadImage() async {
     //   print("===========>Starting upload");
 
