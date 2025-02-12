@@ -152,9 +152,17 @@ class ResultUploadController extends GetxController {
               snackPosition: SnackPosition.BOTTOM);
           return;
         }
-        isUploading.value = true; // Set uploading status to true
 
         File file = File(filePath);
+        int fileSize = await file.length(); // Get the file size in bytes
+
+        if (fileSize > 50 * 1024 * 1024) {
+          // If file size exceeds 50MB
+          Get.snackbar("File Too Large", "Please select a file under 50MB.",
+              snackPosition: SnackPosition.BOTTOM);
+          return;
+        }
+        isUploading.value = true; // Set uploading status to true
 
         final downloadLink = await uploadPdf(fileName, file);
 
@@ -271,8 +279,19 @@ class ResultUploadController extends GetxController {
           return;
         }
 
-        isResultUploading.value = true;
+        // Check if the file size is less than or equal to 50MB (50 * 1024 * 1024 = 52428800 bytes)
         File file = File(filePath);
+        int fileSize = await file.length(); // Get the file size in bytes
+
+        if (fileSize > 50 * 1024 * 1024) {
+          // If file size exceeds 50MB
+          Get.snackbar("File Too Large", "Please select a file under 50MB.",
+              snackPosition: SnackPosition.BOTTOM);
+          return;
+        }
+
+        isResultUploading.value = true;
+
         final downloadLink = await uploadResultPdf(fileName, file);
 
         // Save or replace file in Firestore

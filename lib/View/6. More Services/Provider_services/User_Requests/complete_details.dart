@@ -314,7 +314,7 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "PDF size should not exceed 10MB",
+                                      "PDF size should not exceed 50MB",
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.grey[500],
@@ -480,7 +480,7 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "PDF size should not exceed 10MB",
+                                        "PDF size should not exceed 50MB",
                                         style: TextStyle(
                                           fontSize: 12,
                                           color: Colors.grey[500],
