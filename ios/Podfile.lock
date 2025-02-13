@@ -946,8 +946,6 @@ PODS:
     - abseil/meta/type_traits
     - abseil/xcprivacy
   - abseil/xcprivacy (1.20240116.2)
-  - app_links (0.0.2):
-    - Flutter
   - AppAuth (1.7.6):
     - AppAuth/Core (= 1.7.6)
     - AppAuth/ExternalUserAgent (= 1.7.6)
@@ -1289,7 +1287,6 @@ PODS:
   - ZPNs (2.6.0)
 
 DEPENDENCIES:
-  - app_links (from `.symlinks/plugins/app_links/ios`)
   - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
@@ -1370,8 +1367,6 @@ SPEC REPOS:
     - ZPNs
 
 EXTERNAL SOURCES:
-  app_links:
-    :path: ".symlinks/plugins/app_links/ios"
   audioplayers_darwin:
     :path: ".symlinks/plugins/audioplayers_darwin/ios"
   cloud_firestore:
@@ -1451,7 +1446,6 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   abseil: d121da9ef7e2ff4cab7666e76c5a3e0915ae08c3
-  app_links: 3da4c36b46cac3bf24eb897f1a6ce80bda109874
   AppAuth: d4f13a8fe0baf391b2108511793e4b479691fb73
   audioplayers_darwin: ccf9c770ee768abb07e26d90af093f7bab1c12ab
   BoringSSL-GRPC: 1e2348957acdbcad360b80a264a90799984b2ba6
@@ -1527,6 +1521,6 @@ SPEC CHECKSUMS:
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
   ZPNs: 73bad0046a74e37315201053f9a0e7ac625d9436
 
-PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
+PODFILE CHECKSUM: ba6814bab1a49464792c8e5416a0fdf917f03b5b
 
 COCOAPODS: 1.16.2
