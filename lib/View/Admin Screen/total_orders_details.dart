@@ -355,6 +355,7 @@ class TotalOrdersDetails extends StatelessWidget {
                           
                           
                           
+                      const SizedBox(height: 8),
                           
                           
                           (doc["type"] != "Doctor Visit" && doc["type"] != "Nurse Visit" &&  doc["status"] == "Completed") ?Card(

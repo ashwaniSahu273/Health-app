@@ -660,12 +660,24 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                   onPressed: () {
                                     if (controller.status.value !=
                                         "Requested") {
-                                      controller.completeAppointment(doc.id);
-                                      Get.offAll(Service_Provider_Home(
-                                        userModel: userModel,
-                                        firebaseUser: firebaseUser,
-                                        userEmail: '',
-                                      ));
+                                      Get.defaultDialog(
+                                        title: "Confirm Completion",
+                                        middleText:
+                                            "Are you sure you want to complete this appointment?",
+                                        textConfirm: "Yes",
+                                        textCancel: "No",
+                                        confirmTextColor: Colors.white,
+                                        buttonColor: const Color(0xFF007ABB),
+                                        onConfirm: () {
+                                          controller
+                                              .completeAppointment(doc.id);
+                                          Get.offAll(Service_Provider_Home(
+                                            userModel: userModel,
+                                            firebaseUser: firebaseUser,
+                                            userEmail: '',
+                                          ));
+                                        },
+                                      );
                                     }
                                   },
                                   child: Text(

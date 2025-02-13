@@ -88,15 +88,15 @@ class ResultUploadController extends GetxController {
         });
 
         isUploading.value = false;
-        Get.snackbar(
-          "Success".tr,
-          "Appointment Completed. Check your Completed Appointments.".tr,
-          backgroundColor: const Color.fromARGB(255, 104, 247, 109),
-          colorText: Colors.black,
-          borderColor: Colors.black,
-          borderWidth: 1,
-          duration: const Duration(seconds: 1),
-        );
+        // Get.snackbar(
+        //   "Success".tr,
+        //   "Appointment Completed. Check your Completed Appointments.".tr,
+        //   backgroundColor: const Color.fromARGB(255, 104, 247, 109),
+        //   colorText: Colors.black,
+        //   borderColor: Colors.black,
+        //   borderWidth: 1,
+        //   duration: const Duration(seconds: 1),
+        // );
       });
       resetData();
 

@@ -10,7 +10,6 @@ import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/R
 import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/request_controller.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
-
 class CompleteAppointmentDetailsScreen extends StatelessWidget {
   final UserModel userModel;
   final User firebaseUser;
@@ -201,8 +200,7 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                 Obx(() {
                                   if (uploadController.isUploading.value) {
                                     return const Padding(
-                                      padding:
-                                          EdgeInsets.only(bottom: 16.0),
+                                      padding: EdgeInsets.only(bottom: 16.0),
                                       child: Center(
                                           child: CircularProgressIndicator()),
                                     );
@@ -367,8 +365,7 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                                     if (uploadController
                                         .isResultUploading.value) {
                                       return const Padding(
-                                        padding:
-                                            EdgeInsets.only(bottom: 16.0),
+                                        padding: EdgeInsets.only(bottom: 16.0),
                                         child: Center(
                                             child: CircularProgressIndicator()),
                                       );
@@ -663,9 +660,12 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                           // If validation passes, save the notes
                           uploadController.saveDoctorNotes(doc);
                           Get.snackbar(
-                            "Success",
-                            "Remarks saved successfully!",
-                            snackPosition: SnackPosition.BOTTOM,
+                            "Success".tr,
+                            "Appointment Completed. Check your completed appointments."
+                                .tr,
+                            backgroundColor:
+                                const Color.fromARGB(255, 104, 247, 109),
+                            colorText: Colors.black,
                           );
 
                           Get.offAll(Service_Provider_Home(
@@ -818,7 +818,8 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
-                                  color: const Color(0xFFE3E3E5), // Border color
+                                  color:
+                                      const Color(0xFFE3E3E5), // Border color
                                   width: 1, //
                                 ),
                               ),
@@ -886,7 +887,6 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
     );
   }
 }
-
 
 class PdfViewerScreen extends StatelessWidget {
   final String pdfUrl;

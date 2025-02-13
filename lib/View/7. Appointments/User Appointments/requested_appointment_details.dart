@@ -400,7 +400,7 @@ class RequestedAppointmentDetails extends StatelessWidget {
                       doc["status"] != "Completed"
                           ? const SizedBox(height: 16)
                           : const SizedBox(height: 8),
-                      doc["status"] == "Completed"
+                (doc["type"] != "Doctor Visit" && doc["type"] != "Nurse Visit" &&  doc["status"] == "Completed") 
                           ? Card(
                               elevation: 0, // Shadow effect
                               shape: RoundedRectangleBorder(
@@ -502,7 +502,11 @@ class RequestedAppointmentDetails extends StatelessWidget {
                                 ),
                               ),
                             )
-                          : Card(
+                          : const SizedBox.shrink(),
+                          
+                          
+                          
+                          (doc["type"] != "Doctor Visit" && doc["type"] != "Nurse Visit" &&  doc["status"] == "Completed") ?  Card(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),
@@ -543,7 +547,7 @@ class RequestedAppointmentDetails extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                            ),
+                            ): const SizedBox.shrink(),
                       doc["status"] != "Completed"
                           ? const SizedBox(height: 12)
                           : const SizedBox(height: 8),
