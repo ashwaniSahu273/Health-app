@@ -18,12 +18,14 @@ class MeetingCreatePaymentController extends GetxController
   var paymentStatus = "INITIATED".obs;
   var isButtonEnabled = false.obs;
   late Worker _statusWorker;
+  var varDocId = "".obs;
 
   @override
   void onInit() {
     super.onInit();
     WidgetsBinding.instance.addObserver(this);
     startPollingPaymentStatus();
+    createOrder("PENDING");
   }
 
   void startPollingPaymentStatus() {
@@ -34,18 +36,44 @@ class MeetingCreatePaymentController extends GetxController
     });
   }
 
-  Future<void> createOrder() async {
+  Future<void> createOrder(String status) async {
     try {
       final docRef =
           FirebaseFirestore.instance.collection("User_meetings").doc();
       final docId = docRef.id;
+      varDocId.value = docId;
       orderData["docId"] = docId;
-      orderData["paymentStatus"] = "CAPTURED";
+      orderData["paymentStatus"] = status;
       orderData["createdAt"] = DateTime.now();
 
       await docRef.set(orderData);
     } catch (e) {
       print("Error creating order: $e");
+    }
+  }
+
+  Future<void> deleteOrder(docId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("User_meetings")
+          .doc(docId)
+          .delete();
+    } catch (e) {
+      print("Error creating order: $e");
+    }
+  }
+
+  Future<void> updateOrderStatus(String status) async {
+    try {
+      if (varDocId.value == "") {
+        await createOrder(status);
+      }
+      await FirebaseFirestore.instance
+          .collection("User_meetings")
+          .doc(varDocId.value)
+          .update({"paymentStatus": status});
+    } catch (e) {
+      print("Error updating order status: $e");
     }
   }
 
@@ -60,7 +88,7 @@ class MeetingCreatePaymentController extends GetxController
       paymentStatus.value = response.data["status"];
 
       if (paymentStatus.value == "CAPTURED") {
-        await createOrder(); // Create order only after successful payment
+        await updateOrderStatus("CAPTURED");
         _statusWorker.dispose();
       }
     } catch (e) {
@@ -108,30 +136,106 @@ class MeetingCreatePaymentScreen extends StatelessWidget {
       controller.isButtonEnabled.value = true;
     });
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Obx(
-            () => Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // 🔹 CASE: Payment Processing (User Never Clicked Payment URL)
-                if (controller.paymentStatus.value == "INITIATED") ...[
-                  const CircularProgressIndicator(),
-                  const SizedBox(height: 20),
-                  if (controller.isButtonEnabled.value) ...[
+    return WillPopScope(
+      onWillPop: () async {
+        if (controller.paymentStatus.value == "CAPTURED") {
+          return true;
+        } else {
+          controller.deleteOrder(controller.varDocId.value);
+          return true;
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Obx(
+              () => Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // 🔹 CASE: Payment Processing (User Never Clicked Payment URL)
+                  if (controller.paymentStatus.value == "INITIATED") ...[
+                    const CircularProgressIndicator(),
+                    const SizedBox(height: 20),
+                    if (controller.isButtonEnabled.value) ...[
+                      const Text(
+                        "Payment Pending...",
+                        style: TextStyle(fontSize: 20, color: Colors.orange),
+                      ),
+                      const SizedBox(height: 10),
+                      const Text(
+                        "If you did not complete the payment, please retry.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 14, color: Colors.black54),
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () async {
+                          await openPaymentUrl(orderData["paymentUrl"]);
+                        },
+                        child: const Text("Retry Payment"),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          controller.deleteOrder(controller.varDocId.value);
+                          Get.offAll(HomePage(
+                              userModel: userModel,
+                              firebaseUser: firebaseUser));
+                        },
+                        child: const Text("Cancel Order"),
+                      ),
+                    ],
+                  ],
+
+                  // ✅ CASE: Payment Success
+                  if (controller.paymentStatus.value == "CAPTURED") ...[
+                    const Icon(Icons.check_circle,
+                        color: Colors.green, size: 100),
+                    const SizedBox(height: 20),
                     const Text(
-                      "Payment Pending...",
-                      style: TextStyle(fontSize: 20, color: Colors.orange),
+                      "Payment Successful!",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green,
+                      ),
                     ),
                     const SizedBox(height: 10),
                     const Text(
-                      "If you did not complete the payment, please retry.",
+                      "Your transaction was completed successfully.",
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 14, color: Colors.black54),
+                      style: TextStyle(fontSize: 16, color: Colors.black54),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        Get.offAll(HomePage(
+                            userModel: userModel, firebaseUser: firebaseUser));
+                      },
+                      child: const Text("Back to Home"),
+                    ),
+                  ],
+
+                  // ❌ CASE: Payment Failed
+                  if (controller.paymentStatus.value != "CAPTURED" &&
+                      controller.paymentStatus.value != "INITIATED") ...[
+                    const Icon(Icons.error, color: Colors.red, size: 100),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Payment Failed!",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      "Your payment was unsuccessful. Please try again.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 16, color: Colors.black54),
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
@@ -142,78 +246,15 @@ class MeetingCreatePaymentScreen extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
+                        controller.deleteOrder(controller.varDocId.value);
                         Get.offAll(HomePage(
-                          userModel: userModel, firebaseUser: firebaseUser));
+                            userModel: userModel, firebaseUser: firebaseUser));
                       },
                       child: const Text("Cancel Order"),
                     ),
                   ],
                 ],
-
-                // ✅ CASE: Payment Success
-                if (controller.paymentStatus.value == "CAPTURED") ...[
-                  const Icon(Icons.check_circle,
-                      color: Colors.green, size: 100),
-                  const SizedBox(height: 20),
-                  const Text(
-                    "Payment Successful!",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    "Your transaction was completed successfully.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 16, color: Colors.black54),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      Get.offAll(HomePage(
-                          userModel: userModel, firebaseUser: firebaseUser));
-                    },
-                    child: const Text("Back to Home"),
-                  ),
-                ],
-
-                // ❌ CASE: Payment Failed
-                if (controller.paymentStatus.value != "CAPTURED" &&
-                    controller.paymentStatus.value != "INITIATED") ...[
-                  const Icon(Icons.error, color: Colors.red, size: 100),
-                  const SizedBox(height: 20),
-                  const Text(
-                    "Payment Failed!",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    "Your payment was unsuccessful. Please try again.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 16, color: Colors.black54),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await openPaymentUrl(orderData["paymentUrl"]);
-                    },
-                    child: const Text("Retry Payment"),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Get.offAll(HomePage(
-                          userModel: userModel, firebaseUser: firebaseUser));
-                    },
-                    child: const Text("Cancel Order"),
-                  ),
-                ],
-              ],
+              ),
             ),
           ),
         ),

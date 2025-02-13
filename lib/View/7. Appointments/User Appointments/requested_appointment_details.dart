@@ -259,7 +259,7 @@ class RequestedAppointmentDetails extends StatelessWidget {
                                         child: Text(
                                           doc["paymentStatus"] == "CAPTURED"
                                               ? "PAID"
-                                              : "FAILED",
+                                              : "PENDING",
                                           style: TextStyle(
                                             color: doc["paymentStatus"] ==
                                                     "CAPTURED"

@@ -214,10 +214,46 @@ class UserSideMeetingDetails extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                          _buildDetailRow(
-                                    "Description", doc["meeting_data"]["description"],
-                                    isHighlighted: true),
-                              
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    "Payment: ",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(width: 20,),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 2),
+                                    decoration: BoxDecoration(
+                                      color: doc["paymentStatus"] == "CAPTURED"
+                                          ? Colors.green.withOpacity(0.2)
+                                          : Colors.red.withOpacity(0.2),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text(
+                                      doc["paymentStatus"] == "CAPTURED"
+                                          ? "PAID"
+                                          : "PENDING",
+                                      style: TextStyle(
+                                        color:
+                                            doc["paymentStatus"] == "CAPTURED"
+                                                ? Colors.green
+                                                : Colors.red,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              _buildDetailRow("Description",
+                                  doc["meeting_data"]["description"],
+                                  isHighlighted: true),
                               Obx(
                                 () => _buildDetailRow(
                                     "Start At", controller.date.value,

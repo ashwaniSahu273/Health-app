@@ -1,8 +1,10 @@
 // ignore_for_file: unused_field, unused_import
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/Bottom_Navigation_Bar/bottom_controller.dart';
 import 'package:harees_new_project/Resources/Drawer/drawer.dart';
@@ -54,9 +56,9 @@ class _MyAppointmentsState extends State<MyAppointments> {
 
   @override
   Widget build(BuildContext context) {
-    // indexController.updateIndex(widget.currentIndex);
     return WillPopScope(
       onWillPop: () async {
+        
         Get.offAll(() => HomePage(
               userModel: widget.userModel,
               firebaseUser: widget.firebaseUser,
@@ -191,20 +193,65 @@ class _AppointmentTileState extends State<AppointmentTile> {
   Widget build(BuildContext context) {
     // final userAppointments =
     //     FirebaseFirestore.instance.collection("User_appointments");
+
+    Future<void> updateOrderStatus(doc, String status) async {
+      try {
+        await FirebaseFirestore.instance
+            .collection("User_appointments")
+            .doc(doc.id)
+            .update({"paymentStatus": status});
+
+        EasyLoading.dismiss();
+
+        controller.convertFromFirebaseTimestamp(widget.doc["selected_time"]);
+
+        Get.to(RequestedAppointmentDetails(
+          userModel: widget.userModel,
+          firebaseUser: widget.firebaseUser,
+          doc: widget.doc,
+        ));
+      } catch (e) {
+        print("Error updating order status: $e");
+      }
+    }
+
+    Future<void> getTapPaymentStatus(doc) async {
+      try {
+        EasyLoading.show(status: 'Checking Payment Status...');
+
+        final HttpsCallable callable =
+            FirebaseFunctions.instance.httpsCallable('getTapPaymentStatus');
+        final response = await callable.call(<String, dynamic>{
+          'chargeId': doc["chargeId"],
+        });
+
+        if (response.data["status"] == "CAPTURED") {
+          await updateOrderStatus(doc, "CAPTURED");
+        } else {
+          await updateOrderStatus(doc, "FAILED");
+        }
+      } catch (e) {
+        print('Error fetching payment status: $e');
+        // paymentStatus.value = "FAILED"; // Update status to failed on error
+      }
+    }
+
     return Column(
-      // mainAxisAlignment: MainAxisAlignment.center,
-      // crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         GestureDetector(
           onTap: () {
-            Get.to(RequestedAppointmentDetails(
-              userModel: widget.userModel,
-              firebaseUser: widget.firebaseUser,
-              doc: widget.doc,
-            ));
+            if (widget.doc["paymentStatus"] != "CAPTURED") {
+              getTapPaymentStatus(widget.doc);
+            } else {
+              Get.to(RequestedAppointmentDetails(
+                userModel: widget.userModel,
+                firebaseUser: widget.firebaseUser,
+                doc: widget.doc,
+              ));
 
-            controller
-                .convertFromFirebaseTimestamp(widget.doc["selected_time"]);
+              controller
+                  .convertFromFirebaseTimestamp(widget.doc["selected_time"]);
+            }
           },
           child: Card(
             color: Colors.white,
@@ -266,7 +313,7 @@ class _AppointmentTileState extends State<AppointmentTile> {
                               child: Text(
                                 widget.doc["paymentStatus"] == "CAPTURED"
                                     ? "PAID"
-                                    : "FAILED",
+                                    : "PENDING",
                                 style: TextStyle(
                                   color:
                                       widget.doc["paymentStatus"] == "CAPTURED"

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:harees_new_project/Resources/Bottom_Navigation_Bar/bottom_controller.dart';
 import 'package:harees_new_project/Resources/Bottom_Navigation_Bar/bottom_nav.dart';
@@ -27,9 +29,57 @@ class UserSideMeetingRequest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
+    Future<void> updateOrderStatus(doc, String status) async {
+      try {
+        await FirebaseFirestore.instance
+            .collection("User_meetings")
+            .doc(doc.id)
+            .update({"paymentStatus": status});
+
+        EasyLoading.dismiss();
+
+        controller.convertFromFirebaseTimestampStart(
+            doc["meeting_data"]["startDateTime"]);
+        controller.convertFromFirebaseTimestampEnd(
+            doc["meeting_data"]["endDateTime"]);
+
+        Get.to(UserSideMeetingDetails(
+          doc: doc,
+          userModel: userModel,
+          firebaseUser: firebaseUser,
+        ));
+      } catch (e) {
+        print("Error updating order status: $e");
+      }
+    }
+
+    Future<void> getTapPaymentStatus(doc) async {
+      try {
+        EasyLoading.show(status: 'Checking Payment Status...');
+
+        final HttpsCallable callable =
+            FirebaseFunctions.instance.httpsCallable('getTapPaymentStatus');
+        final response = await callable.call(<String, dynamic>{
+          'chargeId': doc["chargeId"],
+        });
+
+        if (response.data["status"] == "CAPTURED") {
+          await updateOrderStatus(doc, "CAPTURED");
+        } else {
+          await updateOrderStatus(doc, "FAILED");
+        }
+      } catch (e) {
+        print('Error fetching payment status: $e');
+        // paymentStatus.value = "FAILED"; // Update status to failed on error
+      }
+    }
+
     return WillPopScope(
       onWillPop: () async {
         // When the back button is pressed, navigate to Home page
+        EasyLoading.dismiss();
         Get.offAll(() => HomePage(
               userModel: userModel,
               firebaseUser: firebaseUser,
@@ -110,15 +160,19 @@ class UserSideMeetingRequest extends StatelessWidget {
 
                             return GestureDetector(
                               onTap: () {
-                                Get.to(UserSideMeetingDetails(
-                                  doc: doc,
-                                  userModel: userModel,
-                                  firebaseUser: firebaseUser,
-                                ));
-                                controller.convertFromFirebaseTimestampStart(
-                                    doc["meeting_data"]["startDateTime"]);
-                                controller.convertFromFirebaseTimestampEnd(
-                                    doc["meeting_data"]["endDateTime"]);
+                                if (doc["paymentStatus"] != "CAPTURED") {
+                                  getTapPaymentStatus(doc);
+                                } else {
+                                  Get.to(UserSideMeetingDetails(
+                                    doc: doc,
+                                    userModel: userModel,
+                                    firebaseUser: firebaseUser,
+                                  ));
+                                  controller.convertFromFirebaseTimestampStart(
+                                      doc["meeting_data"]["startDateTime"]);
+                                  controller.convertFromFirebaseTimestampEnd(
+                                      doc["meeting_data"]["endDateTime"]);
+                                }
                               },
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(

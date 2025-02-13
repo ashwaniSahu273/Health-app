@@ -148,7 +148,8 @@ class MeetingDetailsScreen extends StatelessWidget {
                                 ),
                                 // const SizedBox(height: 8), // Spacing between buttons
                                 // Accept Button
-                                Obx(
+                                doc["paymentStatus"] == "CAPTURED"
+                                    ? Obx(
                                   () => controller.status.value == "Requested"
                                       ? GestureDetector(
                                           onTap: () {
@@ -190,7 +191,7 @@ class MeetingDetailsScreen extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                ),
+                                ): const Text("No Payment",style: TextStyle(color: Colors.red),),
                               ],
                             ),
                           ],
@@ -270,6 +271,45 @@ class MeetingDetailsScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+
+                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    "Payment: ",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(width: 20,),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 2),
+                                    decoration: BoxDecoration(
+                                      color: doc["paymentStatus"] == "CAPTURED"
+                                          ? Colors.green.withOpacity(0.2)
+                                          : Colors.red.withOpacity(0.2),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text(
+                                      doc["paymentStatus"] == "CAPTURED"
+                                          ? "PAID"
+                                          : "PENDING",
+                                      style: TextStyle(
+                                        color:
+                                            doc["paymentStatus"] == "CAPTURED"
+                                                ? Colors.green
+                                                : Colors.red,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              
                               _buildDetailRow("Description",
                                   doc["meeting_data"]["description"],
                                   isHighlighted: true),
