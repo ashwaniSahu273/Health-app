@@ -61,6 +61,7 @@ class _LabTestState extends State<LabTest> {
     controller.fetchServices();
 
     return SafeArea(
+      
       child: Scaffold(
         appBar: AppBar(
           leading: GestureDetector(

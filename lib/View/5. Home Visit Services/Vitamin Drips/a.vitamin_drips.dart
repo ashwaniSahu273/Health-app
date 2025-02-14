@@ -217,6 +217,29 @@ class _VitaminState extends State<Vitamin> {
     // final user = auth.currentUser;
 
     return Scaffold(
+       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        leadingWidth: 200,
+        leading: Row(
+          children: [
+            IconButton(
+                onPressed: () => Get.back(),
+                icon: const Icon(
+                  Icons.keyboard_double_arrow_left,
+                  size: 25,
+                  weight: 200,
+                )), // Double-arrow icon
+            Text(
+              'Vitamin Service'.tr,
+              style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Roboto"),
+            ),
+          ],
+        ),
+      ),
       body: SafeArea(
         child: GoogleMap(
           mapType: MapType.normal,

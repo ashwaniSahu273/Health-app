@@ -55,26 +55,33 @@ class _E_ClinicsState extends State<E_Clinics> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 1,
-        backgroundColor: MyColors.PageBg,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: CircleAvatar(
-              radius: 18,
-              backgroundColor: Colors.grey[300],
-              backgroundImage: NetworkImage(
-                widget.targetUser.profilePic.toString(),
-              ),
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        leadingWidth: 200,
+        leading: Row(
+          children: [
+            IconButton(
+                onPressed: () => Get.back(),
+                icon: const Icon(
+                  Icons.keyboard_double_arrow_left,
+                  size: 25,
+                  weight: 200,
+                )), // Double-arrow icon
+            Text(
+              'Select Consultation'.tr,
+              style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Roboto"),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-      drawer: MyDrawer(
-        userModel: widget.userModel,
-        firebaseUser: widget.firebaseUser,
-        targetUser: widget.userModel,
-      ),
+      // drawer: MyDrawer(
+      //   userModel: widget.userModel,
+      //   firebaseUser: widget.firebaseUser,
+      //   targetUser: widget.userModel,
+      // ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(

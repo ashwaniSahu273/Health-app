@@ -208,6 +208,8 @@ class _NurseGetPatientInfoState extends State<NurseGetPatientInfo> {
                         controller: cartController.fullNameController,
                         decoration: InputDecoration(
                           hintText: "Full Name".tr,
+                          labelText: "Full Name".tr,
+                          labelStyle: const TextStyle(color: Colors.grey),
                           hintStyle: const TextStyle(color: Colors.grey),
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 16, horizontal: 16),
@@ -239,6 +241,8 @@ class _NurseGetPatientInfoState extends State<NurseGetPatientInfo> {
                         controller: cartController.idNumberController,
                         decoration: InputDecoration(
                           hintText: "ID Number".tr,
+                           labelText: "ID Number".tr,
+                          labelStyle: const TextStyle(color: Colors.grey),
                           hintStyle: const TextStyle(color: Colors.grey),
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 16, horizontal: 16),
