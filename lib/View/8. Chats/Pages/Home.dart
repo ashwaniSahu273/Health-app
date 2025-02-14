@@ -57,36 +57,10 @@ class _HomeState extends State<Home> {
             ),
           ],
         ),
-        // actions: [
-        //   Padding(
-        //     padding: const EdgeInsets.only(right: 10),
-        //     child: CircleAvatar(
-        //       radius: 18,
-        //       backgroundColor: Colors.grey[300],
-        //       backgroundImage: NetworkImage(
-        //         widget.targetUser.profilePic.toString(),
-        //       ),
-        //     ),
-        //   ),
-        // ],
       ),
-      // drawer: MyDrawer(
-      //   userModel: widget.userModel,
-      //   firebaseUser: widget.firebaseUser,
-      //   targetUser: widget.userModel,
-      // ),
       backgroundColor: const Color(0xFFEEF8FF),
       body: Stack(
         children: [
-          // Background Image
-          // Positioned.fill(
-          //   child: Image.asset(
-          //     "assets/images/back_image.png",
-          //     fit: BoxFit.cover,
-          //   ),
-          // ),
-          // Main Content
-
           SafeArea(
             child: Container(
               decoration: const BoxDecoration(
@@ -247,7 +221,6 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-
         ],
       ),
     );
