@@ -68,6 +68,7 @@ class CompletedAppointByProvider extends StatelessWidget {
         ChatRoomModel newChatroom = ChatRoomModel(
           chatroomid: uuid.v1(),
           lastMessage: "",
+          createdAt: Timestamp.now(),
           participants: {
             userModel.uid.toString(): true,
             targetUser.uid.toString(): true,
