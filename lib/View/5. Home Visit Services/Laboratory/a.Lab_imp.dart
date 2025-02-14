@@ -23,7 +23,7 @@ class LabImp extends StatefulWidget {
 }
 
 class _LabImpState extends State<LabImp> {
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
   LabController labController = Get.put(LabController());
 
   static const CameraPosition kGooglePlex = CameraPosition(

@@ -21,6 +21,7 @@ class LabCartPage extends StatelessWidget {
     required this.firebaseUser,
   });
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +47,7 @@ class LabCartPage extends StatelessWidget {
             ),
             Text(
               'Cart Items'.tr,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 16,
                   fontFamily: "schyler",
                   fontWeight: FontWeight.w700),
@@ -54,7 +55,7 @@ class LabCartPage extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: Color(0xFFEEF8FF),
+      backgroundColor: const Color(0xFFEEF8FF),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -64,7 +65,7 @@ class LabCartPage extends StatelessWidget {
               padding: const EdgeInsets.only(left: 16.0, bottom: 4, top: 16),
               child: Text(
                 '${'Your Package tests'.tr} (${controller.cartItems.length})',
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16,
                  
                     fontWeight: FontWeight.w500),
@@ -136,7 +137,7 @@ class LabCartPage extends StatelessWidget {
                                         MainAxisAlignment.spaceAround,
                                     children: [
                                       Container(
-                                        padding: EdgeInsets.only(left: 15),
+                                        padding: const EdgeInsets.only(left: 15),
                                         width:
                                             200, // Set your desired width here
                                         child: Text(
@@ -251,7 +252,7 @@ class LabCartPage extends StatelessWidget {
                         borderRadius:
                             BorderRadius.circular(8), // Rounded corners
                       ),
-                      minimumSize: Size(160, 55),
+                      minimumSize: const Size(160, 55),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 8), // Padding
                     ),
@@ -273,7 +274,7 @@ class LabCartPage extends StatelessWidget {
                           width: 30,
                           height: 30,
                           decoration: BoxDecoration(
-                            color: Color(0xFF009788), // Background color
+                            color: const Color(0xFF009788), // Background color
                             borderRadius:
                                 BorderRadius.circular(8), // Make it circular
                           ),
@@ -308,8 +309,8 @@ class LabCartPage extends StatelessWidget {
                     () => ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: controller.isCartEmpty()
-                            ? Color(0xFFD9D9D9)
-                            : Color(0xFF007ABB),
+                            ? const Color(0xFFD9D9D9)
+                            : const Color(0xFF007ABB),
                         minimumSize: const Size(160, 55),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -334,7 +335,7 @@ class LabCartPage extends StatelessWidget {
                         style: TextStyle(
                             fontFamily: "schyler",
                             color: controller.isCartEmpty()
-                                ? Color(0xFF9C9C9C)
+                                ? const Color(0xFF9C9C9C)
                                 : Colors.white,
                             fontSize: 15),
                       ),

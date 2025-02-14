@@ -41,7 +41,7 @@ class LabDynamicUIPage extends StatelessWidget {
                 )), // Double-arrow icon
             Text(
               'Select Package'.tr,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -53,18 +53,14 @@ class LabDynamicUIPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Step indicator
-            Container(
-                // decoration: BoxDecoration(
-                //   color: Colors.white,
-                // ),
-                child: StepProgressBar(currentStep: 2, totalSteps: 4)),
+            const StepProgressBar(currentStep: 2, totalSteps: 4),
             const SizedBox(height: 16),
 
             // Content box
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Card(
-                color:  Color.fromARGB(255, 218, 232, 243),
+                color:  const Color.fromARGB(255, 218, 232, 243),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
                   side: BorderSide(color: Colors.grey.shade300, width: 1),
@@ -72,7 +68,7 @@ class LabDynamicUIPage extends StatelessWidget {
                 ),
                 elevation: 2,
                 child: Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -102,7 +98,7 @@ class LabDynamicUIPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
 
                       // About section
                       const Text(
@@ -144,7 +140,7 @@ class LabDynamicUIPage extends StatelessWidget {
                     //  const SizedBox(height: 8),
                       Text(
                         '$components',
-                        style: TextStyle(fontSize: 13),
+                        style: const TextStyle(fontSize: 13),
                       ),
                      const  SizedBox(height: 16),
 
@@ -159,7 +155,7 @@ class LabDynamicUIPage extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.w500),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Container(
                                 height: 40,
                               width: 40,
@@ -168,17 +164,17 @@ class LabDynamicUIPage extends StatelessWidget {
                                 color: Colors.grey[200],
                               ),
                               child: IconButton(
-                                icon: Icon(Icons.remove),
+                                icon: const Icon(Icons.remove),
                                 onPressed: () {
                                   controller.decreaseQuantity(id);
                                 },
                               ),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                            Obx(
                              ()=> Text(
                                 '${controller.getQuantityById(id)}',
-                                style: TextStyle(fontSize: 18),
+                                style: const TextStyle(fontSize: 18),
                               ),
                            ),
                             const SizedBox(width: 10),
@@ -190,7 +186,7 @@ class LabDynamicUIPage extends StatelessWidget {
                                 color: Colors.grey[200],
                               ),
                               child: IconButton(
-                                icon: Icon(Icons.add),
+                                icon: const Icon(Icons.add),
                                 onPressed: () {
                                    controller.increaseQuantity(id);
                                 },
@@ -202,7 +198,6 @@ class LabDynamicUIPage extends StatelessWidget {
                             onPressed: () {
                               controller.addToCart(id);
                             },
-                            child: Text('Select'),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blue,
                               shape: RoundedRectangleBorder(
@@ -211,6 +206,7 @@ class LabDynamicUIPage extends StatelessWidget {
                               padding:const EdgeInsets.symmetric(
                                   horizontal: 32, vertical: 12),
                             ),
+                            child: const Text('Select'),
                           ),
                         ),
                      ),
@@ -256,7 +252,7 @@ class LabDynamicUIPage extends StatelessWidget {
                           borderRadius:
                               BorderRadius.circular(8), // Rounded corners
                         ),
-                        minimumSize: Size(160, 55),
+                        minimumSize: const Size(160, 55),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 8), // Padding
                       ),
@@ -281,7 +277,7 @@ class LabDynamicUIPage extends StatelessWidget {
                               ()=> Center(
                                 child: Text(
                                   '${controller.cartItems.length}', // Cart item count
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white, // Text color
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
@@ -319,7 +315,7 @@ class LabDynamicUIPage extends StatelessWidget {
                         //             firebaseUser: widget.firebaseUser,
                         //           ));
                       },
-                      child: Text(
+                      child: const Text(
                         'Continue',
                         style: TextStyle(color: Colors.black, fontSize: 15),
                       ),

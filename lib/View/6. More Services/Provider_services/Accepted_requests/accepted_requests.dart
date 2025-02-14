@@ -66,7 +66,7 @@ class _AcceptedRequestsState extends State<AcceptedRequests> {
             ), // Double-arrow icon
             Text(
               'Accepted Appointments'.tr,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   fontFamily: "Roboto"),
@@ -87,7 +87,7 @@ class _AcceptedRequestsState extends State<AcceptedRequests> {
                   const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
               child: Text(
                 "Upcomming Appointments".tr,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFF424242)),

@@ -229,7 +229,7 @@ class DynamicDoctor extends StatelessWidget {
                       // Components Included
 
                       const SizedBox(height: 8),
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         child: Card(
                           shape: RoundedRectangleBorder(

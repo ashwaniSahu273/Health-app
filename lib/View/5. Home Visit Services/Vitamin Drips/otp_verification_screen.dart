@@ -60,16 +60,16 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-verification-code') {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Invalid OTP')),
+          const SnackBar(content: Text('Invalid OTP')),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Verification failed. Please try again.')),
+          const SnackBar(content: Text('Verification failed. Please try again.')),
         );
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
             content: Text('An unexpected error occurred. Please try again.')),
       );
     }
@@ -99,10 +99,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 100.0),
-                child: const Center(
-                  child: const CircleAvatar(
+              const Padding(
+                padding: EdgeInsets.only(top: 100.0),
+                child: Center(
+                  child: CircleAvatar(
                     radius: 90,
                     backgroundImage: AssetImage("assets/logo/harees_logo.png"),
                   ),
@@ -111,7 +111,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               const SizedBox(height: 70),
               Text(
                 "We Sent OTP code to verify your number".tr,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 22,
                     fontFamily: "schyler",
                     color: Color(0xFF6AA1BF)),
@@ -129,14 +129,14 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               const SizedBox(height: 20),
               Center(
                 child: isLoading
-                    ? CircularProgressIndicator()
+                    ? const CircularProgressIndicator()
                     : RoundButton(
                         width: 250,
                         borderColor: Colors.white,
                         textColor: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFFB2E1DA),
+                        color: const Color(0xFFB2E1DA),
                         text: "Enter".tr,
                         onTap: () {
                           if (otpCode.isNotEmpty && otpCode.length == 6) {

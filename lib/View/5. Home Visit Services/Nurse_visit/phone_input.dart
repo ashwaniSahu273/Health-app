@@ -67,7 +67,7 @@ class _NursePhoneInputState extends State<NursePhoneInput> {
               Text(
                 'Enter Phone Number'.tr,
                 textAlign: TextAlign.start,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF6AA1BF),
@@ -114,10 +114,10 @@ class _NursePhoneInputState extends State<NursePhoneInput> {
                       controller: cartController.phoneController,
                       decoration: InputDecoration(
                         hintText: 'Enter your phone number'.tr,
-                        hintStyle: TextStyle(fontFamily: "schyler"),
+                        hintStyle: const TextStyle(fontFamily: "schyler"),
                         filled: true,
-                        fillColor: Color(0xFFD4D2D0),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                        fillColor: const Color(0xFFD4D2D0),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide.none,
@@ -128,18 +128,18 @@ class _NursePhoneInputState extends State<NursePhoneInput> {
                   ),
                 ],
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
               Center(
                 child: isLoading
-                    ? CircularProgressIndicator()
+                    ? const CircularProgressIndicator()
                     : RoundButton(
                         width: 250,
                         borderColor: Colors.white,
                         textColor: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFFB2E1DA),
+                        color: const Color(0xFFB2E1DA),
                         text: "Next".tr,
                         onTap: () {
                           sendOtp(selectedCountryCode +

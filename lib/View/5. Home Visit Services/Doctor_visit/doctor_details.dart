@@ -55,14 +55,14 @@ class DoctorDetails extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: Color(0xFFEEF8FF),
+      backgroundColor: const Color(0xFFEEF8FF),
       body: Column(
         children: [
           Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
-              child: StepProgressBar(currentStep: 2, totalSteps: 4)),
+              child: const StepProgressBar(currentStep: 2, totalSteps: 4)),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -89,19 +89,19 @@ class DoctorDetails extends StatelessWidget {
                           Container(
                             height: 60,
                             width: 60,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               color: Color(
                                   0xFFE6F5FF), // Circle background color
                             ),
-                            child: Icon(
+                            child: const Icon(
                               Icons
                                   .person, // Replace with actual image/icon if available
                               size: 40,
                               color: Colors.blueAccent,
                             ),
                           ),
-                          SizedBox(width: 12),
+                          const SizedBox(width: 12),
                           // Text Details
                           Expanded(
                             child: Column(
@@ -115,7 +115,7 @@ class DoctorDetails extends StatelessWidget {
                                     color: Color(0xFF007ABB),
                                   ),
                                 ),
-                                SizedBox(height: 4),
+                                const SizedBox(height: 4),
                                 const Text(
                                   "Experience expert medical care in the comfort of your home with our doctor visit service.",
                                   style: TextStyle(
@@ -125,12 +125,12 @@ class DoctorDetails extends StatelessWidget {
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 Container(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 12, vertical: 6),
                                   decoration: BoxDecoration(
-                                    color: Color(
+                                    color: const Color(
                                         0xFFE6F5FF), // Light blue background
                                     borderRadius: BorderRadius.circular(8),
                                   ),
