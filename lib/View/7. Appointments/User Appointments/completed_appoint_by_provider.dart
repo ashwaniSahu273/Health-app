@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -67,6 +68,7 @@ class CompletedAppointByProvider extends StatelessWidget {
         ChatRoomModel newChatroom = ChatRoomModel(
           chatroomid: uuid.v1(),
           lastMessage: "",
+          createdAt: Timestamp.now(),
           participants: {
             userModel.uid.toString(): true,
             targetUser.uid.toString(): true,
@@ -88,6 +90,8 @@ class CompletedAppointByProvider extends StatelessWidget {
     void createChatroom() async {
       try {
         // Get a single snapshot of the query
+
+        EasyLoading.show(status: 'loading...'); 
         QuerySnapshot dataSnapshot = await FirebaseFirestore.instance
             .collection("Registered Users")
             .where("email", isEqualTo: doc["email"])
@@ -104,6 +108,7 @@ class CompletedAppointByProvider extends StatelessWidget {
 
           if (chatroomModel != null) {
             Navigator.pop(context);
+            EasyLoading.dismiss();
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return ChatRoomPage(
                 targetUser: searchedUser,

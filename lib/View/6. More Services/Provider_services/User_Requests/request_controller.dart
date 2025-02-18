@@ -67,13 +67,15 @@ class UserRequestsController extends GetxController {
             {
               ...appointmentData, // Copy all fields
               'status': 'Accepted',
-              'accepted_by': user.email // Update the status
+              'accepted_by': user.email ,
+              'acceptedAt': DateTime.now()
             });
 
         // Update the status field in User_appointments
         transaction.update(userAppointmentsRef.doc(appointmentId), {
           'status': 'Accepted',
-          'accepted_by': user.email // Update the status
+          'accepted_by': user.email,
+          'acceptedAt': DateTime.now()
         });
 
         status.value = 'Accepted';
@@ -120,11 +122,12 @@ class UserRequestsController extends GetxController {
             {
               ...appointmentData, // Copy all fields
 
-              "status": "Completed"
+              "status": "Completed",
+              "completedAt": DateTime.now()
             });
 
         transaction.update(
-            userAppointmentsRef.doc(appointmentId), {"status": "Completed"});
+            userAppointmentsRef.doc(appointmentId), {"status": "Completed","completedAt": DateTime.now()});
 
         Get.snackbar(
           "Success".tr,

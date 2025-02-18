@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
+// import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/c.%20Provider%20Details/consultant_controller.dart';
 import 'package:harees_new_project/View/4.%20Virtual%20Consultation/c.%20Provider%20Details/meeting_create_payment.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
@@ -110,19 +110,39 @@ class _Provider_DetailsState extends State<Provider_Details> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
-        userModel: widget.userModel,
-        firebaseUser: widget.firebaseUser,
-        targetUser: widget.userModel,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        leadingWidth: 200,
+        leading: Row(
+          children: [
+            IconButton(
+                onPressed: () => Get.back(),
+                icon: const Icon(
+                  Icons.keyboard_double_arrow_left,
+                  size: 25,
+                  weight: 200,
+                )), // Double-arrow icon
+            Text(
+              'Select Date & Time'.tr,
+              style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Roboto"),
+            ),
+          ],
+        ),
       ),
+      backgroundColor:  Color(0xFFEEF8FF),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
               // Profile Card
               Card(
-                elevation: 4,
+                color: Colors.white,
+                elevation: 1,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -218,21 +238,48 @@ class _Provider_DetailsState extends State<Provider_Details> {
                     // Description Field
                     TextFormField(
                       controller: consultationController.descriptionController,
+                      // decoration: InputDecoration(
+                      //   labelText: 'Description',
+                      //   labelStyle: TextStyle(
+                      //     color: Colors.grey.shade700,
+                      //     fontWeight: FontWeight.w500,
+                      //   ),
+                      //   hintText: 'Enter your consultation details...',
+                      //   hintStyle: TextStyle(color: Colors.grey.shade500),
+                      //   border: OutlineInputBorder(
+                      //     borderRadius: BorderRadius.circular(5),
+                      //     borderSide: BorderSide(color: Colors.grey.shade300),
+                      //   ),
+                      //   contentPadding:
+                      //       EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      // ),
                       decoration: InputDecoration(
-                        labelText: 'Description',
+                             labelText: 'Description',
                         labelStyle: TextStyle(
-                          color: Colors.grey.shade700,
+                          color: Colors.grey,
                           fontWeight: FontWeight.w500,
                         ),
-                        hintText: 'Enter your consultation details...',
-                        hintStyle: TextStyle(color: Colors.grey.shade500),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(color: Colors.grey.shade300),
+                          hintText: "Enter your consultation details...".tr,
+                          hintStyle: const TextStyle(color: Colors.grey),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 16, horizontal: 16),
+                          filled: true,
+                          fillColor: Colors.white,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: Colors.blue.shade100,
+                              width: 1.0,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                              color: Colors.blue,
+                              width: 1.5,
+                            ),
+                          ),
                         ),
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                      ),
                       maxLines: 3,
                     ),
                     const SizedBox(height: 16),
@@ -243,15 +290,34 @@ class _Provider_DetailsState extends State<Provider_Details> {
                       decoration: InputDecoration(
                         labelText: 'Start Date & Time',
                         labelStyle: TextStyle(
-                          color: Colors.grey.shade700,
+                          color: Colors.grey,
                           fontWeight: FontWeight.w500,
                         ),
                         hintText: 'Select start date and time',
                         hintStyle: TextStyle(color: Colors.grey.shade500),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(5),
                           borderSide: BorderSide(color: Colors.grey.shade300),
                         ),
+                        filled: true,
+                          fillColor: Colors
+                              .white, // Background color of the text field
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(8), // Rounded corners
+                            borderSide: BorderSide(
+                              color: Colors
+                                  .blue.shade100, // Light blue border color
+                              width: 1.0,
+                            ),
+                          ),
+                           focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                              color: Colors.blue, // Highlighted border color
+                              width: 1.5,
+                            ),
+                          ),
                         contentPadding:
                             EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                         suffixIcon: Icon(
@@ -295,15 +361,34 @@ class _Provider_DetailsState extends State<Provider_Details> {
                       decoration: InputDecoration(
                         labelText: 'End Date & Time',
                         labelStyle: TextStyle(
-                          color: Colors.grey.shade700,
+                          color: Colors.grey,
                           fontWeight: FontWeight.w500,
                         ),
                         hintText: 'Select end date and time',
                         hintStyle: TextStyle(color: Colors.grey.shade500),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(5),
                           borderSide: BorderSide(color: Colors.grey.shade300),
                         ),
+                        filled: true,
+                          fillColor: Colors
+                              .white, // Background color of the text field
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(8), // Rounded corners
+                            borderSide: BorderSide(
+                              color: Colors
+                                  .blue.shade100, // Light blue border color
+                              width: 1.0,
+                            ),
+                          ),
+                           focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                              color: Colors.blue, // Highlighted border color
+                              width: 1.5,
+                            ),
+                          ),
                         contentPadding:
                             EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                         suffixIcon: Icon(
@@ -362,7 +447,7 @@ class _Provider_DetailsState extends State<Provider_Details> {
                         }
                       },
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 40),
 
                     // Submit Button
                     ElevatedButton(
@@ -440,7 +525,7 @@ class _Provider_DetailsState extends State<Provider_Details> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blueAccent,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                         padding:
                             EdgeInsets.symmetric(vertical: 14, horizontal: 16),

@@ -67,41 +67,6 @@ class _DoctorVisitState extends State<DoctorVisit> {
     ));
   }
 
-  // Future<void> _handleTap(LatLng tappedPoint) async {
-  //   final GoogleMapController mapController = await _controller.future;
-
-  //   // Animate to tapped location
-  //   mapController.animateCamera(CameraUpdate.newLatLng(tappedPoint));
-
-  //   // Address fetching and marker updates
-  //   setState(() {
-  //     stAddress = "Fetching address...";
-  //     Latitude = tappedPoint.latitude.toString();
-  //     Longitude = tappedPoint.longitude.toString();
-
-  //     _marker.clear();
-  //     _marker.add(Marker(
-  //       markerId: const MarkerId("selectedLocation"),
-  //       position: tappedPoint,
-  //       infoWindow: InfoWindow(title: "Selected Location"),
-  //     ));
-  //   });
-
-  //   try {
-  //     List<Placemark> placemarks = await placemarkFromCoordinates(
-  //         tappedPoint.latitude, tappedPoint.longitude);
-
-  //     setState(() {
-  //       stAddress =
-  //           "${placemarks.reversed.last.country}, ${placemarks.reversed.last.locality}, ${placemarks.reversed.last.street}";
-  //     });
-  //   } catch (e) {
-  //     setState(() {
-  //       stAddress = "Failed to fetch address. Try again.";
-  //     });
-  //   }
-  // }
-
 
 
   Future<Position> getUserCurrentLocation() async {
@@ -212,6 +177,29 @@ class _DoctorVisitState extends State<DoctorVisit> {
 
 
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        leadingWidth: 200,
+        leading: Row(
+          children: [
+            IconButton(
+                onPressed: () => Get.back(),
+                icon: const Icon(
+                  Icons.keyboard_double_arrow_left,
+                  size: 25,
+                  weight: 200,
+                )), // Double-arrow icon
+            Text(
+              'Doctor Visit'.tr,
+              style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Roboto"),
+            ),
+          ],
+        ),
+      ),
       body: SafeArea(
         child: GoogleMap(
           mapType: MapType.normal,

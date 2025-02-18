@@ -67,11 +67,28 @@ class _UserContactState extends State<UserContact> {
  
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Contact Us".tr),
-        centerTitle: true,
-   
-        elevation: 0,
+     appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        leadingWidth: 200,
+        leading: Row(
+          children: [
+            IconButton(
+                onPressed: () => Get.back(),
+                icon: const Icon(
+                  Icons.keyboard_double_arrow_left,
+                  size: 25,
+                  weight: 200,
+                )), // Double-arrow icon
+            Text(
+              'Contact Us'.tr,
+              style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Roboto"),
+            ),
+          ],
+        ),
       ),
       backgroundColor: Colors.blue[50],
       body: SingleChildScrollView(

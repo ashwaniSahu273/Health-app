@@ -47,7 +47,7 @@ class _AcceptedRequestsHistoryState extends State<AcceptedRequestsHistory> {
     final acceptedAppointmentsList = acceptedAppointments
         .doc(user!.email)
         .collection("accepted_appointments_list")
-        .orderBy('createdAt', descending: true)
+        .orderBy('completedAt', descending: true)
         .snapshots();
 
     return Scaffold(
@@ -69,7 +69,7 @@ class _AcceptedRequestsHistoryState extends State<AcceptedRequestsHistory> {
             ), // Double-arrow icon
             Text(
               'Completed Appointments'.tr,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   fontFamily: "Roboto"),
@@ -88,7 +88,7 @@ class _AcceptedRequestsHistoryState extends State<AcceptedRequestsHistory> {
                   const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
               child: Text(
                 "Completed Appointments".tr,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFF424242)),
@@ -121,7 +121,7 @@ class _AcceptedRequestsHistoryState extends State<AcceptedRequestsHistory> {
                       itemCount: filteredAppointments.length,
                       itemBuilder: (context, index) {
                         final appointment = filteredAppointments[index];
-                       
+
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 24),
                           child: GestureDetector(
@@ -223,82 +223,7 @@ class _AcceptedRequestsHistoryState extends State<AcceptedRequestsHistory> {
                             ),
                           ),
                         );
-
-                        // Padding(
-                        //   padding: const EdgeInsets.all(14.0),
-                        //   child: GestureDetector(
-                        //     onTap: () {
-                        //       Get.to(RequestedAppointmentDetails(
-                        //           doc: appointment,
-                        //           firebaseUser: widget.firebaseUser,
-                        //           userModel: widget.userModel));
-                        //     },
-                        //     child: Container(
-                        //       decoration: BoxDecoration(
-                        //         color: Colors.white
-                        //             .withOpacity(0.8), // Ensure readability
-                        //         border: Border.all(color: Colors.black),
-                        //         borderRadius: BorderRadius.circular(15),
-                        //       ),
-                        //       child: ListTile(
-                        //         title: Text(
-                        //           appointment['name'].toString(),
-                        //           style: TextStyle(
-                        //               color: Colors.blue[700],
-                        //               fontSize: 16),
-                        //         ),
-                        //         subtitle: Column(
-                        //           crossAxisAlignment:
-                        //               CrossAxisAlignment.start,
-                        //           children: [
-                        //             Text(
-                        //               appointment['address'].toString(),
-                        //               style: TextStyle(
-                        //                   color: Colors.green[800]),
-                        //             ),
-                        //             const SizedBox(height: 5),
-                        //             Text(
-                        //               appointment["type"].toString(),
-                        //               style: const TextStyle(
-                        //                   color: Colors.red, fontSize: 16),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //         leading: Icon(Icons.person,
-                        //             color: Colors.blue[700], size: 40),
-                        //         trailing: Column(
-                        //           children: [
-                        //             const Icon(Icons.medical_services,
-                        //                 size: 35),
-                        //             // appointment["status"] == "Accepted"
-                        //             //     ? const Text(
-                        //             //         "Accepted",
-                        //             //         textAlign: TextAlign.center,
-                        //             //         style: TextStyle(
-                        //             //           color: Color(0xFF00AAAD),
-                        //             //           fontWeight: FontWeight.bold,
-                        //             //           fontSize: 14,
-                        //             //         ),
-                        //             //       )
-                        //             //     : const Text(
-                        //             //         "Completed",
-                        //             //         textAlign: TextAlign.center,
-                        //             //         style: TextStyle(
-                        //             //           color: Colors.green,
-                        //             //           fontWeight: FontWeight.bold,
-                        //             //           fontSize: 14,
-                        //             //         ),
-                        //             //       )
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // );
-                      }
-                      //   return null;
-                      // },
-                      );
+                      });
                 },
               ),
             ),
