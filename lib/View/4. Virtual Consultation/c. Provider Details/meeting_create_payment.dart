@@ -146,6 +146,36 @@ class MeetingCreatePaymentScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          leadingWidth: 200,
+          leading: Row(
+            children: [
+              IconButton(
+                   onPressed: () {
+                    if (controller.paymentStatus.value == "CAPTURED") {
+                      Get.back();
+                    } else {
+                      controller.deleteOrder(controller.varDocId.value);
+                      Get.back();
+                    }
+                  },
+                  icon: const Icon(
+                    Icons.keyboard_double_arrow_left,
+                    size: 25,
+                    weight: 200,
+                  )), // Double-arrow icon
+              Text(
+                'Payment Status'.tr,
+                style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Roboto"),
+              ),
+            ],
+          ),
+        ),
         backgroundColor: Colors.white,
         body: Center(
           child: Padding(

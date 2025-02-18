@@ -79,12 +79,14 @@ class ResultUploadController extends GetxController {
             {
               ...appointmentData, // Copy all fields
               "doctor_notes": doctorNotesController.text.trim(),
-              "status": "Completed"
+              "status": "Completed",
+              "completedAt": DateTime.now()
             });
 
         transaction.update(userAppointmentsRef.doc(appointmentId), {
           "doctor_notes": doctorNotesController.text.trim(),
-          "status": "Completed"
+          "status": "Completed",
+          "completedAt": DateTime.now()
         });
 
         isUploading.value = false;

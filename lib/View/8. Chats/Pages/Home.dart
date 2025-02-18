@@ -50,43 +50,17 @@ class _HomeState extends State<Home> {
                 )), // Double-arrow icon
             Text(
               'Chat'.tr,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   fontFamily: "Roboto"),
             ),
           ],
         ),
-        // actions: [
-        //   Padding(
-        //     padding: const EdgeInsets.only(right: 10),
-        //     child: CircleAvatar(
-        //       radius: 18,
-        //       backgroundColor: Colors.grey[300],
-        //       backgroundImage: NetworkImage(
-        //         widget.targetUser.profilePic.toString(),
-        //       ),
-        //     ),
-        //   ),
-        // ],
       ),
-      // drawer: MyDrawer(
-      //   userModel: widget.userModel,
-      //   firebaseUser: widget.firebaseUser,
-      //   targetUser: widget.userModel,
-      // ),
-      backgroundColor: Color(0xFFEEF8FF),
+      backgroundColor: const Color(0xFFEEF8FF),
       body: Stack(
         children: [
-          // Background Image
-          // Positioned.fill(
-          //   child: Image.asset(
-          //     "assets/images/back_image.png",
-          //     fit: BoxFit.cover,
-          //   ),
-          // ),
-          // Main Content
-
           SafeArea(
             child: Container(
               decoration: const BoxDecoration(
@@ -192,7 +166,7 @@ class _HomeState extends State<Home> {
                                               ),
                                               title: Text(
                                                 targetUser.fullname.toString(),
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: Color(0xFF004AAD)),
                                               ),
                                               subtitle: (chatRoomModel
@@ -202,7 +176,7 @@ class _HomeState extends State<Home> {
                                                   ? Text(
                                                       chatRoomModel.lastMessage
                                                           .toString(),
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           color: Color(
                                                               0xFF424242)))
                                                   : Text(
@@ -247,25 +221,8 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-
         ],
       ),
-// bottomNavigationBar: MyBottomNavBar(
-//         userModel: widget.userModel,
-//         firebaseUser: widget.firebaseUser,
-//       ),
-
-      // floatingActionButton: FloatingActionButton(
-      //   foregroundColor: Colors.white,
-      //   backgroundColor: MyColors.blue,
-      //   onPressed: () {
-      //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      //       return SearchPage(
-      //           userModel: widget.userModel, firebaseUser: widget.firebaseUser);
-      //     }));
-      //   },
-      //   child: const Icon(Icons.search),
-      // ),
     );
   }
 }

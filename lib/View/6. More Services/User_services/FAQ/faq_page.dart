@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
+import 'package:get/get.dart';
+// import 'package:harees_new_project/Resources/AppBar/app_bar.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 
 class FAQ extends StatelessWidget {
@@ -11,10 +12,28 @@ class FAQ extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
-        userModel: userModel,
-        firebaseUser: firebaseUser,
-        targetUser: userModel,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        leadingWidth: 200,
+        leading: Row(
+          children: [
+            IconButton(
+                onPressed: () => Get.back(),
+                icon: const Icon(
+                  Icons.keyboard_double_arrow_left,
+                  size: 25,
+                  weight: 200,
+                )), // Double-arrow icon
+            Text(
+              'FAQ'.tr,
+              style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Roboto"),
+            ),
+          ],
+        ),
       ),
       backgroundColor: Colors.blue[50],
       body: Padding(

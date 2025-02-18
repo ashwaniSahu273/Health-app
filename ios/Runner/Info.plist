@@ -3,6 +3,11 @@
 <plist version="1.0">
 <dict>
 	
+
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>The app needs location permission</string>
+    <key>io.flutter.embedded_views_preview</key>
+    <true/>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

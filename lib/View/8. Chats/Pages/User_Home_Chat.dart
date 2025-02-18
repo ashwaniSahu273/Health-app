@@ -73,43 +73,18 @@ class _UserHomeChatState extends State<UserHomeChat> {
                   )), // Double-arrow icon
               Text(
                 'Chat'.tr,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
                     fontFamily: "Roboto"),
               ),
             ],
           ),
-          // actions: [
-          //   Padding(
-          //     padding: const EdgeInsets.only(right: 10),
-          //     child: CircleAvatar(
-          //       radius: 18,
-          //       backgroundColor: Colors.grey[300],
-          //       backgroundImage: NetworkImage(
-          //         widget.targetUser.profilePic.toString(),
-          //       ),
-          //     ),
-          //   ),
-          // ],
         ),
-        // drawer: MyDrawer(
-        //   userModel: widget.userModel,
-        //   firebaseUser: widget.firebaseUser,
-        //   targetUser: widget.userModel,
-        // ),
-        backgroundColor: Color(0xFFEEF8FF),
+
+        backgroundColor: const Color(0xFFEEF8FF),
         body: Stack(
           children: [
-            // Background Image
-            // Positioned.fill(
-            //   child: Image.asset(
-            //     "assets/images/back_image.png",
-            //     fit: BoxFit.cover,
-            //   ),
-            // ),
-            // Main Content
-
             SafeArea(
               child: Container(
                 decoration: const BoxDecoration(
@@ -220,7 +195,7 @@ class _UserHomeChatState extends State<UserHomeChat> {
                                                 title: Text(
                                                   targetUser.fullname
                                                       .toString(),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: Color(0xFF004AAD)),
                                                 ),
                                                 subtitle: (chatRoomModel
@@ -231,7 +206,7 @@ class _UserHomeChatState extends State<UserHomeChat> {
                                                         chatRoomModel
                                                             .lastMessage
                                                             .toString(),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             color: Color(
                                                                 0xFF424242)))
                                                     : Text(
