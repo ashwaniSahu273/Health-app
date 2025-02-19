@@ -3,7 +3,10 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:harees_new_project/View/3.%20Home%20Page/Provider_home/provider_home.dart';
+import 'package:harees_new_project/View/6.%20More%20Services/Provider_services/User_Requests/complete_details.dart';
 import 'package:intl/intl.dart';
 
 class UserRequestsController extends GetxController {
@@ -16,8 +19,9 @@ class UserRequestsController extends GetxController {
       FirebaseFirestore.instance.collection("User_appointments");
   final date = "".obs;
   final time = "".obs;
-  final status = "".obs;
+  final status = "Received".obs;
   final paymentStatus = "".obs;
+  var isLoading = false.obs;
 
   void convertFromFirebaseTimestamp(String isoTimestamp) {
     try {
@@ -40,7 +44,7 @@ class UserRequestsController extends GetxController {
     }
   }
 
-  Future<void> accept(String appointmentId) async {
+  Future<void> accept(String appointmentId, userModel, firebaseUser) async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     final user = _auth.currentUser;
@@ -67,7 +71,7 @@ class UserRequestsController extends GetxController {
             {
               ...appointmentData, // Copy all fields
               'status': 'Accepted',
-              'accepted_by': user.email ,
+              'accepted_by': user.email,
               'acceptedAt': DateTime.now()
             });
 
@@ -79,6 +83,12 @@ class UserRequestsController extends GetxController {
         });
 
         status.value = 'Accepted';
+
+        Get.offAll(Service_Provider_Home(
+          userModel: userModel,
+          firebaseUser: firebaseUser,
+          userEmail: '',
+        ));
         Get.snackbar(
           "Success".tr,
           "Appointment Accepted. Check your accepted appointments.".tr,
@@ -96,11 +106,12 @@ class UserRequestsController extends GetxController {
     }
   }
 
-  Future<void> completeAppointment(String appointmentId) async {
+  Future<void> updateAppointmentStatus(
+      String appointmentId, String newStatus, userModel, firebaseUser) async {
+    isLoading.value = true;
+    EasyLoading.show(status: 'Updating...');
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
     final user = _auth.currentUser;
-
     final userAppointmentsRef = firestore.collection('User_appointments');
 
     try {
@@ -111,9 +122,11 @@ class UserRequestsController extends GetxController {
         if (!userAppointmentSnapshot.exists) {
           throw Exception("User appointment does not exist");
         }
+
         Map<String, dynamic> appointmentData =
             userAppointmentSnapshot.data() as Map<String, dynamic>;
 
+        // Update Firestore with the new status
         transaction.set(
             acceptedAppointments
                 .doc(user!.email)
@@ -121,25 +134,97 @@ class UserRequestsController extends GetxController {
                 .doc(appointmentId),
             {
               ...appointmentData, // Copy all fields
-
-              "status": "Completed",
-              "completedAt": DateTime.now()
+              "status": newStatus,
+              if (newStatus == "Completed") "completedAt": DateTime.now(),
             });
 
-        transaction.update(
-            userAppointmentsRef.doc(appointmentId), {"status": "Completed","completedAt": DateTime.now()});
-
-        Get.snackbar(
-          "Success".tr,
-          "Appointment Completed. Check your completed appointments.".tr,
-          backgroundColor: const Color.fromARGB(255, 104, 247, 109),
-          colorText: Colors.black,
-        );
+        transaction.update(userAppointmentsRef.doc(appointmentId), {
+          "status": newStatus,
+          if (newStatus == "Completed") "completedAt": DateTime.now(),
+        });
       });
 
-      print('Appointment accepted successfully.');
+      EasyLoading.dismiss();
+      isLoading.value = false;
+      if (newStatus == "Completed") {
+        Get.offAll(Service_Provider_Home(
+          userModel: userModel,
+          firebaseUser: firebaseUser,
+          userEmail: '',
+        ));
+      }
+
+      Get.snackbar(
+        "Status Updated".tr,
+        "Appointment status changed to $newStatus".tr,
+        backgroundColor: const Color.fromARGB(255, 104, 227, 108),
+        colorText: Colors.black54,
+      );
+
+      print('Appointment status updated successfully to $newStatus.');
     } catch (e) {
-      print('Error accepting appointment: $e');
+      print('Error updating appointment status: $e');
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> updateLabAndVitaminAppointmentStatus(String appointmentId,
+      String newStatus, userModel, firebaseUser, doc) async {
+    isLoading.value = true;
+    EasyLoading.show(status: 'Updating...');
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final user = _auth.currentUser;
+    final userAppointmentsRef = firestore.collection('User_appointments');
+
+    try {
+      await firestore.runTransaction((transaction) async {
+        DocumentSnapshot userAppointmentSnapshot =
+            await transaction.get(userAppointmentsRef.doc(appointmentId));
+
+        if (!userAppointmentSnapshot.exists) {
+          throw Exception("User appointment does not exist");
+        }
+
+        Map<String, dynamic> appointmentData =
+            userAppointmentSnapshot.data() as Map<String, dynamic>;
+
+        if (newStatus != "Completed") {
+          transaction.set(
+              acceptedAppointments
+                  .doc(user!.email)
+                  .collection("accepted_appointments_list")
+                  .doc(appointmentId),
+              {
+                ...appointmentData, // Copy all fields
+                "status": newStatus,
+              });
+
+          transaction.update(userAppointmentsRef.doc(appointmentId), {
+            "status": newStatus,
+          });
+
+          EasyLoading.dismiss();
+          Get.snackbar(
+            "Status Updated".tr,
+            "Appointment status changed to $newStatus".tr,
+            backgroundColor: const Color.fromARGB(255, 104, 227, 108),
+            colorText: Colors.black54,
+          );
+        } else {
+          EasyLoading.dismiss();
+
+          Get.to(CompleteAppointmentDetailsScreen(
+            userModel: userModel,
+            firebaseUser: firebaseUser,
+            doc: doc,
+          ));
+        }
+      });
+
+      print('Appointment status updated successfully to $newStatus.');
+    } catch (e) {
+      print('Error updating appointment status: $e');
+      isLoading.value = false;
     }
   }
 

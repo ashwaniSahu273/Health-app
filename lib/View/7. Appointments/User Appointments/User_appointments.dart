@@ -54,11 +54,13 @@ class _MyAppointmentsState extends State<MyAppointments> {
     const Color(0xFFfcd1c7),
   ];
 
+
+
   @override
   Widget build(BuildContext context) {
+  
     return WillPopScope(
       onWillPop: () async {
-        
         Get.offAll(() => HomePage(
               userModel: widget.userModel,
               firebaseUser: widget.firebaseUser,
@@ -159,6 +161,23 @@ class _MyAppointmentsState extends State<MyAppointments> {
         ),
       ),
     );
+  }
+}
+
+Color getStatusColor(String status) {
+  switch (status) {
+    case "Requested":
+      return Colors.redAccent; // More visible for pending status
+    case "Accepted":
+      return Colors.blueAccent; // Stands out for received orders
+    case "Prepared":
+      return const Color.fromARGB(255, 255, 167, 34); // More vibrant for preparation phase
+    case "Coming":
+      return Colors.purpleAccent; // Highlights movement status
+    case "Completed":
+      return Colors.green; // Standard success color
+    default:
+      return Colors.black; // Default fallback
   }
 }
 
@@ -339,14 +358,12 @@ class _AppointmentTileState extends State<AppointmentTile> {
                               ),
                             ),
                             Text(
-                              widget.name,
+                              widget.name == "Accepted"
+                                  ? "Received"
+                                  : widget.name,
                               style: TextStyle(
                                 fontSize: 14,
-                                color: widget.name == "Requested"
-                                    ? const Color(0xFFC06440)
-                                    : widget.name == "Accepted"
-                                        ? const Color(0xFFFFC300)
-                                        : Colors.green,
+                                color: getStatusColor(widget.name),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

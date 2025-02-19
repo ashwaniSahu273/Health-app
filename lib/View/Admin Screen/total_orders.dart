@@ -285,7 +285,7 @@ class _AppointmentTileState extends State<AppointmentTile> {
                                 fontSize: 14,
                                 color: widget.name == "Requested"
                                     ? const Color(0xFFC06440)
-                                    : widget.name == "accepted"
+                                    : widget.name == "Accepted"
                                         ? const Color(0xFFFFC300)
                                         : Colors.green,
                                 fontWeight: FontWeight.bold,

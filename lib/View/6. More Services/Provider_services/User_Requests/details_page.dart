@@ -88,7 +88,7 @@ class AppointmentDetailsScreen extends StatelessWidget {
     void createChatroom() async {
       try {
         // Get a single snapshot of the query
-        EasyLoading.show(status: 'loading...'); 
+        EasyLoading.show(status: 'loading...');
 
         QuerySnapshot dataSnapshot = await FirebaseFirestore.instance
             .collection("Registered Users")
@@ -247,7 +247,8 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                                 textConfirm: 'Yes'.tr,
                                                 textCancel: 'No'.tr,
                                                 onConfirm: () {
-                                                  controller.accept(doc.id);
+                                                  controller.accept(doc.id,
+                                                      userModel, firebaseUser);
                                                   Get.back(); // Close the dialog
                                                 },
                                                 onCancel: () {},
@@ -278,11 +279,11 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                               ),
                                             ),
                                           )
-                                        : const Padding(
+                                        : Padding(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 10.0, vertical: 8),
                                             child: Text(
-                                              "Accepted",
+                                              controller.status.value,
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: Color(0xFF00AAAD),
@@ -565,37 +566,72 @@ class AppointmentDetailsScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        controller.status.value == "Requested"
-                                            ? Colors.grey
-                                            : const Color(0xFF007ABB),
-                                    minimumSize: const Size(160, 55),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    if (controller.status.value !=
-                                        "Requested") {
-                                      Get.to(() =>
-                                          CompleteAppointmentDetailsScreen(
-                                            userModel: userModel,
-                                            firebaseUser: firebaseUser,
-                                            doc: doc,
-                                            // userModel: userModel,
-                                            // firebaseUser: firebaseUser,
-                                          ));
-                                    }
-                                  },
-                                  child: Text(
-                                    'Continue'.tr,
-                                    style: const TextStyle(
-                                        color: Colors.white, fontSize: 15),
-                                  ),
-                                ),
-                              ),
+                                child: Obx(() => Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(
+                                            color: Colors.grey.shade400),
+                                      ),
+                                      child: DropdownButtonHideUnderline(
+                                        child: DropdownButton<String>(
+                                          value: controller.status.value,
+                                          onChanged: (String? newValue) {
+                                            if (newValue != null) {
+                                              if (newValue == "Completed") {
+                                                Get.defaultDialog(
+                                                  title: "Confirm Completion",
+                                                  middleText:
+                                                      "Are you sure you want to complete this appointment?",
+                                                  textConfirm: "Yes",
+                                                  textCancel: "No",
+                                                  confirmTextColor:
+                                                      Colors.white,
+                                                  buttonColor:
+                                                      const Color(0xFF007ABB),
+                                                  onConfirm: () {
+                                                    Navigator.pop(context);
+                                                    controller
+                                                        .updateLabAndVitaminAppointmentStatus(
+                                                            doc.id,
+                                                            newValue,
+                                                            userModel,
+                                                            firebaseUser,doc);
+                                                  },
+                                                );
+                                              } else {
+                                                controller.status.value =
+                                                    newValue;
+
+                                                controller
+                                                    .updateLabAndVitaminAppointmentStatus(
+                                                        doc.id,
+                                                        newValue,
+                                                        userModel,
+                                                        firebaseUser,doc);
+                                              }
+                                            }
+                                          },
+                                          items: [
+                                            "Accepted",
+                                            "Prepared",
+                                            "Coming",
+                                            "Completed"
+                                          ].map<DropdownMenuItem<String>>(
+                                              (String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value,
+                                                  style: const TextStyle(
+                                                      fontSize: 15)),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
+                                    )),
+                              )
                             ],
                           ),
                         ],
@@ -651,47 +687,72 @@ class AppointmentDetailsScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        controller.status.value == "Requested"
-                                            ? Colors.grey
-                                            : const Color(0xFF007ABB),
-                                    minimumSize: const Size(160, 55),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    if (controller.status.value !=
-                                        "Requested") {
-                                      Get.defaultDialog(
-                                        title: "Confirm Completion",
-                                        middleText:
-                                            "Are you sure you want to complete this appointment?",
-                                        textConfirm: "Yes",
-                                        textCancel: "No",
-                                        confirmTextColor: Colors.white,
-                                        buttonColor: const Color(0xFF007ABB),
-                                        onConfirm: () {
-                                          controller
-                                              .completeAppointment(doc.id);
-                                          Get.offAll(Service_Provider_Home(
-                                            userModel: userModel,
-                                            firebaseUser: firebaseUser,
-                                            userEmail: '',
-                                          ));
-                                        },
-                                      );
-                                    }
-                                  },
-                                  child: Text(
-                                    'Complete Appointment'.tr,
-                                    style: const TextStyle(
-                                        color: Colors.white, fontSize: 15),
-                                  ),
-                                ),
-                              ),
+                                child: Obx(() => Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(
+                                            color: Colors.grey.shade400),
+                                      ),
+                                      child: DropdownButtonHideUnderline(
+                                        child: DropdownButton<String>(
+                                          value: controller.status.value,
+                                          onChanged: (String? newValue) {
+                                            if (newValue != null) {
+                                              if (newValue == "Completed") {
+                                                Get.defaultDialog(
+                                                  title: "Confirm Completion",
+                                                  middleText:
+                                                      "Are you sure you want to complete this appointment?",
+                                                  textConfirm: "Yes",
+                                                  textCancel: "No",
+                                                  confirmTextColor:
+                                                      Colors.white,
+                                                  buttonColor:
+                                                      const Color(0xFF007ABB),
+                                                  onConfirm: () {
+                                                    Navigator.pop(context);
+                                                    controller
+                                                        .updateAppointmentStatus(
+                                                            doc.id,
+                                                            newValue,
+                                                            userModel,
+                                                            firebaseUser);
+                                                  },
+                                                );
+                                              } else {
+                                                controller.status.value =
+                                                    newValue;
+
+                                                controller
+                                                    .updateAppointmentStatus(
+                                                        doc.id,
+                                                        newValue,
+                                                        userModel,
+                                                        firebaseUser);
+                                              }
+                                            }
+                                          },
+                                          items: [
+                                            "Accepted",
+                                            "Prepared",
+                                            "Coming",
+                                            "Completed"
+                                          ].map<DropdownMenuItem<String>>(
+                                              (String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value,
+                                                  style: const TextStyle(
+                                                      fontSize: 15)),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
+                                    )),
+                              )
                             ],
                           ),
                         ],

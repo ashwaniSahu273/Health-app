@@ -42,7 +42,6 @@ class RequestedAppointmentDetails extends StatelessWidget {
       double.parse(doc["longitude"]),
     );
 
-
     void openInGoogleMaps(double latitude, double longitude) async {
       String googleUrl =
           "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude";
@@ -93,7 +92,7 @@ class RequestedAppointmentDetails extends StatelessWidget {
     void createChatroom() async {
       try {
         // Get a single snapshot of the query
-        EasyLoading.show(status: 'loading...'); 
+        EasyLoading.show(status: 'loading...');
 
         QuerySnapshot dataSnapshot = await FirebaseFirestore.instance
             .collection("Registered Users")
@@ -276,7 +275,35 @@ class RequestedAppointmentDetails extends StatelessWidget {
                                         ),
                                       ),
                                     ],
-                                  )
+                                  ),
+                                  // Row(
+                                  //   crossAxisAlignment:
+                                  //       CrossAxisAlignment.center,
+                                  //   children: [
+                                  //     const Text(
+                                  //       "Status: ",
+                                  //       style: TextStyle(
+                                  //         color: Colors.black,
+                                  //         fontSize: 14,
+                                  //         fontWeight: FontWeight.bold,
+                                  //       ),
+                                  //     ),
+                                  //     // const SizedBox(width: 20),
+                                  //     Padding(
+                                  //       padding: const EdgeInsets.symmetric(
+                                  //           horizontal: 0.0, vertical: 0),
+                                  //       child: Text(
+                                  //         getStatusMessage(doc["status"]),
+                                  //         style: TextStyle(
+                                  //           fontSize: 14,
+                                  //           color:
+                                  //               getStatusColor(doc["status"]),
+                                  //           fontWeight: FontWeight.bold,
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  // ),
                                 ],
                               ),
                             ),
@@ -301,111 +328,61 @@ class RequestedAppointmentDetails extends StatelessWidget {
                                   padding: const EdgeInsets.all(8),
                                   iconSize: 40,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 0.0, vertical: 0),
-                                  child: Text(
-                                    doc["status"],
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: doc["status"] == "Requested"
-                                          ? const Color(0xFFC06440)
-                                          : doc["status"] == "Accepted"
-                                              ? const Color(0xFFFFC300)
-                                              : Colors.green,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ),
                               ],
                             ),
                           ],
                         ),
                       ),
-                      // Card(
-                      //   shape: RoundedRectangleBorder(
-                      //     borderRadius: BorderRadius.circular(5),
-                      //   ),
-                      //   elevation: 0,
-                      //   color: Colors.white,
-                      //   child: Container(
-                      //     padding: const EdgeInsets.all(16.0),
-                      //     child: Row(
-                      //       children: [
-                      //         Image.asset(
-                      //           "assets/images/vitamin1.png", // Replace with your asset
-                      //           height: 64,
-                      //           width: 40,
-                      //         ),
-                      //         const SizedBox(width: 12),
-                      //         Expanded(
-                      //           child: Column(
-                      //             crossAxisAlignment: CrossAxisAlignment.start,
-                      //             mainAxisAlignment:
-                      //                 MainAxisAlignment.spaceBetween,
-                      //             children: [
-                      //               Text(
-                      //                 doc["name"],
-                      //                 style: TextStyle(
-                      //                   fontSize: 16,
-                      //                   fontWeight: FontWeight.w600,
-                      //                   fontFamily: "Roboto",
-                      //                   color: Color(0xFF007ABB),
-                      //                 ),
-                      //               ),
-                      //               const SizedBox(height: 15),
-                      //               Row(
-                      //                 mainAxisAlignment:
-                      //                     MainAxisAlignment.spaceBetween,
-                      //                 children: [
-                      //                   Container(
-                      //                     padding: const EdgeInsets.symmetric(
-                      //                         horizontal: 8, vertical: 6),
-                      //                     decoration: BoxDecoration(
-                      //                       color: Colors.lightBlue[
-                      //                           50], // Subtle light blue background
-                      //                       borderRadius:
-                      //                           BorderRadius.circular(5),
-                      //                     ),
-                      //                     child: Obx(
-                      //                       () => Text(
-                      //                         controller.price.value,
-                      //                         style: const TextStyle(
-                      //                           fontSize: 12,
-                      //                           fontWeight: FontWeight.bold,
-                      //                           color: Colors
-                      //                               .teal, // Highlighted teal price text
-                      //                         ),
-                      //                       ),
-                      //                     ),
-                      //                   ),
-                      //                   Text(
-                      //                     doc["status"],
-                      //                     style: TextStyle(
-                      //                       fontSize: 14,
-                      //                       color: doc["status"] == "Requested"
-                      //                           ? Color(0xFFC06440)
-                      //                           : doc["status"] == "accepted"
-                      //                               ? Color(0xFFFFC300)
-                      //                               : Colors.green,
-                      //                       fontWeight: FontWeight.bold,
-                      //                     ),
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
-                      // const SizedBox(height: 8),
-                      doc["status"] != "Completed"
-                          ? const SizedBox(height: 16)
-                          : const SizedBox(height: 8),
-                (doc["type"] != "Doctor Visit" && doc["type"] != "Nurse Visit" &&  doc["status"] == "Completed") 
+                      const SizedBox(height: 8),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        elevation: 0,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Order Status: ",
+                                  style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: "Roboto",
+                                        ),
+                                ),
+                                // const SizedBox(width: 20),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 0.0, vertical: 0),
+                                    child: Text(
+                                      
+                                      getStatusMessage(doc["status"]),
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: getStatusColor(doc["status"]),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      softWrap: true,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      // doc["status"] != "Completed"
+                      //     ? const SizedBox(height: 16)
+                      //     : const SizedBox(height: 8),
+                      (doc["type"] != "Doctor Visit" &&
+                              doc["type"] != "Nurse Visit" &&
+                              doc["status"] == "Completed")
                           ? Card(
                               elevation: 0, // Shadow effect
                               shape: RoundedRectangleBorder(
@@ -458,7 +435,7 @@ class RequestedAppointmentDetails extends StatelessWidget {
                               ),
                             )
                           : const SizedBox.shrink(),
-                      const SizedBox(height: 8),
+                      doc["status"] != "Completed" ? const SizedBox(height: 8) : const SizedBox.shrink(),
                       doc["status"] != "Completed"
                           ? Container(
                               width: double.infinity,
@@ -508,10 +485,10 @@ class RequestedAppointmentDetails extends StatelessWidget {
                               ),
                             )
                           : const SizedBox.shrink(),
-                          
-                          
-                          
-                          (doc["type"] != "Doctor Visit" && doc["type"] != "Nurse Visit" &&  doc["status"] == "Completed") ?  Card(
+                      (doc["type"] != "Doctor Visit" &&
+                              doc["type"] != "Nurse Visit" &&
+                              doc["status"] == "Completed")
+                          ? Card(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),
@@ -552,11 +529,11 @@ class RequestedAppointmentDetails extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                            ): const SizedBox.shrink(),
+                            )
+                          : const SizedBox.shrink(),
                       doc["status"] != "Completed"
                           ? const SizedBox(height: 12)
                           : const SizedBox(height: 8),
-
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 8.0, horizontal: 4),
@@ -690,70 +667,67 @@ class RequestedAppointmentDetails extends StatelessWidget {
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 12),
-
-                     Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 4.0,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 4.0,
+                        ),
+                        child: _buildDetailsCard(
+                          context,
+                          title: "Patient Details",
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildDetailRow(
+                                "Name",
+                                doc["name"],
                               ),
-                              child: _buildDetailsCard(
-                                context,
-                                title: "Patient Details",
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    _buildDetailRow(
-                                      "Name",
-                                      doc["name"],
+                              _buildDetailRow("Gender", doc["gender"]),
+                              _buildDetailRow("DOB", doc["dob"]),
+                              _buildDetailRow(
+                                "Email",
+                                doc["email"],
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  openInGoogleMaps(
+                                    double.parse(doc["latitude"]),
+                                    double.parse(doc["longitude"]),
+                                  );
+                                },
+                                child:
+                                    buildDetailRow("Address", doc["address"]),
+                              ),
+                              SizedBox(
+                                height: 200,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    openInGoogleMaps(
+                                      double.parse(doc["latitude"]),
+                                      double.parse(doc["longitude"]),
+                                    );
+                                  },
+                                  child: GoogleMap(
+                                    // onTap:openGoogleMap,
+                                    initialCameraPosition: CameraPosition(
+                                      target: location,
+                                      zoom: 15,
                                     ),
-                                    _buildDetailRow("Gender", doc["gender"]),
-                                    _buildDetailRow("DOB", doc["dob"]),
-                                    _buildDetailRow(
-                                      "Email",
-                                      doc["email"],
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        openInGoogleMaps(
-                                          double.parse(doc["latitude"]),
-                                          double.parse(doc["longitude"]),
-                                        );
-                                      },
-                                      child: buildDetailRow(
-                                          "Address", doc["address"]),
-                                    ),
-                                    SizedBox(
-                                      height: 200,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          openInGoogleMaps(
-                                            double.parse(doc["latitude"]),
-                                            double.parse(doc["longitude"]),
-                                          );
-                                        },
-                                        child: GoogleMap(
-                                          // onTap:openGoogleMap,
-                                          initialCameraPosition: CameraPosition(
-                                            target: location,
-                                            zoom: 15,
-                                          ),
-                                          markers: {
-                                            Marker(
-                                              markerId:
-                                                  const MarkerId("cartLocation"),
-                                              position: location,
-                                            ),
-                                          },
-                                          zoomControlsEnabled: false,
-                                        ),
+                                    markers: {
+                                      Marker(
+                                        markerId:
+                                            const MarkerId("cartLocation"),
+                                        position: location,
                                       ),
-                                    ),
-                                  ],
+                                    },
+                                    zoomControlsEnabled: false,
+                                  ),
                                 ),
                               ),
-                            )
-                          ,
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -933,5 +907,40 @@ class RequestedAppointmentDetails extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+Color getStatusColor(String status) {
+  switch (status) {
+    case "Requested":
+      return Colors.redAccent; // More visible for pending status
+    case "Accepted":
+      return Colors.blueAccent; // Stands out for received orders
+    case "Prepared":
+      return const Color.fromARGB(
+          255, 255, 167, 34); // More vibrant for preparation phase
+    case "Coming":
+      return Colors.purpleAccent; // Highlights movement status
+    case "Completed":
+      return Colors.green; // Standard success color
+    default:
+      return Colors.black; // Default fallback
+  }
+}
+
+String getStatusMessage(String status) {
+  switch (status) {
+    case "Requested":
+      return "Requested your order";
+    case "Accepted":
+      return "Received your order."; // Same as Requested
+    case "Prepared":
+      return "Your order is being prepared.";
+    case "Coming":
+      return "Order coming to you now.";
+    case "Completed":
+      return "Order completed and delivered.";
+    default:
+      return "Unknown status";
   }
 }

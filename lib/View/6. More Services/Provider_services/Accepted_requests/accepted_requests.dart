@@ -106,8 +106,9 @@ class _AcceptedRequestsState extends State<AcceptedRequests> {
                   }
 
                   var filteredAppointments = snapshot.data!.docs.where((doc) {
-                    return doc['status'] ==
-                        "Accepted"; // Filter based on status
+                    return doc['status'] !=
+                        "Completed" && doc['status'] !=
+                        "Requested"; // Filter based on status
                   }).toList();
 
                   if (filteredAppointments.isEmpty) {
