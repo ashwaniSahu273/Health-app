@@ -17,6 +17,7 @@ import 'package:harees_new_project/View/8.%20Chats/Models/ui_helper.dart';
 import 'package:harees_new_project/View/8.%20Chats/Models/user_models.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class GetPatientInfo extends StatefulWidget {
   final String address;
@@ -60,10 +61,51 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
   // }
 
   void selectImage(ImageSource source) async {
-    XFile? pickedFile = await ImagePicker().pickImage(source: source);
+    try {
+      if (Platform.isIOS) {
+        bool hasPermission = await _requestPermission(source);
+        if (!hasPermission) {
+          UIHelper.showAlertDialog(context, "Permission Denied",
+              "Please grant the necessary permissions to access the camera or photo library.");
+          return;
+        }
+      }
 
-    if (pickedFile != null) {
-      cropImage(pickedFile);
+      XFile? pickedFile = await ImagePicker().pickImage(source: source);
+
+      if (pickedFile != null) {
+        cropImage(pickedFile);
+      } else {
+        UIHelper.showAlertDialog(
+            context, "No Image Selected", "Please select an image.");
+      }
+    } catch (e) {
+      log("Error selecting image: $e");
+      UIHelper.showAlertDialog(
+          context, "Error", "An error occurred while selecting the image: $e");
+    }
+  }
+
+  Future<bool> _requestPermission(ImageSource source) async {
+    try {
+      PermissionStatus status;
+      if (source == ImageSource.camera) {
+        status = await Permission.camera.status;
+        if (status.isDenied || status.isRestricted) {
+          status = await Permission.camera.request();
+        }
+      } else {
+        status = await Permission.photos.status;
+        if (status.isDenied || status.isRestricted) {
+          status = await Permission.photos.request();
+        }
+      }
+      return status.isGranted;
+    } catch (e) {
+      log("Error requesting permission: $e");
+      UIHelper.showAlertDialog(context, "Error",
+          "An error occurred while requesting permissions: $e");
+      return false;
     }
   }
 

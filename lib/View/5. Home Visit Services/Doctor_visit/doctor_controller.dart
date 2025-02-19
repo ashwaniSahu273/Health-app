@@ -28,7 +28,7 @@ class DoctorController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchServices();
+    // fetchServices();
   }
 
   void fetchServices() async {
