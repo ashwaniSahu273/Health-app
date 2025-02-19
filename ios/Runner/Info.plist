@@ -2,7 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
- 
+    <key>NSCameraUsageDescription</key>
+<string>We need access to your camera to take pictures.</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>We need access to your photo library to select images.</string>
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>We need permission to save images to your photo library.</string>
+
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -42,10 +48,7 @@
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>The app needs location permission</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to your photo library to select photos.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>We need access to your camera to take photos.</string>
+
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.181225854885-m55duucf74lv8d144rrvmv8j8oj9jinp</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

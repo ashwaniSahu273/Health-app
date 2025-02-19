@@ -49,53 +49,69 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
   //   selectedGender = widget.userModel.gender ?? "";
   // }
 
-  void selectImage(ImageSource source) async {
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> selectImage(BuildContext context, ImageSource source) async {
     try {
       if (Platform.isIOS) {
-        bool hasPermission = await _requestPermission(source);
+        bool hasPermission = await _requestPermission(context, source);
+        print("Has permission: $hasPermission");
         if (!hasPermission) {
-          UIHelper.showAlertDialog(context, "Permission Denied",
-              "Please grant the necessary permissions to access the camera or photo library.");
           return;
         }
       }
 
-      XFile? pickedFile = await ImagePicker().pickImage(source: source);
+      XFile? pickedFile = await _picker.pickImage(source: source);
 
       if (pickedFile != null) {
+        // Call your crop function here
         cropImage(pickedFile);
       } else {
-        UIHelper.showAlertDialog(
+        _showAlertDialog(
             context, "No Image Selected", "Please select an image.");
       }
     } catch (e) {
-      log("Error selecting image: $e");
-      UIHelper.showAlertDialog(
-          context, "Error", "An error occurred while selecting the image: $e");
+      debugPrint("Error selecting image: $e");
+      _showAlertDialog(context, "Error", "An error occurred: $e");
     }
   }
 
-  Future<bool> _requestPermission(ImageSource source) async {
-    try {
-      PermissionStatus status;
-      if (source == ImageSource.camera) {
-        status = await Permission.camera.status;
-        if (status.isDenied || status.isRestricted) {
-          status = await Permission.camera.request();
-        }
-      } else {
-        status = await Permission.photos.status;
-        if (status.isDenied || status.isRestricted) {
-          status = await Permission.photos.request();
-        }
-      }
-      return status.isGranted;
-    } catch (e) {
-      log("Error requesting permission: $e");
-      UIHelper.showAlertDialog(context, "Error",
-          "An error occurred while requesting permissions: $e");
+  Future<bool> _requestPermission(
+      BuildContext context, ImageSource source) async {
+    PermissionStatus status;
+    if (source == ImageSource.camera) {
+      status = await Permission.camera.request();
+    } else {
+      status = await Permission.photos.request();
+    }
+    if (!status.isGranted) {
+      _showAlertDialog(context, "Permission Required",
+          "Please enable permissions in settings.");
       return false;
     }
+    return true;
+  }
+
+  void _showAlertDialog(BuildContext context, String title, String message) {
+    showCupertinoDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            onPressed: () => openAppSettings(),
+            child: const Text('Settings'),
+          ),
+        ],
+      ),
+    );
   }
 
   void cropImage(XFile file) async {
@@ -124,7 +140,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                 ListTile(
                   onTap: () {
                     Navigator.pop(context);
-                    selectImage(ImageSource.gallery);
+                    selectImage(context, ImageSource.gallery);
                   },
                   leading: const Icon(Icons.photo_album),
                   title: Text("Select from Gallery".tr),
@@ -132,7 +148,7 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
                 ListTile(
                   onTap: () {
                     Navigator.pop(context);
-                    selectImage(ImageSource.camera);
+                    selectImage(context, ImageSource.camera);
                   },
                   leading: const Icon(Icons.camera_alt),
                   title: Text("Take a photo".tr),
