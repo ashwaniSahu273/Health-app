@@ -598,19 +598,35 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                                             doc.id,
                                                             newValue,
                                                             userModel,
-                                                            firebaseUser,doc);
+                                                            firebaseUser,
+                                                            doc);
                                                   },
                                                 );
                                               } else {
-                                                controller.status.value =
-                                                    newValue;
+                                                Get.defaultDialog(
+                                                  title: "Confirm Updating",
+                                                  middleText:
+                                                      "Are you sure you want to update this appointment?",
+                                                  textConfirm: "Yes",
+                                                  textCancel: "No",
+                                                  confirmTextColor:
+                                                      Colors.white,
+                                                  buttonColor:
+                                                      const Color(0xFF007ABB),
+                                                  onConfirm: () {
+                                                    Navigator.pop(context);
+                                                    controller.status.value =
+                                                        newValue;
 
-                                                controller
-                                                    .updateLabAndVitaminAppointmentStatus(
-                                                        doc.id,
-                                                        newValue,
-                                                        userModel,
-                                                        firebaseUser,doc);
+                                                    controller
+                                                        .updateLabAndVitaminAppointmentStatus(
+                                                            doc.id,
+                                                            newValue,
+                                                            userModel,
+                                                            firebaseUser,
+                                                            doc);
+                                                  },
+                                                );
                                               }
                                             }
                                           },
@@ -723,15 +739,29 @@ class AppointmentDetailsScreen extends StatelessWidget {
                                                   },
                                                 );
                                               } else {
-                                                controller.status.value =
-                                                    newValue;
+                                                Get.defaultDialog(
+                                                  title: "Confirm Update",
+                                                  middleText:
+                                                      "Are you sure you want to update this appointment?",
+                                                  textConfirm: "Yes",
+                                                  textCancel: "No",
+                                                  confirmTextColor:
+                                                      Colors.white,
+                                                  buttonColor:
+                                                      const Color(0xFF007ABB),
+                                                  onConfirm: () {
+                                                    Navigator.pop(context);
+                                                    controller.status.value =
+                                                        newValue;
 
-                                                controller
-                                                    .updateAppointmentStatus(
-                                                        doc.id,
-                                                        newValue,
-                                                        userModel,
-                                                        firebaseUser);
+                                                    controller
+                                                        .updateAppointmentStatus(
+                                                            doc.id,
+                                                            newValue,
+                                                            userModel,
+                                                            firebaseUser);
+                                                  },
+                                                );
                                               }
                                             }
                                           },

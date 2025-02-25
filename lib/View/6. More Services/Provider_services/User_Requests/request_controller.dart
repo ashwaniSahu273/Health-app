@@ -89,14 +89,21 @@ class UserRequestsController extends GetxController {
           firebaseUser: firebaseUser,
           userEmail: '',
         ));
+
         Get.snackbar(
           "Success".tr,
           "Appointment Accepted. Check your accepted appointments.".tr,
-          backgroundColor: const Color.fromARGB(255, 104, 247, 109),
-          colorText: Colors.black,
-          borderColor: Colors.black,
-          borderWidth: 1,
-          duration: const Duration(seconds: 1),
+          backgroundColor: Colors.green.shade600,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.TOP,
+          margin: const EdgeInsets.all(12),
+          borderRadius: 10,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          icon: const Icon(Icons.check_circle, color: Colors.white),
+          shouldIconPulse: false,
+          duration: const Duration(seconds: 3),
+          barBlur: 10,
+          overlayBlur: 2,
         );
       });
 
@@ -153,12 +160,20 @@ class UserRequestsController extends GetxController {
           userEmail: '',
         ));
       }
-
       Get.snackbar(
         "Status Updated".tr,
         "Appointment status changed to $newStatus".tr,
-        backgroundColor: const Color.fromARGB(255, 104, 227, 108),
-        colorText: Colors.black54,
+        backgroundColor: Colors.green.shade600,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.TOP,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 10,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        icon: const Icon(Icons.check_circle, color: Colors.white),
+        shouldIconPulse: false,
+        duration: const Duration(seconds: 3),
+        barBlur: 10,
+        overlayBlur: 2,
       );
 
       print('Appointment status updated successfully to $newStatus.');
@@ -204,12 +219,22 @@ class UserRequestsController extends GetxController {
           });
 
           EasyLoading.dismiss();
-          Get.snackbar(
-            "Status Updated".tr,
-            "Appointment status changed to $newStatus".tr,
-            backgroundColor: const Color.fromARGB(255, 104, 227, 108),
-            colorText: Colors.black54,
-          );
+            Get.snackbar(
+        "Status Updated".tr,
+        "Appointment status changed to $newStatus".tr,
+        backgroundColor: Colors.green.shade600,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.TOP,
+        margin: const EdgeInsets.all(12),
+        borderRadius: 10,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        icon: const Icon(Icons.check_circle, color: Colors.white),
+        shouldIconPulse: false,
+        duration: const Duration(seconds: 3),
+        barBlur: 10,
+        overlayBlur: 2,
+      );
+
         } else {
           EasyLoading.dismiss();
 
