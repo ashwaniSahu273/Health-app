@@ -18,6 +18,8 @@
 				<!-- TODO Replace this value: -->
 				<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
 				<string>com.googleusercontent.apps.181225854885-m55duucf74lv8d144rrvmv8j8oj9jinp</string>
+				<string>myapp</string>
+				<string>app-1-343705544018-ios-2b27149e031f4d6f44868b</string>
 			</array>
 		</dict>
 	</array>
@@ -69,5 +71,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera to allow you to take photos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to allow you to select photos.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We need access to your photo library to save photos.</string>
 </dict>
 </plist>

@@ -49,24 +49,32 @@ class _GetPatientInfoState extends State<GetPatientInfo> {
   // }
 
   void selectImage(ImageSource source) async {
-    XFile? pickedFile = await ImagePicker().pickImage(source: source);
+    try {
+      XFile? pickedFile = await ImagePicker().pickImage(source: source);
 
-    if (pickedFile != null) {
-      cropImage(pickedFile);
+      if (pickedFile != null) {
+        cropImage(pickedFile);
+      }
+    } catch (e) {
+      print("Error selecting image: $e");
     }
   }
 
   void cropImage(XFile file) async {
-    CroppedFile? croppedImage = (await ImageCropper().cropImage(
-      sourcePath: file.path,
-      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-      compressQuality: 40,
-    ));
+    try {
+      CroppedFile? croppedImage = await ImageCropper().cropImage(
+        sourcePath: file.path,
+        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+        compressQuality: 40,
+      );
 
-    if (croppedImage != null) {
-      setState(() {
-        imageFile = File(croppedImage.path);
-      });
+      if (croppedImage != null) {
+        setState(() {
+          imageFile = File(croppedImage.path);
+        });
+      }
+    } catch (e) {
+      print("Error cropping image: $e");
     }
   }
 

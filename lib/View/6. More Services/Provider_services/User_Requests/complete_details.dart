@@ -887,7 +887,6 @@ class CompleteAppointmentDetailsScreen extends StatelessWidget {
     );
   }
 }
-
 class PdfViewerScreen extends StatelessWidget {
   final String pdfUrl;
   const PdfViewerScreen({Key? key, required this.pdfUrl}) : super(key: key);
@@ -903,6 +902,14 @@ class PdfViewerScreen extends StatelessWidget {
           return const Center(child: Text("Error loading PDF"));
         } else {
           return Scaffold(
+            appBar: AppBar(
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              title: const Text("PDF Viewer"),
+              backgroundColor: Colors.blue,
+            ),
             body: Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(
