@@ -260,16 +260,18 @@ class PaymentSuccessScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     const Text(
-                      "Your payment was unsuccessful. Please try again.",
+                      "Your payment was unsuccessful.",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 16, color: Colors.black54),
                     ),
                     const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () async {
-                        await openPaymentUrl(orderData["paymentUrl"]);
+                  ElevatedButton(
+                      onPressed: () {
+                        controller.deleteOrder(controller.varDocId.value);
+                        Get.offAll(HomePage(
+                            userModel: userModel, firebaseUser: firebaseUser));
                       },
-                      child: const Text("Retry Payment"),
+                      child: const Text("Back to Home"),
                     ),
                     TextButton(
                       onPressed: () {
