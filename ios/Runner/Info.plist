@@ -18,14 +18,20 @@
 				<!-- TODO Replace this value: -->
 				<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
 				<string>com.googleusercontent.apps.181225854885-m55duucf74lv8d144rrvmv8j8oj9jinp</string>
+				<string>myapp</string>
+				<string>app-1-343705544018-ios-2b27149e031f4d6f44868b</string>
+				<!-- Add the missing URL scheme -->
+				<string>com.googleusercontent.apps.343705544018-92k24n23bj1asg63tm3mhnmceoadoauj</string>
+				<string>com.googleusercontent.apps.y343705544018-92k24n23bj1asg63tm3mhnmceoadoauj</string>
 			</array>
 		</dict>
 	</array>
-
 	<key>CLIENT_ID</key>
 	<string>181225854885-m55duucf74lv8d144rrvmv8j8oj9jinp.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.181225854885-m55duucf74lv8d144rrvmv8j8oj9jinp</string>
+	<key>GIDClientID</key>
+	<string>Y343705544018-92k24n23bj1asg63tm3mhnmceoadoauj.apps.googleusercontent.com</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -69,5 +75,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera to allow you to take photos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to allow you to select photos.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We need access to your photo library to save photos.</string>
 </dict>
 </plist>
