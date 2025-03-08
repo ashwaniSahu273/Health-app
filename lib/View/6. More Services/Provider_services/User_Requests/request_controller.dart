@@ -19,7 +19,7 @@ class UserRequestsController extends GetxController {
       FirebaseFirestore.instance.collection("User_appointments");
   final date = "".obs;
   final time = "".obs;
-  final status = "Received".obs;
+  final status = "Requested".obs;
   final paymentStatus = "".obs;
   var isLoading = false.obs;
 
